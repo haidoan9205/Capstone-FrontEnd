@@ -10,7 +10,8 @@ import Login from "./views/Login.vue";
 import Register from "./views/Register.vue";
 import Profile from "./views/Profile.vue";
 import ChangePassword from "./views/ChangePassword.vue";
-import ImageDetailed from "./views/ImageDetailed.vue";
+import Photo from "./views/Photo.vue";
+import Cart from "./views/Cart.vue";
 
 Vue.use(Router);
 
@@ -63,13 +64,24 @@ export default new Router({
       }
     },
     {
-      path: "/imagedetailed",
-      name: "imagedetailed",
+      path: "/photo/:photoId",
+      name: "photo",
       components: {
         header: AppHeader,
-        default: ImageDetailed,
+        default: Photo,
         footer: AppFooter
-      }
+      },
+      props: true,
+    },
+    {
+      path: "/cart",
+      name: "cart",
+      components: {
+        header: AppHeader,
+        default: Cart,
+        footer: AppFooter
+      },
+      props: true,
     },
   ],
   scrollBehavior: to => {

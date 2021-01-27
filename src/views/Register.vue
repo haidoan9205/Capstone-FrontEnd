@@ -24,57 +24,32 @@
               <div class="text-center text-muted mb-4">
                 <h4>Sign up</h4>
               </div>
-              <form role="form">
+              <form role="form" @submit.prevent="register">
                 <base-input
+                  v-model="username"
                   alternative
                   class="mb-3"
-                  placeholder="Name"
-                  addon-left-icon="ni ni-hat-3"
+                  placeholder="Username"
+                  addon-left-icon="ni ni-circle-08"
                 >
                 </base-input>
                 <base-input
-                  alternative
-                  class="mb-3"
-                  placeholder="Email"
-                  addon-left-icon="ni ni-email-83"
-                >
-                </base-input>
-                <base-input
-                  alternative
-                  class="mb-3"
-                  placeholder="Phone"
-                  addon-left-icon="fa fa-phone"
-                >
-                </base-input>
-                <base-input
+                  v-model="password"
                   alternative
                   type="password"
                   placeholder="Password"
                   addon-left-icon="ni ni-lock-circle-open"
                 >
                 </base-input>
-                <base-input addon-left-icon="ni ni-calendar-grid-58">
-                  <flat-picker
-                    slot-scope="{ focus, blur }"
-                    @on-open="focus"
-                    @on-close="blur"
-                    :config="{ allowInput: true }"
-                    class="form-control datepicker"
-                    v-model="dates.simple"
-                  >
-                  </flat-picker>
+                <base-input
+                  v-model="email"
+                  alternative
+                  class="mb-3"
+                  placeholder="Email"
+                  addon-left-icon="ni ni-email-83"
+                >
                 </base-input>
-                <base-checkbox>
-                  <span
-                    >I agree with the
-                    <a href="#">Privacy Policy</a>
-                  </span>
-                </base-checkbox>
-                <div class="text-center">
-                  <base-button type="primary" class="my-4"
-                    >Create account</base-button
-                  >
-                </div>
+                    <button type="submit">Create Account</button>
               </form>
             </template>
           </card>
@@ -84,19 +59,31 @@
   </section>
 </template>
 <script>
-import flatPicker from "vue-flatpickr-component";
-import "flatpickr/dist/flatpickr.css";
+import firebase from '../firebase';
+
 export default {
-  components: {
-    flatPicker
-  },
+  
+
   data() {
     return {
-      dates: {
-        simple: "2018-07-17",
-        range: "2018-07-17 to 2018-07-19"
-      }
+      username: "",
+      password: "",
+      email: "",
     };
-  }
+  },
+  methods: {
+    register() {
+      let data = {
+        username: this.username,
+        password: this.password,
+        email: this.email,
+      };
+
+      this.$store
+        .dispatch("register", data)
+        .then(() => this.$router.push("/"))
+        .catch((err) => console.log(err));
+    },
+  },
 };
 </script>

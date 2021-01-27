@@ -1,52 +1,45 @@
 <template>
-    <div class="container container-lg">
-        <div class="row mt-4" >
-          <div class="col-md-4 mb-5 mb-md-0" v-for='data in datas' :key="data.id">
-            <div class="card card-lift--hover shadow border-0">
-              <img v-lazy='data.link' class="card-img" />
-            </div>
-          </div>
-          <!-- <div class="col-md-4 mb-5 mb-md-0">
-            <div class="card card-lift--hover shadow border-0">
-              <img v-lazy='data.link' class="card-img" />
-            </div>
-          </div>
-          <div class="col-md-4 mb-5 mb-md-0">
-            <div class="card card-lift--hover shadow border-0">
-              <img v-lazy='data.link' class="card-img" />
-            </div> -->
-          </div>
+  <div class="container container-lg">
+    <div class="row mt-4">
+      <div
+        class="col-md-4 mb-5 mb-md-0"
+        v-for="image in images"
+        :key="image.photoId"
+        :image="image"
+      >
+        <div class="card card-lift--hover shadow border-0">
+          <router-link
+            :to="{ name: 'photo', params: { photoId: image.photoId } }"
+          >
+            <img v-lazy="image.link" class="img-fit" />
+          </router-link>
         </div>
-    <!-- </div> -->
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
-// import {Stack, StackItem} from 'vue-stack-grid';
+
 
 export default {
-    data(){
-        return{
-            title:"Get All Photos",
-            datas:[]
-        }
+  computed: {
+    images() {
+      return this.$store.state.images;
     },
-    created:function(){
-        this.photo_list();
-      },
-      methods:{
-          photo_list(){
-           this.axios.get('https://capstonerestapi.azurewebsites.net/api/v1/Photo').then((response)=>{
-             this.datas=response.data;
-            });
-          }
-      }
+  },
 
-}
+  mounted() {
+    this.$store.dispatch("getImages");
+  },
+};
+
 </script>
 
 <style scoped>
-  .card-img{
-    max-width: 100%;
-    height: auto;
-  }
+.img-fit {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
 </style>
