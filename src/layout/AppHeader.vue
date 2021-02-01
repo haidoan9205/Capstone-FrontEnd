@@ -5,7 +5,7 @@
                   :type="menu.type"
                   effect="dark"
                   expand
-                  title="GettyPhoto"
+                  title="Imago"
                   :content-id="`navbar-${menu.type}`">
             <div class="row" slot="content-header" slot-scope="{closeMenu}">
                 <div class="col-6 collapse-brand">

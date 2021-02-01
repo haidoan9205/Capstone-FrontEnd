@@ -1,16 +1,16 @@
 <template>
-  <div>
+  <div > 
     <div class="position-relative">
       <!-- shape Hero -->
 
-      <section class="section section-lg">
-        <div class="container">
+      <section class="section section-lg pt-0 pb-0 mt-4">
+        <div class="container search-bar">
           <div class="row row-grid justify-content-center">
             <h3>Moving the world with images</h3>
           </div>
           <div class="row row-grid justify-content-center">
             <i class="fa fa-search my-auto"></i>
-            <div class="col-md-4">
+            <div class="col-md-6">
               <base-input
                 alternative
                 placeholder="Search creative images...  "
@@ -25,27 +25,27 @@
                 Regular
               </base-button>
             </base-dropdown>
-            <div class="col-md-2">
+            <!-- <div class="col-md-2">
               <div class="row row-grid justify-content-center">
                 <i class="fa fa-camera"></i>
               </div>
               <div class="row justify-content-center">
                 <p>search by image</p>
               </div>
-            </div>
+            </div> -->
           </div>
           <br />
         </div>
-        <div class="col-md-6 m-auto justify-content-center">
+        <!-- <div class="col-md-6 m-auto justify-content-center cat-bar">
           <a href="#" class="btn btn-link text-primary">Creative</a>
           <a href="#" class="btn btn-link text-primary">Editorial</a>
           <a href="#" class="btn btn-link text-primary">Video</a>
           <a href="#" class="btn btn-link text-primary">Music</a>
           <a href="#" class="btn btn-link text-primary">Blog</a>
           <a href="#" class="btn btn-link text-primary">Collections</a>
-        </div>
+        </div> -->
       </section>
-      <div class="container container-lg">
+      <div class="container container-lg mb-0">
          <!-- <div class="row mt-4">
           <div class="col-md-4 mb-5 mb-md-0">
             <div class="card card-lift--hover shadow border-0">
@@ -126,4 +126,9 @@ export default {
   },
 };
 </script>
-<style scoped></style>
+<style scoped>
+  .search-bar{
+    
+    max-width: 100%;
+  }
+</style>

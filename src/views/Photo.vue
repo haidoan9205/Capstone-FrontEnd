@@ -30,6 +30,7 @@
 <script>
 export default {
 
+
   data(){
     return {
       photoId : 0

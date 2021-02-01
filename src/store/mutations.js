@@ -17,6 +17,9 @@ export const REMOVE_ITEM = (state, image) => {
     let item = state.cart.indexOf(image);
     state.cart.splice(item, 1);
     window.localStorage.setItem("cart", JSON.stringify(state.cart));
+    if(state.cart.length == 0){
+      window.localStorage.removeItem('cart');
+    }
 }
 
 export const auth_request = (state) =>{

@@ -1,26 +1,19 @@
 <template>
-  <div class="container table-responsive">
-    <table id="cart" class="table table-hover table-sm">
-      <thead>
-        <tr>
-          <th style="width:50%">Image</th>
-          <th style="width:40%">Price</th>
-          <th style="width:10%"></th>
-        </tr>
-      </thead>
-      <div v-if="checkLocal != null">
+ <div class="container table-responsive">
+    <table id="cart" class="table table-hover table-sm" v-if="checkLocal != 0">
+      <div>
         <tr v-for="item in cart" :key="item.image.photoId">
-          <td>
+          <td data-th="Image">
             <div class="row">
-              <div class="col-sm-2 d-none d-sm-block">
+              <td class="col-sm-3  gallery-panel">
                 <img :src="item.image.link" class="img-fluid" />
-              </div>
-              <div class="col-sm-10">
+              </td>
+              <td>
                 <h4 class="nomargin">{{ item.image.photoName }}</h4>
-              </div>
+              </td>
             </div>
           </td>
-          <td data-th="Price">{{ item.image.price }}</td>
+          <td data-th="Price"><h4>${{ item.image.price }}</h4></td>
           <td class="actions" data-th="">
             <button class="btn btn-danger btn-sm" @click.prevent="removeItem(item.image)">
               <i class="fa fa-trash-o"></i>
@@ -41,14 +34,20 @@
         </tfoot>
       </div>
     </table>
+    <div v-else>
+      <p>There is nothing to show</p>
+      <router-link to="/"> <button type="primary">Come here to Shopping</button> </router-link>
+    </div>
   </div>
+
+  
 </template>
 
 <script>
 export default {
   computed: {
     cart() {
-      console.log("con cac");
+      console.log(this.checkLocal);
       console.log(this.$store.state);
       return this.$store.state.cart;
     },
@@ -56,7 +55,7 @@ export default {
 
   data() {
     return {
-      checkLocal: window.localStorage.getItem("cart"),
+      checkLocal: this.$store.state.cart,
     };
   },
   methods:{
@@ -66,3 +65,11 @@ export default {
   }
 };
 </script>
+<style scoped>
+.gallery-panel img {
+    width: 100%;
+    height: 10vw;
+    object-fit: cover;
+    border-radius: 0.75rem;
+  }
+</style>
