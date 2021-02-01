@@ -2,7 +2,7 @@ import axios from "axios";
 
 export const getImages = ({ commit }) => {
   axios
-    .get("https://capstonerestapi.azurewebsites.net/api/v1/Photo/random2")
+    .get("https://capstonerestapi.azurewebsites.net/api/v1/Photo/random")
     .then((response) => {
       commit("SET_IMAGES", response.data);
     });

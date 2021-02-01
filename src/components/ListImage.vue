@@ -1,8 +1,8 @@
 <template>
-  <div class="container container-lg">
-    <div class="row mt-4">
+  <div class="container container-lg gallery">
+    <div class="row mt-4 ">
       <div
-        class="col-md-4 mb-5 mb-md-0"
+        class="col-md-4 mb-5 mb-md-0 gallery-panel"
         v-for="image in images"
         :key="image.photoId"
         :image="image"
@@ -11,12 +11,19 @@
           <router-link
             :to="{ name: 'photo', params: { photoId: image.photoId } }"
           >
-            <img v-lazy="image.link" class="img-fit" />
+            <img v-lazy="image.wmlink" class="img-fit" />
           </router-link>
         </div>
       </div>
     </div>
   </div>
+  <!-- <div class="row gallery ">
+    <div class="gallery-panel"
+         v-for="image in images"
+         :key="image.photoId">
+      <img :src="image.link">
+    </div>
+   </div>  -->
 </template>
 
 <script>
@@ -40,6 +47,21 @@ export default {
 .img-fit {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
 }
+
+.gallery {
+    display: grid;
+    /* grid-template-columns: repeat(auto-fill, minmax(20rem, 1fr)); */
+    grid-gap: 1rem;
+    max-width: 100rem;
+    margin: 3rem auto;
+    padding: 0 5rem;
+  }
+  .gallery-panel img {
+    width: 100%;
+    height: 22vw;
+    object-fit: cover;
+    border-radius: 0.75rem;
+  }
 </style>
