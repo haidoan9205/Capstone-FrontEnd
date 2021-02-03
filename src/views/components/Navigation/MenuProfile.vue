@@ -1,58 +1,55 @@
 <template>
-  <base-nav effect="dark"
-                  expand
-                  title="Imago"> 
-    <div class="row" slot="content-header">
-      <ul class="navbar-nav ml-auto row justify-content-center mx-auto">
-        <li class="nav-item">
-          <router-link to="/cart" title="Your basket">
-            <a class="nav-link nav-link-icon" href="#">
-              <i class="fa fa-shopping-basket"></i>
-              <span class="nav-link-inner--text">Basket</span>
-            </a>
-          </router-link>
-        </li>
-        <!-- <li class="nav-item" > -->
-        <li class="nav-item" v-if="isLoggedIn">
-          <a class="nav-link nav-link-icon" @click="logout">
-            <i class="fa fa-sign-out"></i>
-            <span class="nav-link-inner--text">Sign out</span>
-          </a>
-        </li>
-        <li class="nav-item" v-if="isLoggedIn">
-          <img
-            v-lazy="
-              'https://www.irishtimes.com/polopoly_fs/1.3170107.1501253408!/image/image.jpg_gen/derivatives/box_620_330/image.jpg'
-            "
-            alt="Raised circle image"
-            class="img-fluid rounded-circle shadow-lg"
-            style="width: 50px; height: 50px"
-          />
-        </li>
-      </ul>
-    </div>
+  <div class="row justify-content-center mt-0">
+    <div class="col-lg-12">
+      <div class="row">
+        <div class="col-lg-12">
+          <base-nav expand effect="dark" type="primary" round title="Menu">
+            <div class="row" slot="content-header" slot-scope="{ closeMenu }">
+              <div class="col-6 collapse-brand">
+                <a href="./index.html">
+                  <img src="img/brand/blue.png" />
+                </a>
+              </div>
+              <div class="col-6 collapse-close">
+                <close-button target="nav-inner-primary" @click="closeMenu">
+                </close-button>
+              </div>
+            </div>
 
-    <!-- <div class="col-md-6 m-auto justify-content-center cat-bar">
-      <div class="col-lg-8 text-center">
-        <div class="btn-wrapper">
-          <a
-            href="https://demos.creative-tim.com/argon-design-system/docs/foundation/icons.html"
-            class="btn btn-primary"
-            >Your Images</a
-          >
-          <a
-            href="https://nucleoapp.com/?ref=1712"
-            target="_blank"
-            class="btn btn-primary mt-3 mt-md-0"
-            >Dowloaded</a
-          >
+            <ul class="navbar-nav ml-lg-auto">
+              <li class="nav-item">
+                <router-link to="/">
+                   <a class="nav-link" href="#"
+                  >Discover
+                  <span class="sr-only">(current)</span>
+                </a>
+                </router-link>
+               
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">Profile</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link nav-link-icon" @click="logout">
+                  <i class="fa fa-sign-out"></i>
+                  <span class="nav-link-inner--text">Sign out</span>
+                </a>
+              </li>
+            </ul>
+          </base-nav>
         </div>
       </div>
-    </div> -->
-  </base-nav>
+    </div>
+  </div>
 </template>
 <script>
+import BaseNav from "@/components/BaseNav";
+import CloseButton from "@/components/CloseButton";
 export default {
+  components: {
+    BaseNav,
+    CloseButton,
+  },
   computed: {
     isLoggedIn() {
       return this.$store.getters.isLoggedIn;

@@ -18,20 +18,21 @@
     </li>
     <!-- <li class="nav-item" > -->
     <li class="nav-item" v-if="isLoggedIn">
-     
-             <a class="nav-link nav-link-icon" @click="logout">
-              <i class="fa fa-sign-out"></i>
-              <span class="nav-link-inner--text">Sign out</span>
-    </a>
+      <a class="nav-link nav-link-icon" @click="logout">
+        <i class="fa fa-sign-out"></i>
+        <span class="nav-link-inner--text">Sign out</span>
+      </a>
     </li>
     <li class="nav-item" v-if="isLoggedIn">
-       
-            <img v-lazy="'https://www.irishtimes.com/polopoly_fs/1.3170107.1501253408!/image/image.jpg_gen/derivatives/box_620_330/image.jpg'" alt="Raised circle image"
-                 class="img-fluid rounded-circle shadow-lg" style="width: 50px; height: 50px">
-        
+      <img
+        v-lazy="
+          'https://www.irishtimes.com/polopoly_fs/1.3170107.1501253408!/image/image.jpg_gen/derivatives/box_620_330/image.jpg'
+        "
+        alt="Raised circle image"
+        class="img-fluid rounded-circle shadow-lg"
+        style="width: 50px; height: 50px"
+      />
     </li>
-
-    
   </ul>
 </template>
 <script>
