@@ -13,7 +13,7 @@ import ChangePassword from "./views/ChangePassword.vue";
 import Photo from "./views/Photo.vue";
 import Cart from "./views/Cart.vue";
 import MenuProfile from "./views/components/Navigation/MenuProfile.vue";
-
+import UploadImage from "./views/UploadImage.vue";
 
 Vue.use(Router);
 
@@ -84,6 +84,15 @@ export default new Router({
         footer: AppFooter
       },
       props: true,
+    },
+    {
+      path: "/upload",
+      name: "upload",
+      components: {
+        header: MenuProfile,
+        default: UploadImage,
+        footer: AppFooter
+      }
     },
   ],
   scrollBehavior: to => {
