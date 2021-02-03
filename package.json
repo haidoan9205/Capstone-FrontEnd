@@ -18,6 +18,7 @@
     "register-service-worker": "^1.5.2",
     "vue": "^2.6.6",
     "vue-axios": "^3.2.2",
+    "vue-burger-menu": "^2.0.5",
     "vue-flatpickr-component": "^8.1.1",
     "vue-lazyload": "^1.2.6",
     "vue-masonry": "^0.12.0",

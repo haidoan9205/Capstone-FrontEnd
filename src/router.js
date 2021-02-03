@@ -12,6 +12,8 @@ import Profile from "./views/Profile.vue";
 import ChangePassword from "./views/ChangePassword.vue";
 import Photo from "./views/Photo.vue";
 import Cart from "./views/Cart.vue";
+import MenuProfile from "./views/components/Navigation/MenuProfile.vue";
+
 
 Vue.use(Router);
 
@@ -58,7 +60,7 @@ export default new Router({
       path: "/profile",
       name: "profile",
       components: {
-        header: AppHeader,
+        header: MenuProfile,
         default: Profile,
         footer: AppFooter
       }
