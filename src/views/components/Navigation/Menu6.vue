@@ -24,6 +24,7 @@
       </a>
     </li>
     <li class="nav-item" v-if="isLoggedIn">
+      <router-link to="/profile">
       <img
         v-lazy="
           'https://www.irishtimes.com/polopoly_fs/1.3170107.1501253408!/image/image.jpg_gen/derivatives/box_620_330/image.jpg'
@@ -32,6 +33,7 @@
         class="img-fluid rounded-circle shadow-lg"
         style="width: 50px; height: 50px"
       />
+      </router-link>
     </li>
   </ul>
 </template>
