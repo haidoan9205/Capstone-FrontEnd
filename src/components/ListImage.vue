@@ -64,4 +64,7 @@ export default {
     object-fit: cover;
     border-radius: 0.75rem;
   }
+.gallery-panel {
+  padding-bottom: 15px;
+}
 </style>
