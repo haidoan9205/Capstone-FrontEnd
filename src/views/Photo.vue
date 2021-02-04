@@ -8,13 +8,13 @@
         <h5 class="text-uppercase font-weight-bold"
           >How can I buy this?</h5
         >
-        <base-radio name="radio0" class="mb-3">
+        <base-radio name="rdoBtn" class="mb-3">
           Large
         </base-radio>
-        <base-radio name="radio1" class="mb-3">
+        <base-radio name="rdoBtn" class="mb-3">
           Medium
         </base-radio>
-        <base-radio name="radio1" class="mb-3">
+        <base-radio name="rdoBtn" class="mb-3">
           Small
         </base-radio>
         <h3 class="text-uppercase font-weight-bold">${{ image.price }}</h3>
