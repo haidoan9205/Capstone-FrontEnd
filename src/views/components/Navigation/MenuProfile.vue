@@ -27,7 +27,14 @@
                
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#">Profile</a>
+                <router-link to="/profile"><a class="nav-link" href="#">Profile</a></router-link>
+                
+              </li>
+              <li class="nav-item">
+                <router-link to="/upload"> 
+                <a class="nav-link" href="#">Upload</a>
+                </router-link>
+                
               </li>
               <li class="nav-item">
                 <a class="nav-link nav-link-icon" @click="logout">

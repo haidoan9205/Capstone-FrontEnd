@@ -84,7 +84,7 @@ export default {
         .dispatch("login", { username, password })
         .then(() => this.$router.push("/"))
         .catch((err) => console.log(err));
-      this.$$store.dispatch("auth")
+      this.$store.dispatch("auth")
     },
   },
 };
