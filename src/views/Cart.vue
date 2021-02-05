@@ -1,22 +1,43 @@
 <template>
  <div class="container table-responsive">
+    <h2>Shopping Cart</h2>
     <table id="cart" class="table table-hover table-sm" v-if="checkLocal != 0">
       <div>
         <tr v-for="item in cart" :key="item.image.photoId">
-          <td data-th="Image">
-            <div class="row">
-              <td class="col-sm-3  gallery-panel">
-                <img :src="item.image.link" class="img-fluid" />
-              </td>
-              <td>
-                <h4 class="nomargin">{{ item.image.photoName }}</h4>
-              </td>
+          <td class="col-sm-3  gallery-panel">
+            <img :src="item.image.wmlink" class="img-fluid" />
+          </td>
+          <td>
+            <div class="detail">
+              <tr>
+                <td class="col1"><p style="color:black;">Photo:</p></td>
+                <td class="col2">
+                  <p style="color:black;">{{ item.image.photoName }} |
+                    <router-link :to="{ name: 'photo', params: { photoId: item.image.photoId } }">
+                      Detail
+                    </router-link>
+                  </p>
+                </td>
+              </tr>
+              <tr>
+                <td class="col1"><p style="color:black;">Lisence type:</p></td>
+                <td class="col2">
+                  <p style="color:black;" v-if="item.image.typeId === 1">Cassual</p>
+                  <p style="color:black;" v-if="item.image.typeId === 2">Monopoly</p>
+                </td>
+              </tr>
+              <tr>
+                <td class="col1"><p style="color:black;">How can I use it?:</p></td>
+                <td class="col2">
+                  <p style="color:black;">Available for all permitted uses under our <a href="#">License Terms</a></p>
+                </td>
+              </tr>
             </div>
           </td>
-          <td data-th="Price"><h4>${{ item.image.price }}</h4></td>
-          <td class="actions" data-th="">
-            <button class="btn btn-danger btn-sm" @click.prevent="removeItem(item.image)">
-              <i class="fa fa-trash-o"></i>
+          <td><h5>${{ item.image.price }}USD</h5></td>
+          <td>
+            <button type="button" class="close" aria-label="Close" @click="removeItem(item.image)">
+              <span aria-hidden="true">&times;</span>
             </button>
           </td>
         </tr>
@@ -36,7 +57,7 @@
     </table>
     <div v-else>
       <p>There is nothing to show</p>
-      <router-link to="/"> <button type="primary">Come here to Shopping</button> </router-link>
+      <router-link to="/"> <button class="btn btn-primary">Come here to Shopping</button> </router-link>
     </div>
   </div>
 
@@ -60,14 +81,41 @@ export default {
   },
   methods:{
     removeItem(image){
-      this.$store.dispatch('removeItem', image)
+      this.$store.dispatch('removeItem', { image })
     }
   }
 };
 </script>
 <style scoped>
+.gallery-panel {
+  width: 20vw;
+}
+.table td {
+  border-top: 0;
+}
+div.detail {
+  max-width: 500px;
+}
+td.col1 {
+  max-width: 150px;
+}
+td.col2 {
+  max-width: 350px;
+}
+h2 {
+  margin-top: 5%
+}
+h5 {
+  margin-top: 45%;
+}
+table {
+  margin-top: 5%;
+}
+p {
+  margin: 0px;
+}
 .gallery-panel img {
-    width: 100%;
+    width: 20vw;
     height: 10vw;
     object-fit: cover;
     border-radius: 0.75rem;
