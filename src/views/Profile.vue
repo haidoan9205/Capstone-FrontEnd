@@ -22,76 +22,146 @@
         </div>
       </div>
     </section>
-    <section class="section section-skew">
-      <div class="container">
-        <card shadow class="card-profile mt--300" no-body>
-          <div class="mt-5 py-5 px-4 text-center">
-            <div class="row justify-content-center">
-              <div class="row align-items-center">
-                <div class="col-sm-4">
-                  <small class="text-uppercase text-muted font-weight-bold"
-                    >Name</small
-                  >
-                </div>
-                <div class="col-sm-8">
-                  <base-input placeholder="Doan Quang Hai" disabled>
-                  </base-input>
-                </div>
-              </div>
-            </div>
-            <div class="row justify-content-center">
-              <div class="row align-items-center">
-                <div class="col-sm-4">
-                  <small class="text-uppercase text-muted font-weight-bold"
-                    >Birthday</small
-                  >
-                </div>
-                <div class="col-sm-8">
-                  <base-input placeholder="28/07/1999" disabled> </base-input>
+    <div class="absolute">
+      <section class="section section-skew">
+        <div class="container">
+          <card shadow class="card-profile mt--300" no-body>
+            <div class="mt-5 py-5 px-4 text-center">
+              <div class="page"><h2>Profile</h2></div>
+              <div class="row justify-content-center">
+                <div class="row align-items-center">
+                  <div class="col1">
+                    <small class="text-uppercase text-muted font-weight-bold"
+                      >Name</small>
+                  </div>
+                  <div class="col2">
+                    <base-input placeholder="Doan Quang Hai" >
+                    </base-input>
+                  </div>
+                  <div  class="col3"></div>
                 </div>
               </div>
-            </div>
-            <div class="row justify-content-center">
-              <div class="row align-items-center">
-                <div class="col-sm-4">
-                  <small class="text-uppercase text-muted font-weight-bold"
-                    >Phone</small
-                  >
-                </div>
-                <div class="col-sm-8">
-                  <base-input placeholder="(+84) 973.538.339" disabled>
-                  </base-input>
-                </div>
-              </div>
-            </div>
-            <div class="row justify-content-center">
-              <div class="row align-items-center">
-                <div class="col-sm-4">
-                  <small class="text-uppercase text-muted font-weight-bold"
-                    >Password</small
-                  >
-                </div>
-                <div class="col-sm-8">
-                  <base-input placeholder="*******" type="password" disabled>
-                  </base-input>
+              <div class="row justify-content-center">
+                <div class="row align-items-center">
+                  <div class="col1">
+                    <small class="text-uppercase text-muted font-weight-bold"
+                      >Birthday</small
+                    >
+                  </div>
+                  <div class="col2">
+                    <base-input placeholder="28/07/1999"> </base-input>
+                  </div>
+                  <div  class="col3"></div>
                 </div>
               </div>
+              <div class="row justify-content-center">
+                <div class="row align-items-center">
+                  <div class="col1">
+                    <small class="text-uppercase text-muted font-weight-bold"
+                      >Phone</small
+                    >
+                  </div>
+                  <div class="col2">
+                    <base-input placeholder="(+84) 973.538.339" >
+                    </base-input>
+                  </div>
+                  <div  class="col3"></div>
+                </div>
+              </div>
+              <div class="row justify-content-center">
+                <div class="row align-items-center">
+                  <div class="col1">
+                    <small class="text-uppercase text-muted font-weight-bold"
+                      >Password</small
+                    >
+                  </div>
+                  <div class="col2">
+                    <base-input placeholder="*******" type="password">
+                    </base-input>
+                  </div>
+                  <div  class="col3">
+                    <input type="checkbox" id="checkbox" @click="toggleActive">
+                  </div>
+                </div>
+              </div>
+              <div class="row justify-content-center" v-if="isActive  == false">
+                <div class="row align-items-center">
+                  <div class="col1">
+                    <small class="text-uppercase text-muted font-weight-bold"
+                      >Confirm Password</small
+                    >
+                  </div>
+                  <div class="col2">
+                    <base-input placeholder="*******" type="password">
+                    </base-input>
+                  </div>
+                  <div  class="col3">
+                  </div>
+                </div>
+              </div>
+              <base-button
+                size="sm"
+                type="primary"
+                class="btn-tooltip"
+                v-b-tooltip.hover.right
+                title="Tooltip on right"
+                >Edit
+              </base-button>
             </div>
-            <base-button
-              size="sm"
-              type="primary"
-              class="btn-tooltip"
-              v-b-tooltip.hover.right
-              title="Tooltip on right"
-              >Change Password
-            </base-button>
-          </div>
-        </card>
-      </div>
-    </section>
+          </card>
+        </div>
+      </section>
+    </div>
   </div>
 </template>
+
 <script>
-export default {};
+  export default {
+    data() {
+        return {
+            isActive: false
+        }
+    },
+    methods: {
+        toggleActive() {
+            if(this.isActive == true) {
+                this.isActive = false
+            }
+            else {
+                this.isActive = true
+            }
+        }
+    }
+};
 </script>
-<style scpped></style>
+
+<style scoped>
+div.absolute {
+  position: absolute;
+  width: 80%;
+  top: 50%;
+  left: 10%;
+}
+div.col1 {
+  width: 110px;
+  padding-bottom: 11px;
+}
+div.col2 {
+  width: 190px;
+}
+div.col3 {
+  width: 50px;
+  padding-bottom: 11px;
+}
+small {
+  font-size: 13px;
+}
+input.form-control {
+  width: auto;
+}
+div.page {
+  position: absolute;
+  top: 25px;
+  left: 45%;
+}
+</style>
