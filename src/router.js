@@ -60,7 +60,7 @@ export default new Router({
       path: "/profile",
       name: "profile",
       components: {
-        header: MenuProfile,
+        header: AppHeader,
         default: Profile,
         footer: AppFooter
       }
@@ -89,7 +89,7 @@ export default new Router({
       path: "/upload",
       name: "upload",
       components: {
-        header: MenuProfile,
+        header: AppHeader,
         default: UploadImage,
         footer: AppFooter
       }
