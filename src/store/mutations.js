@@ -9,14 +9,27 @@ export const SET_IMAGE = (state, image) => {
 };
 
 export const ADD_TO_CART = (state, { image }) => {
-    if (state.cart.findIndex(x => x.image === image) < 0) {
+    var flag = true;
+    for (var key in state.cart) {
+        if (!state.cart.hasOwnProperty(key)) continue;
+        var obj = state.cart[key];
+        for (var prop in obj) {
+            if (!obj.hasOwnProperty(prop)) continue;
+            var id = obj[prop].photoId;
+            if (id === image.photoId) {
+                flag = false;
+            }
+        }
+    }
+    if (flag) {
         state.cart.push({ image });
     }
     window.localStorage.setItem("cart", JSON.stringify(state.cart));
 };
 
 export const REMOVE_ITEM = (state, { image }) => {
-    var indexItem = state.cart.findIndex(x => x.image === image)
+    var indexItem = state.cart.findIndex(x => x.image === image);
+    console.log("index: " + indexItem);
     state.cart.splice(indexItem, 1);
     window.localStorage.setItem("cart", JSON.stringify(state.cart));
     if (state.cart.length == 0) {
