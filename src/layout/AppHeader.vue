@@ -33,9 +33,8 @@ import HomepageMenu from "../views/components/Navigation/HomepageMenu";
 export default {
   components: {
     BaseNav,
-    CloseButton,
-
     HomepageMenu,
+    CloseButton,
   },
   data() {
     return {
