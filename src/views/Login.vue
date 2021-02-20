@@ -80,11 +80,19 @@ export default {
     login() {
       let username = this.username;
       let password = this.password;
-      this.$store
-        .dispatch("login", { username, password })
-        .then(() => this.$router.push("/"))
-        .catch((err) => console.log(err));
-      this.$store.dispatch("auth")
+      if (username === "" || password === "") {
+        alert("Username and password must not empty");
+      }
+      else {
+        this.$store
+          .dispatch("login", { username, password })
+          .then(() => this.$router.push("/"))
+          .catch(
+            (err) => (console.log(err),
+            alert("The username and / or password is incorrect"))
+          )
+        this.$store.dispatch("auth")
+      }
     },
   },
 };
