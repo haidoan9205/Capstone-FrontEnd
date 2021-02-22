@@ -12,13 +12,16 @@
         <span></span>
         <span></span>
         <div class="row justify-content-center">
-                  <div class="col-lg-12 order-lg-2">
-                                <div class="card-profile-image">
-                                    <a href="#">
-                                        <img v-lazy="'img/theme/team-4-800x800.jpg'" class="rounded-circle">
-                                    </a>
-                                </div>
-                            </div>
+          <div class="col-lg-12 order-lg-2">
+            <div class="card-profile-image">
+              <a href="#">
+                <img
+                  v-lazy="'img/theme/team-4-800x800.jpg'"
+                  class="rounded-circle"
+                />
+              </a>
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -32,26 +35,26 @@
                 <div class="row align-items-center">
                   <div class="col1">
                     <small class="text-uppercase text-muted font-weight-bold"
-                      >Name</small>
+                      >Name</small
+                    >
                   </div>
                   <div class="col2">
-                    <base-input placeholder="Doan Quang Hai" >
-                    </base-input>
+                    <base-input>{{user.fullName}} </base-input>
                   </div>
-                  <div  class="col3"></div>
+                  <div class="col3"></div>
                 </div>
               </div>
               <div class="row justify-content-center">
                 <div class="row align-items-center">
                   <div class="col1">
                     <small class="text-uppercase text-muted font-weight-bold"
-                      >Birthday</small
+                      >Email</small
                     >
                   </div>
                   <div class="col2">
-                    <base-input placeholder="28/07/1999"> </base-input>
+                    <base-input>{{user.email}} </base-input>
                   </div>
-                  <div  class="col3"></div>
+                  <div class="col3"></div>
                 </div>
               </div>
               <div class="row justify-content-center">
@@ -62,10 +65,9 @@
                     >
                   </div>
                   <div class="col2">
-                    <base-input placeholder="(+84) 973.538.339" >
-                    </base-input>
+                    <base-input>{{user.phone}} </base-input>
                   </div>
-                  <div  class="col3"></div>
+                  <div class="col3"></div>
                 </div>
               </div>
               <div class="row justify-content-center">
@@ -76,15 +78,20 @@
                     >
                   </div>
                   <div class="col2">
-                    <base-input placeholder="*******" type="password">
+                    <base-input type="password">
+                    {{user.password}}
                     </base-input>
                   </div>
-                  <div  class="col3">
-                    <input type="checkbox" id="checkbox" @click="toggleActive">
+                  <div class="col3">
+                    <input
+                      type="checkbox"
+                      id="checkbox"
+                      @click="toggleActive"
+                    />
                   </div>
                 </div>
               </div>
-              <div class="row justify-content-center" v-if="isActive  == false">
+              <div class="row justify-content-center" v-if="isActive == false">
                 <div class="row align-items-center">
                   <div class="col1">
                     <small class="text-uppercase text-muted font-weight-bold"
@@ -92,11 +99,11 @@
                     >
                   </div>
                   <div class="col2">
-                    <base-input placeholder="*******" type="password">
+                    <base-input type="password">
+                    {{user.password}}
                     </base-input>
                   </div>
-                  <div  class="col3">
-                  </div>
+                  <div class="col3"></div>
                 </div>
               </div>
               <base-button
@@ -116,22 +123,31 @@
 </template>
 
 <script>
-  export default {
-    data() {
-        return {
-            isActive: false
-        }
+export default {
+  data() {
+    return {
+      isActive: false,
+    };
+  },
+  computed: {
+    isLoggedIn() {
+      return this.$store.getters.isLoggedIn;
     },
-    methods: {
-        toggleActive() {
-            if(this.isActive == true) {
-                this.isActive = false
-            }
-            else {
-                this.isActive = true
-            }
-        }
-    }
+    user() {
+      const abc = window.localStorage.getItem("user");
+      console.log(abc);
+      return JSON.parse(abc);
+    },
+  },
+  methods: {
+    toggleActive() {
+      if (this.isActive == true) {
+        this.isActive = false;
+      } else {
+        this.isActive = true;
+      }
+    },
+  },
 };
 </script>
 

@@ -41,10 +41,12 @@ export const auth_request = (state) => {
     state.status = 'loading'
 }
 
-export const auth_success = (state, token, user) => {
+export const auth_success = (state, user) => {
     state.status = 'success'
-    state.token = token
-    state.user = user
+    state.token = user.token
+    console.log('in user trong mutation')
+    state.user = user    
+    console.log(user)
 }
 
 export const auth_error = (state) => {
@@ -54,4 +56,5 @@ export const auth_error = (state) => {
 export const logout = (state) => {
     state.status = ''
     state.token = ''
+    state.user = ''
 };

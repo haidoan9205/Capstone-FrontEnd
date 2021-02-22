@@ -53,18 +53,27 @@
 import BaseNav from "@/components/BaseNav";
 import CloseButton from "@/components/CloseButton";
 export default {
+  data() {
+    return {
+      username: '',
+    };
+  },
   components: {
     BaseNav,
     CloseButton,
   },
   computed: {
     isLoggedIn() {
+     
       return this.$store.getters.isLoggedIn;
     },
+  
   },
 
   methods: {
     logout() {
+       console.log('anh hai cho em check cai user')
+      console.log(this.$store.state.user);
       this.$store.dispatch("logout").then(() => {
         this.$router.push("/login");
       });

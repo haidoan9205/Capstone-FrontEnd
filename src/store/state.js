@@ -6,8 +6,9 @@ export default{
     cart: cart ? JSON.parse(cart) : [],
     status: '',
     token: localStorage.getItem('token') || '',
-    user : {}
+    user:  localStorage.getItem('user') || null,
 } 
+
 
 
  

@@ -1,8 +1,9 @@
 import axios from "axios";
+import state from "./state";
 
 export const getImages = ({ commit }) => {
     axios
-        .get("https://capstonerestapi.azurewebsites.net/api/v1/Photo/random")
+        .get("https://imago.azurewebsites.net/api/v1/Photo/random")
         .then((response) => {
             commit("SET_IMAGES", response.data);
         });
@@ -10,7 +11,7 @@ export const getImages = ({ commit }) => {
 
 export const getImage = ({ commit }, photoId) => {
     axios
-        .get(`https://capstonerestapi.azurewebsites.net/api/v1/Photo/${photoId}`)
+        .get(`https://imago.azurewebsites.net/api/v1/Photo/${photoId}`)
         .then((response) => {
             commit("SET_IMAGE", response.data);
         });
@@ -28,16 +29,17 @@ export const login = ({ commit }, user) => {
     return new Promise((resolve, reject) => {
         commit("auth_request");
         axios({
-                url: "https://capstonerestapi.azurewebsites.net/api/v1/Auth",
+                url: "https://imago.azurewebsites.net/api/v1/Auth",
                 data: user,
                 method: "POST",
             })
             .then((resp) => {
                 const token = resp.data.token;
-                const user = resp.data.user;
+                const user = resp.data;
                 window.localStorage.setItem("token", token);
+                window.localStorage.setItem("user", JSON.stringify(user));
                 axios.defaults.headers.common["Authorization"] = token;
-                commit("auth_success", token, user);
+                commit("auth_success", user);
                 resolve(resp);
             })
             .catch((err) => {
@@ -52,16 +54,17 @@ export const register = ({ commit }, user) => {
     return new Promise((resolve, reject) => {
         commit("auth_request");
         axios({
-                url: "https://capstonerestapi.azurewebsites.net/api/v1/Auth/Register",
+                url: "https://imago.azurewebsites.net/api/v1/Auth/Register",
                 data: user,
                 method: "POST",
             })
             .then((resp) => {
                 const token = resp.data.token;
-                const user = resp.data.user;
+                const user = resp.data;
                 localStorage.setItem("token", token);
                 axios.defaults.headers.common["Authorization"] = token;
-                commit("auth_success", token, user);
+                commit("auth_success", user);
+                
                 resolve(resp);
             })
             .catch((err) => {
@@ -76,6 +79,7 @@ export const logout = ({ commit }) => {
     return new Promise((resolve, reject) => {
         commit("logout");
         localStorage.removeItem("token");
+        localStorage.removeItem("user");
         delete axios.defaults.headers.common["Authorization"];
         resolve();
     });

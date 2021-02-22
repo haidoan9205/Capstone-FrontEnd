@@ -17,16 +17,7 @@
       </router-link>
     </li>
     <li class="nav-item" v-if="isLoggedIn">
-      <!-- <div class="media align-items-center" slot="title" @click="handleCloseMenu">
-        <span class="avatar avatar-sm rounded-circle">
-          <img alt="Image placeholder" src="img/theme/team-4-800x800.jpg" />
-        </span>
-        <div class="media-body ml-2 d-none d-lg-block">
-          <span class="mb-0 text-sm font-weight-bold">Jessica Jones</span>
-        </div>
-      </div> -->
-
-      <Slide right :closeOnNavigation="true" :burgerIcon="true">
+      <Slide right :closeOnNavigation="true" :burgerIcon="true" v-if="isLoggedIn">
         <div class="media-body ml-2 d-none d-lg-block">
           <!-- <span>
             WELCOME!
@@ -34,7 +25,7 @@
           <span class="avatar avatar-sm rounded-circle">
             <img alt="Image placeholder" src="img/theme/team-4-800x800.jpg" />
           </span>
-          <span><h3 style="color: white">Jessica Jones</h3></span>
+          <span><h3 style="color: white">{{user.fullName}}</h3></span>
         </div>
         <router-link to="/profile"
           ><a class="nav-link" href="#">Profile</a>
@@ -77,6 +68,11 @@ export default {
   computed: {
     isLoggedIn() {
       return this.$store.getters.isLoggedIn;
+    },
+    user(){
+      const abc = window.localStorage.getItem('user');
+      console.log(abc);
+      return JSON.parse(abc);
     },
   },
 
