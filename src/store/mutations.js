@@ -23,6 +23,9 @@ export const ADD_TO_CART = (state, { image }) => {
     }
     if (flag) {
         state.cart.push({ image });
+        alert("Add to cart successfully");
+    } else {
+        alert("You already have this item in your cart!");
     }
     window.localStorage.setItem("cart", JSON.stringify(state.cart));
 };
@@ -45,7 +48,7 @@ export const auth_success = (state, user) => {
     state.status = 'success'
     state.token = user.token
     console.log('in user trong mutation')
-    state.user = user    
+    state.user = user
     console.log(user)
 }
 

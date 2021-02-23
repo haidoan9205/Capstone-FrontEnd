@@ -81,7 +81,11 @@ export default {
   },
   methods:{
     removeItem(image){
-      this.$store.dispatch('removeItem', { image })
+      if(confirm('Are you sure to remove this item')) {
+        this.$store.dispatch('removeItem', { image });
+      } else {
+        return;
+      }
     }
   }
 };
