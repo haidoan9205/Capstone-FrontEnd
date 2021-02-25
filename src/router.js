@@ -14,6 +14,7 @@ import Photo from "./views/Photo.vue";
 import Cart from "./views/Cart.vue";
 import MenuProfile from "./views/components/Navigation/MenuProfile.vue";
 import UploadPhoto from "./views/UploadPhoto.vue";
+import YourPhoto from "./views/YourPhoto.vue";
 
 Vue.use(Router);
 
@@ -92,6 +93,16 @@ export default new Router({
                 default: UploadPhoto,
                 footer: AppFooter
             }
+        },
+        {
+            path: "/uploaded/:userId",
+            name: "yourphoto",
+            components: {
+                header: AppHeader,
+                default: YourPhoto,
+                footer: AppFooter
+            },
+            props: true,
         },
     ],
     scrollBehavior: to => {

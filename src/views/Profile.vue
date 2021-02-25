@@ -78,9 +78,7 @@
                     >
                   </div>
                   <div class="col2">
-                    <base-input type="password">
-                    {{user.password}}
-                    </base-input>
+                    <base-input type="password">{{user.password}} </base-input>
                   </div>
                   <div class="col3">
                     <input

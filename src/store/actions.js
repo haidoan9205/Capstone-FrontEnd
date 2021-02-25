@@ -84,3 +84,15 @@ export const logout = ({ commit }) => {
         resolve();
     });
 };
+
+export const getApprovedImageByUser = ({commit}, userId) => {
+    const user = localStorage.getItem('user')
+    const user_parsed = JSON.parse(user)
+    console.log('user parse')
+    console.log(user_parsed)
+    axios
+    .get(`https://imago.azurewebsites.net/api/v1/User/GetUserApprovedPhoto/${user_parsed.userId}`)
+    .then((response) => {
+        commit("GET_APPROVED_IMAGE", response.data);
+    });
+}

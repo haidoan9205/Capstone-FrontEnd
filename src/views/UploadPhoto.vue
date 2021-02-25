@@ -46,7 +46,7 @@ export default {
             fd.append('file', this.file, this.file.name);
             fd.append('price', this.price);
             fd.append('typeId', this.typeId);
-            fd.append('userId', this.userId);
+            fd.append('userId', this.$store.state.user.userId);
             let config = {
                 headers: {
                 "Content-Type": "multipart/form-data"

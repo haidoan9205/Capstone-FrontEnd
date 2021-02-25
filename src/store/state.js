@@ -7,6 +7,7 @@ export default{
     status: '',
     token: localStorage.getItem('token') || '',
     user:  localStorage.getItem('user') || null,
+    approved_images: [],
 } 
 
 

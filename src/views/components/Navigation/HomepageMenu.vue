@@ -30,6 +30,11 @@
         <router-link to="/profile"
           ><a class="nav-link" href="#">Profile</a>
         </router-link>
+         <router-link
+            :to="{ name: 'yourphoto', params: { userId: user.userId } }"
+          >
+         <a class="nav-link" href="#">Your Photo</a>
+         </router-link>
         <router-link to="/upload">
           <a class="nav-link" href="#">Upload</a>
         </router-link>
@@ -71,7 +76,9 @@ export default {
     },
     user(){
       const abc = window.localStorage.getItem('user');
-      console.log(abc);
+      // console.log(abc);
+      const appove = this.$store.state.approved_images;
+      console.log(appove)
       return JSON.parse(abc);
     },
   },

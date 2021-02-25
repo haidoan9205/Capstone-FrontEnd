@@ -61,3 +61,7 @@ export const logout = (state) => {
     state.token = ''
     state.user = ''
 };
+
+export const GET_APPROVED_IMAGE = (state, approved_images) => {
+    state.approved_images = approved_images
+}
