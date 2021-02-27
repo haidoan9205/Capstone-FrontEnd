@@ -1,17 +1,17 @@
 <template>
   <div>
     <div class="justify-content-center button-links">
-      <router-link
+       <router-link
             :to="{ name: 'yourphoto', params: { userId: user.userId } }"
           >
          <a href="#" class="btn btn-link text-primary">Approved</a>
          </router-link>  
-      <router-link
+      
+     <router-link
             :to="{ name: 'yourphotodenied', params: { userId: user.userId } }"
           >
          <a href="#" class="btn btn-link text-primary">Denied</a>
          </router-link>  
-      
       <a href="#" class="btn btn-link text-primary">Pending</a>
     </div>
     <div class="container container-lg gallery">
@@ -43,7 +43,7 @@
 export default {
   computed: {
     images() {
-      return this.$store.state.approved_images;
+      return this.$store.state.denied_images;
     },
      isLoggedIn() {
       return this.$store.getters.isLoggedIn;
@@ -58,7 +58,7 @@ export default {
   },
 
   mounted() {
-    this.$store.dispatch("getApprovedImageByUser");
+    this.$store.dispatch("getDeniedImageByUser");
   },
 };
 </script>
