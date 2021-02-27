@@ -14,20 +14,14 @@
       
       <a href="#" class="btn btn-link text-primary">Pending</a>
     </div>
-    <div class="container container-lg gallery">
-      <div class="row mt-4 ">
-        <div
-          class="col-md-4 mb-5 mb-md-0 gallery-panel"
+    <div class="wrapper">
+      <ul class="image-card-grid">
+        <image-card
           v-for="image in images"
-          :key="image.photoId"
-          :image="image"
-        >
-          <div class="card card-lift--hover shadow border-0">
-            <img v-lazy="image.wmlink" class="img-fit" />
-          </div>
-        </div>
-      </div>
-    </div>
+          :key="image.id"
+          :image="image" />
+      </ul>
+   </div>
   </div>
 
   <!-- <div class="row gallery ">
@@ -40,7 +34,14 @@
 </template>
 
 <script>
+import ImageCard from './ImageCard';
+
+
 export default {
+  
+  components:{
+    ImageCard
+  },
   computed: {
     images() {
       return this.$store.state.approved_images;
@@ -63,32 +64,58 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped >
+.wrapper {
+  margin: 0 auto;
+  max-width: 800px;
+  @media only screen and (max-width: 799px) {
+    max-width: 100%;
+    margin: 0 1.5rem;
+  }
+}
+.image-card-grid {
+  list-style: none;
+  margin: .5rem 0;
+  padding: 0;
+  display: flex;
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
 .button-links{
   display: flex;
 align-items: center;
 }
-.img-fit {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
+.gallery-panel {
+  width: 20vw;
 }
-
-.gallery {
-  display: grid;
-  /* grid-template-columns: repeat(auto-fill, minmax(20rem, 1fr)); */
-  grid-gap: 1rem;
-  max-width: 100rem;
-  margin: 3rem auto;
-  padding: 0 5rem;
+.table td {
+  border-top: 0;
+}
+div.detail {
+  max-width: 500px;
+}
+td.col1 {
+  max-width: 150px;
+}
+td.col2 {
+  max-width: 350px;
+}
+h2 {
+  margin-top: 5%
+}
+h5 {
+  margin-top: 45%;
+}
+table {
+  margin-top: 5%;
+}
+p {
+  margin: 0px;
 }
 .gallery-panel img {
-  width: 100%;
-  height: 22vw;
-  object-fit: cover;
-  border-radius: 0.75rem;
-}
-.gallery-panel {
-  padding-bottom: 15px;
-}
+    width: 20vw;
+    height: 10vw;
+    object-fit: cover;
+    border-radius: 0.75rem;
+  }
 </style>

@@ -14,20 +14,44 @@
          </router-link>  
       <a href="#" class="btn btn-link text-primary">Pending</a>
     </div>
-    <div class="container container-lg gallery">
-      <div class="row mt-4 ">
-        <div
-          class="col-md-4 mb-5 mb-md-0 gallery-panel"
-          v-for="image in images"
-          :key="image.photoId"
-          :image="image"
-        >
-          <div class="card card-lift--hover shadow border-0">
-            <img v-lazy="image.wmlink" class="img-fit" />
-          </div>
-        </div>
+  <div class="container table-responsive">
+    <table  class="table table-hover table-sm" >
+      <div>
+        <tr v-for="image in images" :key="image.photoId">
+          <td class="col-sm-3  gallery-panel">
+            <img :src="image.wmlink" class="img-fluid" />
+          </td>
+          <td>
+            <div class="detail">
+              <tr>  
+                <td class="col1"><p style="color:black;">Photo:</p></td>
+                <td class="col2">
+                  <p style="color:black;">{{ image.photoName }} 
+        
+                  </p>
+                </td>
+              </tr>
+              <tr>
+                <td class="col1"><p style="color:blue;">Status:</p></td>
+                <td class="col2">
+                  <p style="color:red;">{{image.approveStatus}}</p>
+                 
+                </td>
+              </tr>
+               <tr>
+                <td class="col1"><p style="color:blue;">Note:</p></td>
+                <td class="col2">
+                  <p style="color:red;">{{image.note}}</p>
+                 
+                </td>
+              </tr>
+            </div>
+          </td>
+        
+        </tr>
       </div>
-    </div>
+    </table>
+  </div>
   </div>
 
   <!-- <div class="row gallery ">
@@ -64,31 +88,42 @@ export default {
 </script>
 
 <style scoped>
+
 .button-links{
   display: flex;
 align-items: center;
 }
-.img-fit {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
+.gallery-panel {
+  width: 20vw;
 }
-
-.gallery {
-  display: grid;
-  /* grid-template-columns: repeat(auto-fill, minmax(20rem, 1fr)); */
-  grid-gap: 1rem;
-  max-width: 100rem;
-  margin: 3rem auto;
-  padding: 0 5rem;
+.table td {
+  border-top: 0;
+}
+div.detail {
+  max-width: 500px;
+}
+td.col1 {
+  max-width: 150px;
+}
+td.col2 {
+  max-width: 350px;
+}
+h2 {
+  margin-top: 5%
+}
+h5 {
+  margin-top: 45%;
+}
+table {
+  margin-top: 5%;
+}
+p {
+  margin: 0px;
 }
 .gallery-panel img {
-  width: 100%;
-  height: 22vw;
-  object-fit: cover;
-  border-radius: 0.75rem;
-}
-.gallery-panel {
-  padding-bottom: 15px;
-}
+    width: 20vw;
+    height: 10vw;
+    object-fit: cover;
+    border-radius: 0.75rem;
+  }
 </style>
