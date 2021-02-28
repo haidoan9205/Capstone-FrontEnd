@@ -9,22 +9,21 @@
             <h3>Moving the world with images</h3>
           </div>
           <div class="row row-grid justify-content-center">
-            <i class="fa fa-search my-auto"></i>
-            <div class="col-md-6">
+             <!-- <i class="fa fa-search my-auto"></i>-->
+            <div class="col-md-7">
               <base-input
                 alternative
-                placeholder="Search creative images...  "
+                placeholder="Search creative images..." type="text" v-model="searchValue"
               ></base-input>
             </div>
-            <base-dropdown>
+            <div>
               <base-button
-                slot="title"
                 type="secondary"
-                class="dropdown-toggle"
+                @click="onSearch"
               >
-                Regular
+                Search
               </base-button>
-            </base-dropdown>
+            </div>
             <!-- <div class="col-md-2">
               <div class="row row-grid justify-content-center">
                 <i class="fa fa-camera"></i>
@@ -45,72 +44,24 @@
           <a href="#" class="btn btn-link text-primary">Collections</a>
         </div> -->
       </section>
-      <div class="container container-lg mb-0">
-         <!-- <div class="row mt-4">
-          <div class="col-md-4 mb-5 mb-md-0">
+      <list-image v-if="flag === true"></list-image>
+      <div v-if="flag === false" class="container container-lg gallery">
+        <div class="row mt-4 ">
+          <div
+            class="col-md-4 mb-5 mb-md-0 gallery-panel"
+            v-for="image in imagesearch"
+            :key="image.photoId"
+            :image="image"
+          >
             <div class="card card-lift--hover shadow border-0">
-              <img
-                v-lazy="
-                  'https://images.pexels.com/photos/853199/pexels-photo-853199.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500'
-                "
-                class="card-img"
-              />
-            </div>
-          </div>
-          <div class="col-md-4 mb-5 mb-lg-0">
-            <div class="card card-lift--hover shadow border-0">
-              <img
-                v-lazy="
-                  'https://images.pexels.com/photos/842711/pexels-photo-842711.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500'
-                "
-                class="card-img"
-              />
-            </div>
-          </div>
-          <div class="col-md-4 mb-5 mb-lg-0">
-            <div class="card card-lift--hover shadow border-0">
-              <img
-                v-lazy="
-                  'https://images.pexels.com/photos/1252869/pexels-photo-1252869.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500'
-                "
-                class="card-img"
-              />
+              <router-link
+                :to="{ name: 'photo', params: { photoId: image.photoId } }"
+              >
+                <img v-lazy="image.wmlink" class="img-fit" />
+              </router-link>
             </div>
           </div>
         </div>
-        <div class="row mt-4">
-          <div class="col-md-4 mb-5 mb-md-0">
-            <div class="card card-lift--hover shadow border-0">
-              <img
-                v-lazy="
-                  'https://images.pexels.com/photos/853199/pexels-photo-853199.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500'
-                "
-                class="card-img"
-              />
-            </div>
-          </div>
-          <div class="col-md-4 mb-5 mb-lg-0">
-            <div class="card card-lift--hover shadow border-0">
-              <img
-                v-lazy="
-                  'https://images.pexels.com/photos/842711/pexels-photo-842711.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500'
-                "
-                class="card-img"
-              />
-            </div>
-          </div>
-          <div class="col-md-4 mb-5 mb-lg-0">
-            <div class="card card-lift--hover shadow border-0">
-              <img
-                v-lazy="
-                  'https://images.pexels.com/photos/1252869/pexels-photo-1252869.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500'
-                "
-                class="card-img"
-              />
-            </div>
-          </div>
-        </div>  -->
-        <list-image></list-image>
       </div>
     </div>
   </div>
@@ -118,17 +69,66 @@
 
 <script>
 import ListImage from "../components/ListImage.vue";
+import axios from 'axios';
 
 export default {
   name: "home",
   components: {
     listImage: ListImage,
   },
+  data() {
+    return {
+      flag: true,
+      searchValue: '',
+      pageSize: 21,
+      currentPage: 1,
+      imagesearch: []
+    }
+  },
+  methods: {
+    onSearch() {
+      let searchValue = this.searchValue;
+      let pageSize = this.pageSize;
+      let currentPage = this.currentPage;
+      console.log("oke")
+      axios.get("https://imago.azurewebsites.net/api/v1/Photo/SearchPhoto/" + searchValue,  {pageSize, currentPage})
+        .then((response) => {
+            this.imagesearch = response.data;
+            console.log(respone.data);
+            this.flag = false;
+        })
+        .catch((error) => {
+        console.log(error);
+        });
+    }
+  }
 };
 </script>
 <style scoped>
-  .search-bar{
-    
-    max-width: 100%;
+.search-bar{
+  
+  max-width: 100%;
+}
+.img-fit {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+.gallery {
+    display: grid;
+    /* grid-template-columns: repeat(auto-fill, minmax(20rem, 1fr)); */
+    grid-gap: 1rem;
+    max-width: 100rem;
+    margin: 3rem auto;
+    padding: 0 5rem;
   }
+  .gallery-panel img {
+    width: 100%;
+    height: 22vw;
+    object-fit: cover;
+    border-radius: 0.75rem;
+  }
+.gallery-panel {
+  padding-bottom: 15px;
+}
 </style>
