@@ -1,27 +1,57 @@
 <template>
   <div>
     <div class="justify-content-center button-links">
-      <router-link
+       <router-link
             :to="{ name: 'yourphoto', params: { userId: user.userId } }"
           >
          <a href="#" class="btn btn-link text-primary">Approved</a>
          </router-link>  
-      <router-link
+      
+     <router-link
             :to="{ name: 'yourphotodenied', params: { userId: user.userId } }"
           >
          <a href="#" class="btn btn-link text-primary">Denied</a>
          </router-link>  
-      
       <a href="#" class="btn btn-link text-primary">Pending</a>
     </div>
-    <div class="wrapper">
-      <ul class="image-card-grid">
-        <image-card
-          v-for="image in images"
-          :key="image.id"
-          :image="image" />
-      </ul>
-   </div>
+  <div class="container table-responsive">
+    <table  class="table table-hover table-sm" >
+      <div>
+        <tr v-for="image in images" :key="image.photoId">
+          <td class="col-sm-3  gallery-panel">
+            <img :src="image.wmlink" class="img-fluid" />
+          </td>
+          <td>
+            <div class="detail">
+              <tr>  
+                <td class="col1"><p style="color:black;">Photo:</p></td>
+                <td class="col2">
+                  <p style="color:black;">{{ image.photoName }} 
+        
+                  </p>
+                </td>
+              </tr>
+              <tr>
+                <td class="col1"><p style="color:blue;">Status:</p></td>
+                <td class="col2">
+                  <p style="color:red;">{{image.approveStatus}}</p>
+                 
+                </td>
+              </tr>
+               <tr>
+                <td class="col1"><p style="color:blue;">Note:</p></td>
+                <td class="col2">
+                  <p style="color:red;">{{image.note}}</p>
+                 
+                </td>
+              </tr>
+            </div>
+          </td>
+        
+        </tr>
+      </div>
+    </table>
+  </div>
   </div>
 
   <!-- <div class="row gallery ">
@@ -34,17 +64,10 @@
 </template>
 
 <script>
-import ImageCard from './ImageCard';
-
-
 export default {
-  
-  components:{
-    ImageCard
-  },
   computed: {
     images() {
-      return this.$store.state.approved_images;
+      return this.$store.state.denied_images;
     },
      isLoggedIn() {
       return this.$store.getters.isLoggedIn;
@@ -59,28 +82,13 @@ export default {
   },
 
   mounted() {
-    this.$store.dispatch("getApprovedImageByUser");
+    this.$store.dispatch("getDeniedImageByUser");
   },
 };
 </script>
 
-<style lang="scss" scoped >
-.wrapper {
-  margin: 0 auto;
-  max-width: 800px;
-  @media only screen and (max-width: 799px) {
-    max-width: 100%;
-    margin: 0 1.5rem;
-  }
-}
-.image-card-grid {
-  list-style: none;
-  margin: .5rem 0;
-  padding: 0;
-  display: flex;
-  align-items: flex-start;
-  flex-wrap: wrap;
-}
+<style scoped>
+
 .button-links{
   display: flex;
 align-items: center;

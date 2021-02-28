@@ -24,6 +24,7 @@
     "vue-lazyload": "^1.2.6",
     "vue-masonry": "^0.12.0",
     "vue-material": "^1.0.0-beta-15",
+    "vue-multiselect": "^2.1.6",
     "vue-router": "^3.0.2",
     "vue-stack-grid": "^1.2.2",
     "vue2-transitions": "^0.2.3",

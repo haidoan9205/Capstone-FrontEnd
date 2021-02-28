@@ -16,6 +16,7 @@ import MenuProfile from "./views/components/Navigation/MenuProfile.vue";
 import UploadPhoto from "./views/UploadPhoto.vue";
 import YourPhoto from "./views/YourPhoto.vue";
 import Checkout from "./views/Checkout.vue";
+import YourPhotoDenied from "./views/YourPhotoDenied.vue";
 
 Vue.use(Router);
 
@@ -110,6 +111,16 @@ export default new Router({
             components: {
                 header: AppHeader,
                 default: YourPhoto,
+                footer: AppFooter
+            },
+            props: true,
+        },
+        {
+            path: "/denied/:userId",
+            name: "yourphotodenied",
+            components: {
+                header: AppHeader,
+                default: YourPhotoDenied,
                 footer: AppFooter
             },
             props: true,

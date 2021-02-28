@@ -7,9 +7,45 @@
                     <label class="control-label">Title</label>
                     <input  type="text" class="form-control" v-model="photoName" required />
                 </div>
-                <br/>
                 <div class="form-group">
+                    <label class="control-label">Select Picture</label>
                     <input type="file" class="form-control" @change="onFileSeleted" accept="image/*" required />
+                </div>
+                <div class="multiselect-div">
+                    <label class="typo__label" for="ajax">Select 2 Category</label>
+                    <multiselect 
+                            v-model="value" 
+                            id="ajax" 
+                            label="categoryName" 
+                            track-by="categoryId" 
+                            placeholder="Type to search" 
+                            open-direction="bottom" 
+                            :options="options" 
+                            :multiple="true" 
+                            :searchable="flag" 
+                            :internal-search="flag" 
+                            :clear-on-select="false" 
+                            :close-on-select="false" 
+                            :options-limit="100" 
+                            :limit="2" 
+                            :max-height="150" 
+                            :hide-selected="true" 
+                            :max="2">
+                    </multiselect>
+                </div>
+                <div class="multiselect-div">
+                    <label class="typo__label">Single Type</label>
+                    <multiselect 
+                            v-model="type" 
+                            deselect-label="Can't remove this value" 
+                            open-direction="bottom" 
+                            track-by="typeId" 
+                            label="typeName" 
+                            placeholder="Select one" 
+                            :options="typeList" 
+                            :searchable="false" 
+                            :allow-empty="false">
+                    </multiselect>
                 </div>
                 <div class="form-group">
                     <label class="control-label">Price</label>
@@ -25,28 +61,55 @@
 
 <script>
 import axios from 'axios';
+import Multiselect from 'vue-multiselect'
+import 'vue-multiselect/dist/vue-multiselect.min.css'
+
 
 export default {
+    components: {
+        Multiselect
+    },
     data() {
         return {
             photoName: '',
             file: null,
             price: '',
-            typeId: 1,
-            userId: 2
+            value: [],
+            options: [],
+            type: null,
+            typeList: []
         }
+    },
+    mounted: function() {
+        axios.get("https://imago.azurewebsites.net/api/v1/Category")
+        .then((response) => {
+            this.options = response.data;
+            this.clone_options = response.data;
+        });
+        axios.get("https://imago.azurewebsites.net/api/v1/Type/GetAllType")
+        .then((response) => {
+            this.typeList = response.data;
+        });
     },
     methods: {
         onFileSeleted(event) {
             this.file = event.target.files[0]
         },
         onUploadPhoto() {
+            if(this.value.length === 0) {
+                alert("Please select category");
+                return;
+            }
             const fd = new FormData();
             fd.append('photoName', this.photoName);
             fd.append('file', this.file, this.file.name);
             fd.append('price', this.price);
-            fd.append('typeId', this.typeId);
+            fd.append('typeId', this.type.typeId);
             fd.append('userId', this.$store.state.user.userId);
+            fd.append('listCategory', this.value[0].categoryId);
+            if(this.value.length === 2) {
+                fd.append('listCategory', this.value[1].categoryId);
+            }
             let config = {
                 headers: {
                 "Content-Type": "multipart/form-data"
@@ -90,4 +153,8 @@ form
 h4 {
     padding-top: 5%
 }
+.multiselect-div {
+    margin-bottom: 28px;
+}
+
 </style>
