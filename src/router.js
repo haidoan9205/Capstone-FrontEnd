@@ -15,6 +15,7 @@ import Cart from "./views/Cart.vue";
 import MenuProfile from "./views/components/Navigation/MenuProfile.vue";
 import UploadPhoto from "./views/UploadPhoto.vue";
 import YourPhoto from "./views/YourPhoto.vue";
+import Checkout from "./views/Checkout.vue";
 
 Vue.use(Router);
 
@@ -62,6 +63,15 @@ export default new Router({
             components: {
                 header: AppHeader,
                 default: Profile,
+                footer: AppFooter
+            }
+        },
+        {
+            path: "/checkout",
+            name: "checkout",
+            components: {
+                header: AppHeader,
+                default: Checkout,
                 footer: AppFooter
             }
         },
