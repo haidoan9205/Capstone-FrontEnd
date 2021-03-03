@@ -105,7 +105,7 @@ export default {
   },
   methods: {
     removeItem(image) {
-      if (confirm("Are you sure to remove this item")) {
+      if (confirm("Are you sure to remove this item ?")) {
         this.$store.dispatch("removeItem", { image });
       } else {
         return;
