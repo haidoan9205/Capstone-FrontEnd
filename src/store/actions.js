@@ -80,6 +80,7 @@ export const logout = ({ commit }) => {
         commit("logout");
         localStorage.removeItem("token");
         localStorage.removeItem("user");
+        localStorage.removeItem("cart");
         delete axios.defaults.headers.common["Authorization"];
         resolve();
     });

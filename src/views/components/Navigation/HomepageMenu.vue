@@ -17,7 +17,7 @@
       </router-link>
     </li>
     <li class="nav-item" v-if="isLoggedIn">
-      <Slide right :closeOnNavigation="true" :burgerIcon="true" v-if="isLoggedIn">
+      <Slide right :closeOnNavigation="true" :burgerIcon="true" v-if="isLoggedIn" noOverlay>
         <div class="media-body ml-2 d-none d-lg-block">
           <!-- <span>
             WELCOME!

@@ -50,7 +50,7 @@
             </div>
           </td>
           <td>
-            <h5>${{ item.image.price }}USD</h5>
+            <h5>${{ item.image.price }} USD</h5>
           </td>
           <td>
             <button

@@ -42,24 +42,23 @@
                 >
                 </base-input>
 
-                <button type="submit">Login</button>
-
+                <button class="login-button" type="submit">Login</button>
               </form>
             </template>
           </card>
           <div class="row mt-3">
             <div class="col-6">
               <router-link to="/changepassword" title="Register">
-              <a href="#" class="text-light">
-                <small>Forgot password?</small>
-              </a>
+                <a href="#" class="text-light">
+                  <small>Forgot password?</small>
+                </a>
               </router-link>
             </div>
             <div class="col-6 text-right">
               <router-link to="/register" title="Register">
-              <a href="#" class="text-light">
-                <small>Create new account</small>
-              </a>
+                <a href="#" class="text-light">
+                  <small>Create new account</small>
+                </a>
               </router-link>
             </div>
           </div>
@@ -82,19 +81,22 @@ export default {
       let password = this.password;
       if (username === "" || password === "") {
         alert("Username and password must not empty");
-      }
-      else {
+      } else {
         this.$store
           .dispatch("login", { username, password })
           .then(() => this.$router.push("/"))
           .catch(
-            (err) => (console.log(err),
-            alert("The username and / or password is incorrect"))
-          )
-        this.$store.dispatch("auth")
+            (err) => (
+              console.log(err),
+              alert("The username and / or password is incorrect")
+            )
+          );
+        this.$store.dispatch("auth");
       }
     },
   },
 };
 </script>
-<style></style>
+<style scoped>
+
+</style>

@@ -11,7 +11,7 @@
     >
       <div class="row" slot="content-header" slot-scope="{ closeMenu }">
         <div class="col-6 collapse-brand">
-          <router-link to="/">
+          <router-link :to="{ name: 'landing'}">
             <img src="img/brand/logo.png" />
           </router-link>
         </div>
