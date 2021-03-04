@@ -29,10 +29,10 @@
                 <td class="col1"><p style="color: black">Lisence type:</p></td>
                 <td class="col2">
                   <p style="color: black" v-if="item.image.typeId === 1">
-                    Cassual
+                    Casual
                   </p>
                   <p style="color: black" v-if="item.image.typeId === 2">
-                    Monopoly
+                    Exclusive
                   </p>
                 </td>
               </tr>
