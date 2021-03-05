@@ -1,5 +1,9 @@
 <template>
-  <div class="container container-lg gallery">
+  <div
+    class="container container-lg gallery"
+    style="background-color: #FFFFFF
+"
+  >
     <div class="row mt-4 ">
       <div
         class="col-md-4 mb-5 mb-md-0 gallery-panel"
@@ -27,8 +31,6 @@
 </template>
 
 <script>
-
-
 export default {
   computed: {
     images() {
@@ -40,7 +42,6 @@ export default {
     this.$store.dispatch("getImages");
   },
 };
-
 </script>
 
 <style scoped>
@@ -51,19 +52,19 @@ export default {
 }
 
 .gallery {
-    display: grid;
-    /* grid-template-columns: repeat(auto-fill, minmax(20rem, 1fr)); */
-    grid-gap: 1rem;
-    max-width: 100rem;
-    margin: 3rem auto;
-    padding: 0 5rem;
-  }
-  .gallery-panel img {
-    width: 100%;
-    height: 22vw;
-    object-fit: cover;
-    border-radius: 0.75rem;
-  }
+  display: grid;
+  /* grid-template-columns: repeat(auto-fill, minmax(20rem, 1fr)); */
+  grid-gap: 1rem;
+  max-width: 100rem;
+  margin: 3rem auto;
+  padding: 0 5rem;
+}
+.gallery-panel img {
+  width: 100%;
+  height: 22vw;
+  object-fit: cover;
+  border-radius: 0.75rem;
+}
 .gallery-panel {
   padding-bottom: 15px;
 }

@@ -47,6 +47,10 @@
                             :allow-empty="false">
                     </multiselect>
                 </div>
+                 <div class="form-group">
+                    <label class="control-label">Description</label>
+                    <input type="text" class="form-control" v-model="description" required />
+                </div>
                 <div class="form-group">
                     <label class="control-label">Price</label>
                     <input type="text" class="form-control" v-model="price" required />
@@ -74,6 +78,7 @@ export default {
             photoName: '',
             file: null,
             price: '',
+            description: '',
             value: [],
             options: [],
             type: null,
@@ -110,6 +115,8 @@ export default {
             if(this.value.length === 2) {
                 fd.append('listCategory', this.value[1].categoryId);
             }
+            
+            fd.append('description', this.description);
             let config = {
                 headers: {
                 "Content-Type": "multipart/form-data"

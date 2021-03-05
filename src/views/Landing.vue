@@ -1,17 +1,18 @@
 <template>
-  <div > 
+  <div style="background-color:#FAE9CD"> 
     <div class="position-relative">
       <!-- shape Hero -->
 
-      <section class="section section-lg pt-0 pb-0 mt-4">
+      <section class="section section-lg pt-0 pb-0">
         <div class="container search-bar">
           <div class="row row-grid justify-content-center">
-            <h3>Moving the world with images</h3>
+            <h3 class="mt-3 searchbar-title">Moving the world with images</h3>
           </div>
-          <div class="row row-grid justify-content-center">
+          <div class="row row-grid justify-content-center ">
              <!-- <i class="fa fa-search my-auto"></i>-->
             <div class="col-md-7">
               <base-input
+              class="search-aria"
                 alternative
                 placeholder="Search creative images..." type="text" v-model="searchValue"
               ></base-input>
@@ -109,9 +110,16 @@ export default {
 };
 </script>
 <style scoped>
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;1,300&display=swap');
+.searchbar-title{
+  font-family: 'Lato', sans-serif;
+}
 .search-bar{
   
   max-width: 100%;
+}
+.search-aria{
+  border:2px solid;
 }
 .img-fit {
   width: 100%;

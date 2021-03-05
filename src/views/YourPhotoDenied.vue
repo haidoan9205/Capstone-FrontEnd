@@ -1,17 +1,17 @@
 <template>
   <div>
-    <div class="justify-content-center button-links">
-       <router-link
+   <div class="justify-content-center button-links">
+      <router-link
             :to="{ name: 'yourphoto', params: { userId: user.userId } }"
           >
-         <a href="#" class="btn btn-link text-primary">Approved</a>
+         <a href="#"  class="btn btn-link text-success">Approved</a>
          </router-link>  
-      
-     <router-link
+      <router-link
             :to="{ name: 'yourphotodenied', params: { userId: user.userId } }"
           >
-         <a href="#" class="btn btn-link text-primary">Denied</a>
+         <a href="#" class="btn btn-link text-warning">Denied</a>
          </router-link>  
+      
       <a href="#" class="btn btn-link text-primary">Pending</a>
     </div>
   <div class="container table-responsive">
@@ -27,19 +27,18 @@
                 <td class="col1"><p style="color:black;">Photo:</p></td>
                 <td class="col2">
                   <p style="color:black;">{{ image.photoName }} 
-        
                   </p>
                 </td>
               </tr>
               <tr>
-                <td class="col1"><p style="color:blue;">Status:</p></td>
+                <td class="col1"><h6>Status:</h6></td>
                 <td class="col2">
                   <p style="color:red;">{{image.approveStatus}}</p>
                  
                 </td>
               </tr>
                <tr>
-                <td class="col1"><p style="color:blue;">Note:</p></td>
+                <td class="col1"><h6>Rejection reasons:</h6></td>
                 <td class="col2">
                   <p style="color:red;">{{image.note}}</p>
                  
@@ -64,7 +63,10 @@
 </template>
 
 <script>
+import ImageCard from './ImageCard';
+
 export default {
+  
   computed: {
     images() {
       return this.$store.state.denied_images;

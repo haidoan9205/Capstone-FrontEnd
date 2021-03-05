@@ -4,12 +4,12 @@
       <router-link
             :to="{ name: 'yourphoto', params: { userId: user.userId } }"
           >
-         <a href="#" class="btn btn-link text-primary">Approved</a>
+         <a href="#"  class="btn btn-link text-success">Approved</a>
          </router-link>  
       <router-link
             :to="{ name: 'yourphotodenied', params: { userId: user.userId } }"
           >
-         <a href="#" class="btn btn-link text-primary">Denied</a>
+         <a href="#" class="btn btn-link text-warning">Denied</a>
          </router-link>  
       
       <a href="#" class="btn btn-link text-primary">Pending</a>
@@ -35,7 +35,6 @@
 
 <script>
 import ImageCard from './ImageCard';
-
 
 export default {
   
