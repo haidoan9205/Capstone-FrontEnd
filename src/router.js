@@ -17,6 +17,7 @@ import UploadPhoto from "./views/UploadPhoto.vue";
 import YourPhoto from "./views/YourPhoto.vue";
 import Checkout from "./views/Checkout.vue";
 import YourPhotoDenied from "./views/YourPhotoDenied.vue";
+import Search from "./views/Search.vue";
 
 Vue.use(Router);
 
@@ -121,6 +122,16 @@ export default new Router({
             components: {
                 header: AppHeader,
                 default: YourPhotoDenied,
+                footer: AppFooter
+            },
+            props: true,
+        },
+        {
+            path: "/search",
+            name: "search",
+            components: {
+                header: AppHeader,
+                default: Search,
                 footer: AppFooter
             },
             props: true,

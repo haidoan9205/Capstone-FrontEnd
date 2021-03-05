@@ -88,22 +88,7 @@ export default {
   },
   methods: {
     onSearch() {
-      let searchValue = this.searchValue;
-      let pageSize = this.pageSize;
-      let currentPage = this.currentPage;
-      console.log("oke")
-      axios.get("https://imago.azurewebsites.net/api/v1/Photo/SearchPhoto/" + searchValue + "?PageSize=" + pageSize + "&CurrentPage=" + currentPage)
-        .then((response) => {
-            this.imagesearch = response.data;
-            console.log(response.data);
-            this.flag = false;
-            console.log(this.flag)
-            this.x_pagination = response.headers;
-            console.log(response.headers);
-        })
-        .catch((error) => {
-        console.log(error);
-        });
+      return this.$router.push({ name: 'search', query: { searchValue: this.searchValue } });
     }
   }
 };
