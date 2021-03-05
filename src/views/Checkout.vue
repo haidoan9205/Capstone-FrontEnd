@@ -129,7 +129,7 @@
         <p style="padding-left: 25px">{{ user.fullName }}</p>
         <p style="padding-left: 25px">{{ user.email }}</p>
         <hr style="width: 80%" />
-        <p style="padding-left: 140px;">
+        <p style="padding-left: 140px">
           TOTAL: <span style="color: red">${{ total }}USD</span>
         </p>
       </div>
@@ -177,10 +177,13 @@ export default {
         description: "leg lamp from that one movie",
         img: "./assets/lamp.jpg",
       },
+      products: [],
+      // purchase_units: []
     };
   },
   mounted: function () {
     this.getTotal();
+    this.createListItems();
     const script = document.createElement("script");
     script.src =
       "https://www.paypal.com/sdk/js?client-id=AYvSMAPfagJB-ffNa4cHkH_dk7zK8ojJu4G6UVhrhQqe2w3LaKqjzvKirbdm3cGguTH_pM6FQRx-_O76";
@@ -194,25 +197,63 @@ export default {
         .Buttons({
           createOrder: (data, actions) => {
             return actions.order.create({
+              // purchase_units: [
+              //   {
+              //     description: this.product.description,
+              //     amount: {
+              //       currency_code: "USD",
+              //       value: this.product.price,
+              //     },
+              //   },
+              // ],
+
+              intent: "CAPTURE",
               purchase_units: [
                 {
-                  description: this.product.description,
                   amount: {
                     currency_code: "USD",
-                    value: this.product.price,
+                    value: this.total,
+                    breakdown: {
+                      item_total: {
+                        currency_code: "USD",
+                        value: this.total,
+                      },
+                    },
                   },
+                  // items: this.products,
+                  // items: [
+                  //   {
+                  //     name: "item1",
+                  //     unit_amount: {
+                  //       currency_code: "USD",
+                  //       value: "0.01",
+                  //     },
+                  //     quantity: "1",
+                  //   },
+                  //   {
+                  //     name: "item2",
+                  //     unit_amount: {
+                  //       currency_code: "USD",
+                  //       value: "0.01",
+                  //     },
+                  //     quantity: "1",
+                  //   },
+                  // ],
                 },
-              ],
+              ]
             });
           },
           onApprove: async (data, actions) => {
+            console.log(purchase_units);
             const order = await actions.order.capture();
             this.data;
             this.paidFor = true;
             console.log(order);
+            alert("Transaction success!");
           },
           onError: (err) => {
             console.log(err);
+            alert("Transaction error!");
           },
         })
         .render(this.$refs.paypal);
@@ -224,6 +265,19 @@ export default {
       });
       this.total = price;
       //console.log(this.total);
+    },
+    createListItems() {
+      this.cart.forEach((item) => {
+        this.products.push({
+          name: item.image.photoName,
+          unit_amount: {
+            currency_code: "USD",
+            value: item.image.price,
+          },
+          quantity: 1,
+        });
+      });
+      console.log(this.products);
     },
   },
 };
