@@ -15,26 +15,6 @@
         padding-left: 40px;
       "
     >
-      <!-- <div style="text-align: center">
-        <div v-if="!paidFor">
-          <h1>Buy this Lamp - ${{ product.price }} OBO</h1>
-
-          <p>{{ product.description }}</p>
-
-          <img
-            width="250"
-            src="https://images-na.ssl-images-amazon.com/images/I/61yZD4-mKjL._SX425_.jpg"
-          />
-        </div>
-
-        <div v-if="paidFor">
-          <h1>Noice, you bought a beautiful lamp!</h1>
-
-          <img src="https://media.giphy.com/media/j5QcmXoFWl4Q0/giphy.gif" />
-        </div>
-
-        <div ref="paypal"></div>
-      </div> -->
       <h2 style="padding-left: 10px">Checkout List</h2>
       <table
         id="cart"
@@ -142,29 +122,16 @@
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
   computed: {
     cart() {
-      console.log(this.checkLocal);
-      console.log(this.$store.state);
       return this.$store.state.cart;
     },
     isLoggedIn() {
       return this.$store.getters.isLoggedIn;
-    },
-    user() {
-      const abc = window.localStorage.getItem("user");
-      // console.log(abc);
-      const appove = this.$store.state.approved_images;
-      console.log(appove);
-      return JSON.parse(abc);
-    },
-  },
-
-  data() {
-    return {
-      checkLocal: this.$store.state.cart,
-    };
+    }
   },
 
   data: function () {
@@ -172,19 +139,18 @@ export default {
       total: [],
       loaded: false,
       paidFor: false,
-      product: {
-        price: 777.77,
-        description: "leg lamp from that one movie",
-        img: "./assets/lamp.jpg",
-      },
       products: [],
-      // purchase_units: []
+      checkLocal: "",
+      orderDetail: [],
+      orderInfo: [],
+      user: JSON.parse(localStorage.getItem("user"))
     };
   },
   mounted: function () {
     this.getTotal();
     this.createListItems();
     const script = document.createElement("script");
+    this.checkLocal = this.$store.state.cart,
     script.src =
       "https://www.paypal.com/sdk/js?client-id=AYvSMAPfagJB-ffNa4cHkH_dk7zK8ojJu4G6UVhrhQqe2w3LaKqjzvKirbdm3cGguTH_pM6FQRx-_O76";
     script.addEventListener("load", this.setLoaded);
@@ -197,17 +163,6 @@ export default {
         .Buttons({
           createOrder: (data, actions) => {
             return actions.order.create({
-              // purchase_units: [
-              //   {
-              //     description: this.product.description,
-              //     amount: {
-              //       currency_code: "USD",
-              //       value: this.product.price,
-              //     },
-              //   },
-              // ],
-
-              intent: "CAPTURE",
               purchase_units: [
                 {
                   amount: {
@@ -220,39 +175,22 @@ export default {
                       },
                     },
                   },
-                  // items: this.products,
-                  // items: [
-                  //   {
-                  //     name: "item1",
-                  //     unit_amount: {
-                  //       currency_code: "USD",
-                  //       value: "0.01",
-                  //     },
-                  //     quantity: "1",
-                  //   },
-                  //   {
-                  //     name: "item2",
-                  //     unit_amount: {
-                  //       currency_code: "USD",
-                  //       value: "0.01",
-                  //     },
-                  //     quantity: "1",
-                  //   },
-                  // ],
-                },
+                  items: this.products,
+                }
               ]
             });
           },
           onApprove: async (data, actions) => {
-            console.log(purchase_units);
             const order = await actions.order.capture();
             this.data;
-            this.paidFor = true;
-            console.log(order);
-            alert("Transaction success!");
+            this.orderInfo = order;
+            this.onCheckOut();
+
+            //console.log("VALUE");
+            //console.log(order.create_time);
           },
           onError: (err) => {
-            console.log(err);
+            console.log("ERR: " + err);
             alert("Transaction error!");
           },
         })
@@ -269,16 +207,52 @@ export default {
     createListItems() {
       this.cart.forEach((item) => {
         this.products.push({
-          name: item.image.photoName,
+          name: item.image.photoId + "-" + item.image.photoName,
           unit_amount: {
             currency_code: "USD",
             value: item.image.price,
           },
           quantity: 1,
         });
+        this.orderDetail.push(parseInt(item.image.photoId));
+        //this.orderDetail.push({
+        //  photoId: parseInt(item.image.photoId),
+        //  price: parseFloat(item.image.price),
+        //});
       });
-      console.log(this.products);
     },
+    onCheckOut() {
+      const fd = new FormData();
+      const orderDetails = Object.values(this.orderDetail);
+      fd.append('userId', this.user.userId);
+      fd.append('transactionId', this.orderInfo.id);
+      fd.append('createTime', this.orderInfo.create_time);
+      fd.append('amount', parseFloat(this.orderInfo.purchase_units[0].amount.value));
+      fd.append('payerId', this.orderInfo.payer.payer_id);
+      fd.append('payerPaypalEmail', this.orderInfo.payer.email_address);
+      for (let i = 0; i < orderDetails.length; i++) {
+        fd.append('ListPhotoId', orderDetails[i]);
+      }
+      
+      axios({
+                url: "https://imago.azurewebsites.net/api/Order",
+                data: fd,
+                method: "POST",
+                headers: {'Content-Type': 'application/json'}
+            })
+            .then((respone) => {
+            if (respone.status == 201) {
+                alert("Transaction successfully");
+                this.paidFor = true;
+            } else {
+                alert("Transaction error");
+            }
+            console.log(respone.status);
+            })
+            .catch((error) => {
+            console.log(error);
+            });
+    }
   },
 };
 </script>
