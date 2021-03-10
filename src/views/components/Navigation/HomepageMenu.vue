@@ -2,7 +2,7 @@
   <ul class="navbar-nav ml-auto">
     <li class="nav-item">
       <router-link to="/cart" title="Your basket">
-        <a class="nav-link nav-link-icon" href="#">
+        <a class="nav-link nav-link-icon" href="#" style="color:black">
           <i class="fa fa-shopping-basket"></i>
           <span class="nav-link-inner--text">Basket</span>
         </a>
@@ -17,11 +17,8 @@
       </router-link>
     </li>
     <li class="nav-item" v-if="isLoggedIn">
-      <Slide right :closeOnNavigation="true" :burgerIcon="true" v-if="isLoggedIn">
+      <Slide right :closeOnNavigation="true" :burgerIcon="true"  v-if="isLoggedIn" noOverlay>
         <div class="media-body ml-2 d-none d-lg-block">
-          <!-- <span>
-            WELCOME!
-          </span> -->
           <span class="avatar avatar-sm rounded-circle">
             <img alt="Image placeholder" src="img/theme/team-4-800x800.jpg" />
           </span>
@@ -114,7 +111,7 @@ ul.sidebar-panel-nav > li > a {
   cursor: pointer;
 }
 .bm-burger-bars {
-  background-color: #fff;
+  background-color: black;
 }
 .line-style {
   position: absolute;

@@ -5,16 +5,19 @@
       { 'navbar-expand-lg': expand },
       { [`navbar-${effect}`]: effect },
       { 'navbar-transparent': transparent },
-      { [`bg-${type}`]: type },
       { rounded: round },
     ]"
+    style="background-color: #FFFFFF"
   >
     <div class="container">
       <slot name="container-pre"></slot>
       <slot name="brand">
-        <router-link to="/">
-            <img src="img/brand/logo.png" style="width: 150px; height: 100px" />
-          </router-link>
+        <router-link to="/" title="Home Page">
+          <a class="nav-link" href="#">
+            <p class="nav-title">Imago</p>
+          </a>
+        </router-link>
+
         <!-- <a class="navbar-brand" href="/" @click="onTitleClick">
           {{ title }}
         </a> -->
@@ -106,4 +109,9 @@ export default {
 };
 </script>
 <style>
+.nav-title {
+  font-family: Garamond, serif;
+  font-size: 28px;
+  font-weight: bold;
+}
 </style>

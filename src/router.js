@@ -38,7 +38,7 @@ export default new Router({
             components: {
                 header: AppHeader,
                 default: ChangePassword,
-                footer: AppFooter
+               
             }
         },
         {
@@ -47,7 +47,6 @@ export default new Router({
             components: {
                 header: AppHeader,
                 default: Login,
-                footer: AppFooter
             }
         },
         {
@@ -56,7 +55,7 @@ export default new Router({
             components: {
                 header: AppHeader,
                 default: Register,
-                footer: AppFooter
+             
             }
         },
         {

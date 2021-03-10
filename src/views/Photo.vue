@@ -1,25 +1,32 @@
 <template>
-  <div class="container container-lg"> 
-    <div class="row">
-      <div class="col-md-6 mb-5 mb-md-0 mt-3">
-        <img width="70%" height="80%" :src="image.wmlink" />
+  <div class="mb-3" style="background-color:#F2F2F2">
+    <div class="row ml-2">
+      <div class="col-md-5 col-sm-5 col-xs-12">
+        <img :src="image.wmlink" />
       </div>
       <div class="col-md-6 mb-5 mb-md-0 mt-3">
-        <h5 class="text-uppercase font-weight-bold"
-          >How can I buy this?</h5
-        >
-        <base-radio name="rdoBtn" class="mb-3">
-          Large
-        </base-radio>
-        <base-radio name="rdoBtn" class="mb-3">
-          Medium
-        </base-radio>
-        <base-radio name="rdoBtn" class="mb-3">
-          Small
-        </base-radio>
-        <h3 class="text-uppercase font-weight-bold">${{ image.price }}</h3>
-        <div class="mb-3 mt-5">
-          <base-button class="btn-1" type="primary" @click="addToCart()">Add to cart</base-button>
+        <h3>{{ image.photoName }}</h3>
+
+        <h5 class="heading">${{ image.price }}</h5>
+        <p class="lead">{{ image.description }}</p>
+        <badge type="info" class="text-uppercase">{{
+          image.category[0].categoryName
+        }}</badge>
+        <badge type="info" class="text-uppercase">{{
+          image.category[1].categoryName
+        }}</badge>
+        <blockquote class="blockquote mt-2">
+          <p class="mb-0">
+           Upload By:
+          </p>
+          <footer class="blockquote-footer">
+            <cite title="Source Title">{{image.userName}}</cite>
+          </footer>
+        </blockquote>
+        <div class="mb-3 mt-2">
+          <base-button class="btn-1" type="primary" @click="addToCart()"
+            >Add to cart</base-button
+          >
         </div>
       </div>
     </div>
@@ -29,19 +36,17 @@
 
 <script>
 export default {
-
-
-  data(){
+  data() {
     return {
-      photoId : 0
-    }
+      photoId: 0,
+    };
   },
-  methods:{
-    addToCart(){
-      this.$store.dispatch('addPhotoToCart', {
+  methods: {
+    addToCart() {
+      this.$store.dispatch("addPhotoToCart", {
         image: this.image,
       });
-    }
+    },
   },
 
   computed: {
@@ -51,14 +56,18 @@ export default {
   },
 
   mounted() {
-    console.log(this.photoId)
-    this.$store.dispatch('getImage', this.photoId); 
+    console.log(this.photoId);
+    this.$store.dispatch("getImage", this.photoId);
   },
 
-  created(){
+  created() {
     this.photoId = this.$route.params.photoId;
-  }
+  },
 };
 </script>
 
-<style></style>
+<style>
+.photo-aria{
+  width: 100%;
+}
+</style>
