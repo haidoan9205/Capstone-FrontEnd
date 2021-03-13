@@ -68,23 +68,22 @@
     </div>
     <div
       v-if="paidFor"
-      style="
-        border-radius: 15px;
-        border: 2px solid rgba(0, 0, 0, 0.48);
-        width: 60%;
-        margin-top: 30px;
-        margin-bottom: 30px;
-        margin-left: 7%;
-        margin-right: 40px;
-        overflow: auto;
-        padding-left: 40px;
-      "
+      class="popup"
     >
-      <h1>Nice, your transaction success!</h1>
-
-      <img src="https://media.giphy.com/media/j5QcmXoFWl4Q0/giphy.gif" />
+      <h2 style="padding-top: 10%; padding-left: 10px">Thank you for your purchase!</h2>
+      <div class="row" style="padding-top: 10px; padding-left: 28px">  
+        <router-link to="/">
+          <button class="btn btn-primary">Continute Shopping</button>
+        </router-link>
+      </div>
+      <div class="row" style="padding-top: 10px; padding-left: 28px">
+        <router-link to="/">
+          <button class="btn btn-primary">View History</button>
+        </router-link>
+        </div>
     </div>
     <div
+      v-if="!paidFor"
       class="col-md-3"
       style="
         border-radius: 15px;
@@ -290,5 +289,10 @@ p {
   height: 10vw;
   object-fit: cover;
   border-radius: 0.75rem;
+}
+.popup {
+  margin: auto;
+  width: 600px;
+  height: 500px;
 }
 </style>

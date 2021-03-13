@@ -23,35 +23,11 @@
                             </div>
                             <form  role="form" @submit.prevent="onChangePassword" method="put">
                                 <div class="form-group">
-                                    <input v-model="oldpassword" type="password" placeholder="Old Password" class="form-control" required/>
-                                </div>
-                                <div class="form-group">
                                     <input v-model="newpassword" type="password" placeholder="New Password" class="form-control" required/>
                                 </div>
                                 <div class="form-group">
                                     <input v-model="confirmpassword" type="password" placeholder="Confirm Password" class="form-control" required/>
                                 </div>
-                                <!-- <base-input alternative
-                                            v-model="oldpassword"
-                                            type="password" 
-                                            placeholder="Old Password"
-                                            required
-                                            addon-left-icon="ni ni-lock-circle-open">
-                                </base-input>
-                                <base-input alternative
-                                            v-model="newpassword"
-                                            type="password"
-                                            placeholder="New Password"
-                                            required
-                                            addon-left-icon="ni ni-lock-circle-open">
-                                </base-input>
-                                <base-input alternative
-                                            v-model="confirmpassword"
-                                            type="password"
-                                            placeholder="Confirm"
-                                            required
-                                            addon-left-icon="ni ni-lock-circle-open">
-                                </base-input>-->
                                 <!-- <div class="text-muted font-italic">
                                     <small>password strength:
                                         <span class="text-success font-weight-700">strong</span>
@@ -76,40 +52,50 @@ import axios from "axios";
 export default {
     data() {
         return {
-            oldpassword: "",
             newpassword: "",
             confirmpassword: "",
-            user: JSON.parse(localStorage.getItem("user"))
+            userId: ""
         };
+    },
+    
+    mounted: function() {
+        var url_string = window.location.href;
+        var url = new URL(url_string);
+        //this.userId = url.searchParams.get("userId");
+        this.userId = url.hash.substring(30);
+        console.log(url.hash.substring(30));
     },
     methods: {
         onChangePassword() {
-            let oldpassword = this.oldpassword;
+            //let userId = "eb4571fe-0bfb-4394-999b-c7c64bfb335a";
             let newpassword = this.newpassword;
             let confirmpassword = this.confirmpassword;
             const fd = new FormData();
-            if (newpassword === confirmpassword) {
-                axios.put("https://imago.azurewebsites.net/api/v1/User", {
-                    username: this.user.username,
-                    oldPassword: this.oldpassword,
-                    newPassword: this.newpassword
-                })
-                .then((respone) => {
-                if (respone.status == 200) {
-                    localStorage.removeItem("token");
-                    localStorage.removeItem("user");
-                    this.$router.push("/login");
-                    alert("Change password successfully");
-                } else {
-                    alert("Change password error");
-                }
-                console.log(respone.status);
-                })
-                .catch((error) => {
-                console.log(error);
-        });
+            if (newpassword.length < 12 || newpassword.length > 30) {
+                alert("Password must have 12 - 30 characters");
             } else {
-                alert("Confirm password not match");
+                if (newpassword === confirmpassword) {
+                    axios.put("https://imago.azurewebsites.net/api/v1/Auth/RecoveryPasswordForUser", {
+                        userId: this.userId,
+                        newPassword: this.newpassword
+                    })
+                    .then((respone) => {
+                        if (respone.status == 200) {
+                            localStorage.removeItem("token");
+                            localStorage.removeItem("user");
+                            this.$router.push("/login");
+                            alert("Change password successfully");
+                        } else {
+                            alert("Change password error");
+                        }
+                        console.log(respone.status);
+                    })
+                    .catch((error) => {
+                        console.log(error);
+                    });
+                } else {
+                    alert("Confirm password not match");
+                }
             }
         },
     },
