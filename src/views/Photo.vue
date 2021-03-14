@@ -17,15 +17,18 @@
         }}</badge>
         <blockquote class="blockquote mt-2">
           <p class="mb-0">
-           Upload By:
+            Upload By:
           </p>
           <footer class="blockquote-footer">
-            <cite title="Source Title">{{image.userName}}</cite>
+            <cite title="Source Title">{{ image.userName }}</cite>
           </footer>
         </blockquote>
         <div class="mb-3 mt-2">
           <base-button class="btn-1" type="primary" @click="addToCart()"
             >Add to cart</base-button
+          >
+          <base-button class="btn-2" outline type="primary"  @click="followUser" icon="fa fa-heart-o"
+            >Follow</base-button
           >
         </div>
       </div>
@@ -35,10 +38,17 @@
 </template>
 
 <script>
+import axios from 'axios';
 export default {
+  props: ["follows"],
+
   data() {
     return {
       photoId: 0,
+      status: this.follows,
+      userId: '',
+      followUserId: ''
+
     };
   },
   methods: {
@@ -47,6 +57,22 @@ export default {
         image: this.image,
       });
     },
+    followUser() {
+       axios({
+
+                method : 'POST',
+                url : 'https://imago.azurewebsites.net/api/v1/Follow/Follow',
+                data: {
+                    userId :  this.$store.state.user.userId,
+                    followUserId : this.$store.state.image.userId
+                },
+
+            })
+        .then((response) => {
+          console.log(response.data);
+        });
+    },
+  
   },
 
   computed: {
@@ -67,7 +93,7 @@ export default {
 </script>
 
 <style>
-.photo-aria{
+.photo-aria {
   width: 100%;
 }
 </style>

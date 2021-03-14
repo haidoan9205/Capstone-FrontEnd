@@ -31,15 +31,23 @@
 </template>
 
 <script>
+import VirtualGrid from 'vue-virtual-grid';
+
 export default {
+  components:{
+    VirtualGrid,
+  },
+  
   computed: {
     images() {
       return this.$store.state.images;
     },
+   
   },
 
   mounted() {
     this.$store.dispatch("getImages");
+
   },
 };
 </script>

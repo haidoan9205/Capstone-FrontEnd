@@ -50,6 +50,7 @@ export const login = ({ commit }, user) => {
     });
 };
 
+
 export const register = ({ commit }, user) => {
     return new Promise((resolve, reject) => {
         commit("auth_request");

@@ -1,6 +1,6 @@
 <template>
   <div
-    class="container"
+    class="container mb-2"
     style="background-color:#FAE9CD"
   >
     <div class="form bg-text">

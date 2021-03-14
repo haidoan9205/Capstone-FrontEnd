@@ -1,5 +1,5 @@
 <template>
-  <div class="container table-responsive">
+  <div class="container table-responsive" style="background-color:#F2F2F2">
     <h2>Shopping Cart</h2>
     <table id="cart" class="table table-hover table-sm" v-if="checkLocal != 0">
       <div>
@@ -147,5 +147,10 @@ p {
   height: 10vw;
   object-fit: cover;
   border-radius: 0.75rem;
+}
+.container{
+  border: 1px solid;
+  border-radius: 12px;
+  margin-bottom: 2px;
 }
 </style>
