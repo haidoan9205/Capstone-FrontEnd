@@ -8,6 +8,15 @@ export const SET_IMAGE = (state, image) => {
     state.image = image;
 };
 
+export const SET_TRANSACTIONS = (state, transactions) => {
+    state.transactions = transactions;
+};
+
+export const DOWNLOAD_IMAGE = (state, downloadURL) =>{
+    state.downloadURL = downloadURL;
+    window.open(downloadURL)
+}
+
 export const ADD_TO_CART = (state, { image }) => {
     var flag = true;
     for (var key in state.cart) {

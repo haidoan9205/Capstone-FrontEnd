@@ -9,6 +9,8 @@ export default{
     user:  localStorage.getItem('user') || null,
     approved_images: [],
     denied_images: [],
+    transactions: [],
+    donwloadURL: '',
 } 
 
 
