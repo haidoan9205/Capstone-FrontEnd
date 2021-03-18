@@ -43,7 +43,7 @@
           </card>
           <div class="row mt-3">
             <div class="col-6">
-              <router-link to="/changepassword" title="Register">
+              <router-link to="/requestchangepassword" title="Register">
                 <a href="#" style="color:#0886DE">
                   <small>Forgot password?</small>
                 </a>

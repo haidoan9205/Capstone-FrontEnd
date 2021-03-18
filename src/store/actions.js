@@ -34,6 +34,22 @@ export const downloadImage = ({ commit }, photoId) => {
   });
 };
 
+// export const downloadImage = ({ commit }, photoId) => {
+//   axios({
+//     url: `https://imago.azurewebsites.net/api/v1/Photo/DownloadPhoto/${photoId}`,
+//     method: "GET"
+//   }).then((response) => {
+//     var fileURL = window.URL.createObjectURL(new Blob([response.data]));
+//     var fileLink = document.createElement("a");
+//     console.log(response.data.image)
+//     console.log(response.data)
+//     fileLink.href = fileURL;
+//     fileLink.setAttribute("download", "file.jpg");
+//     document.body.appendChild(fileLink);
+//     fileLink.click();
+//   });
+// };
+
 export const addPhotoToCart = ({ commit }, { image }) => {
   commit("ADD_TO_CART", { image });
 };

@@ -4,6 +4,7 @@
     style="background-color:#FAE9CD"
   >
     <div class="form bg-text">
+      <div class="lds-ring" v-if="loading"><div></div><div></div><div></div><div></div></div>
       <h4>Upload a new photo</h4>
       <form @submit.prevent="onUploadPhoto" method="post">
         <div class="form-group">
@@ -85,16 +86,21 @@
 </template>
 
 <script>
+
 import axios from "axios";
 import Multiselect from "vue-multiselect";
 import "vue-multiselect/dist/vue-multiselect.min.css";
+import Spinner from './Spinner.vue';
 
 export default {
   components: {
     Multiselect,
+    Spinner,
+    Spinner
   },
   data() {
     return {
+      loading: false,
       photoName: "",
       file: null,
       price: "",
@@ -123,6 +129,7 @@ export default {
       this.file = event.target.files[0];
     },
     onUploadPhoto() {
+      this.loading=true;
       if (this.value.length === 0) {
         alert("Please select category");
         return;
@@ -153,6 +160,7 @@ export default {
         )
         .then((respone) => {
           if (respone.status == 201) {
+            this.loading = false;
             alert("Upload successfully");
           } else {
             alert("Upload error");
@@ -167,7 +175,8 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+
 .container{
     border: 1px solid;
     border-radius: 12px;
@@ -194,5 +203,40 @@ h4 {
 }
 .multiselect-div {
   margin-bottom: 28px;
+}
+.lds-ring {
+  display: inline-block;
+  position: relative;
+  width: 80px;
+  height: 80px;
+}
+.lds-ring div {
+  box-sizing: border-box;
+  display: block;
+  position: absolute;
+  width: 64px;
+  height: 64px;
+  margin: 8px;
+  border: 8px solid #fff;
+  border-radius: 50%;
+  animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+  border-color: #fff transparent transparent transparent;
+}
+.lds-ring div:nth-child(1) {
+  animation-delay: -0.45s;
+}
+.lds-ring div:nth-child(2) {
+  animation-delay: -0.3s;
+}
+.lds-ring div:nth-child(3) {
+  animation-delay: -0.15s;
+}
+@keyframes lds-ring {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 </style>

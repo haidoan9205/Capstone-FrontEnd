@@ -7,7 +7,7 @@
         <th>Photo Name</th>
         <th>Type</th>
         <th>Amount</th>
-        <th>Transaction ID</th>
+        <!-- <th  width="15%">Transaction ID</th> -->
         <th></th>
       </tr>
     </thead>
@@ -17,7 +17,7 @@
         <td>{{ transaction.photoName }}</td>
         <td>{{ transaction.typeId }}</td>
         <td>${{ transaction.price }}</td>
-        <td>{{transaction.transactionId}}</td> 
+        <!-- <td>{{transaction.transactionId}}</td>  -->
         <td><button @click="download(transaction)">Download</button> </td>
       </tr>
     </tbody>

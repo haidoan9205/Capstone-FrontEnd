@@ -47,10 +47,11 @@ export default {
       photoId: 0,
       status: this.follows,
       userId: '',
-      followUserId: ''
-
+      followUserId: '',
+      user : JSON.stringify(window.localStorage.getItem('user')),
     };
   },
+  
   methods: {
     addToCart() {
       this.$store.dispatch("addPhotoToCart", {
@@ -58,13 +59,15 @@ export default {
       });
     },
     followUser() {
+      // console.log(user.userId)
+      console.log(this.$store.state.image.userId)
        axios({
 
                 method : 'POST',
                 url : 'https://imago.azurewebsites.net/api/v1/Follow/Follow',
                 data: {
-                    userId :  this.$store.state.user.userId,
-                    followUserId : this.$store.state.image.userId
+                    userId :  JSON.parse(this.$store.state.user).userId,
+                    followUserId : this.$store.state.image.userId,
                 },
 
             })

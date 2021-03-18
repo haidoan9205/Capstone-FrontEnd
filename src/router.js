@@ -10,6 +10,8 @@ import Login from "./views/Login.vue";
 import Register from "./views/Register.vue";
 import Profile from "./views/Profile.vue";
 import ChangePassword from "./views/ChangePassword.vue";
+import ChangeForgotPassword from "./views/ChangeForgotPassword.vue";
+import RequestChangePassword from "./views/RequestChangePassword.vue";
 import Photo from "./views/Photo.vue";
 import Cart from "./views/Cart.vue";
 import MenuProfile from "./views/components/Navigation/MenuProfile.vue";
@@ -35,13 +37,34 @@ export default new Router({
             }
         },
         {
-            path: "/changepassword",
+            path: "/changepassword/:userId",
             name: "changepassword",
             components: {
                 header: AppHeader,
                 default: ChangePassword,
-               
-            }
+                footer: AppFooter
+            },
+            props: true,
+        },
+        {
+            path: "/changeforgotpassword",
+            name: "changeforgotpassword",
+            components: {
+                header: AppHeader,
+                default: ChangeForgotPassword,
+                footer: AppFooter
+            },
+            props: true,
+        },
+        {
+            path: "/requestchangepassword",
+            name: "requestchangepassword",
+            components: {
+                header: AppHeader,
+                default: RequestChangePassword,
+                footer: AppFooter
+            },
+            props: true,
         },
         {
             path: "/login",
@@ -57,7 +80,7 @@ export default new Router({
             components: {
                 header: AppHeader,
                 default: Register,
-             
+
             }
         },
         {
