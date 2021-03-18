@@ -19,6 +19,7 @@ import UploadPhoto from "./views/UploadPhoto.vue";
 import YourPhoto from "./views/YourPhoto.vue";
 import Checkout from "./views/Checkout.vue";
 import YourPhotoDenied from "./views/YourPhotoDenied.vue";
+import Unauthorized from "./views/Unauthorized.vue";
 import Search from "./views/Search.vue";
 import TransactionHistory from "./views/TransactionHistory.vue";
 
@@ -73,6 +74,12 @@ export default new Router({
                 header: AppHeader,
                 default: Login,
             }
+        },
+        {
+            path: "/unauthorized",
+            name: "unauthorized",
+            component: Unauthorized,
+
         },
         {
             path: "/register",

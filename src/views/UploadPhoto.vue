@@ -109,6 +109,7 @@ export default {
       options: [],
       type: null,
       typeList: [],
+      user: JSON.parse(localStorage.getItem("user"))
     };
   },
   mounted: function() {
@@ -139,7 +140,7 @@ export default {
       fd.append("file", this.file, this.file.name);
       fd.append("price", this.price);
       fd.append("typeId", this.type.typeId);
-      fd.append("userId", this.$store.state.user.userId);
+      fd.append("userId", this.user.userId);
       fd.append("listCategory", this.value[0].categoryId);
       if (this.value.length === 2) {
         fd.append("listCategory", this.value[1].categoryId);
