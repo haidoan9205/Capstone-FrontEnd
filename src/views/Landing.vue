@@ -1,5 +1,5 @@
 <template>
-  <div style="background-color:#FAE9CD"> 
+  <div style="background-image: linear-gradient(to right, #f5f7fa, #e8edf4, #dce3ee, #cfd9e8, #c3cfe2);"> 
     <div class="position-relative">
       <!-- shape Hero -->
 

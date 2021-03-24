@@ -12,7 +12,7 @@
         <badge type="info" class="text-uppercase">{{
           image.category[0].categoryName
         }}</badge>
-        <badge type="info" class="text-uppercase">{{
+        <badge type="info" class="text-uppercase" v-if="image.category[1]">{{
           image.category[1].categoryName
         }}</badge>
         <blockquote class="blockquote mt-2">

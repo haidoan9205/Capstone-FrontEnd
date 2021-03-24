@@ -10,7 +10,7 @@ import './registerServiceWorker'
 import store from './store';
 import VueMaterial from 'vue-material';
 import 'vue-material/dist/vue-material.min.css';
-
+import VueSimpleAlert from "vue-simple-alert";
 
 Vue.use(VueMaterial);
 
@@ -36,10 +36,11 @@ if (token) {
 
 
 
-
+Vue.use(VueSimpleAlert);
 Vue.config.productionTip = false;
 Vue.use(Argon);
 Vue.use(Vuex);
+
 new Vue({
   router,
   store,

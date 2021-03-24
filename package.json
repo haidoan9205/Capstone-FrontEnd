@@ -26,11 +26,9 @@
     "vue-material": "^1.0.0-beta-15",
     "vue-multiselect": "^2.1.6",
     "vue-router": "^3.0.2",
+    "vue-simple-alert": "^1.1.1",
     "vue-stack-grid": "^1.2.2",
-<<<<<<< HEAD
     "vue-virtual-grid": "^2.3.1",
-=======
->>>>>>> 090432d354c5ace7dc1c88be2f31f56e0e076037
     "vue2-datepicker": "^3.9.0",
     "vue2-transitions": "^0.2.3",
     "vuex": "^3.6.0",
