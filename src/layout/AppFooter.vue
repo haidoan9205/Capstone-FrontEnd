@@ -1,97 +1,75 @@
 <template>
-  <footer class="footer shape shape-style-1 bg-gradient" style="background-color: #5E72E4">
-    <div class="container ">
-      <div class="row">
-        <div class="col-sm-3">
-          <h4 class="title">Sumi</h4>
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin
-            suscipit, libero a molestie consectetur, sapien elit lacinia mi.
-          </p>
-          <ul class="social-icon">
-            <a href="#" class="social"
-              ><i class="fa fa-facebook" aria-hidden="true"></i
-            ></a>
-            <a href="#" class="social"
-              ><i class="fa fa-twitter" aria-hidden="true"></i
-            ></a>
-            <a href="#" class="social"
-              ><i class="fa fa-instagram" aria-hidden="true"></i
-            ></a>
-            <a href="#" class="social"
-              ><i class="fa fa-youtube-play" aria-hidden="true"></i
-            ></a>
-            <a href="#" class="social"
-              ><i class="fa fa-google" aria-hidden="true"></i
-            ></a>
-            <a href="#" class="social"
-              ><i class="fa fa-dribbble" aria-hidden="true"></i
-            ></a>
-          </ul>
-        </div>
-        <div class="col-sm-3">
-          <h4 class="title">My Account</h4>
-          <span class="acount-icon">
-            <a href="#"
-              ><i class="fa fa-heart" aria-hidden="true"></i> Wish List</a
-            >
-            <a href="#"
-              ><i class="fa fa-cart-plus" aria-hidden="true"></i> Cart</a
-            >
-            <a href="#"
-              ><i class="fa fa-user" aria-hidden="true"></i> Profile</a
-            >
-            <a href="#"
-              ><i class="fa fa-globe" aria-hidden="true"></i> Language</a
-            >
-          </span>
-        </div>
-        <div class="col-sm-3">
-          <h4 class="title">Category</h4>
-          <div class="category">
-            <a href="#">men</a>
-            <a href="#">women</a>
-            <a href="#">boy</a>
-            <a href="#">girl</a>
-            <a href="#">bag</a>
-            <a href="#">teshart</a>
-            <a href="#">top</a>
-            <a href="#">shos</a>
-            <a href="#">glass</a>
-            <a href="#">kit</a>
-            <a href="#">baby dress</a>
-            <a href="#">kurti</a>
-          </div>
-        </div>
-        <div class="col-sm-3">
-          <h4 class="title">Payment Methods</h4>
-          <p>
-            Lorem Ipsum is simply dummy text of the printing and typesetting
-            industry.
-          </p>
-          <ul class="payment">
-            <li>
-              <a href="#"><i class="fa fa-cc-amex" aria-hidden="true"></i></a>
-            </li>
-            <li>
-              <a href="#"
-                ><i class="fa fa-credit-card" aria-hidden="true"></i
-              ></a>
-            </li>
-            <li>
-              <a href="#"><i class="fa fa-paypal" aria-hidden="true"></i></a>
-            </li>
-            <li>
-              <a href="#"><i class="fa fa-cc-visa" aria-hidden="true"></i></a>
-            </li>
-          </ul>
-        </div>
-      </div>
-      <hr />
+  <!-- Footer -->
+<footer class="bg-light text-center text-lg-start">
+  <!-- Grid container -->
+  <div class="container p-4">
+    <!--Grid row-->
+    <div class="row">
+      <!--Grid column-->
+      <div class="col-lg-6 col-md-12 mb-4 mb-md-0">
+        <h5 class="text-uppercase">About Us</h5>
 
-      <div class="row text-center">© 2017. Made with by sumi9xm.</div>
+        <p>
+          With the desire to create a modern, safe photos trading platform for both sellers and buyers with the best deals.
+
+        </p>
+      </div>
+      <!--Grid column-->
+
+      <!--Grid column-->
+      <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+        <h5 class="text-uppercase">Contact</h5>
+
+        <ul class="list-unstyled mb-0">
+          <li>
+            <a href="#!" class="text-dark">Doan Quang Hai</a>
+          </li>
+          <li>
+            <a href="#!" class="text-dark">Do Trong Hieu</a>
+          </li>
+          <li>
+            <a href="#!" class="text-dark">Nguyen Minh Chien</a>
+          </li>
+          <li>
+            <a href="#!" class="text-dark">Truong Chi Hai</a>
+          </li>
+        </ul>
+      </div>
+      <!--Grid column-->
+
+      <!--Grid column-->
+      <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+        <h5 class="text-uppercase mb-0">Phone Number</h5>
+
+        <ul class="list-unstyled">
+          <li>
+            <a href="#!" class="text-dark">(+84) 973 538 339</a>
+          </li>
+          <li>
+            <a href="#!" class="text-dark">(+84) 903 339 321</a>
+          </li>
+          <li>
+            <a href="#!" class="text-dark">(+84) 963 104 545</a>
+          </li>
+          <li>
+            <a href="#!" class="text-dark">(+84) 973 538 339</a>
+          </li>
+        </ul>
+      </div>
+      <!--Grid column-->
     </div>
-  </footer>
+    <!--Grid row-->
+  </div>
+  <!-- Grid container -->
+
+  <!-- Copyright -->
+  <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+    © 2020 Copyright:
+    <a class="text-dark" href="#">IMAGO</a>
+  </div>
+  <!-- Copyright -->
+</footer>
+<!-- Footer -->
 </template>
 <script>
 export default {
@@ -101,7 +79,7 @@ export default {
 <style>
 .footer {
   padding: 50px 0 20px 0;
-  background-color: #8898aa;
+  background-image: linear-gradient(to right top, #f0f3f9, #d1e1e8, #b4d0cf, #a2bdae, #9ea78a);
   color: #878c94;
 }
 .footer .title {

@@ -8,26 +8,46 @@ export const SET_IMAGE = (state, image) => {
     state.image = image;
 };
 
+export const SET_TRANSACTIONS = (state, transactions) => {
+    state.transactions = transactions;
+};
+
+export const DOWNLOAD_IMAGE = (state, downloadURL) => {
+    state.downloadURL = downloadURL;
+    window.open(downloadURL)
+}
+
 export const ADD_TO_CART = (state, { image }) => {
-    var flag = true;
-    for (var key in state.cart) {
-        if (!state.cart.hasOwnProperty(key)) continue;
-        var obj = state.cart[key];
-        for (var prop in obj) {
-            if (!obj.hasOwnProperty(prop)) continue;
-            var id = obj[prop].photoId;
-            if (id === image.photoId) {
-                flag = false;
+    if (image.typeId === 1) {
+        var flag = true;
+        for (var key in state.cart) {
+            if (!state.cart.hasOwnProperty(key)) continue;
+            var obj = state.cart[key];
+            for (var prop in obj) {
+                if (!obj.hasOwnProperty(prop)) continue;
+                var id = obj[prop].photoId;
+                if (id === image.photoId) {
+                    flag = false;
+                }
             }
         }
-    }
-    if (flag) {
-        state.cart.push({ image });
-        alert("Add to cart successfully");
+        if (flag) {
+            state.cart.push({ image });
+            alert("Add to cart successfully");
+        } else {
+            alert("You already have this item in your cart!");
+        }
+        window.localStorage.setItem("cart", JSON.stringify(state.cart));
     } else {
-        alert("You already have this item in your cart!");
+        if (state.ucart.length === 1) {
+            alert("You can only add a single exclusive photo to the cart!");
+        } else {
+            state.ucart.push({ image });
+            alert("Add to cart successfully");
+        }
+
+        window.localStorage.setItem("ucart", JSON.stringify(state.ucart));
     }
-    window.localStorage.setItem("cart", JSON.stringify(state.cart));
 };
 
 export const REMOVE_ITEM = (state, { image }) => {

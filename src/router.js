@@ -21,6 +21,8 @@ import Checkout from "./views/Checkout.vue";
 import YourPhotoDenied from "./views/YourPhotoDenied.vue";
 import Unauthorized from "./views/Unauthorized.vue";
 import Search from "./views/Search.vue";
+import TransactionHistory from "./views/TransactionHistory.vue";
+
 
 Vue.use(Router);
 
@@ -151,6 +153,16 @@ export default new Router({
             components: {
                 header: AppHeader,
                 default: YourPhotoDenied,
+                footer: AppFooter
+            },
+            props: true,
+        },
+        {
+            path: "/transaction",
+            name: "transaction",
+            components: {
+                header: AppHeader,
+                default: TransactionHistory,
                 footer: AppFooter
             },
             props: true,

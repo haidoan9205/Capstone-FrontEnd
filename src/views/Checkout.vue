@@ -126,7 +126,12 @@ import axios from 'axios';
 export default {
   computed: {
     cart() {
-      return this.$store.state.cart;
+      if (this.$store.state.cartFlag === true) {
+        return this.$store.state.cart;
+      } else {
+        return this.$store.state.ucart;
+      }
+      
     },
     isLoggedIn() {
       return this.$store.getters.isLoggedIn;

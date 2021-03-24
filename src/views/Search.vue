@@ -2,13 +2,13 @@
   <div > 
     <div class="position-relative" >
         <section class="section section-lg pt-0 pb-0">
-            <div class="container search-bar" style="background-color:#FAE9CD">
+            <div class="container search-bar" style="background-image: linear-gradient(to right, #a3bded, #95b2e3, #86a7da, #789cd0, #6991c7);">
                 <div class="row row-grid justify-content-center">
-                    <h3 class="searchbar-title">Moving the world with images</h3>
+                    <h3 class="searchbar-title mt-3">Moving the world with images</h3>
                 </div>
                 <div class="row row-grid justify-content-center">
                     <!-- <i class="fa fa-search my-auto"></i>-->
-                    <div class="col-md-7">
+                    <div class="col-md-7 mb-5">
                     <base-input
                         class="search-aria"
                         alternative

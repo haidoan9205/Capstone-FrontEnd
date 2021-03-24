@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="justify-content-center button-links">
+    <div class="justify-content-center button-links" style="background-color:#FAE9CD;">
       <router-link
             :to="{ name: 'yourphoto', params: { userId: user.userId } }"
           >
@@ -14,14 +14,39 @@
       
       <a href="#" class="btn btn-link text-primary">Pending</a>
     </div>
-    <div class="wrapper">
-      <ul class="image-card-grid">
-        <image-card
-          v-for="image in images"
-          :key="image.id"
-          :image="image" />
-      </ul>
-   </div>
+  <div class="container table-responsive ">
+      <table class="table table-hover table-sm mx-auto">
+        <div>
+          <tr v-for="image in images" :key="image.photoId">
+            <td class="col-sm-3  gallery-panel">
+              <img :src="image.wmlink" class="img-fluid" />
+            </td>
+            <td>
+              <div class="detail">
+                <tr>
+                  <td class="col1"><h6 class="description">Photo:</h6></td>
+                  <td class="col2">
+                    <p >{{ image.photoName }}</p>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="col1"><h6 class="description">Status:</h6></td>
+                  <td class="col2">
+                    <p>{{ image.approveStatus }}</p>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="col1"><h6 class="description">Description:</h6></td>
+                  <td class="col2">
+                    <p>{{ image.description }}</p>
+                  </td>
+                </tr>
+              </div>
+            </td>
+          </tr>
+        </div>
+      </table>
+    </div>
   </div>
 
   <!-- <div class="row gallery ">
@@ -64,6 +89,11 @@ export default {
 </script>
 
 <style lang="scss" scoped >
+@import url("https://fonts.googleapis.com/css2?family=Heebo:wght@500&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Heebo:wght@300&family=Oxygen:wght@300&display=swap");
+.description{
+  font-family: "Heebo", sans-serif;
+}
 .wrapper {
   margin: 0 auto;
   max-width: 800px;
