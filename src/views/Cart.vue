@@ -211,6 +211,7 @@ export default {
     },
     removeItem(image) {
       if (confirm("Are you sure to remove this item ?")) {
+        this.$store.state.cartFlag = this.flag;
         this.$store.dispatch("removeItem", { image });
       } else {
         return;

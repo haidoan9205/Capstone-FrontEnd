@@ -51,13 +51,22 @@ export const ADD_TO_CART = (state, { image }) => {
 };
 
 export const REMOVE_ITEM = (state, { image }) => {
-    var indexItem = state.cart.findIndex(x => x.image === image);
-    console.log("index: " + indexItem);
-    state.cart.splice(indexItem, 1);
-    window.localStorage.setItem("cart", JSON.stringify(state.cart));
-    if (state.cart.length == 0) {
-        window.localStorage.removeItem('cart');
+    if (state.cartFlag === true) {
+        var indexItem = state.cart.findIndex(x => x.image === image);
+        console.log("index: " + indexItem);
+        state.cart.splice(indexItem, 1);
+        window.localStorage.setItem("cart", JSON.stringify(state.cart));
+        if (state.cart.length == 0) {
+            window.localStorage.removeItem('cart');
+        }
+    } else {
+        state.ucart.splice(0, 1);
+        window.localStorage.setItem("ucart", JSON.stringify(state.ucart));
+        if (state.ucart.length == 0) {
+            window.localStorage.removeItem('ucart');
+        }
     }
+
 }
 
 export const auth_request = (state) => {
