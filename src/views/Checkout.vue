@@ -154,7 +154,11 @@ export default {
     this.getTotal();
     this.createListItems();
     const script = document.createElement("script");
-    this.checkLocal = this.$store.state.cart,
+    if (this.$store.state.cartFlag === true) {
+      this.checkLocal =  this.$store.state.cart;
+    } else {
+      this.checkLocal =  this.$store.state.ucart;
+    }
     script.src =
       "https://www.paypal.com/sdk/js?client-id=AYvSMAPfagJB-ffNa4cHkH_dk7zK8ojJu4G6UVhrhQqe2w3LaKqjzvKirbdm3cGguTH_pM6FQRx-_O76";
     script.addEventListener("load", this.setLoaded);
