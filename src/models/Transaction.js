@@ -6,7 +6,7 @@ const TransactionSchema = mongoose.Schema({
     name: String,
     photoId: String,
     photoHash: String,
-    amount: Number,
+    amount: String,
     transactionCreationTime: Date,
     // transactionCreatonTime: {
     //     type: Date,

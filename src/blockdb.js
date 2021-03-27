@@ -1,7 +1,7 @@
 const ProvenDB = require('@southbanksoftware/provendb-node-driver').Database;
 const MongoClient = require('mongodb').MongoClient;
-//const url = "mongodb+srv://imago-admin:capstone@cluster0.1vhur.mongodb.net/myFirstDatabase?retryWrites=true&w=majority&useNewUrlParser=true&useUnifiedTopology=true";
-const url = "mongo mongodb://imago-admin:capstone@imago-bc.provendb.io/imago-bc?ssl=true";
+const url = "mongodb+srv://imago-admin:capstone@cluster0.1vhur.mongodb.net/imago-bc?retryWrites=true&w=majority&useNewUrlParser=true&useUnifiedTopology=true";
+//const url = "mongo mongodb://imago-admin:capstone@imago-bc.provendb.io/imago-bc?ssl=true";
 
 const client = new MongoClient(url);
 
@@ -28,10 +28,10 @@ async function run() {
         let userTransaction = {
             "transactionId": "test trans id",
             "userId": "test user id",
-            "name": "Jane Doe",
+            "name": "Tom Doe",
             "photoId": "test photo id",
             "photoHash": "098f6bcd4621d373cade4e832627b4f6",
-            "price": 50000 + " USD",
+            "price": 500 + " USD",
             "transactionCreation": new Date(),
         }
         // Insert a single document, wait for promise so we can read it back
