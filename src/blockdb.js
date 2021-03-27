@@ -18,6 +18,7 @@ async function run() {
         const db = client.db(dbName);
         // Create ProvenDB Client
         pdb = new ProvenDB(db);
+        console.log(db);
         // Use/Create the collection "Transactions"
         const col = pdb.collection("Transactions");
         // Check current version
@@ -30,7 +31,7 @@ async function run() {
             "name": "Jane Doe",
             "photoId": "test photo id",
             "photoHash": "098f6bcd4621d373cade4e832627b4f6",
-            "price": 900 + " USD",
+            "price": 50000 + " USD",
             "transactionCreation": new Date(),
         }
         // Insert a single document, wait for promise so we can read it back
@@ -56,7 +57,7 @@ async function run() {
         console.log(`Submitted Proof: ${JSON.stringify(result, null, 4)}`);
 
         // Get an existing Proof
-        result = await pdb.getProof();
+        result = await pdb.getProof('6fa4bdc1-3b14-4347-8cf1-b3419085caac');
         console.log(`Latest Proof Is: ${JSON.stringify(result, null, 4)}`);
 
     } catch (err) {

@@ -159,6 +159,7 @@ export default {
       "https://www.paypal.com/sdk/js?client-id=AYvSMAPfagJB-ffNa4cHkH_dk7zK8ojJu4G6UVhrhQqe2w3LaKqjzvKirbdm3cGguTH_pM6FQRx-_O76";
     script.addEventListener("load", this.setLoaded);
     document.body.appendChild(script);
+    //console.log(this.$store.state.cart);
   },
   methods: {
     setLoaded: function () {
@@ -240,6 +241,39 @@ export default {
       
       axios({
                 url: "https://imago.azurewebsites.net/api/Order",
+                data: fd,
+                method: "POST",
+                headers: {'Content-Type': 'application/json'}
+            })
+            .then((respone) => {
+            if (respone.status == 201) {
+                alert("Transaction successfully");
+                this.paidFor = true;
+            } else {
+                alert("Transaction error");
+            }
+            console.log(respone.status);
+            })
+            .catch((error) => {
+            console.log(error);
+            });
+    },
+    onCheckoutSaveToBC() {
+      const fd = new FormData();
+      const orderDetails = Object.values(this.orderDetail);
+      fd.append('userId', this.user.userId);
+      fd.append('transactionId', this.orderInfo.id);
+      fd.append('createTime', this.orderInfo.create_time);
+      fd.append('amount', parseFloat(this.orderInfo.purchase_units[0].amount.value));
+      fd.append('name', this.user.fullName);
+      fd.append('photoId', this.orderInfo.payer.email_address);
+      fd.append('photoHash', this.$store.state.ucart);
+      for (let i = 0; i < orderDetails.length; i++) {
+        fd.append('ListPhotoId', orderDetails[i]);
+      }
+      
+      axios({
+                url: "http://localhost:3000/transactions",
                 data: fd,
                 method: "POST",
                 headers: {'Content-Type': 'application/json'}
