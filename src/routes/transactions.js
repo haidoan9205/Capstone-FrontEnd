@@ -8,7 +8,6 @@ const MongoClient = require('mongodb').MongoClient;
 let client;
 let result;
 let pdb;
-let proofId;
 
 async function getConnection() {
     try {
@@ -28,7 +27,7 @@ router.get('/', (req, res) => {
 });
 
 router.post('/', async (req, res) => {
-    console.log("req body: " + JSON.stringify(req.body));
+    //console.log("req body: " + JSON.stringify(req.body));
     await getConnection();
     // Use/Create the collection "Transactions"
     const col = pdb.collection("Transactions");
@@ -66,8 +65,8 @@ router.post('/', async (req, res) => {
         result = await pdb.submitProof();
         console.log(`Submitted Proof: ${JSON.stringify(result, null, 4)}`);
         //console.log(`Your ProofID: ${JSON.stringify(result.proofId)}`);
-        proofId = JSON.stringify(result.proofId);
-
+        let proofId = JSON.stringify(result.proofId);
+        return res.send(`ProofID: ${proofId}`);
     }
     // try {
     //     const savedTrans = await transaction.save();
@@ -86,7 +85,7 @@ router.post('/', async (req, res) => {
     //     .catch(err => {
     //         res.json({ message: err });
     //     })
-    return res.send(`ProofID: ${proofId}`);
+    
 });
 
 router.get('/getProof/:id', async (req, res) => {
