@@ -1,13 +1,9 @@
 <template>
-
-  <div
-    id="demo"
-    :class="[{'collapsed' : collapsed}, {'onmobile' : isOnMobile}]"
-  >
+  <div id="demo" :class="[{ collapsed: collapsed }, { onmobile: isOnMobile }]">
     <div class="demo">
-       <router-view />
+      <router-view />
       <sidebar-menu
-      style="background-image: linear-gradient(to left, #f297f7, #ed7ff4, #e665f1, #df46ee, #d812eb);"
+        style="background-image: linear-gradient(to right top, #464749, #56595c, #656c70, #758084, #859497);"
         :menu="menu"
         :collapsed="collapsed"
         :show-one-child="true"
@@ -24,120 +20,112 @@
 </template>
 
 <script>
-import { SidebarMenu } from 'vue-sidebar-menu'
+import { SidebarMenu } from "vue-sidebar-menu";
 
 const separator = {
-  template: `<hr style="border-color: rgba(0, 0, 0, 0.1); margin: 20px;">`
-}
+  template: `<hr style="border-color: rgba(0, 0, 0, 0.1); margin: 20px;">`,
+};
 
 export default {
-    
-  name: 'Sidebar',
+  name: "Sidebar",
   components: {
-        SidebarMenu
-    },
-  data () {
+    SidebarMenu,
+  },
+  data() {
     return {
       menu: [
         {
           header: true,
-          title: 'Privacy',
-          hiddenOnCollapse: true
+          title: "Privacy",
+          hiddenOnCollapse: true,
         },
         {
-          href: {path: '/profile'},
-          title: 'Profile',
-          icon: 'fa fa-user'
+          href: { path: "/profile" },
+          title: "Profile",
+          icon: "fa fa-user",
         },
         {
-          href: '/boughtphoto',
-          title: 'Your Bought Photos',
-          icon: 'fa fa-cc-paypal'
+          href: "/boughtphoto",
+          title: "Your Bought Photos",
+          icon: "fa fa-cc-paypal",
         },
         {
-          component: separator
+          component: separator,
         },
         {
           header: true,
-          title: 'Photos',
-          hiddenOnCollapse: true
+          title: "Photos",
+          hiddenOnCollapse: true,
         },
         {
-          title: 'Your Photo',
-          icon: 'fa fa-list-ul',
+          title: "Your Photo",
+          icon: "fa fa-list-ul",
           child: [
             {
-              href: {path:'/uploaded/:userId'},
-              title: 'Approved',
-              icon: 'fa fa-file-alt'
+              href: { path: "/uploaded/:userId" },
+              title: "Approved",
+              icon: "fa fa-file-alt",
             },
             {
-              href: {path: '/denied/:userId'},
-              title: 'Denied',
-              icon: 'fa fa-file-alt'
+              href: { path: "/denied/:userId" },
+              title: "Denied",
+              icon: "fa fa-file-alt",
             },
-              {
-              href: '/pending/:userId',
-              title: 'Pending',
-              icon: 'fa fa-file-alt'
+            {
+              href: "/pending/:userId",
+              title: "Pending",
+              icon: "fa fa-file-alt",
             },
-          
-          // {
-          //     href: logout(),
-          //     title: 'S out',
-          //     icon: 'fa fa-sign-out'
-          //   },
-          ]
+          ],
         },
-     
+      
       ],
       collapsed: false,
       themes: [
         {
-          name: 'Default theme',
-          input: ''
+          name: "Default theme",
+          input: "",
         },
         {
-          name: 'White theme',
-          input: 'white-theme'
-        }
+          name: "White theme",
+          input: "white-theme",
+        },
       ],
-      selectedTheme: 'white-theme',
-      isOnMobile: false
-    }
+      selectedTheme: "white-theme",
+      isOnMobile: false,
+    };
   },
-  mounted () {
-    this.onResize()
-    window.addEventListener('resize', this.onResize)
+  mounted() {
+    this.onResize();
+    window.addEventListener("resize", this.onResize);
   },
   computed: {
     isLoggedIn() {
       return this.$store.getters.isLoggedIn;
     },
-    user(){
-      const abc = window.localStorage.getItem('user');
+    user() {
+      const abc = window.localStorage.getItem("user");
       // console.log(abc);
       const appove = this.$store.state.approved_images;
-      console.log(appove)
+      console.log(appove);
       return JSON.parse(abc);
     },
   },
   methods: {
-    onToggleCollapse (collapsed) {
-      console.log(collapsed)
-      this.collapsed = collapsed
+    onToggleCollapse(collapsed) {
+      console.log(collapsed);
+      this.collapsed = collapsed;
     },
-    onItemClick (event, item, node) {
-      console.log('onItemClick')
-      
+    onItemClick(event, item, node) {
+      console.log("onItemClick");
     },
-    onResize () {
+    onResize() {
       if (window.innerWidth <= 767) {
-        this.isOnMobile = true
-        this.collapsed = true
+        this.isOnMobile = true;
+        this.collapsed = true;
       } else {
-        this.isOnMobile = false
-        this.collapsed = false
+        this.isOnMobile = false;
+        this.collapsed = false;
       }
     },
     logout() {
@@ -145,12 +133,12 @@ export default {
         this.$router.push("/login");
       });
     },
-  }
-}
+  },
+};
 </script>
 
 <style lang="scss" scoped>
-@import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600');
+@import url("https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600");
 
 body,
 html {
@@ -159,7 +147,7 @@ html {
 }
 
 body {
-  font-family: 'Source Sans Pro', sans-serif;
+  font-family: "Source Sans Pro", sans-serif;
   font-size: 18px;
   background-color: #f2f4f7;
   color: #262626;
