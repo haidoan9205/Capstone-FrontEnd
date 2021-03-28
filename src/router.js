@@ -22,7 +22,7 @@ import YourPhotoDenied from "./views/YourPhotoDenied.vue";
 import Unauthorized from "./views/Unauthorized.vue";
 import Search from "./views/Search.vue";
 import TransactionHistory from "./views/TransactionHistory.vue";
-
+import Sidebar from "./views/Sidebar.vue";
 
 Vue.use(Router);
 
@@ -53,6 +53,16 @@ export default new Router({
             components: {
                 header: AppHeader,
                 default: ChangeForgotPassword,
+                footer: AppFooter
+            },
+            props: true,
+        },
+        {
+            path: "/sidebar",
+            name: "sidebar",
+            components: {
+                header: AppHeader,
+                default: Sidebar,
                 footer: AppFooter
             },
             props: true,
@@ -96,7 +106,7 @@ export default new Router({
             components: {
                 header: AppHeader,
                 default: Profile,
-                footer: AppFooter
+                footer: Sidebar
             }
         },
         {
@@ -143,7 +153,7 @@ export default new Router({
             components: {
                 header: AppHeader,
                 default: YourPhoto,
-                footer: AppFooter
+                footer: Sidebar
             },
             props: true,
         },
@@ -153,17 +163,17 @@ export default new Router({
             components: {
                 header: AppHeader,
                 default: YourPhotoDenied,
-                footer: AppFooter
+                footer: Sidebar
             },
             props: true,
         },
         {
-            path: "/transaction",
-            name: "transaction",
+            path: "/boughtphoto",
+            name: "boughtphoto",
             components: {
                 header: AppHeader,
                 default: TransactionHistory,
-                footer: AppFooter
+                footer: Sidebar
             },
             props: true,
         },
