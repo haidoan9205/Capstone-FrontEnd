@@ -66,12 +66,11 @@
         </div>
       </table>
     </div>
-    <div
-      v-if="paidFor"
-      class="popup"
-    >
-      <h2 style="padding-top: 10%; padding-left: 10px">Thank you for your purchase!</h2>
-      <div class="row" style="padding-top: 10px; padding-left: 28px">  
+    <div v-if="paidFor" class="popup">
+      <h2 style="padding-top: 10%; padding-left: 10px">
+        Thank you for your purchase!
+      </h2>
+      <div class="row" style="padding-top: 10px; padding-left: 28px">
         <router-link to="/">
           <button class="btn btn-primary">Continute Shopping</button>
         </router-link>
@@ -80,7 +79,7 @@
         <router-link to="/">
           <button class="btn btn-primary">View History</button>
         </router-link>
-        </div>
+      </div>
     </div>
     <div
       v-if="!paidFor"
@@ -121,16 +120,20 @@
 </template>
 
 <script>
-import axios from 'axios';
+import axios from "axios";
 
 export default {
   computed: {
     cart() {
-      return this.$store.state.cart;
+      if (this.$store.state.cartFlag === true) {
+        return this.$store.state.cart;
+      } else {
+        return this.$store.state.ucart;
+      }
     },
     isLoggedIn() {
       return this.$store.getters.isLoggedIn;
-    }
+    },
   },
 
   data: function () {
@@ -142,18 +145,23 @@ export default {
       checkLocal: "",
       orderDetail: [],
       orderInfo: [],
-      user: JSON.parse(localStorage.getItem("user"))
+      user: JSON.parse(localStorage.getItem("user")),
     };
   },
   mounted: function () {
     this.getTotal();
     this.createListItems();
     const script = document.createElement("script");
-    this.checkLocal = this.$store.state.cart,
+    if (this.$store.state.cartFlag === true) {
+      this.checkLocal = this.$store.state.cart;
+    } else {
+      this.checkLocal = this.$store.state.ucart;
+    }
     script.src =
       "https://www.paypal.com/sdk/js?client-id=AYvSMAPfagJB-ffNa4cHkH_dk7zK8ojJu4G6UVhrhQqe2w3LaKqjzvKirbdm3cGguTH_pM6FQRx-_O76";
     script.addEventListener("load", this.setLoaded);
     document.body.appendChild(script);
+    //console.log(this.$store.state.ucart);
   },
   methods: {
     setLoaded: function () {
@@ -175,15 +183,19 @@ export default {
                     },
                   },
                   items: this.products,
-                }
-              ]
+                },
+              ],
             });
           },
           onApprove: async (data, actions) => {
             const order = await actions.order.capture();
             this.data;
             this.orderInfo = order;
-            this.onCheckOut();
+            if (this.$store.state.cartFlag === true) {
+              this.onCheckOut();
+            } else {
+              this.onCheckoutSaveToBC();
+            }
 
             //console.log("VALUE");
             //console.log(order.create_time);
@@ -197,9 +209,16 @@ export default {
     },
     getTotal() {
       var price = 0;
-      this.$store.state.cart.forEach((el) => {
-        price += parseInt(el.image.price);
-      });
+      if (this.$store.state.cartFlag === true) {
+        this.$store.state.cart.forEach((el) => {
+          price += parseInt(el.image.price);
+        });
+      } else {
+        this.$store.state.ucart.forEach((el) => {
+          price += parseInt(el.image.price);
+        });
+      }
+
       this.total = price;
       //console.log(this.total);
     },
@@ -223,35 +242,67 @@ export default {
     onCheckOut() {
       const fd = new FormData();
       const orderDetails = Object.values(this.orderDetail);
-      fd.append('userId', this.user.userId);
-      fd.append('transactionId', this.orderInfo.id);
-      fd.append('createTime', this.orderInfo.create_time);
-      fd.append('amount', parseFloat(this.orderInfo.purchase_units[0].amount.value));
-      fd.append('payerId', this.orderInfo.payer.payer_id);
-      fd.append('payerPaypalEmail', this.orderInfo.payer.email_address);
+      fd.append("userId", this.user.userId);
+      fd.append("transactionId", this.orderInfo.id);
+      fd.append("createTime", this.orderInfo.create_time);
+      fd.append(
+        "amount",
+        parseFloat(this.orderInfo.purchase_units[0].amount.value)
+      );
+      fd.append("payerId", this.orderInfo.payer.payer_id);
+      fd.append("payerPaypalEmail", this.orderInfo.payer.email_address);
       for (let i = 0; i < orderDetails.length; i++) {
-        fd.append('ListPhotoId', orderDetails[i]);
+        fd.append("ListPhotoId", orderDetails[i]);
       }
-      
+
       axios({
-                url: "https://imago.azurewebsites.net/api/Order",
-                data: fd,
-                method: "POST",
-                headers: {'Content-Type': 'application/json'}
-            })
-            .then((respone) => {
-            if (respone.status == 201) {
-                alert("Transaction successfully");
-                this.paidFor = true;
-            } else {
-                alert("Transaction error");
-            }
-            console.log(respone.status);
-            })
-            .catch((error) => {
-            console.log(error);
-            });
-    }
+        url: "https://imago.azurewebsites.net/api/Order",
+        data: fd,
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+      })
+        .then((respone) => {
+          if (respone.status == 201) {
+            alert("Transaction successfully");
+            this.paidFor = true;
+          } else {
+            alert("Transaction error");
+          }
+          console.log(respone.status);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+    onCheckoutSaveToBC() {
+      axios({
+        url: "http://localhost:3000/transactions",
+        data: {
+          transactionId: this.orderInfo.id,
+          userId: this.user.userId,
+          name: this.user.fullName,
+          photoId: this.$store.state.ucart[0].image.photoId,
+          photoHash: this.$store.state.ucart[0].image.hash,
+          amount: parseFloat(this.orderInfo.purchase_units[0].amount.value),
+          transactionCreationTime: this.orderInfo.create_time,
+        },
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+      })
+        .then((respone) => {
+          if (respone.status == 200) {
+            alert("Transaction successfully");
+            console.log(respone.data);
+            this.paidFor = true;
+          } else {
+            alert("Transaction error");
+          }
+          console.log(respone.status);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
   },
 };
 </script>
