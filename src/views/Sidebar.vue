@@ -81,11 +81,7 @@ export default {
               title: 'Pending',
               icon: 'fa fa-file-alt'
             },
-            {
-          header: true,
-          title: 'Account',
-          hiddenOnCollapse: true
-        },
+          
           // {
           //     href: logout(),
           //     title: 'S out',
