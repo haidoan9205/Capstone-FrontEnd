@@ -289,19 +289,49 @@ export default {
         method: "POST",
         headers: { "Content-Type": "application/json" },
       })
-        .then((respone) => {
-          if (respone.status == 200) {
-            alert("Transaction successfully");
-            console.log(respone.data);
-            this.paidFor = true;
-          } else {
-            alert("Transaction error");
+      .then((respone) => {
+        if (respone.status == 200) {
+          const fd = new FormData();
+          const orderDetails = Object.values(this.orderDetail);
+          fd.append("userId", this.user.userId);
+          fd.append("transactionId", this.orderInfo.id);
+          fd.append("proofId", respone.data);
+          fd.append("createTime", this.orderInfo.create_time);
+          fd.append(
+            "amount",
+            parseFloat(this.orderInfo.purchase_units[0].amount.value)
+          );
+          fd.append("payerId", this.orderInfo.payer.payer_id);
+          fd.append("payerPaypalEmail", this.orderInfo.payer.email_address);
+          for (let i = 0; i < orderDetails.length; i++) {
+            fd.append("ListPhotoId", orderDetails[i]);
           }
-          console.log(respone.status);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+          axios({
+            url: "https://imago.azurewebsites.net/api/Order",
+            data: fd,
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+          })
+          .then((res) => {
+            if (res.status == 201) {
+              alert("Transaction successfully");
+              this.paidFor = true;
+            } else {
+              alert("Transaction error");
+            }
+            console.log(res.status);
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+        } else {
+          alert("Transaction error");
+        }
+        console.log(respone.status);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
     },
   },
 };
