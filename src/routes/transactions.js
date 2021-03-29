@@ -125,4 +125,23 @@ router.get('/getDocumentHistory/:name', async (req, res) => {
     }
 
 });
+
+router.get('/getDocumentProof/:name', async (req, res) => {
+    await getConnection();
+    try {
+        // Fetch the history of that document.
+        result = await pdb.getDocumentProof('Transactions', { name: `${req.params.name}` });
+        console.log(result);
+        let length = result.history.length;
+        console.log(
+            `History for document: ${JSON.stringify(result.history, null, 4)}`
+        );
+        return res.json(result.history, null, 4);
+    } catch (error) {
+        res.json({ message: error });
+    } finally {
+        await client.close();
+    }
+
+});
 module.exports = router;
