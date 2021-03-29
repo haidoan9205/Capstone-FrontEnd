@@ -26,7 +26,7 @@ router.get('/', (req, res) => {
     res.send('On transactions !')
 });
 
-router.post('/', async (req, res) => {
+router.post('/', async(req, res) => {
     //console.log("req body: " + JSON.stringify(req.body));
     await getConnection();
     // Use/Create the collection "Transactions"
@@ -66,7 +66,7 @@ router.post('/', async (req, res) => {
         console.log(`Submitted Proof: ${JSON.stringify(result, null, 4)}`);
         //console.log(`Your ProofID: ${JSON.stringify(result.proofId)}`);
         let proofId = JSON.stringify(result.proofId);
-        return res.send(`ProofID: ${proofId}`);
+        return res.send(`${proofId}`);
     }
     // try {
     //     const savedTrans = await transaction.save();
@@ -74,8 +74,7 @@ router.post('/', async (req, res) => {
     // } 
     catch (error) {
         res.json({ message: error });
-    }
-    finally {
+    } finally {
         await client.close();
     }
     // transaction.save()
@@ -85,10 +84,10 @@ router.post('/', async (req, res) => {
     //     .catch(err => {
     //         res.json({ message: err });
     //     })
-    
+
 });
 
-router.get('/getProof/:id', async (req, res) => {
+router.get('/getProof/:id', async(req, res) => {
     await getConnection();
     try {
         // Get an existing Proof
@@ -107,7 +106,7 @@ router.get('/getProof/:id', async (req, res) => {
 
 });
 
-router.get('/getDocumentHistory/:name', async (req, res) => {
+router.get('/getDocumentHistory/:name', async(req, res) => {
     await getConnection();
     try {
         // Fetch the history of that document.
