@@ -27,6 +27,18 @@
               <div class="row justify-content-center">
                 <div class="row align-items-center">
                   <div class="form-group">
+                    <input
+                      type="hidden"
+                      class="form-control"
+                      v-model="user.userId"
+                      required
+                    />
+                  </div>
+                </div>
+              </div>
+              <div class="row justify-content-center">
+                <div class="row align-items-center">
+                  <div class="form-group">
                     <div class="donateItem ">
                       <label class="control-label">Full Name</label>
                     </div>
@@ -34,6 +46,21 @@
                       type="text"
                       class="form-control"
                       v-model="user.fullName"
+                      required
+                    />
+                  </div>
+                </div>
+              </div>
+              <div class="row justify-content-center">
+                <div class="row align-items-center">
+                  <div class="form-group">
+                    <div class="donateItem ">
+                      <label class="control-label">Description</label>
+                    </div>
+                    <input
+                      type="text"
+                      class="form-control"
+                      v-model="user.description"
                       required
                     />
                   </div>
@@ -55,17 +82,6 @@
               <div class="row justify-content-center">
                 <div class="row align-items-center">
                   <div class="form-group">
-                    <div class="donateItem ">
-                      <label class="control-label">Date of birth</label>
-                    </div>
-                    <date-picker v-model="user.birthDay" valueType="format" 
-                    :disabled-date="(date) => date >= new Date()"></date-picker>
-                  </div>
-                </div>
-              </div>
-              <div class="row justify-content-center">
-                <div class="row align-items-center">
-                  <div class="form-group">
                     <label class="control-label">Phone</label>
                     <input
                       type="text"
@@ -77,10 +93,36 @@
                 </div>
               </div>
               <div class="row justify-content-center">
-                <button class="btn btn-primary" type="submit" @click="onEditProfile">Edit</button>
+                <div class="row align-items-center">
+                  <div class="form-group">
+                    <div class="donateItem ">
+                      <label class="control-label">Date of birth</label>
+                    </div>
+                    <date-picker
+                      v-model="user.birthDay"
+                      valueType="format"
+                      :disabled-date="(date) => date >= new Date()"
+                    ></date-picker>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row justify-content-center">
+                <button
+                  class="btn btn-primary"
+                  type="submit"
+                  @click="onEditProfile"
+                >
+                  Edit
+                </button>
               </div>
               <div class="row justify-content-center">
-                <a v-bind:href="'http://localhost:8081/#/changepassword/' + user.userId">Click here to change password</a>
+                <a
+                  v-bind:href="
+                    'http://localhost:8081/#/changepassword/' + user.userId
+                  "
+                  >Click here to change password</a
+                >
               </div>
             </div>
           </card>
@@ -91,8 +133,8 @@
 </template>
 
 <script>
-import DatePicker from 'vue2-datepicker';
-import 'vue2-datepicker/index.css';
+import DatePicker from "vue2-datepicker";
+import "vue2-datepicker/index.css";
 import axios from "axios";
 
 export default {
@@ -100,37 +142,49 @@ export default {
   data() {
     return {
       user: JSON.parse(localStorage.getItem("user")),
-      disabledAfter: new Date().toLocaleDateString()
+      disabledAfter: new Date().toLocaleDateString(),
     };
   },
   computed: {
     isLoggedIn() {
       return this.$store.getters.isLoggedIn;
-    }
+    },
   },
   methods: {
     onEditProfile() {
       let userId = this.user.userId;
-        axios.put("https://imago.azurewebsites.net/api/v1/User/" + userId, {
-          fullName: this.user.username,
+      axios
+        .put("https://imago.azurewebsites.net/api/v1/User/" + userId, {
+          userId: this.user.userId,
+          fullName: this.user.fullName,
           description: this.user.description,
           email: this.user.email,
           phone: this.user.phone,
-          dayOfBirth: this.user.birthDay
+          dayOfBirth: this.user.birthDay,
         })
-        .then((respone) => {
-          if (respone.status == 201) {
-              alert("Edit successfully");
-              window.localStorage.setItem("user", JSON.stringify(respone.data));
+        .then((response) => {
+          if (response.status == 201) {
+            this.$alert(
+              "Your information is updated",
+              "Success",
+              "success"
+            ).then(() => console.log("Closed"));
+            const userUpdated = JSON.parse(window.localStorage.getItem("user"));
+            (userUpdated.fullName = response.data.fullName),
+              (userUpdated.description = response.data.description),
+              (userUpdated.email = response.data.email),
+              (userUpdated.phone = response.data.phone),
+              (userUpdated.dayOfBirth = response.data.birthDay);
+            window.localStorage.setItem("user", JSON.stringify(userUpdated));
           } else {
-              alert("Edit error");
+            alert("Edit error");
           }
-          console.log(respone);
+          console.log(response);
         })
         .catch((error) => {
           console.log(error);
         });
-    }  
+    },
   },
 };
 </script>

@@ -35,6 +35,7 @@
     "vue-material": "^1.0.0-beta-15",
     "vue-multiselect": "^2.1.6",
     "vue-router": "^3.0.2",
+    "vue-sidebar-menu": "^4.7.4",
     "vue-simple-alert": "^1.1.1",
     "vue-stack-grid": "^1.2.2",
     "vue-virtual-grid": "^2.3.1",

@@ -11,8 +11,12 @@ import store from './store';
 import VueMaterial from 'vue-material';
 import 'vue-material/dist/vue-material.min.css';
 import VueSimpleAlert from "vue-simple-alert";
+import VueSidebarMenu from 'vue-sidebar-menu'
+import 'vue-sidebar-menu/dist/vue-sidebar-menu.css'
+
 
 Vue.use(VueMaterial);
+Vue.use(VueSidebarMenu);
 
 // import Vue from 'vue'
 

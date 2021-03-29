@@ -181,7 +181,6 @@ export default {
           } else {
             alert("Upload error");
           }
-          window.location.reload();
           console.log(respone.status);
         })
         .catch((error) => {

@@ -10,41 +10,29 @@
     </li>
     <li class="nav-item" v-if="!isLoggedIn">
       <router-link to="/login" title="Login">
-        <a class="nav-link nav-link-icon" href="#">
+        <a class="nav-link nav-link-icon" href="#" style="color:black">
           <i class="fa fa-sign-in"></i>
           <span class="nav-link-inner--text">Sign in</span>
         </a>
       </router-link>
     </li>
     <li class="nav-item" v-if="isLoggedIn">
-      <Slide right :closeOnNavigation="true" :burgerIcon="true"  v-if="isLoggedIn" noOverlay>
-        <div class="media-body ml-2 d-none d-lg-block">
-          <span class="avatar avatar-sm rounded-circle">
-            <img alt="Image placeholder" src="img/theme/team-4-800x800.jpg" />
-          </span>
-          <span><h3 style="color: white">{{user.fullName}}</h3></span>
-        </div>
-        <router-link to="/profile"
-          ><a class="nav-link" href="#">Profile</a>
-        </router-link>
-         <router-link
-            :to="{ name: 'yourphoto', params: { userId: user.userId } }"
-          >
-         <a class="nav-link" href="#">Your Photo</a>
-         </router-link>
-        <router-link to="/upload">
-          <a class="nav-link" href="#">Upload</a>
-        </router-link>
-        <div class="dropdown-divider" />
-        <!-- <a class="nav-link nav-link-icon" @click="logout">
-          <i class="fa fa-sign-out"></i>
-          <span class="nav-link-inner--text">Sign out</span>
-        </a> -->
-        <div class="text-center">
-          <base-button type="" @click="logout" style="margin-left: 10%; width: 80%">Log out</base-button>
-        </div>
-      </Slide>
+      <router-link to="/profile" title="Profile">
+        <a class="nav-link nav-link-icon"  href="#" style="color:black">
+          <i class="fa fa-user"></i>
+          <span class="nav-link-inner--text">Profile</span>
+        </a>
+      </router-link>
     </li>
+    <li class="nav-item" v-if="isLoggedIn">
+      <router-link to="/login" title="Login">
+        <a class="nav-link nav-link-icon" @click="logout" href="#" style="color:black">
+          <i class="fa fa-sign-in"></i>
+          <span class="nav-link-inner--text">Sign out</span>
+        </a>
+      </router-link>
+    </li>
+    
 
     <!-- <li class="nav-item" v-if="isLoggedIn">
       <router-link to="/profile">

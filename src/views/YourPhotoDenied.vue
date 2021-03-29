@@ -1,20 +1,5 @@
 <template>
   <div>
-    <div
-      class="justify-content-center button-links mx-auto"
-      style="background-color:#FAE9CD;"
-    >
-      <router-link :to="{ name: 'yourphoto', params: { userId: user.userId } }">
-        <a href="#" class="btn btn-link text-success">Approved</a>
-      </router-link>
-      <router-link
-        :to="{ name: 'yourphotodenied', params: { userId: user.userId } }"
-      >
-        <a href="#" class="btn btn-link text-warning">Denied</a>
-      </router-link>
-
-      <a href="#" class="btn btn-link text-primary">Pending</a>
-    </div>
     <div class="container table-responsive">
       <table class="table table-hover table-sm">
         <div>
