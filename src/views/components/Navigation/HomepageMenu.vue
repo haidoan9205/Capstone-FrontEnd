@@ -16,19 +16,12 @@
         </a>
       </router-link>
     </li>
+ 
     <li class="nav-item" v-if="isLoggedIn">
-      <router-link to="/profile" title="Profile">
+      <router-link to="/profile" title="ProfileMaster">
         <a class="nav-link nav-link-icon"  href="#" style="color:black">
           <i class="fa fa-user"></i>
           <span class="nav-link-inner--text">Profile</span>
-        </a>
-      </router-link>
-    </li>
-    <li class="nav-item" v-if="isLoggedIn">
-      <router-link to="/profileMaster" title="ProfileMaster">
-        <a class="nav-link nav-link-icon"  href="#" style="color:black">
-          <i class="fa fa-user"></i>
-          <span class="nav-link-inner--text">ProfileMaster</span>
         </a>
       </router-link>
     </li>

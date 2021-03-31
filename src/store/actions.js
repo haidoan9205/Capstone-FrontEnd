@@ -17,6 +17,14 @@ export const getImage = ({ commit }, photoId) => {
     });
 };
 
+export const getStrangeUser = ({ commit }, userId) => {
+  axios
+    .get(`https://imago.azurewebsites.net/api/v1/User/GetById/${userId}`)
+    .then((response) => {
+      commit("SET_STRANGER", response.data);
+    });
+};
+
 export const downloadImage = ({ commit }, photoId) => {
   axios({
     url: `https://imago.azurewebsites.net/api/v1/Photo/DownloadPhoto/${photoId}`,
@@ -160,6 +168,7 @@ export const getApprovedImageByUser = ({ commit }) => {
       commit("GET_APPROVED_IMAGE", response.data);
     });
 };
+
 
 export const getDeniedImageByUser = ({ commit }) => {
   const user = localStorage.getItem("user");

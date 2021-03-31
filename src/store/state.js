@@ -15,4 +15,5 @@ export default {
     denied_images: [],
     transactions: [],
     donwloadURL: '',
+    stranger: null,
 }

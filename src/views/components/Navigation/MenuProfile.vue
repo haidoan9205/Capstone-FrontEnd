@@ -26,11 +26,9 @@
                 </router-link>
                
               </li>
+             
               <li class="nav-item">
                 <router-link to="/profile"><a class="nav-link" href="#">Profile</a></router-link>
-              </li>
-              <li class="nav-item">
-                <router-link to="/profileMaster"><a class="nav-link" href="#">ProfileMaster</a></router-link>
               </li>
               <li class="nav-item">
                 <router-link to="/upload"> 

@@ -8,7 +8,7 @@ import AppFooter from "./layout/AppFooter";
 import Landing from "./views/Landing.vue";
 import Login from "./views/Login.vue";
 import Register from "./views/Register.vue";
-import Profile from "./views/Profile.vue";
+
 import ProfileMaster from "./views/ProfileMaster.vue";
 import ChangePassword from "./views/ChangePassword.vue";
 import ChangeForgotPassword from "./views/ChangeForgotPassword.vue";
@@ -103,17 +103,9 @@ export default new Router({
 
             }
         },
+      
         {
             path: "/profile",
-            name: "profile",
-            components: {
-                header: AppHeader,
-                default: Profile,
-                footer: Sidebar
-            }
-        },
-        {
-            path: "/profileMaster",
             name: "profileMaster",
             components: {
                 header: AppHeader,

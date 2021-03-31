@@ -16,6 +16,10 @@ export const SET_FOLLOWINGUSERS = (state, followingUsers) => {
     state.followingUsers = followingUsers;
 };
 
+export const SET_STRANGER =(state, stranger) =>{
+    state.stranger = stranger
+}
+
 export const DOWNLOAD_IMAGE = (state, downloadURL) => {
     state.downloadURL = downloadURL;
     window.open(downloadURL)
@@ -98,6 +102,9 @@ export const logout = (state) => {
 export const GET_APPROVED_IMAGE = (state, approved_images) => {
     state.approved_images = approved_images
 }
+
+
+
 
 export const GET_DENIED_IMAGE = (state, denied_images) => {
     state.denied_images = denied_images
