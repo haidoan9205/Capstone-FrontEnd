@@ -28,7 +28,9 @@
               </li>
               <li class="nav-item">
                 <router-link to="/profile"><a class="nav-link" href="#">Profile</a></router-link>
-                
+              </li>
+              <li class="nav-item">
+                <router-link to="/profileMaster"><a class="nav-link" href="#">ProfileMaster</a></router-link>
               </li>
               <li class="nav-item">
                 <router-link to="/upload"> 
@@ -72,8 +74,7 @@ export default {
 
   methods: {
     logout() {
-       console.log('anh hai cho em check cai user')
-      console.log(this.$store.state.user);
+
       this.$store.dispatch("logout").then(() => {
         this.$router.push("/login");
       });

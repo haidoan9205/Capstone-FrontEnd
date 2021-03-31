@@ -13,10 +13,13 @@
     </thead>
     <tbody>
       <tr v-for="transaction in transactions" :key="transaction.photoId">
-        <td>{{ transaction.insDateTime }}</td>
+        <td>{{ frontEndDateFormat(transaction.boughtTime) }}</td>
         <td>{{ transaction.photoName }}</td>
-        <td>{{ transaction.typeId }}</td>
-        <td>${{ transaction.price }}</td>
+        <td>
+          <p v-if="transaction.typeId === 1">Normal</p>
+          <p v-if="transaction.typeId === 2">Exclusive</p>
+        </td>
+        <td>${{ transaction.boughtPrice }}</td>
         <!-- <td>{{transaction.transactionId}}</td>  -->
         <td><button @click="download(transaction)">Download</button> </td>
       </tr>
@@ -28,6 +31,8 @@
 
 <script>
 import axios from 'axios';
+  import moment from 'moment'
+
 export default {
   data() {
     return {
@@ -45,7 +50,11 @@ export default {
   methods:{
       download(transaction){
           this.$store.dispatch('downloadImage', transaction.photoId);
-      }
+      },
+      frontEndDateFormat(date) {
+        		return moment(date, 'YYYY-MM-DDTHH:mm:ss').format('DD/MM/YYYY HH:mm');
+        	},
+      
   }
 };
 </script>

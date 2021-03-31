@@ -5,3 +5,9 @@ export const isLoggedIn = (state) =>{
 export const authStatus = (state) =>{
     return state.status;
 };
+
+
+
+export const followerCount = (state) =>{
+    return state.followingUsers.length + 1;
+};

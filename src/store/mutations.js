@@ -12,6 +12,10 @@ export const SET_TRANSACTIONS = (state, transactions) => {
     state.transactions = transactions;
 };
 
+export const SET_FOLLOWINGUSERS = (state, followingUsers) => {
+    state.followingUsers = followingUsers;
+};
+
 export const DOWNLOAD_IMAGE = (state, downloadURL) => {
     state.downloadURL = downloadURL;
     window.open(downloadURL)
