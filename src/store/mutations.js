@@ -18,6 +18,7 @@ export const SET_FOLLOWINGUSERS = (state, followingUsers) => {
 
 export const SET_STRANGER =(state, stranger) =>{
     state.stranger = stranger
+    window.localStorage.setItem("stranger", JSON.stringify(state.stranger));
 }
 
 export const DOWNLOAD_IMAGE = (state, downloadURL) => {
@@ -104,7 +105,9 @@ export const GET_APPROVED_IMAGE = (state, approved_images) => {
 }
 
 
-
+export const GET_APPROVED_IMAGE_STRANGER = (state, approved_images_stranger) =>{
+    state.approved_images_stranger = approved_images_stranger;
+}
 
 export const GET_DENIED_IMAGE = (state, denied_images) => {
     state.denied_images = denied_images

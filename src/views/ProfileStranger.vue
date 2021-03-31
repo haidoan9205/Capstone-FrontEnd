@@ -30,11 +30,8 @@
                 class="col-lg-4 order-lg-3 text-lg-right align-self-lg-center"
               >
                 <div class="card-profile-actions py-4 mt-lg-0">
-                  <base-button type="info" size="sm" @click="modals.modalEditProfile = true" class="mr-4"
-                    >Edit Profile</base-button
-                  >
-            
-                  <base-button type="default" size="sm" class="float-right" @click="followUser(strange)">Follow This User</base-button>
+                  
+                  <base-button type="default" size="sm"  v-show="alreadyFollowed == false" class="float-right" @click="followUser(strange)">Follow This User</base-button>
                 </div>
               </div>
               <div class="col-lg-4 order-lg-1">
@@ -116,6 +113,7 @@ export default {
   data() {
     return {
       userId:"",
+      alreadyFollowed: false,
       countFollower: this.$store.getters.followerCount,
       user: JSON.parse(localStorage.getItem("user")),
       disabledAfter: new Date().toLocaleDateString(),
@@ -135,12 +133,26 @@ export default {
      strange(){
       return this.$store.state.stranger;
     },
+    images(){
+      return this.$store.state.approved_images_stranger;
+    }
 
   },
   mounted() {
     this.$store.dispatch("getFollowingUsers");
     this.$store.dispatch("getStrangeUser", this.$route.params.userId);
-
+    window.localStorage.setItem('strangerId', this.$route.params.userId);
+    this.$store.dispatch("getApprovedImageByStranger")
+    axios({
+      method: "GET",
+      url:
+        "https://imago.azurewebsites.net/api/v1/Follow/CheckFollowedUser?userId=" +
+        JSON.parse(this.$store.state.user).userId +
+        "&followId=" +
+        window.localStorage.getItem('strangerId'),
+    }).then((response) => {
+      this.alreadyFollowed = response.data;
+    });
     
   },
   methods: {
@@ -162,19 +174,12 @@ export default {
               "Success",
               "success"
             ).then(() => console.log("Closed"));
-        }
+        }else  this.$alert(
+              "Something went wrong",
+              "Error",
+              "error"
+            )
       });
-    },
-    images(){
-       axios({
-
-                method : 'GET',
-                url : 'https://imago.azurewebsites.net/api/v1/User/GetUserApprovedPhoto/' + this.$route.params.userId,
-
-            })
-        .then((response) => {
-          console.log(response.data);
-        });
     },
     unFollowUser(follower) {
       // console.log(user.userId)
@@ -240,5 +245,12 @@ export default {
 .mini-button{
   font-weight: 200 !important;
   padding: 0.2rem 1rem !important;
+}
+.img-fit {
+  width: 100%;
+  height: 15vw;
+  object-fit: cover;
+  margin-bottom: 15px;
+  border-radius: 10px;
 }
 </style>

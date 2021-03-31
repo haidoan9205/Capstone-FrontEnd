@@ -168,6 +168,16 @@ export const getApprovedImageByUser = ({ commit }) => {
       commit("GET_APPROVED_IMAGE", response.data);
     });
 };
+export const getApprovedImageByStranger = ({ commit }) => {
+  const strangerId = window.localStorage.getItem('strangerId');
+  axios
+    .get(
+      `https://imago.azurewebsites.net/api/v1/User/GetUserApprovedPhoto/${strangerId}`
+    )
+    .then((response) => {
+      commit("GET_APPROVED_IMAGE_STRANGER", response.data);
+    });
+};
 
 
 export const getDeniedImageByUser = ({ commit }) => {

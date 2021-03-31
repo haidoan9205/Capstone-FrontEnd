@@ -12,6 +12,7 @@ export default {
     token: localStorage.getItem('token') || '',
     user: localStorage.getItem('user') || null,
     approved_images: [],
+    approved_images_stranger:[],
     denied_images: [],
     transactions: [],
     donwloadURL: '',

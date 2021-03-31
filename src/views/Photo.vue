@@ -65,24 +65,24 @@
           <p class="mb-0">
             Upload By:
           </p>
-          <router-link :to="{ name: 'Profile', params: { userId: image.userId } }">
-          <footer class="blockquote-footer">
-            <cite title="Source Title">{{ image.userName }}</cite>
-          </footer>
+          <router-link
+            :to="{ name: 'Profile', params: { userId: image.userId } }"
+          >
+            <footer class="blockquote-footer">
+              <cite title="Source Title">{{ image.userName }}</cite>
+            </footer>
           </router-link>
         </blockquote>
         <div class="mb-3 mt-2">
-          <base-button class="btn-1" type="primary" @click="addToCart()" v-show="alreadyBought == false"
+          <base-button
+            class="btn-1"
+            type="primary"
+            @click="addToCart()"
+           
+            v-if="this.isYour == false && alreadyBought == false"
             >Add to cart</base-button
           >
-          <base-button
-            class="btn-2"
-            outline
-            type="primary"
-            @click="followUser"
-            icon="fa fa-heart-o"
-            >Follow</base-button
-          >
+        
         </div>
       </div>
       <!-- </div> -->
@@ -101,6 +101,7 @@ export default {
   data() {
     return {
       photoId: 0,
+      isYour: false,
       status: this.follows,
       alreadyBought: false,
       userId: "",
@@ -110,9 +111,7 @@ export default {
         modalTag: false,
       },
       openingBadgeModal: "",
-      testPicture: [
-       
-      ],
+      testPicture: [],
     };
   },
 
@@ -136,15 +135,19 @@ export default {
         console.log(response.data);
       });
     },
-    getPhotosByCategory(badge){
-       axios({
+    getPhotosByCategory(badge) {
+      axios({
         method: "GET",
-        url: "https://imago.azurewebsites.net/api/v1/Photo/GetByCategory/?catName=" + badge.categoryName +"&photoId=" + this.photoId + "" ,
+        url:
+          "https://imago.azurewebsites.net/api/v1/Photo/GetByCategory/?catName=" +
+          badge.categoryName +
+          "&photoId=" +
+          this.photoId +
+          "",
       }).then((response) => {
-        this.testPicture = response.data
+        this.testPicture = response.data;
       });
-    }
-    
+    },
   },
 
   computed: {
@@ -156,22 +159,21 @@ export default {
   mounted() {
     console.log(this.photoId);
     this.$store.dispatch("getImage", this.photoId);
-     
-      
-     axios({
-        method: "GET",
-        url:
-          "https://imago.azurewebsites.net/api/v1/Photo/CheckBoughtPhoto?id=" +
-         this.photoId +
-          "&userId=" +
-          JSON.parse(this.$store.state.user).userId,
-      }).
-      then(response => {
-        this.alreadyBought = response.data
-      }
 
-      ) 
-      
+    axios({
+      method: "GET",
+      url:
+        "https://imago.azurewebsites.net/api/v1/Photo/CheckBoughtPhoto?id=" +
+        this.photoId +
+        "&userId=" +
+        JSON.parse(this.$store.state.user).userId,
+    }).then((response) => {
+      this.alreadyBought = response.data;
+    });
+
+     this.isYour = this.$store.state.approved_images.includes(this.photoId);
+     console.log('con cac')
+     console.log(this.isYour)
   },
 
   created() {

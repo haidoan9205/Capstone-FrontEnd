@@ -30,7 +30,11 @@
                 class="col-lg-4 order-lg-3 text-lg-right align-self-lg-center"
               >
                 <div class="card-profile-actions py-4 mt-lg-0">
-                  <base-button type="info" size="sm" @click="modals.modalEditProfile = true" class="mr-4"
+                  <base-button
+                    type="info"
+                    size="sm"
+                    @click="modals.modalEditProfile = true"
+                    class="mr-4"
                     >Edit Profile</base-button
                   >
                   <modal :show.sync="modals.modalEditProfile">
@@ -41,112 +45,111 @@
                     >
                       Edit Profile
                     </h6>
-                   
-            <div class="py-5 px-4 text-center">
-              <div class="page"><h2>Profile</h2></div>
-              <div class="row justify-content-center">
-                <div class="row align-items-center">
-                  <div class="form-group">
-                    <input
-                      type="hidden"
-                      class="form-control"
-                      v-model="user.userId"
-                      required
-                    />
-                  </div>
-                </div>
-              </div>
-              <div class="row justify-content-center">
-                <div class="row align-items-center">
-                  <div class="form-group">
-                    <div class="donateItem ">
-                      <label class="control-label">Full Name</label>
-                    </div>
-                    <input
-                      type="text"
-                      class="form-control"
-              
-                      v-model="user.fullName"
-                      required
-                    />
-                  </div>
-                </div>
-              </div>
-              <div class="row justify-content-center">
-                <div class="row align-items-center">
-                  <div class="form-group">
-                    <div class="donateItem ">
-                      <label class="control-label">Description</label>
-                    </div>
-                    <input
-                      type="text"
-                      class="form-control"
-                      v-model="user.description"
-                      required
-                    />
-                  </div>
-                </div>
-              </div>
-              <div class="row justify-content-center">
-                <div class="row align-items-center">
-                  <div class="form-group">
-                    <label class="control-label">Email</label>
-                    <input
-                      type="text"
-                      class="form-control"
-                      v-model="user.email"
-                      required
-                    />
-                  </div>
-                </div>
-              </div>
-              <div class="row justify-content-center">
-                <div class="row align-items-center">
-                  <div class="form-group">
-                    <label class="control-label">Phone</label>
-                    <input
-                      type="text"
-                      class="form-control"
-                      v-model="user.phone"
-                      required
-                    />
-                  </div>
-                </div>
-              </div>
-              <div class="row justify-content-center">
-                <div class="row align-items-center">
-                  <div class="form-group">
-                    <div class="donateItem ">
-                      <label class="control-label">Date of birth</label>
-                    </div>
-                    <date-picker
-                      v-model="user.birthDay"
-                      valueType="format"
-                      :disabled-date="(date) => date >= new Date()"
-                    ></date-picker>
-                  </div>
-                </div>
-              </div>
 
-              <div class="row justify-content-center">
-                <button
-                  class="btn btn-primary"
-                  type="submit"
-                  @click="onEditProfile"
-                >
-                  Edit
-                </button>
-              </div>
-              <div class="row justify-content-center">
-                <a
-                  v-bind:href="
-                    'http://localhost:8081/#/changepassword/' + user.userId
-                  "
-                  >Click here to change password</a
-                >
-              </div>
-            </div>
-      
+                    <div class="py-5 px-4 text-center">
+                      <div class="page"><h2>Profile</h2></div>
+                      <div class="row justify-content-center">
+                        <div class="row align-items-center">
+                          <div class="form-group">
+                            <input
+                              type="hidden"
+                              class="form-control"
+                              v-model="user.userId"
+                              required
+                            />
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row justify-content-center">
+                        <div class="row align-items-center">
+                          <div class="form-group">
+                            <div class="donateItem ">
+                              <label class="control-label">Full Name</label>
+                            </div>
+                            <input
+                              type="text"
+                              class="form-control"
+                              v-model="user.fullName"
+                              required
+                            />
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row justify-content-center">
+                        <div class="row align-items-center">
+                          <div class="form-group">
+                            <div class="donateItem ">
+                              <label class="control-label">Description</label>
+                            </div>
+                            <input
+                              type="text"
+                              class="form-control"
+                              v-model="user.description"
+                              required
+                            />
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row justify-content-center">
+                        <div class="row align-items-center">
+                          <div class="form-group">
+                            <label class="control-label">Email</label>
+                            <input
+                              type="text"
+                              class="form-control"
+                              v-model="user.email"
+                              required
+                            />
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row justify-content-center">
+                        <div class="row align-items-center">
+                          <div class="form-group">
+                            <label class="control-label">Phone</label>
+                            <input
+                              type="text"
+                              class="form-control"
+                              v-model="user.phone"
+                              required
+                            />
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row justify-content-center">
+                        <div class="row align-items-center">
+                          <div class="form-group">
+                            <div class="donateItem ">
+                              <label class="control-label">Date of birth</label>
+                            </div>
+                            <date-picker
+                              v-model="user.birthDay"
+                              valueType="format"
+                              :disabled-date="(date) => date >= new Date()"
+                            ></date-picker>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="row justify-content-center">
+                        <button
+                          class="btn btn-primary"
+                          type="submit"
+                          @click="onEditProfile"
+                        >
+                          Edit
+                        </button>
+                      </div>
+                      <div class="row justify-content-center">
+                        <a
+                          v-bind:href="
+                            'http://localhost:8081/#/changepassword/' +
+                              user.userId
+                          "
+                          >Click here to change password</a
+                        >
+                      </div>
+                    </div>
 
                     <template slot="footer">
                       <base-button
@@ -157,13 +160,12 @@
                       </base-button>
                     </template>
                   </modal>
-                  <base-button type="default" size="sm" class="float-right">Follow This User</base-button>
                 </div>
               </div>
               <div class="col-lg-4 order-lg-1">
                 <div class="card-profile-stats d-flex justify-content-center">
                   <div class="modalCursor" @click="modals.modalFollower = true">
-                    <span class="heading">{{countFollower}}</span>
+                    <span class="heading">{{ countFollower }}</span>
                     <span class="description">Follower</span>
                   </div>
                   <modal :show.sync="modals.modalFollower">
@@ -183,7 +185,10 @@
                           <td>{{ follower.username }}</td>
                           <td>{{ follower.description }}</td>
                           <td>
-                            <base-button class="btn-1 mini-button" @click="unFollowUser(follower)" type="neutral"
+                            <base-button
+                              class="btn-1 mini-button"
+                              @click="unFollowUser(follower)"
+                              type="neutral"
                               >Unfollow</base-button
                             >
                           </td>
@@ -241,6 +246,21 @@
                 </div>
               </div>
             </div>
+              <div class="container">
+            <div class="ct-example-row">
+              <div class="row">
+                <div
+                  class="col-6 col-md-4"
+                  v-for="item in images"
+                  :key="item.photoId"
+                >
+                 
+                    <img v-lazy="item.wmlink" class="img-fit" />
+    
+                </div>
+              </div>
+            </div>
+          </div>
           </div>
         </card>
       </div>
@@ -262,7 +282,7 @@ export default {
       disabledAfter: new Date().toLocaleDateString(),
       modals: {
         modalFollower: false,
-        modalEditProfile: false
+        modalEditProfile: false,
       },
     };
   },
@@ -273,9 +293,13 @@ export default {
     followingUsers() {
       return this.$store.state.followingUsers;
     },
+    images() {
+      return this.$store.state.approved_images;
+    },
   },
   mounted() {
     this.$store.dispatch("getFollowingUsers");
+    this.$store.dispatch("getApprovedImageByUser");
   },
   methods: {
     onEditProfile() {
@@ -314,19 +338,16 @@ export default {
     },
     unFollowUser(follower) {
       // console.log(user.userId)
-       axios({
-
-                method : 'POST',
-                url : 'https://imago.azurewebsites.net/api/v1/Follow/UnFollow',
-                data: {
-                    userId :  JSON.parse(this.$store.state.user).userId,
-                    followUserId : follower.userId,
-                },
-
-            })
-        .then((response) => {
-          console.log(response.data);
-        });
+      axios({
+        method: "POST",
+        url: "https://imago.azurewebsites.net/api/v1/Follow/UnFollow",
+        data: {
+          userId: JSON.parse(this.$store.state.user).userId,
+          followUserId: follower.userId,
+        },
+      }).then((response) => {
+        console.log(response.data);
+      });
     },
   },
 };
@@ -373,8 +394,15 @@ export default {
 .styled-table tbody tr:last-of-type {
   border-bottom: 2px solid #009879;
 }
-.mini-button{
+.mini-button {
   font-weight: 200 !important;
   padding: 0.2rem 1rem !important;
+}
+.img-fit {
+  width: 100%;
+  height: 15vw;
+  object-fit: cover;
+  margin-bottom: 15px;
+  border-radius: 10px;
 }
 </style>
