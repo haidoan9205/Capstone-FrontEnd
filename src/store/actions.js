@@ -179,6 +179,30 @@ export const getApprovedImageByStranger = ({ commit }) => {
     });
 };
 
+export const getTransactionDetail =({commit}, transactionId) =>{
+  axios
+  .get(
+    `https://imago.azurewebsites.net/api/v1/User/GetUserApprovedPhoto/${transactionId}`
+  )
+  .then((response) => {
+    commit("GET_HISTORY_DETAIL)", response.data);
+  });
+}
+
+export const getHistory = ({commit}) =>{
+  const user = localStorage.getItem("user");
+  const user_parsed = JSON.parse(user);
+  console.log("user parse");
+  console.log(user_parsed);
+  axios
+    .get(
+      `https://imago.azurewebsites.net/api/v1/Transaction/GetAllTransactionByUserID/${user_parsed.userId}`
+    )
+    .then((response) => {
+      commit("SET_HISTORY", response.data);
+    });
+}
+
 
 export const getDeniedImageByUser = ({ commit }) => {
   const user = localStorage.getItem("user");

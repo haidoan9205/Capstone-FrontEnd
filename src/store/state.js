@@ -17,4 +17,6 @@ export default {
     transactions: [],
     donwloadURL: '',
     stranger: null,
+    history: [],
+    transaction_detail: [],
 }

@@ -59,6 +59,14 @@ export const ADD_TO_CART = (state, { image }) => {
     }
 };
 
+export const SET_HISTORY = (state, history) =>{
+    state.history = history
+}
+
+export const GET_HISTORY_DETAIL = (state, transaction_detail) =>{
+    state.transaction_detail = transaction_detail;
+}
+
 export const REMOVE_ITEM = (state, { image }) => {
     if (state.cartFlag === true) {
         var indexItem = state.cart.findIndex(x => x.image === image);

@@ -50,6 +50,11 @@ export default {
           title: "Your Bought Photos",
           icon: "fa fa-cc-paypal",
         },
+          {
+          href: "/history",
+          title: "Transactions",
+          icon: "fa fa-cc-paypal",
+        },
         {
           component: separator,
         },

@@ -8,7 +8,7 @@ import AppFooter from "./layout/AppFooter";
 import Landing from "./views/Landing.vue";
 import Login from "./views/Login.vue";
 import Register from "./views/Register.vue";
-
+import History from "./views/History.vue";
 import ProfileMaster from "./views/ProfileMaster.vue";
 import ChangePassword from "./views/ChangePassword.vue";
 import ChangeForgotPassword from "./views/ChangeForgotPassword.vue";
@@ -25,7 +25,7 @@ import Search from "./views/Search.vue";
 import TransactionHistory from "./views/TransactionHistory.vue";
 import Sidebar from "./views/Sidebar.vue";
 import ProfileStranger from "./views/ProfileStranger.vue";
-
+import TransactionDetail from "./views/TransactionDetail.vue";
 
 Vue.use(Router);
 
@@ -162,6 +162,16 @@ export default new Router({
             }
         },
         {
+            path: "/transactionDetail/:transactionId",
+            name: "transactionDetail",
+            components: {
+                header: AppHeader,
+                default: TransactionDetail,
+                footer: Sidebar
+            },
+            props: true,
+        },
+        {
             path: "/uploaded/:userId",
             name: "yourphoto",
             components: {
@@ -187,6 +197,16 @@ export default new Router({
             components: {
                 header: AppHeader,
                 default: TransactionHistory,
+                footer: Sidebar
+            },
+            props: true,
+        },
+        {
+            path: "/history",
+            name: "history",
+            components: {
+                header: AppHeader,
+                default: History,
                 footer: Sidebar
             },
             props: true,
