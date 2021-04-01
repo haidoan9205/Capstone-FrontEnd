@@ -161,7 +161,7 @@ export default {
   },
   mounted() {
     this.$store.dispatch("getTransactions");
-    this.getExclusiveHistory();
+    //this.getExclusiveHistory();
   },
   methods: {
     download(transaction) {
