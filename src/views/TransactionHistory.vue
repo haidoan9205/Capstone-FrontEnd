@@ -56,14 +56,25 @@
                     resize="none"
                     v-bind="proofResponse"
                   >
-                  <p v-if="proofResponse == '' " ></p>
+                    <p v-if="proofResponse == ''"></p>
 
-                  <p v-else style="padding-top: 5px; padding-left: 10px; font-size: 16px">
-                    <span style="color: #6A5ACD"> ID:  </span> {{ proofResponse[0].proofId }}<br>
-                    <span style="color: #6A5ACD">Submitted Date: </span> {{ new Date(proofResponse[0].submitted) }}  <br>
-                    <span style="color: #6A5ACD">Status: </span> {{ proofResponse[0].status }}
-                  </p>
-                    
+                    <p
+                      v-else
+                      style="
+                        padding-top: 5px;
+                        padding-left: 10px;
+                        font-size: 16px;
+                      "
+                    >
+                      <span style="color: #6a5acd">Proof: </span>
+                      {{ proofResponse[0].proofId }}<br />
+                      <span style="color: #6a5acd">Submitted Date: </span>
+                      {{ new Date(proofResponse[0].submitted) }} <br />
+                      <span style="color: #6a5acd"> Submitted Version: </span>
+                      {{ proofResponse[0].version }}<br />
+                      <span style="color: #6a5acd">Status: </span>
+                      {{ proofResponse[0].status }}
+                    </p>
                   </div>
 
                   <div
@@ -80,9 +91,31 @@
                   >
                     <!-- <p v-if="history[item].versions[0].minVersion == version">{{ history[item].version[0].minVersion }}</p>
                     <p v-else>{{ history[0].versions[0] }}</p> -->
-                    {{ history[3].versions[0] }}
-                  </div>
+                    <!-- {{ history.versions[0] }} -->
 
+                    <p
+                      style="
+                        padding-top: 5px;
+                        padding-left: 10px;
+                        font-size: 16px;
+                      "
+                    >
+                      <span style="color: #6a5acd">Current Version: </span>
+                      {{ history.versions[0].minVersion }}<br />
+                      <span style="color: #6a5acd">Transaction Date: </span>
+                      {{ new Date(history.versions[0].started) }} <br />
+                      <span style="color: #6a5acd">Status: </span>
+                      {{ history.versions[0].status }} <br />
+                      <span style="color: #6a5acd">Details: </span> <br />
+                      Transaction ID:
+                      {{ history.versions[0].document.transactionId }} <br />
+                      User ID: {{ history.versions[0].document.userId }} <br />
+                      Name: {{ history.versions[0].document.name }} <br />
+                      Photo ID: {{ history.versions[0].document.photoId }}
+                      <br />
+                      Amount: {{ history.versions[0].document.amount }} <br />
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>
@@ -116,6 +149,7 @@ export default {
       proofId: [],
       proofResponse: "",
       history: [],
+      fullHistory: [],
       user: JSON.parse(localStorage.getItem("user")),
       version: "",
     };
@@ -141,6 +175,11 @@ export default {
           if (response.status == 200) {
             this.proofResponse = response.data;
             this.version = this.proofResponse[0].version;
+            for (let index = 0; index < this.fullHistory.length; index++) {
+              if (this.fullHistory[index].versions[0].minVersion == this.version) {
+                this.history = this.fullHistory[index];
+              }
+            }
           } else {
             alert("Network error, please try again!");
           }
@@ -159,8 +198,9 @@ export default {
         )
         .then((response) => {
           if (response.status == 200) {
-            this.history = response.data;
-            console.log(this.history);
+            this.fullHistory = response.data;
+            let length = this.fullHistory.length;
+            this.history = this.fullHistory[length - 1];
           } else {
             alert("Network error, please try again!");
           }
