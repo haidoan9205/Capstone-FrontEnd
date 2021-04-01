@@ -20,7 +20,7 @@
                 <div class="card-profile-image">
                   <a href="#">
                     <img
-                      v-lazy="'img/theme/profile.png'"
+                      v-lazy="'img/theme/user.png'"
                       class="rounded-circle"
                     />
                   </a>

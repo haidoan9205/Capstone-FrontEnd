@@ -171,9 +171,16 @@ export default {
       this.alreadyBought = response.data;
     });
 
-     this.isYour = this.$store.state.approved_images.includes(this.photoId);
-     console.log('con cac')
-     console.log(this.isYour)
+    axios({
+      method: "GET",
+      url:
+        "https://imago.azurewebsites.net/api/v1/Photo/CheckMyPhoto?photoId=" +
+        this.photoId +
+        "&userId=" +
+        JSON.parse(this.$store.state.user).userId,
+    }).then((response) => {
+      this.isYour = response.data;
+    });
   },
 
   created() {

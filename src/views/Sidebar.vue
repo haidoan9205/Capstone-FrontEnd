@@ -78,6 +78,11 @@ export default {
             },
           ],
         },
+        {
+          href: { path: "/upload" },
+          title: "Upload",
+          icon: "fa fa-upload",
+        },
       
       ],
       collapsed: false,

@@ -158,7 +158,7 @@ export default new Router({
             components: {
                 header: AppHeader,
                 default: UploadPhoto,
-                footer: AppFooter
+                footer: Sidebar
             }
         },
         {
