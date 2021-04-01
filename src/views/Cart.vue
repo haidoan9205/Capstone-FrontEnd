@@ -84,7 +84,7 @@
         </div>
       </table>
       <div class="nothing" v-else>
-        <p>There is nothing to show</p>
+        <p>Put your favourite to the basket first!!</p>
         <router-link to="/">
           <button class="btn btn-primary">Come here to Shopping</button>
         </router-link>
@@ -174,7 +174,7 @@
         </div>
       </table>
       <div class="nothing" v-else>
-        <p>There is nothing to show</p>
+        <p>Put your favourite to the basket first!! </p>
         <router-link to="/">
           <button class="btn btn-primary">Come here to Shopping</button>
         </router-link>

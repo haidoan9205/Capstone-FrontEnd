@@ -264,13 +264,21 @@ export default {
       })
         .then((respone) => {
           if (respone.status == 201) {
-            alert("Transaction successfully");
+             this.$alert(
+              "Transaction complete",
+              "Success",
+              "success"
+            ).then(() => console.log("Closed"));
             
             this.paidFor = true;
             window.localStorage.removeItem('cart');
             this.$store.state.cart = [];
           } else {
-            alert("Transaction error");
+            this.$alert(
+              "Transaction complete",
+              "Error",
+              "error"
+            ).then(() => console.log("Closed"));
           }
           console.log(respone.status);
         })
