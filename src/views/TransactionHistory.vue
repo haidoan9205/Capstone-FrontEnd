@@ -1,42 +1,123 @@
 <template>
-<div class="container container-lg">
- <table class="styled-table">
-    <thead>
-      <tr>
-        <th>Date</th>
-        <th>Photo Name</th>
-        <th>Type</th>
-        <th>Amount</th>
-        <!-- <th  width="15%">Transaction ID</th> -->
-        <th></th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr v-for="transaction in transactions" :key="transaction.photoId">
-        <td>{{ frontEndDateFormat(transaction.boughtTime) }}</td>
-        <td>{{ transaction.photoName }}</td>
-        <td>
-          <p v-if="transaction.typeId === 1">Normal</p>
-          <p v-if="transaction.typeId === 2">Exclusive</p>
-        </td>
-        <td>${{ transaction.boughtPrice }}</td>
-        <!-- <td>{{transaction.transactionId}}</td>  -->
-        <td><button @click="download(transaction)">Download</button> </td>
-      </tr>
-    </tbody>
-  </table>
-</div>
- 
+  <div class="container container-lg">
+    <tabs fill class="flex-column flex-md-row">
+      <card shadow>
+        <tab-pane title="Transaction History">
+          <table class="styled-table">
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Photo Name</th>
+                <th>Type</th>
+                <th>Amount</th>
+                <!-- <th  width="15%">Transaction ID</th> -->
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                v-for="transaction in transactions"
+                :key="transaction.photoId"
+              >
+                <td>{{ transaction.insDateTime }}</td>
+                <td>{{ transaction.photoName }}</td>
+                <td>{{ transaction.typeId }}</td>
+                <td>${{ transaction.price }}</td>
+                <!-- <td>{{transaction.transactionId}}</td>  -->
+                <td>
+                  <button @click="download(transaction)">Download</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </tab-pane>
+
+        <tab-pane title="Exclusive Transaction">
+          <div class="row justify-content-center">
+            <div class="row align-items-center">
+              <div class="form-group">
+                <label class="control-label">Proof ID:</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  v-model="proofId"
+                  required
+                />
+                <div class="flex-container">
+                  <div
+                    disabled="true"
+                    style="
+                      width: 380px;
+                      height: 400px;
+                      border-style: solid;
+                      border-width: thin;
+                      border-radius: 15px 0px 0px 15px;
+                    "
+                    resize="none"
+                    v-bind="proofResponse"
+                  >
+                  <p v-if="proofResponse == '' " ></p>
+
+                  <p v-else style="padding-top: 5px; padding-left: 10px; font-size: 16px">
+                    <span style="color: #6A5ACD"> ID:  </span> {{ proofResponse[0].proofId }}<br>
+                    <span style="color: #6A5ACD">Submitted Date: </span> {{ new Date(proofResponse[0].submitted) }}  <br>
+                    <span style="color: #6A5ACD">Status: </span> {{ proofResponse[0].status }}
+                  </p>
+                    
+                  </div>
+
+                  <div
+                    disabled="true"
+                    style="
+                      width: 500px;
+                      height: 400px;
+                      border-style: solid;
+                      border-width: thin;
+                      border-radius: 0px 15px 15px 0px;
+                    "
+                    resize="none"
+                    v-bind="history"
+                  >
+                    <!-- <p v-if="history[item].versions[0].minVersion == version">{{ history[item].version[0].minVersion }}</p>
+                    <p v-else>{{ history[0].versions[0] }}</p> -->
+                    {{ history[3].versions[0] }}
+                  </div>
+
+                </div>
+              </div>
+            </div>
+          </div>
+          <button
+            class="btn btn-success"
+            style="margin: auto; display: flex"
+            type="submit"
+            @click="getProofConfimation(proofId)"
+          >
+            <span class="text-nowrap">Submit</span>
+          </button>
+        </tab-pane>
+      </card>
+    </tabs>
+  </div>
 </template>
 
 <script>
-import axios from 'axios';
-  import moment from 'moment'
-
+import axios from "axios";
+import Tabs from "@/components/Tabs/Tabs.vue";
+import TabPane from "@/components/Tabs/TabPane.vue";
 export default {
+  components: {
+    Tabs,
+    TabPane,
+  },
   data() {
     return {
       photoId: 0,
+      proofId: [],
+      proofResponse: "",
+      history: [],
+      user: JSON.parse(localStorage.getItem("user")),
+      version: "",
     };
   },
   computed: {
@@ -46,20 +127,68 @@ export default {
   },
   mounted() {
     this.$store.dispatch("getTransactions");
+    this.getExclusiveHistory();
   },
-  methods:{
-      download(transaction){
-          this.$store.dispatch('downloadImage', transaction.photoId);
-      },
-      frontEndDateFormat(date) {
-        		return moment(date, 'YYYY-MM-DDTHH:mm:ss').format('DD/MM/YYYY HH:mm');
-        	},
-      
-  }
+  methods: {
+    download(transaction) {
+      this.$store.dispatch("downloadImage", transaction.photoId);
+    },
+
+    getProofConfimation(proofId) {
+      axios
+        .get("http://localhost:3000/transactions/getProof/" + proofId)
+        .then((response) => {
+          if (response.status == 200) {
+            this.proofResponse = response.data;
+            this.version = this.proofResponse[0].version;
+          } else {
+            alert("Network error, please try again!");
+          }
+        })
+        .catch((error) => {
+          alert("System error, please contact admin!");
+          console.log(error);
+        });
+    },
+
+    getExclusiveHistory() {
+      axios
+        .get(
+          "http://localhost:3000/transactions/getDocumentHistory/" +
+            this.user.fullName
+        )
+        .then((response) => {
+          if (response.status == 200) {
+            this.history = response.data;
+            console.log(this.history);
+          } else {
+            alert("Network error, please try again!");
+          }
+        })
+        .catch((error) => {
+          alert("System error, please contact admin!");
+          console.log(error);
+        });
+    },
+  },
 };
 </script>
 
 <style lang="scss" scoped>
+.flex-container {
+  display: flex;
+  flex-direction: row;
+  margin-top: 5px;
+}
+@media (max-width: 970px) {
+  .flex-container {
+    flex-direction: column;
+  }
+}
+.container {
+  display: flex;
+  flex-direction: column;
+}
 .styled-table {
   border-collapse: collapse;
   margin: 25px 0;

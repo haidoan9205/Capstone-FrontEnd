@@ -26,7 +26,7 @@ router.get('/', (req, res) => {
     res.send('On transactions !')
 });
 
-router.post('/', async(req, res) => {
+router.post('/', async (req, res) => {
     //console.log("req body: " + JSON.stringify(req.body));
     await getConnection();
     // Use/Create the collection "Transactions"
@@ -87,7 +87,7 @@ router.post('/', async(req, res) => {
 
 });
 
-router.get('/getProof/:id', async(req, res) => {
+router.get('/getProof/:id', async (req, res) => {
     await getConnection();
     try {
         // Get an existing Proof
@@ -95,8 +95,8 @@ router.get('/getProof/:id', async(req, res) => {
         if (result.proofs == "") {
             return res.send('ProofId is invalid!');
         } else {
-            console.log(`Latest Proof Is: ${JSON.stringify(result, null, 4)}`);
-            return res.json(result);
+            console.log(`Latest Proof Is: ${JSON.stringify(result.proofs, null, 4)}`);
+            return res.json(result.proofs, null, 4);
         }
     } catch (error) {
         res.json({ message: error });
@@ -106,7 +106,7 @@ router.get('/getProof/:id', async(req, res) => {
 
 });
 
-router.get('/getDocumentHistory/:name', async(req, res) => {
+router.get('/getDocumentHistory/:name', async (req, res) => {
     await getConnection();
     try {
         // Fetch the history of that document.
@@ -116,6 +116,7 @@ router.get('/getDocumentHistory/:name', async(req, res) => {
         console.log(
             `History for document: ${JSON.stringify(result.history, null, 4)}`
         );
+
         return res.json(result.history, null, 4);
     } catch (error) {
         res.json({ message: error });
@@ -124,4 +125,23 @@ router.get('/getDocumentHistory/:name', async(req, res) => {
     }
 
 });
+
+// router.get('/getDocumentProof/:name', async (req, res) => {
+//     await getConnection();
+//     try {
+//         // Fetch the history of that document.
+//         result = await pdb.getDocumentProof('Transactions', { name: `${req.params.name}` });
+//         console.log(result);
+//         let length = result.history.length;
+//         console.log(
+//             `History for document: ${JSON.stringify(result.history, null, 4)}`
+//         );
+//         return res.json(result.history, null, 4);
+//     } catch (error) {
+//         res.json({ message: error });
+//     } finally {
+//         await client.close();
+//     }
+
+// });
 module.exports = router;
