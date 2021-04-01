@@ -114,7 +114,7 @@ router.get('/getDocumentHistory/:name', async (req, res) => {
         console.log(result);
         let length = result.history.length;
         console.log(
-            `History for document: ${JSON.stringify(result.history, null, 4)}`
+            `History for document: ${JSON.stringify(result.history[length - 1], null, 4)}`
         );
 
         return res.json(result.history, null, 4);
