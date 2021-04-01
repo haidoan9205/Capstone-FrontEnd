@@ -193,6 +193,7 @@ export default {
             this.orderInfo = order;
             if (this.$store.state.cartFlag === true) {
               this.onCheckOut();
+              
             } else {
               this.onCheckoutSaveToBC();
             }
@@ -264,7 +265,10 @@ export default {
         .then((respone) => {
           if (respone.status == 201) {
             alert("Transaction successfully");
+            
             this.paidFor = true;
+            window.localStorage.removeItem('cart');
+            this.$store.state.cart = [];
           } else {
             alert("Transaction error");
           }

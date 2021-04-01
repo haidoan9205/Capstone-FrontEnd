@@ -3,9 +3,10 @@
     <div class="demo">
       <router-view />
       <sidebar-menu
-        style="background-image: linear-gradient(to right top, #464749, #56595c, #656c70, #758084, #859497);"
+        
         :menu="menu"
         :collapsed="collapsed"
+        :theme="white-theme"
         :show-one-child="true"
         @toggle-collapse="onToggleCollapse"
         @item-click="onItemClick"
