@@ -8,7 +8,8 @@ import AppFooter from "./layout/AppFooter";
 import Landing from "./views/Landing.vue";
 import Login from "./views/Login.vue";
 import Register from "./views/Register.vue";
-import Profile from "./views/Profile.vue";
+
+import ProfileMaster from "./views/ProfileMaster.vue";
 import ChangePassword from "./views/ChangePassword.vue";
 import ChangeForgotPassword from "./views/ChangeForgotPassword.vue";
 import RequestChangePassword from "./views/RequestChangePassword.vue";
@@ -23,6 +24,8 @@ import Unauthorized from "./views/Unauthorized.vue";
 import Search from "./views/Search.vue";
 import TransactionHistory from "./views/TransactionHistory.vue";
 import Sidebar from "./views/Sidebar.vue";
+import ProfileStranger from "./views/ProfileStranger.vue";
+
 
 Vue.use(Router);
 
@@ -100,12 +103,13 @@ export default new Router({
 
             }
         },
+      
         {
             path: "/profile",
-            name: "profile",
+            name: "profileMaster",
             components: {
                 header: AppHeader,
-                default: Profile,
+                default: ProfileMaster,
                 footer: Sidebar
             }
         },
@@ -117,6 +121,16 @@ export default new Router({
                 default: Checkout,
                 footer: AppFooter
             }
+        },
+        {
+            path: "/stranger/:userId",
+            name: "Profile",
+            components: {
+                header: AppHeader,
+                default: ProfileStranger,
+                footer: AppFooter
+            },
+            props: true,
         },
         {
             path: "/photo/:photoId",
@@ -144,7 +158,7 @@ export default new Router({
             components: {
                 header: AppHeader,
                 default: UploadPhoto,
-                footer: AppFooter
+                footer: Sidebar
             }
         },
         {

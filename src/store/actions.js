@@ -17,6 +17,14 @@ export const getImage = ({ commit }, photoId) => {
     });
 };
 
+export const getStrangeUser = ({ commit }, userId) => {
+  axios
+    .get(`https://imago.azurewebsites.net/api/v1/User/GetById/${userId}`)
+    .then((response) => {
+      commit("SET_STRANGER", response.data);
+    });
+};
+
 export const downloadImage = ({ commit }, photoId) => {
   axios({
     url: `https://imago.azurewebsites.net/api/v1/Photo/DownloadPhoto/${photoId}`,
@@ -97,6 +105,20 @@ export const getTransactions = ({ commit }) => {
     });
 };
 
+export const getFollowingUsers = ({ commit }) => {
+  const user = localStorage.getItem("user");
+  const user_parsed = JSON.parse(user);
+  console.log("user parse");
+  console.log(user_parsed);
+  axios
+    .get(
+      `https://imago.azurewebsites.net/api/v1/Follow/GetFollowingUser/${user_parsed.userId}`
+    )
+    .then((response) => {
+      commit("SET_FOLLOWINGUSERS", response.data);
+    });
+};
+
 export const register = ({ commit }, user) => {
   return new Promise((resolve, reject) => {
     commit("auth_request");
@@ -146,6 +168,17 @@ export const getApprovedImageByUser = ({ commit }) => {
       commit("GET_APPROVED_IMAGE", response.data);
     });
 };
+export const getApprovedImageByStranger = ({ commit }) => {
+  const strangerId = window.localStorage.getItem('strangerId');
+  axios
+    .get(
+      `https://imago.azurewebsites.net/api/v1/User/GetUserApprovedPhoto/${strangerId}`
+    )
+    .then((response) => {
+      commit("GET_APPROVED_IMAGE_STRANGER", response.data);
+    });
+};
+
 
 export const getDeniedImageByUser = ({ commit }) => {
   const user = localStorage.getItem("user");

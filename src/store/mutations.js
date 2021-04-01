@@ -12,6 +12,15 @@ export const SET_TRANSACTIONS = (state, transactions) => {
     state.transactions = transactions;
 };
 
+export const SET_FOLLOWINGUSERS = (state, followingUsers) => {
+    state.followingUsers = followingUsers;
+};
+
+export const SET_STRANGER =(state, stranger) =>{
+    state.stranger = stranger
+    window.localStorage.setItem("stranger", JSON.stringify(state.stranger));
+}
+
 export const DOWNLOAD_IMAGE = (state, downloadURL) => {
     state.downloadURL = downloadURL;
     window.open(downloadURL)
@@ -93,6 +102,11 @@ export const logout = (state) => {
 
 export const GET_APPROVED_IMAGE = (state, approved_images) => {
     state.approved_images = approved_images
+}
+
+
+export const GET_APPROVED_IMAGE_STRANGER = (state, approved_images_stranger) =>{
+    state.approved_images_stranger = approved_images_stranger;
 }
 
 export const GET_DENIED_IMAGE = (state, denied_images) => {
