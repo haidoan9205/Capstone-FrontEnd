@@ -68,6 +68,11 @@ export default {
           icon: "fa fa-list-ul",
           child: [
             {
+              href: { path: "/statistic" },
+              title: "Statistic",
+              icon: "fa fa-file-alt",
+            },
+            {
               href: { path: "/uploaded/:userId" },
               title: "Approved",
               icon: "fa fa-file-alt",
