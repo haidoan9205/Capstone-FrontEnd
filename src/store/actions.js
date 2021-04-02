@@ -182,7 +182,7 @@ export const getApprovedImageByStranger = ({ commit }) => {
 export const getTransactionDetail =({commit}, transactionId) =>{
   axios
   .get(
-    `https://imago.azurewebsites.net/api/v1/User/GetUserApprovedPhoto/${transactionId}`
+    `https://imago.azurewebsites.net/api/v1/Transaction/GetTransaction/${transactionId}`
   )
   .then((response) => {
     commit("GET_HISTORY_DETAIL)", response.data);

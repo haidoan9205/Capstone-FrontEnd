@@ -19,10 +19,10 @@
                 v-for="transaction in transactions"
                 :key="transaction.photoId"
               >
-                <td>{{ transaction.insDateTime }}</td>
+                <td>{{ frontEndDateFormat(transaction.boughtTime) }}</td>
                 <td>{{ transaction.photoName }}</td>
-                <td>{{ transaction.typeId }}</td>
-                <td>${{ transaction.price }}</td>
+                <td>Normal</td>
+                <td>${{ transaction.boughtPrice }}</td>
                 <!-- <td>{{transaction.transactionId}}</td>  -->
                 <td>
                   <button @click="download(transaction)">Download</button>
@@ -66,14 +66,14 @@
                         font-size: 16px;
                       "
                     >
-                      <span style="color: #6a5acd">Proof: </span>
+                      <!-- <span style="color: #6a5acd">Proof: </span>
                       {{ proofResponse[0].proofId }}<br />
                       <span style="color: #6a5acd">Submitted Date: </span>
                       {{ new Date(proofResponse[0].submitted) }} <br />
                       <span style="color: #6a5acd"> Submitted Version: </span>
                       {{ proofResponse[0].version }}<br />
                       <span style="color: #6a5acd">Status: </span>
-                      {{ proofResponse[0].status }}
+                      {{ proofResponse[0].status }} -->
                     </p>
                   </div>
 
@@ -89,9 +89,6 @@
                     resize="none"
                     v-bind="history"
                   >
-                    <!-- <p v-if="history[item].versions[0].minVersion == version">{{ history[item].version[0].minVersion }}</p>
-                    <p v-else>{{ history[0].versions[0] }}</p> -->
-                    <!-- {{ history.versions[0] }} -->
 
                     <p
                       style="
@@ -100,7 +97,7 @@
                         font-size: 16px;
                       "
                     >
-                      <span style="color: #6a5acd">Current Version: </span>
+                      <!-- <span style="color: #6a5acd">Current Version: </span>
                       {{ history.versions[0].minVersion }}<br />
                       <span style="color: #6a5acd">Transaction Date: </span>
                       {{ new Date(history.versions[0].started) }} <br />
@@ -113,7 +110,7 @@
                       Name: {{ history.versions[0].document.name }} <br />
                       Photo ID: {{ history.versions[0].document.photoId }}
                       <br />
-                      Amount: {{ history.versions[0].document.amount }} <br />
+                      Amount: {{ history.versions[0].document.amount }} <br /> -->
                     </p>
                   </div>
                 </div>
@@ -138,6 +135,7 @@
 import axios from "axios";
 import Tabs from "@/components/Tabs/Tabs.vue";
 import TabPane from "@/components/Tabs/TabPane.vue";
+import moment from 'moment'
 export default {
   components: {
     Tabs,
@@ -189,6 +187,7 @@ export default {
           console.log(error);
         });
     },
+    
 
     getExclusiveHistory() {
       axios
@@ -210,6 +209,9 @@ export default {
           console.log(error);
         });
     },
+    frontEndDateFormat(date) {
+        		return moment(date, 'YYYY-MM-DD HHmm').format('DD/MM/YYYY HH:mm');
+        	},
   },
 };
 </script>
