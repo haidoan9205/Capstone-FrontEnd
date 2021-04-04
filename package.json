@@ -33,6 +33,7 @@
         "vue-burger-menu": "^2.0.5",
         "vue-chartkick": "0.6.1",
         "vue-flatpickr-component": "^8.1.1",
+        "vue-it-bigger": "^0.2.2",
         "vue-lazyload": "^1.2.6",
         "vue-masonry": "^0.12.0",
         "vue-material": "^1.0.0-beta-15",

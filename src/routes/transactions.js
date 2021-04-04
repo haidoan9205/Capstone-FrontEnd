@@ -106,11 +106,11 @@ router.get('/getProof/:id', async (req, res) => {
 
 });
 
-router.get('/getDocumentHistory/:name', async (req, res) => {
+router.get('/getDocumentHistory/:userId', async (req, res) => {
     await getConnection();
     try {
         // Fetch the history of that document.
-        result = await pdb.docHistory('Transactions', { name: `${req.params.name}` });
+        result = await pdb.docHistory('Transactions', { userId: `${req.params.userId}` });
         console.log(result);
         let length = result.history.length;
         console.log(
