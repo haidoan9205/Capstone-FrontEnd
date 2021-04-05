@@ -1,85 +1,96 @@
 <template>
   <!-- Footer -->
-<footer class="bg-light text-center text-lg-start">
-  <!-- Grid container -->
-  <div class="container p-4">
-    <!--Grid row-->
-    <div class="row">
-      <!--Grid column-->
-      <div class="col-lg-6 col-md-12 mb-4 mb-md-0">
-        <h5 class="text-uppercase">About Us</h5>
+  <footer class="background text-center text-lg-start">
+    <!-- Grid container -->
+    <div class="container p-4">
+      <!--Grid row-->
+      <div class="row">
+        <!--Grid column-->
+        <div class="col-lg-6 col-md-12 mb-4 mb-md-0">
+          <h5 class="text-uppercase">About Us</h5>
 
-        <p>
-          With the desire to create a modern, safe photos trading platform for both sellers and buyers with the best deals.
+          <p>
+            With the desire to create a modern, safe photos trading platform for
+            both sellers and buyers with the best deals.
+          </p>
+        </div>
+        <!--Grid column-->
 
-        </p>
+        <!--Grid column-->
+        <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+          <h5 class="text-uppercase">Contact</h5>
+
+          <ul class="list-unstyled mb-0">
+            <li>
+              <a href="#!" class="text-dark">Doan Quang Hai</a>
+            </li>
+            <li>
+              <a href="#!" class="text-dark">Do Trong Hieu</a>
+            </li>
+            <li>
+              <a href="#!" class="text-dark">Nguyen Minh Chien</a>
+            </li>
+            <li>
+              <a href="#!" class="text-dark">Truong Chi Hai</a>
+            </li>
+          </ul>
+        </div>
+        <!--Grid column-->
+
+        <!--Grid column-->
+        <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+          <h5 class="text-uppercase mb-0">Phone Number</h5>
+
+          <ul class="list-unstyled">
+            <li>
+              <a href="#!" class="text-dark">(+84) 973 538 339</a>
+            </li>
+            <li>
+              <a href="#!" class="text-dark">(+84) 903 339 321</a>
+            </li>
+            <li>
+              <a href="#!" class="text-dark">(+84) 963 104 545</a>
+            </li>
+            <li>
+              <a href="#!" class="text-dark">(+84) 973 538 339</a>
+            </li>
+          </ul>
+        </div>
+        <!--Grid column-->
       </div>
-      <!--Grid column-->
-
-      <!--Grid column-->
-      <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
-        <h5 class="text-uppercase">Contact</h5>
-
-        <ul class="list-unstyled mb-0">
-          <li>
-            <a href="#!" class="text-dark">Doan Quang Hai</a>
-          </li>
-          <li>
-            <a href="#!" class="text-dark">Do Trong Hieu</a>
-          </li>
-          <li>
-            <a href="#!" class="text-dark">Nguyen Minh Chien</a>
-          </li>
-          <li>
-            <a href="#!" class="text-dark">Truong Chi Hai</a>
-          </li>
-        </ul>
-      </div>
-      <!--Grid column-->
-
-      <!--Grid column-->
-      <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
-        <h5 class="text-uppercase mb-0">Phone Number</h5>
-
-        <ul class="list-unstyled">
-          <li>
-            <a href="#!" class="text-dark">(+84) 973 538 339</a>
-          </li>
-          <li>
-            <a href="#!" class="text-dark">(+84) 903 339 321</a>
-          </li>
-          <li>
-            <a href="#!" class="text-dark">(+84) 963 104 545</a>
-          </li>
-          <li>
-            <a href="#!" class="text-dark">(+84) 973 538 339</a>
-          </li>
-        </ul>
-      </div>
-      <!--Grid column-->
+      <!--Grid row-->
     </div>
-    <!--Grid row-->
-  </div>
-  <!-- Grid container -->
+    <!-- Grid container -->
 
-  <!-- Copyright -->
-  <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
-    © 2020 Copyright:
-    <a class="text-dark" href="#">IMAGO</a>
-  </div>
-  <!-- Copyright -->
-</footer>
-<!-- Footer -->
+    <!-- Copyright -->
+    <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+      © 2020 Copyright:
+      <a class="text-dark" href="#">IMAGO</a>
+    </div>
+    <!-- Copyright -->
+  </footer>
+  <!-- Footer -->
 </template>
 <script>
 export default {
-  name: "app-footer",
+  name: 'app-footer',
 };
 </script>
+
 <style>
+.background {
+  background-color: #c6d1e4;
+}
 .footer {
   padding: 50px 0 20px 0;
-  background-image: linear-gradient(to right top, #f0f3f9, #d1e1e8, #b4d0cf, #a2bdae, #9ea78a);
+  background-image: linear-gradient(
+    to right top,
+    #f0f3f9,
+    #d1e1e8,
+    #b4d0cf,
+    #a2bdae,
+    #9ea78a
+  );
   color: #878c94;
 }
 .footer .title {

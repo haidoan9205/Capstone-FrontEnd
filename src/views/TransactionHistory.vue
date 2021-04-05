@@ -25,7 +25,7 @@
                 <td>${{ transaction.boughtPrice }}</td>
                 <!-- <td>{{transaction.transactionId}}</td>  -->
                 <td>
-                  <button @click="download(transaction)">Download</button>
+                  <base-button outline type="primary" @click="download(transaction)">Download</base-button>
                 </td>
               </tr>
             </tbody>

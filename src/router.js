@@ -26,6 +26,9 @@ import TransactionHistory from "./views/TransactionHistory.vue";
 import Sidebar from "./views/Sidebar.vue";
 import ProfileStranger from "./views/ProfileStranger.vue";
 import TransactionDetail from "./views/TransactionDetail.vue";
+import Statistic from "./views/Statistic.vue";
+import YourPhotoPending from "./views/YourPhotoPending.vue"
+
 
 Vue.use(Router);
 
@@ -103,7 +106,7 @@ export default new Router({
 
             }
         },
-      
+
         {
             path: "/profile",
             name: "profileMaster",
@@ -172,6 +175,16 @@ export default new Router({
             props: true,
         },
         {
+            path: "/statistic",
+            name: "statistic",
+            components: {
+                header: AppHeader,
+                default: Statistic,
+                footer: Sidebar
+            },
+            props: true,
+        },
+        {
             path: "/uploaded/:userId",
             name: "yourphoto",
             components: {
@@ -187,6 +200,16 @@ export default new Router({
             components: {
                 header: AppHeader,
                 default: YourPhotoDenied,
+                footer: Sidebar
+            },
+            props: true,
+        },
+        {
+            path: "/pending/:userId",
+            name: "yourphotopending",
+            components: {
+                header: AppHeader,
+                default: YourPhotoPending,
                 footer: Sidebar
             },
             props: true,

@@ -1,7 +1,7 @@
 <template>
-  <div class="container table-responsive ">
-    <table class="table table-hover table-sm mx-auto">
-      <h2>Approved</h2>
+  <div class="container table-responsive">
+    <h2>Pending</h2>
+    <table class="table table-hover table-sm">
       <div class="itemCart" v-for="image in images" :key="image.photoId">
         <tr>
           <td class="col-sm-3  gallery-panel">
@@ -10,27 +10,15 @@
           <td>
             <div class="detail">
               <tr>
-                <td class="col1">
-                  <strong class="description">Photo:</strong>
-                </td>
+                <td class="col1"><strong class="rejection">Photo:</strong></td>
                 <td class="col2">
-                  <p>{{ image.photoName }}</p>
+                  <p style="color:black;">{{ image.photoName }}</p>
                 </td>
               </tr>
               <tr>
-                <td class="col1">
-                  <strong class="description">Status:</strong>
-                </td>
+                <td class="col1"><strong class="rejection">Status:</strong></td>
                 <td class="col2">
                   <p class="status">{{ image.approveStatus }}</p>
-                </td>
-              </tr>
-              <tr>
-                <td class="col1">
-                  <strong class="description">Description:</strong>
-                </td>
-                <td class="col2">
-                  <p>{{ image.description }}</p>
                 </td>
               </tr>
             </div>
@@ -39,18 +27,30 @@
       </div>
     </table>
   </div>
+
+  <!-- <div class="row gallery ">
+    <div class="gallery-panel"
+         v-for="image in images"
+         :key="image.photoId">
+      <img :src="image.link">
+    </div>
+   </div>  -->
 </template>
 
 <script>
-import ImageCard from './ImageCard';
-
+import axios from 'axios';
 export default {
-  components: {
-    ImageCard,
+  data() {
+    return {
+      photoId: 0,
+    };
   },
   computed: {
     images() {
-      return this.$store.state.approved_images;
+      return this.$store.state.pending_images;
+    },
+    image() {
+      return this.$store.state.image;
     },
     isLoggedIn() {
       return this.$store.getters.isLoggedIn;
@@ -65,33 +65,25 @@ export default {
   },
 
   mounted() {
-    this.$store.dispatch('getApprovedImageByUser');
+    this.$store.dispatch('getPendingImageByUser');
+    this.$store.dispatch('getImage', this.photoId);
+  },
+  methods: {
+    select: function(event) {
+      targetId = event.images.photoId;
+      console.log(targetId); // returns 'foo'
+    },
+    getImage() {
+      this.$store.dispatch('getImage', this.photoId);
+    },
   },
 };
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
 @import url('https://fonts.googleapis.com/css2?family=Heebo:wght@500&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Heebo:wght@300&family=Oxygen:wght@300&display=swap');
-.description {
-  font-family: 'Heebo', sans-serif;
-}
-.wrapper {
-  margin: 0 auto;
-  max-width: 800px;
-  @media only screen and (max-width: 799px) {
-    max-width: 100%;
-    margin: 0 1.5rem;
-  }
-}
-.image-card-grid {
-  list-style: none;
-  margin: 0.5rem 0;
-  padding: 0;
-  display: flex;
-  align-items: flex-start;
-  flex-wrap: wrap;
-}
+
 .button-links {
   display: flex;
   align-items: center;
@@ -120,23 +112,25 @@ h5 {
 p {
   margin: 0px;
 }
+
 .gallery-panel img {
   width: 20vw;
   height: 10vw;
   object-fit: cover;
   border-radius: 0.75rem;
 }
+.rejection {
+  font-family: 'Heebo', sans-serif;
+}
+.reason {
+  font-family: 'Oxygen', sans-serif;
+}
+
 .itemCart {
   border-radius: 20px;
   padding: 1rem;
   margin-bottom: 1rem;
   background-color: lightgray;
-}
-
-strong {
-  font-size: 15px;
-  position: relative;
-  top: 4px;
 }
 .status {
   color: white;
@@ -144,7 +138,11 @@ strong {
   font-weight: bold;
   background-color: green;
   padding-left: 6px;
-  width: 30%;
   border-radius: 10px;
+}
+strong {
+  font-size: 15px;
+  position: relative;
+  top: 4px;
 }
 </style>

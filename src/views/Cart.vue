@@ -1,38 +1,67 @@
 <template>
   <div class="content">
-    <div class="container table-responsive" v-if="!flag" style="background-color:#F2F2F2">
-    
-    <div id="outer">
-      <div class="inner"><button class="block" v-on:click="flag = true" >Normal</button></div>
-      <div class="inner"><button class="block" v-on:click="flag = false">Exclusive</button></div>
-    </div>
-      <h2>Shopping Cart</h2>
-      <table id="ucart" class="table table-hover table-sm" v-if="checkLocal2 != 0">
-        <div>
-          <tr v-for="item in ucart" :key="item.image.photoId">
+    <div
+      class="container table-responsive"
+      v-if="!flag"
+      style="background-color:#F2F2F2;padding:0;"
+    >
+      <div id="outer">
+        <div class="inner">
+          <button
+            class="block"
+            v-bind:class="{tabSelected: flag === true}"
+            v-on:click="flag = true"
+          >
+            Normal
+          </button>
+        </div>
+        <div class="inner">
+          <button
+            class="block"
+            v-bind:class="{tabSelected: flag === false}"
+            v-on:click="flag = false"
+          >
+            Exclusive
+          </button>
+        </div>
+      </div>
+      <div class="d-flex justify-content-center">
+        <h2>Shopping Cart</h2>
+      </div>
+      <table
+        id="ucart"
+        class="table table-hover table-sm"
+        v-if="checkLocal2 != 0"
+      >
+        <div class="itemCart" v-for="item in ucart" :key="item.image.photoId">
+          <tr>
             <td class="col-sm-3 gallery-panel">
               <img :src="item.image.wmlink" class="img-fluid" />
             </td>
             <td>
               <div class="detail">
                 <tr>
-                  <td class="col1"><p style="color: black">Photo:</p></td>
+                  <td class="col1">
+                    <strong style="color: black">Photo:</strong>
+                  </td>
                   <td class="col2">
-                    <p style="color: black">
+                    <strong style="color: black">
                       {{ item.image.photoName }} |
                       <router-link
                         :to="{
                           name: 'photo',
-                          params: { photoId: item.image.photoId },
+                          params: {photoId: item.image.photoId},
                         }"
                       >
                         Detail
                       </router-link>
-                    </p>
+                    </strong>
                   </td>
                 </tr>
                 <tr>
-                  <td class="col1"><p style="color: black">Lisence type:</p></td>
+                  <td class="col1">
+                    <strong style="color: black">Lisence type:</strong>
+                  </td>
                   <td class="col2">
                     <p style="color: black" v-if="item.image.typeId === 1">
                       Casual
@@ -44,7 +73,7 @@
                 </tr>
                 <tr>
                   <td class="col1">
-                    <p style="color: black">How can I use it?:</p>
+                    <strong style="color: black">How can I use it?:</strong>
                   </td>
                   <td class="col2">
                     <p style="color: black">
@@ -56,7 +85,7 @@
               </div>
             </td>
             <td>
-              <h5>${{ item.image.price }} USD</h5>
+              <h4>${{ item.image.price }} USD</h4>
             </td>
             <td>
               <button
@@ -73,56 +102,87 @@
             <tr>
               <td colspan="2" class="d-none d-sm-table-cell"></td>
               <td class="px-0">
-                  <button class="btn btn-success" @click="checkOut()">
-                    <span class="text-nowrap"
-                      >Checkout <i class="fa fa-angle-right d-inline"></i
-                    ></span>
-                  </button>
+                <button class="btn btn-success" @click="checkOut()">
+                  <span class="text-nowrap"
+                    >Checkout <i class="fa fa-angle-right d-inline"></i
+                  ></span>
+                </button>
               </td>
             </tr>
           </tfoot>
         </div>
       </table>
       <div class="nothing" v-else>
-        <p>Put your favourite to the basket first!!</p>
+        <p style="margin-bottom:2rem">
+          Put your favourite to the basket first!
+        </p>
         <router-link to="/">
-          <button class="btn btn-primary">Come here to Shopping</button>
+          <button class="btn btn-primary">Go Shopping</button>
         </router-link>
       </div>
     </div>
-    <div class="container table-responsive" v-if="flag" style="background-color:#F2F2F2">
-    
-    <div id="outer">
-      <div class="inner"><button class="block" v-on:click="flag = true" >Normal</button></div>
-      <div class="inner"><button class="block" v-on:click="flag = false">Exclusive</button></div>
-    </div>
-      <h2>Shopping Cart</h2>
-      <table id="cart" class="table table-hover table-sm" v-if="checkLocal != 0">
-        <div>
-          <tr v-for="item in cart" :key="item.image.photoId">
+    <div
+      class="container table-responsive"
+      v-if="flag"
+      style="background-color:#F2F2F2;padding:0;"
+    >
+      <div id="outer">
+        <div class="inner">
+          <button
+            class="block"
+            v-bind:class="{tabSelected: flag === true}"
+            v-on:click="flag = true"
+          >
+            Normal
+          </button>
+        </div>
+        <div class="inner">
+          <button
+            class="block"
+            v-bind:class="{tabSelected: flag === false}"
+            v-on:click="flag = false"
+          >
+            Exclusive
+          </button>
+        </div>
+      </div>
+      <div class="d-flex justify-content-center">
+        <h2>Shopping Cart</h2>
+      </div>
+      <table
+        id="cart"
+        class="table table-hover table-sm"
+        v-if="checkLocal != 0"
+      >
+        <div class="itemCart" v-for="item in cart" :key="item.image.photoId">
+          <tr>
             <td class="col-sm-3 gallery-panel">
               <img :src="item.image.wmlink" class="img-fluid" />
             </td>
             <td>
               <div class="detail">
                 <tr>
-                  <td class="col1"><p style="color: black">Photo:</p></td>
+                  <td class="col1">
+                    <strong style="color: black">Photo:</strong>
+                  </td>
                   <td class="col2">
-                    <p style="color: black">
+                    <strong style="color: black">
                       {{ item.image.photoName }} |
                       <router-link
                         :to="{
                           name: 'photo',
-                          params: { photoId: item.image.photoId },
+                          params: {photoId: item.image.photoId},
                         }"
                       >
                         Detail
                       </router-link>
-                    </p>
+                    </strong>
                   </td>
                 </tr>
                 <tr>
-                  <td class="col1"><p style="color: black">Lisence type:</p></td>
+                  <td class="col1">
+                    <strong style="color: black">Lisence type:</strong>
+                  </td>
                   <td class="col2">
                     <p style="color: black" v-if="item.image.typeId === 1">
                       Casual
@@ -134,7 +194,7 @@
                 </tr>
                 <tr>
                   <td class="col1">
-                    <p style="color: black">How can I use it?:</p>
+                    <strong style="color: black">How can I use it?:</strong>
                   </td>
                   <td class="col2">
                     <p style="color: black">
@@ -146,7 +206,7 @@
               </div>
             </td>
             <td>
-              <h5>${{ item.image.price }} USD</h5>
+              <h4>${{ item.image.price }} USD</h4>
             </td>
             <td>
               <button
@@ -163,20 +223,22 @@
             <tr>
               <td colspan="2" class="d-none d-sm-table-cell"></td>
               <td class="px-0">
-                  <button class="btn btn-success" @click="checkOut()">
-                    <span class="text-nowrap"
-                      >Checkout <i class="fa fa-angle-right d-inline"></i
-                    ></span>
-                  </button>
+                <button class="btn btn-success" @click="checkOut()">
+                  <span class="text-nowrap"
+                    >Checkout <i class="fa fa-angle-right d-inline"></i
+                  ></span>
+                </button>
               </td>
             </tr>
           </tfoot>
         </div>
       </table>
       <div class="nothing" v-else>
-        <p>Put your favourite to the basket first!! </p>
+        <p style="margin-bottom:2rem">
+          Put your favourite to the basket first!
+        </p>
         <router-link to="/">
-          <button class="btn btn-primary">Come here to Shopping</button>
+          <button class="btn btn-primary">Go Shopping</button>
         </router-link>
       </div>
     </div>
@@ -207,12 +269,12 @@ export default {
     checkOut() {
       this.$store.state.cartFlag = this.flag;
       console.log(this.$store.state.cartFlag);
-      this.$router.push("/checkout");
+      this.$router.push('/checkout');
     },
     removeItem(image) {
-      if (confirm("Are you sure to remove this item ?")) {
+      if (confirm('Are you sure to remove this item ?')) {
         this.$store.state.cartFlag = this.flag;
-        this.$store.dispatch("removeItem", { image });
+        this.$store.dispatch('removeItem', {image});
       } else {
         return;
       }
@@ -243,7 +305,8 @@ h5 {
   margin-top: 45%;
 }
 table {
-  margin-top: 5%;
+  width: unset;
+  margin: 1rem;
 }
 p {
   margin: 0px;
@@ -254,20 +317,18 @@ p {
   object-fit: cover;
   border-radius: 0.75rem;
 }
-.container{
+.container {
   border: 1px solid;
   border-radius: 12px;
   margin-bottom: 2px;
 }
-#outer
-{
-    width:100%;
-    text-align: center;
+#outer {
+  width: 100%;
+  text-align: center;
 }
-.inner
-{
-    width:50%;
-    display: inline-block;
+.inner {
+  width: 50%;
+  display: inline-block;
 }
 .block {
   display: block;
@@ -279,17 +340,33 @@ p {
   text-align: center;
 }
 .block:hover {
-  background-color: #ddd;
-  color: black;
+  background-color: #5e72fe;
+  color: white;
+  font: bold;
 }
 .button:active {
   border: 2px solid black;
 }
 .nothing {
-  margin-bottom: 5%;
+  margin: 2rem;
 }
-.content{
+.content {
   margin-top: 2%;
   margin-bottom: 2%;
+}
+.tabSelected {
+  background-color: #5e72e4;
+  color: white;
+}
+.itemCart {
+  border-radius: 20px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  background-color: lightgray;
+}
+strong {
+  font-size: 15px;
+  position: relative;
+  top: 4px;
 }
 </style>

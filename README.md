@@ -1,4 +1,4 @@
-<h1 id="argon-design-system"><a href="https://www.creative-tim.com/product/vue-argon-design-system">Vue Argon Design System</a></h1>
+<h1 id="argon-design-system"><a href="https://www.creative-tim.com/product/vue-argon-design-system">Imago</a></h1>
 
 <p><img src="https://s3.amazonaws.com/creativetim_bucket/products/92/original/opt_argon_vue_thumbnail.jpg?1534236902" alt="Product Gif" /></p>
 
@@ -6,7 +6,7 @@
 
 <h4 id="fully-coded-components">Fully Coded Components</h4>
 
-<p>Vue Argon Design System is built with over 100 individual components, giving you the freedom of choosing and combining. All components can take variations in colour, that you can easily modify using SASS files.</p>
+<p>Imago is built with over 100 individual components, giving you the freedom of choosing and combining. All components can take variations in colour, that you can easily modify using SASS files.</p>
 
 <p>You will save a lot of time going from prototyping to full-functional code, because all elements are implemented. This Design System is coming with prebuilt examples, so the development process is seamless, switching from our pages to the real website is very easy to be done.</p>
 
@@ -57,7 +57,7 @@
 
 <h2 id="documentation">Documentation</h2>
 
-<p>The documentation for the Vue Argon Design System is hosted at our <a href="https://demos.creative-tim.com/vue-argon-design-system">website</a>.</p>
+<p>The documentation for the Imago is hosted at our <a href="https://demos.creative-tim.com/vue-argon-design-system">website</a>.</p>
 
 <h2 id="file-structure">File Structure</h2>
 
@@ -157,10 +157,10 @@
 
 <h2 id="reporting-issues">Reporting Issues</h2>
 
-<p>We use GitHub Issues as the official bug tracker for the Vue Argon Design System. Here are some advices for our users that want to report an issue:</p>
+<p>We use GitHub Issues as the official bug tracker for the Imago. Here are some advices for our users that want to report an issue:</p>
 
 <ol>
-  <li>Make sure that you are using the latest version of the Vue Argon Design System. Check the CHANGELOG from your copy on our <a href="https://www.creative-tim.com">website</a>.</li>
+  <li>Make sure that you are using the latest version of the Imago. Check the CHANGELOG from your copy on our <a href="https://www.creative-tim.com">website</a>.</li>
   <li>Providing us reproducible steps for the issue will shorten the time it takes for it to be fixed.</li>
   <li>Some issues may be browser specific, so specifying in what browser you encountered the issue might help.</li>
 </ol>

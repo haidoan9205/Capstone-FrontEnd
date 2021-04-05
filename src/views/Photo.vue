@@ -1,17 +1,25 @@
 <template>
   <div class="mb-3" style="background-color:#F2F2F2">
+    <cube-spin></cube-spin>
     <div class="row ml-2 imageInfo">
       <!-- <div class="imageInfo"> -->
-      <div class="col-md-5 col-sm-5 col-xs-12">
-        <img :src="image.wmlink" />
+      <div class="col-md-5 col-sm-5 col-xs-12 positionImage">
+        <img
+          style="border-radius: 20px;
+    margin: 2rem 0;"
+          :src="image.wmlink"
+        />
       </div>
-      <div class="col-md-6 mb-5 mb-md-0 mt-3">
-        <h3>{{ image.photoName }}</h3>
+      <div class="col-md-6 mb-5 mb-md-0 mt-5 positionImage">
+        <h3>
+          <strong>{{ image.photoName }}</strong>
+        </h3>
 
-        <h5 class="heading">${{ image.price }}</h5>
+        <h5 class="h5"><strong>Price</strong> : $ {{ image.price }}</h5>
         <p class="lead">
           {{ image.description }}
         </p>
+        <span><strong>Tags</strong> : </span>
         <badge
           type="info"
           class="text-uppercase"
@@ -62,10 +70,15 @@
         </modal>
 
         <blockquote class="blockquote mt-2">
-          <p class="mb-0">
-            Upload By:
-          </p>
-          <router-link
+          <p><strong> Upload By:</strong></p>
+          <router-link v-if="this.isYour == true"
+            :to="{ name: 'profileMaster', params: { userId: image.userId } }"
+          >
+            <footer class="blockquote-footer">
+              <cite title="Source Title">{{ image.userName }}</cite>
+            </footer>
+          </router-link>
+           <router-link v-else-if="this.isYour == false"
             :to="{ name: 'Profile', params: { userId: image.userId } }"
           >
             <footer class="blockquote-footer">
@@ -78,11 +91,9 @@
             class="btn-1"
             type="primary"
             @click="addToCart()"
-           
             v-if="this.isYour == false && alreadyBought == false"
             >Add to cart</base-button
           >
-        
         </div>
       </div>
       <!-- </div> -->
@@ -94,8 +105,12 @@
 <script>
 import Modal from "@/components/Modal.vue";
 import axios from "axios";
+import CubeSpin from "vue-loading-spinner";
+import { merge, of } from "rxjs";
+
+// const { map, pluck, startWith, scan } = rxjs.operators;
 export default {
-  components: { Modal },
+  components: { Modal, CubeSpin },
   props: ["follows"],
 
   data() {
@@ -112,6 +127,7 @@ export default {
       },
       openingBadgeModal: "",
       testPicture: [],
+      fullPage: true,
     };
   },
 
@@ -148,6 +164,32 @@ export default {
         this.testPicture = response.data;
       });
     },
+    functionA() {
+      axios({
+        method: "GET",
+        url:
+          "https://imago.azurewebsites.net/api/v1/Photo/CheckBoughtPhoto?id=" +
+          this.photoId +
+          "&userId=" +
+          JSON.parse(this.$store.state.user).userId,
+      }).then((response) => {
+        this.alreadyBought = response.data;
+      });
+      return [];
+    },
+    functionB() {
+      axios({
+        method: "GET",
+        url:
+          "https://imago.azurewebsites.net/api/v1/Photo/CheckMyPhoto?photoId=" +
+          this.photoId +
+          "&userId=" +
+          JSON.parse(this.$store.state.user).userId,
+      }).then((response) => {
+        this.isYour = response.data;
+      });
+      return [];
+    },
   },
 
   computed: {
@@ -159,27 +201,10 @@ export default {
   mounted() {
     console.log(this.photoId);
     this.$store.dispatch("getImage", this.photoId);
-
-    axios({
-      method: "GET",
-      url:
-        "https://imago.azurewebsites.net/api/v1/Photo/CheckBoughtPhoto?id=" +
-        this.photoId +
-        "&userId=" +
-        JSON.parse(this.$store.state.user).userId,
-    }).then((response) => {
-      this.alreadyBought = response.data;
-    });
-
-    axios({
-      method: "GET",
-      url:
-        "https://imago.azurewebsites.net/api/v1/Photo/CheckMyPhoto?photoId=" +
-        this.photoId +
-        "&userId=" +
-        JSON.parse(this.$store.state.user).userId,
-    }).then((response) => {
-      this.isYour = response.data;
+    const abc = merge(this.functionA(), this.functionB());
+    console.log(abc)
+    abc.pipe((res) => {
+      loader.hide();
     });
   },
 
@@ -190,6 +215,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.positionImage {
+  position: relative;
+  left: 10rem;
+}
 .imageInfo {
   display: flex;
   justify-content: center;

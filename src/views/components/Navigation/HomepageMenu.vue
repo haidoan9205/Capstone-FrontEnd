@@ -1,39 +1,46 @@
 <template>
   <ul class="navbar-nav ml-auto">
     <li class="nav-item">
-      <router-link to="/cart" title="Your basket">
-        <a class="nav-link nav-link-icon" href="#" style="color:black">
+      <router-link to="/cart" title="Your basket" style="text-decoration:none;">
+        <a class="nav-link nav-link-icon  item-nav-bar  nav-menu-item" href="#">
           <i class="fa fa-shopping-basket"></i>
           <span class="nav-link-inner--text">Basket</span>
         </a>
       </router-link>
     </li>
     <li class="nav-item" v-if="!isLoggedIn">
-      <router-link to="/login" title="Login">
-        <a class="nav-link nav-link-icon" href="#" style="color:black">
+      <router-link to="/login" title="Login" style="text-decoration:none;">
+        <a class="nav-link nav-link-icon item-nav-bar  nav-menu-item" href="#">
           <i class="fa fa-sign-in"></i>
           <span class="nav-link-inner--text">Sign in</span>
         </a>
       </router-link>
     </li>
- 
+
     <li class="nav-item" v-if="isLoggedIn">
-      <router-link to="/profile" title="ProfileMaster">
-        <a class="nav-link nav-link-icon"  href="#" style="color:black">
+      <router-link
+        to="/profile"
+        title="ProfileMaster"
+        style="text-decoration:none;"
+      >
+        <a class="nav-link nav-link-icon  item-nav-bar  nav-menu-item" href="#">
           <i class="fa fa-user"></i>
           <span class="nav-link-inner--text">Profile</span>
         </a>
       </router-link>
     </li>
     <li class="nav-item" v-if="isLoggedIn">
-      <router-link to="/login" title="Login">
-        <a class="nav-link nav-link-icon" @click="logout" href="#" style="color:black">
+      <router-link to="/login" title="Login" style="text-decoration:none;">
+        <a
+          class="nav-link nav-link-icon item-nav-bar nav-menu-item"
+          @click="logout"
+          href="#"
+        >
           <i class="fa fa-sign-in"></i>
           <span class="nav-link-inner--text">Sign out</span>
         </a>
       </router-link>
     </li>
-    
 
     <!-- <li class="nav-item" v-if="isLoggedIn">
       <router-link to="/profile">
@@ -50,7 +57,7 @@
   </ul>
 </template>
 <script>
-import { Slide } from "vue-burger-menu";
+import {Slide} from 'vue-burger-menu';
 export default {
   components: {
     Slide,
@@ -60,25 +67,40 @@ export default {
     isLoggedIn() {
       return this.$store.getters.isLoggedIn;
     },
-    user(){
+    user() {
       const abc = window.localStorage.getItem('user');
       // console.log(abc);
       const appove = this.$store.state.approved_images;
-      console.log(appove)
+      console.log(appove);
       return JSON.parse(abc);
     },
   },
 
   methods: {
     logout() {
-      this.$store.dispatch("logout").then(() => {
-        this.$router.push("/login");
+      this.$store.dispatch('logout').then(() => {
+        this.$router.push('/login');
       });
     },
   },
 };
 </script>
 <style>
+.nav-menu-item {
+  color: black !important;
+  text-decoration: none !important;
+  border-radius: 15px !important;
+  transition: 1s ease transform !important;
+}
+.item-nav-bar:hover {
+  background-color: black;
+}
+.item-nav-bar:hover i {
+  color: #fff;
+}
+.item-nav-bar:hover .nav-link-inner--text {
+  color: #fff;
+}
 ul.sidebar-panel-nav {
   list-style-type: none;
 }

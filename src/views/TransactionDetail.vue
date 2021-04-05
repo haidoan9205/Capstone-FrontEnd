@@ -1,94 +1,31 @@
 <template>
-<div class="container container-lg">
- <table class="styled-table">
-    <thead>
-      <tr>
-        <th>Date</th>
-        <th>Transaction ID</th>
-        <th>Payer Paypal Email</th>
-        <th>Amount</th>
-        <!-- <th  width="15%">Transaction ID</th> -->
-        <th></th>
-      </tr>
-    </thead>
-    <tbody>
-       <div>
-          <tr v-for="item in transactions" :key="item.image.photoId">
-            <td class="col-sm-3 gallery-panel">
-              <img :src="item.image.wmlink" class="img-fluid" />
-            </td>
-            <td>
-              <div class="detail">
-                <tr>
-                  <td class="col1"><p style="color: black">Photo:</p></td>
-                  <td class="col2">
-                    <p style="color: black">
-                      {{ item.image.photoName }} |
-                      <router-link
-                        :to="{
-                          name: 'photo',
-                          params: { photoId: item.image.photoId },
-                        }"
-                      >
-                        Detail
-                      </router-link>
-                    </p>
-                  </td>
-                </tr>
-                <tr>
-                  <td class="col1"><p style="color: black">Lisence type:</p></td>
-                  <td class="col2">
-                    <p style="color: black" v-if="item.image.typeId === 1">
-                      Casual
-                    </p>
-                    <p style="color: black" v-if="item.image.typeId === 2">
-                      Exclusive
-                    </p>
-                  </td>
-                </tr>
-                <tr>
-                  <td class="col1">
-                    <p style="color: black">How can I use it?:</p>
-                  </td>
-                  <td class="col2">
-                    <p style="color: black">
-                      Available for all permitted uses under our
-                      <a href="#">License Terms</a>
-                    </p>
-                  </td>
-                </tr>
-              </div>
-            </td>
-            <td>
-              <h5>${{ item.image.price }} USD</h5>
-            </td>
-            <td>
-              <button
-                type="button"
-                class="close"
-                aria-label="Close"
-                @click="removeItem(item.image)"
-              >
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </td>
-          </tr>
-          <tfoot>
-            <tr>
-              <td colspan="2" class="d-none d-sm-table-cell"></td>
-              <td class="px-0">
-                  <button class="btn btn-success" @click="checkOut()">
-                    <span class="text-nowrap"
-                      >Checkout <i class="fa fa-angle-right d-inline"></i
-                    ></span>
-                  </button>
-              </td>
-            </tr>
-          </tfoot>
-        </div>
-    </tbody>
-  </table>
-</div>
+<div class="container table-responsive ">
+    <table class="table table-hover table-sm mx-auto">
+      <h2>Items in order
+      </h2>
+      <div class="itemCart" v-for="image in transactions" :key="image.photoId">
+        <tr>
+          <td class="col-sm-3  gallery-panel">
+            <img :src="image.wmlink" class="img-fluid" />
+          </td>
+          <td>
+            <div class="detail">
+              <tr>
+                <td class="col1">
+                  <strong class="description">Photo:</strong>
+                </td>
+                <td class="col2">
+                  <p>{{ image.photoName }}</p>
+                </td>
+              </tr>
+          
+           
+            </div>
+          </td>
+        </tr>
+      </div>
+    </table>
+  </div>
  
 </template>
 
@@ -100,7 +37,7 @@ export default {
   data() {
     return {
       photoId: 0,
-      transactionId: '',
+
     };
   },
   computed: {
@@ -109,7 +46,7 @@ export default {
     },
   },
   mounted() {
-    this.$store.dispatch("getTransactionDetail", this.transactionId);
+    this.$store.dispatch("getTransactionDetail", this.$route.params.transactionId);
   },
   methods:{
       frontEndDateFormat(date) {
@@ -119,35 +56,81 @@ export default {
   }
 };
 </script>
-
 <style lang="scss" scoped>
-.styled-table {
-  border-collapse: collapse;
-  margin: 25px 0;
-  font-size: 0.9em;
-  font-family: sans-serif;
-  width: 100%;
-  min-width: 500px;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+@import url('https://fonts.googleapis.com/css2?family=Heebo:wght@500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Heebo:wght@300&family=Oxygen:wght@300&display=swap');
+.description {
+  font-family: 'Heebo', sans-serif;
 }
-.styled-table thead tr {
-  background-color: #009879;
-  color: #ffffff;
-  text-align: left;
+.wrapper {
+  margin: 0 auto;
+  max-width: 800px;
+  @media only screen and (max-width: 799px) {
+    max-width: 100%;
+    margin: 0 1.5rem;
+  }
 }
-.styled-table th,
-.styled-table td {
-  padding: 12px 15px;
+.image-card-grid {
+  list-style: none;
+  margin: 0.5rem 0;
+  padding: 0;
+  display: flex;
+  align-items: flex-start;
+  flex-wrap: wrap;
 }
-.styled-table tbody tr {
-  border-bottom: 1px solid #dddddd;
+.button-links {
+  display: flex;
+  align-items: center;
+}
+.gallery-panel {
+  width: 20vw;
+}
+.table td {
+  border-top: 0;
+}
+div.detail {
+  max-width: 500px;
+}
+td.col1 {
+  max-width: 150px;
+}
+td.col2 {
+  max-width: 350px;
+}
+h2 {
+  margin-top: 5%;
+}
+h5 {
+  margin-top: 45%;
+}
+p {
+  margin: 0px;
+}
+.gallery-panel img {
+  width: 20vw;
+  height: 10vw;
+  object-fit: cover;
+  border-radius: 0.75rem;
+}
+.itemCart {
+  border-radius: 20px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  background-color: lightgray;
 }
 
-.styled-table tbody tr:nth-of-type(even) {
-  background-color: #f3f3f3;
+strong {
+  font-size: 15px;
+  position: relative;
+  top: 4px;
 }
-
-.styled-table tbody tr:last-of-type {
-  border-bottom: 2px solid #009879;
+.status {
+  color: white;
+  text-transform: uppercase;
+  font-weight: bold;
+  background-color: green;
+  padding-left: 6px;
+  width: 30%;
+  border-radius: 10px;
 }
 </style>

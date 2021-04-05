@@ -113,7 +113,7 @@
                   type="submit"
                   @click="onEditProfile"
                 >
-                  Edit
+                  Save
                 </button>
               </div>
               <div class="row justify-content-center">

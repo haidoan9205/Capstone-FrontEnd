@@ -33,8 +33,8 @@
             open-direction="bottom"
             :options="options"
             :multiple="true"
-            :searchable="flag"
-            :internal-search="flag"
+            :searchable="true"
+            :internal-search="true"
             :clear-on-select="false"
             :close-on-select="false"
             :options-limit="100"
@@ -46,7 +46,7 @@
           </multiselect>
         </div>
         <div class="multiselect-div">
-          <label class="typo__label">Single Type</label>
+          <label class="typo__label">License Type</label>
           <multiselect
             v-model="type"
             deselect-label="Can't remove this value"
@@ -108,6 +108,7 @@ export default {
         modal2: false,
         modal3: false,
       },
+      isImage: false,
       upload: false,
       loading: false,
       photoName: "",
@@ -137,12 +138,28 @@ export default {
   methods: {
     onFileSeleted(event) {
       this.file = event.target.files[0];
+      if(!this.file.type.match('image.*')) {
+        alert('Invalid image');
+        this.isImage = false;
+      } 
+      if(this.file.type.match('image.*')) {
+        this.isImage = true;
+      }
+      console.log(this.isImage);
     },
     onUploadPhoto() {
       this.upload = true;
       this.loading = true;
       if (this.value.length === 0) {
         alert("Please select category");
+        return;
+      }
+      if (this.isImage === false) {
+        alert("Please select an image");
+        return;
+      }
+      if (isNaN(this.price)) {
+        alert("Please enter only the number to the price");
         return;
       }
       const fd = new FormData();
@@ -194,7 +211,7 @@ export default {
 <style lang="scss" scoped>
 
 .container {
-  border: 1px solid;
+  // border: 1px solid;
   border-radius: 12px;
   max-width: 60%;
 }

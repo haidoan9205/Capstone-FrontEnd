@@ -1,5 +1,7 @@
 import axios from "axios";
 import state from "./state";
+import Vue from "vue";
+
 
 export const getImages = ({ commit }) => {
   axios
@@ -9,7 +11,8 @@ export const getImages = ({ commit }) => {
     });
 };
 
-export const getImage = ({ commit }, photoId) => {
+export const getImage = ({ commit },photoId) => {
+  state.image = '';
   axios
     .get(`https://imago.azurewebsites.net/api/v1/Photo/${photoId}`)
     .then((response) => {
@@ -168,6 +171,21 @@ export const getApprovedImageByUser = ({ commit }) => {
       commit("GET_APPROVED_IMAGE", response.data);
     });
 };
+
+export const getPendingImageByUser = ({ commit }) => {
+  const user = localStorage.getItem("user");
+  const user_parsed = JSON.parse(user);
+  console.log("user parse");
+  console.log(user_parsed);
+  axios
+    .get(
+      `https://imago.azurewebsites.net/api/v1/User/GetUserPendingPhoto/${user_parsed.userId}`
+    )
+    .then((response) => {
+      commit("GET_PENDING_IMAGE", response.data);
+    });
+};
+
 export const getApprovedImageByStranger = ({ commit }) => {
   const strangerId = window.localStorage.getItem('strangerId');
   axios
@@ -185,7 +203,7 @@ export const getTransactionDetail =({commit}, transactionId) =>{
     `https://imago.azurewebsites.net/api/v1/Transaction/GetTransaction/${transactionId}`
   )
   .then((response) => {
-    commit("GET_HISTORY_DETAIL)", response.data);
+    commit("GET_HISTORY_DETAIL", response.data);
   });
 }
 

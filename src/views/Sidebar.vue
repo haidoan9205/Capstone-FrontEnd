@@ -68,6 +68,11 @@ export default {
           icon: "fa fa-list-ul",
           child: [
             {
+              href: { path: "/statistic" },
+              title: "Statistic",
+              icon: "fa fa-file-alt",
+            },
+            {
               href: { path: "/uploaded/:userId" },
               title: "Approved",
               icon: "fa fa-file-alt",
@@ -91,7 +96,7 @@ export default {
         },
       
       ],
-      collapsed: false,
+      collapsed: true,
       themes: [
         {
           name: "Default theme",
@@ -136,7 +141,7 @@ export default {
         this.collapsed = true;
       } else {
         this.isOnMobile = false;
-        this.collapsed = false;
+        this.collapsed = true;
       }
     },
     logout() {
