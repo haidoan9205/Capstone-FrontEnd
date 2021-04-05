@@ -158,7 +158,7 @@
               <div class="col-lg-4 order-lg-1">
                 <div class="card-profile-stats d-flex justify-content-center">
                   <div class="modalCursor" @click="modals.modalFollower = true">
-                    <span class="heading">{{ countFollower }}</span>
+                    <span class="heading">{{ followers.length }}</span>
                     <span class="description">Follower</span>
                   </div>
                   <modal :show.sync="modals.modalFollower">
@@ -289,6 +289,9 @@ export default {
     images() {
       return this.$store.state.approved_images;
     },
+    followers(){
+      return this.$store.state.followingUsers;
+    }
   },
   mounted() {
     this.$store.dispatch('getFollowingUsers');

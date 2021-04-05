@@ -40,7 +40,7 @@
               <div class="col-lg-4 order-lg-1">
                 <div class="card-profile-stats d-flex justify-content-center">
                   <div class="modalCursor" @click="modals.modalFollower = true">
-                    <span class="heading">{{ countFollower }}</span>
+                    <span class="heading">{{ followers.length }}</span>
                     <span class="description">Follower</span>
                   </div>
                   <div>
@@ -130,15 +130,15 @@ export default {
     isLoggedIn() {
       return this.$store.getters.isLoggedIn;
     },
-    followingUsers() {
-      return this.$store.state.followingUsers;
-    },
     strange() {
       return this.$store.state.stranger;
     },
     images() {
       return this.$store.state.approved_images_stranger;
     },
+    followers(){
+      return this.$store.state.followingUsers;
+    }
   },
   mounted() {
     this.$store.dispatch('getFollowingUsers');

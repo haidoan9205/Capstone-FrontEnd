@@ -34,6 +34,7 @@
         "vue-burger-menu": "^2.0.5",
         "vue-chartkick": "0.6.1",
         "vue-flatpickr-component": "^8.1.1",
+        "vue-it-bigger": "^0.2.2",
         "vue-lazyload": "^1.2.6",
         "vue-loading-overlay": "^3.4.2",
         "vue-loading-spinner": "^1.0.11",

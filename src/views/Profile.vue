@@ -149,6 +149,7 @@ export default {
     isLoggedIn() {
       return this.$store.getters.isLoggedIn;
     },
+    
   },
   methods: {
     onEditProfile() {
