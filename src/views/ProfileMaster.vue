@@ -46,7 +46,7 @@
                       Edit Profile
                     </h6>
 
-                    <div class="py-5 px-4 text-center">
+                    <div class=" text-center">
                       <div class="page"><h2>Profile</h2></div>
                       <div class="row justify-content-center">
                         <div class="row align-items-center">
@@ -73,26 +73,7 @@
                               required
                             />
                           </div>
-                        </div>
-                      </div>
-                      <div class="row justify-content-center">
-                        <div class="row align-items-center">
-                          <div class="form-group">
-                            <div class="donateItem ">
-                              <label class="control-label">Description</label>
-                            </div>
-                            <input
-                              type="text"
-                              class="form-control"
-                              v-model="user.description"
-                              required
-                            />
-                          </div>
-                        </div>
-                      </div>
-                      <div class="row justify-content-center">
-                        <div class="row align-items-center">
-                          <div class="form-group">
+                          <div class="form-group  pl-3">
                             <label class="control-label">Email</label>
                             <input
                               type="text"
@@ -114,15 +95,12 @@
                               required
                             />
                           </div>
-                        </div>
-                      </div>
-                      <div class="row justify-content-center">
-                        <div class="row align-items-center">
-                          <div class="form-group">
+                          <div class="form-group  pl-3">
                             <div class="donateItem ">
-                              <label class="control-label">Date of birth</label>
+                              <label class="control-label">Date of Birth</label>
                             </div>
                             <date-picker
+                              class="dateBirthDay"
                               v-model="user.birthDay"
                               valueType="format"
                               :disabled-date="(date) => date >= new Date()"
@@ -132,6 +110,21 @@
                       </div>
 
                       <div class="row justify-content-center">
+                        <div class="row align-items-center">
+                          <div class="form-group">
+                            <div class="donateItem ">
+                              <label class="control-label">Description</label>
+                            </div>
+                            <textarea
+                              type="text"
+                              class="form-control description"
+                              v-model="user.description"
+                              required
+                            />
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row justify-content-center">
                         <button
                           class="btn btn-primary"
                           type="submit"
@@ -140,7 +133,7 @@
                           Edit
                         </button>
                       </div>
-                      <div class="row justify-content-center">
+                      <div class="row justify-content-center pt-3">
                         <a
                           v-bind:href="
                             'http://localhost:8081/#/changepassword/' +
@@ -151,21 +144,21 @@
                       </div>
                     </div>
 
-                    <template slot="footer">
+                    <!-- <template slot="footer">
                       <base-button
                         type="link"
                         class="ml-auto"
                         @click="modals.modalEditProfile = false"
                         >Close
                       </base-button>
-                    </template>
+                    </template> -->
                   </modal>
                 </div>
               </div>
               <div class="col-lg-4 order-lg-1">
                 <div class="card-profile-stats d-flex justify-content-center">
                   <div class="modalCursor" @click="modals.modalFollower = true">
-                    <span class="heading">{{ countFollower }}</span>
+                    <span class="heading">{{ followers.length }}</span>
                     <span class="description">Follower</span>
                   </div>
                   <modal :show.sync="modals.modalFollower">
@@ -182,7 +175,9 @@
                           v-for="follower in followingUsers"
                           :key="follower.username"
                         >
+                       
                           <td>{{ follower.username }}</td>
+                      
                           <td>{{ follower.description }}</td>
                           <td>
                             <base-button
@@ -208,7 +203,7 @@
                     </template>
                   </modal>
                   <div>
-                    <span class="heading">10</span>
+                    <span class="heading">{{images.length}}</span>
                     <span class="description">Photos</span>
                   </div>
                   <div>
@@ -246,21 +241,19 @@
                 </div>
               </div>
             </div>
-              <div class="container">
-            <div class="ct-example-row">
-              <div class="row">
-                <div
-                  class="col-6 col-md-4"
-                  v-for="item in images"
-                  :key="item.photoId"
-                >
-                 
+            <div class="container">
+              <div class="ct-example-row">
+                <div class="row">
+                  <div
+                    class="col-6 col-md-4"
+                    v-for="item in images"
+                    :key="item.photoId"
+                  >
                     <img v-lazy="item.wmlink" class="img-fit" />
-    
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
           </div>
         </card>
       </div>
@@ -268,17 +261,17 @@
   </div>
 </template>
 <script>
-import DatePicker from "vue2-datepicker";
-import "vue2-datepicker/index.css";
-import axios from "axios";
-import Modal from "@/components/Modal.vue";
+import DatePicker from 'vue2-datepicker';
+import 'vue2-datepicker/index.css';
+import axios from 'axios';
+import Modal from '@/components/Modal.vue';
 
 export default {
-  components: { DatePicker, Modal },
+  components: {DatePicker, Modal},
   data() {
     return {
       countFollower: this.$store.getters.followerCount,
-      user: JSON.parse(localStorage.getItem("user")),
+      user: JSON.parse(localStorage.getItem('user')),
       disabledAfter: new Date().toLocaleDateString(),
       modals: {
         modalFollower: false,
@@ -296,16 +289,19 @@ export default {
     images() {
       return this.$store.state.approved_images;
     },
+    followers(){
+      return this.$store.state.followingUsers;
+    }
   },
   mounted() {
-    this.$store.dispatch("getFollowingUsers");
-    this.$store.dispatch("getApprovedImageByUser");
+    this.$store.dispatch('getFollowingUsers');
+    this.$store.dispatch('getApprovedImageByUser');
   },
   methods: {
     onEditProfile() {
       let userId = this.user.userId;
       axios
-        .put("https://imago.azurewebsites.net/api/v1/User/" + userId, {
+        .put('https://imago.azurewebsites.net/api/v1/User/' + userId, {
           userId: this.user.userId,
           fullName: this.user.fullName,
           description: this.user.description,
@@ -316,31 +312,37 @@ export default {
         .then((response) => {
           if (response.status == 201) {
             this.$alert(
-              "Your information is updated",
-              "Success",
-              "success"
-            ).then(() => console.log("Closed"));
-            const userUpdated = JSON.parse(window.localStorage.getItem("user"));
+              'Your information is updated',
+              'Success',
+              'success'
+            ).then(() => console.log('Closed'));
+            this.modals.modalEditProfile = false;
+            const userUpdated = JSON.parse(window.localStorage.getItem('user'));
             (userUpdated.fullName = response.data.fullName),
               (userUpdated.description = response.data.description),
               (userUpdated.email = response.data.email),
               (userUpdated.phone = response.data.phone),
               (userUpdated.dayOfBirth = response.data.birthDay);
-            window.localStorage.setItem("user", JSON.stringify(userUpdated));
+            window.localStorage.setItem('user', JSON.stringify(userUpdated));
           } else {
-            alert("Edit error");
+            this.$toasts.push({
+              type: 'error',
+              message: 'Edit error',
+            });
           }
-          console.log(response);
         })
         .catch((error) => {
-          console.log(error);
+          this.$toasts.push({
+            type: 'error',
+            message: error,
+          });
         });
     },
     unFollowUser(follower) {
       // console.log(user.userId)
       axios({
-        method: "POST",
-        url: "https://imago.azurewebsites.net/api/v1/Follow/UnFollow",
+        method: 'POST',
+        url: 'https://imago.azurewebsites.net/api/v1/Follow/UnFollow',
         data: {
           userId: JSON.parse(this.$store.state.user).userId,
           followUserId: follower.userId,
@@ -352,8 +354,29 @@ export default {
   },
 };
 </script>
-
+<style lang="scss">
+#app .dateBirthDay .mx-input {
+  display: block;
+  width: 100%;
+  height: calc(2.75rem + 2px);
+  padding: 0.625rem 0.75rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  color: #8898aa;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid #cad1d7;
+  border-radius: 0.25rem;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  -webkit-transition: all 0.2s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  transition: all 0.2s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+</style>
 <style lang="scss" scoped>
+.description {
+  width: 27rem;
+}
 .modalCursor {
   cursor: pointer;
 }

@@ -2,22 +2,21 @@
   <nav
     class="navbar"
     :class="[
-      { 'navbar-expand-lg': expand },
-      { [`navbar-${effect}`]: effect },
-      { 'navbar-transparent': transparent },
-      { rounded: round },
+      {'navbar-expand-lg': expand},
+      {[`navbar-${effect}`]: effect},
+      {'navbar-transparent': transparent},
+      {rounded: round},
     ]"
     style="background-color: #FFFFFF"
   >
     <div class="container">
       <slot name="container-pre"></slot>
       <slot name="brand">
-        <router-link to="/" title="Home Page">
-          <a class="nav-link" href="#">
+        <router-link to="/" title="Home Page" style="text-decoration:none">
+          <a class="nav-link" href="#" style="text-decoration:none">
             <p class="nav-title">Imago</p>
           </a>
         </router-link>
-
         <!-- <a class="navbar-brand" href="/" @click="onTitleClick">
           {{ title }}
         </a> -->
@@ -33,7 +32,7 @@
 
       <div
         class="collapse navbar-collapse"
-        :class="{ show: toggled }"
+        :class="{show: toggled}"
         :id="contentId"
         v-click-outside="closeMenu"
       >
@@ -46,11 +45,11 @@
   </nav>
 </template>
 <script>
-import { FadeTransition } from "vue2-transitions";
-import NavbarToggleButton from "./NavbarToggleButton";
+import {FadeTransition} from 'vue2-transitions';
+import NavbarToggleButton from './NavbarToggleButton';
 
 export default {
-  name: "base-nav",
+  name: 'base-nav',
   components: {
     FadeTransition,
     NavbarToggleButton,
@@ -58,13 +57,13 @@ export default {
   props: {
     type: {
       type: String,
-      default: "primary",
-      description: "Navbar type (e.g default, primary etc)",
+      default: 'primary',
+      description: 'Navbar type (e.g default, primary etc)',
     },
     title: {
       type: String,
-      default: "",
-      description: "Title of navbar",
+      default: '',
+      description: 'Title of navbar',
     },
     contentId: {
       type: [String, Number],
@@ -74,23 +73,23 @@ export default {
     },
     effect: {
       type: String,
-      default: "dark",
-      description: "Effect of the navbar (light|dark)",
+      default: 'dark',
+      description: 'Effect of the navbar (light|dark)',
     },
     round: {
       type: Boolean,
       default: false,
-      description: "Whether nav has rounded corners",
+      description: 'Whether nav has rounded corners',
     },
     transparent: {
       type: Boolean,
       default: false,
-      description: "Whether navbar is transparent",
+      description: 'Whether navbar is transparent',
     },
     expand: {
       type: Boolean,
       default: false,
-      description: "Whether navbar should contain `navbar-expand-lg` class",
+      description: 'Whether navbar should contain `navbar-expand-lg` class',
     },
   },
   data() {
@@ -100,7 +99,7 @@ export default {
   },
   methods: {
     onTitleClick(evt) {
-      this.$emit("title-click", evt);
+      this.$emit('title-click', evt);
     },
     closeMenu() {
       this.toggled = false;
@@ -113,5 +112,16 @@ export default {
   font-family: Garamond, serif;
   font-size: 28px;
   font-weight: bold;
+  outline: none;
+}
+.overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  top: unset;
+  right: unset;
+  width: 100%;
+  height: 3rem;
+  background: linear-gradient(180deg, hsla(0, 0%, 100%, 0) 0, #c6d1e4);
 }
 </style>

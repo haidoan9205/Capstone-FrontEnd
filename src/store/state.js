@@ -19,4 +19,5 @@ export default {
     stranger: null,
     history: [],
     transaction_detail: [],
+    pending_images: [],
 }

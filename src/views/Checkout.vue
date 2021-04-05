@@ -120,7 +120,7 @@
 </template>
 
 <script>
-import axios from "axios";
+import axios from 'axios';
 
 export default {
   computed: {
@@ -136,35 +136,35 @@ export default {
     },
   },
 
-  data: function () {
+  data: function() {
     return {
       total: [],
       loaded: false,
       paidFor: false,
       products: [],
-      checkLocal: "",
+      checkLocal: '',
       orderDetail: [],
       orderInfo: [],
-      user: JSON.parse(localStorage.getItem("user")),
+      user: JSON.parse(localStorage.getItem('user')),
     };
   },
-  mounted: function () {
+  mounted: function() {
     this.getTotal();
     this.createListItems();
-    const script = document.createElement("script");
+    const script = document.createElement('script');
     if (this.$store.state.cartFlag === true) {
       this.checkLocal = this.$store.state.cart;
     } else {
       this.checkLocal = this.$store.state.ucart;
     }
     script.src =
-      "https://www.paypal.com/sdk/js?client-id=AYvSMAPfagJB-ffNa4cHkH_dk7zK8ojJu4G6UVhrhQqe2w3LaKqjzvKirbdm3cGguTH_pM6FQRx-_O76";
-    script.addEventListener("load", this.setLoaded);
+      'https://www.paypal.com/sdk/js?client-id=AYvSMAPfagJB-ffNa4cHkH_dk7zK8ojJu4G6UVhrhQqe2w3LaKqjzvKirbdm3cGguTH_pM6FQRx-_O76';
+    script.addEventListener('load', this.setLoaded);
     document.body.appendChild(script);
     //console.log(this.$store.state.ucart);
   },
   methods: {
-    setLoaded: function () {
+    setLoaded: function() {
       this.loaded = true;
       window.paypal
         .Buttons({
@@ -173,11 +173,11 @@ export default {
               purchase_units: [
                 {
                   amount: {
-                    currency_code: "USD",
+                    currency_code: 'USD',
                     value: this.total,
                     breakdown: {
                       item_total: {
-                        currency_code: "USD",
+                        currency_code: 'USD',
                         value: this.total,
                       },
                     },
@@ -193,7 +193,6 @@ export default {
             this.orderInfo = order;
             if (this.$store.state.cartFlag === true) {
               this.onCheckOut();
-              
             } else {
               this.onCheckoutSaveToBC();
             }
@@ -202,8 +201,8 @@ export default {
             //console.log(order.create_time);
           },
           onError: (err) => {
-            console.log("ERR: " + err);
-            alert("Transaction error!");
+            console.log('ERR: ' + err);
+            alert('Transaction error!');
           },
         })
         .render(this.$refs.paypal);
@@ -226,9 +225,9 @@ export default {
     createListItems() {
       this.cart.forEach((item) => {
         this.products.push({
-          name: item.image.photoId + "-" + item.image.photoName,
+          name: item.image.photoId + '-' + item.image.photoName,
           unit_amount: {
-            currency_code: "USD",
+            currency_code: 'USD',
             value: item.image.price,
           },
           quantity: 1,
@@ -243,52 +242,51 @@ export default {
     onCheckOut() {
       const fd = new FormData();
       const orderDetails = Object.values(this.orderDetail);
-      fd.append("userId", this.user.userId);
-      fd.append("transactionId", this.orderInfo.id);
-      fd.append("createTime", this.orderInfo.create_time);
+      fd.append('userId', this.user.userId);
+      fd.append('transactionId', this.orderInfo.id);
+      fd.append('createTime', this.orderInfo.create_time);
       fd.append(
-        "amount",
+        'amount',
         parseFloat(this.orderInfo.purchase_units[0].amount.value)
       );
-      fd.append("payerId", this.orderInfo.payer.payer_id);
-      fd.append("payerPaypalEmail", this.orderInfo.payer.email_address);
+      fd.append('payerId', this.orderInfo.payer.payer_id);
+      fd.append('payerPaypalEmail', this.orderInfo.payer.email_address);
       for (let i = 0; i < orderDetails.length; i++) {
-        fd.append("ListPhotoId", orderDetails[i]);
+        fd.append('ListPhotoId', orderDetails[i]);
       }
 
       axios({
-        url: "https://imago.azurewebsites.net/api/Order",
+        url: 'https://imago.azurewebsites.net/api/Order',
         data: fd,
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
       })
         .then((respone) => {
           if (respone.status == 201) {
-             this.$alert(
-              "Transaction complete",
-              "Success",
-              "success"
-            ).then(() => console.log("Closed"));
-            
+            this.$alert('Transaction complete', 'Success', 'success').then(() =>
+              console.log('Closed')
+            );
+
             this.paidFor = true;
             window.localStorage.removeItem('cart');
             this.$store.state.cart = [];
           } else {
-            this.$alert(
-              "Transaction complete",
-              "Error",
-              "error"
-            ).then(() => console.log("Closed"));
+            this.$toasts.push({
+              type: 'error',
+              message: 'Error',
+            });
           }
-          console.log(respone.status);
         })
         .catch((error) => {
-          console.log(error);
+          this.$toasts.push({
+            type: 'error',
+            message: error,
+          });
         });
     },
     onCheckoutSaveToBC() {
       axios({
-        url: "http://localhost:3000/transactions",
+        url: 'http://localhost:3000/transactions',
         data: {
           transactionId: this.orderInfo.id,
           prevOwner: this.$store.state.ucart[0].image.userName,
@@ -298,52 +296,65 @@ export default {
           amount: parseFloat(this.orderInfo.purchase_units[0].amount.value),
           transactionCreationTime: this.orderInfo.create_time,
         },
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
       })
-      .then((respone) => {
-        if (respone.status == 200) {
-          const fd = new FormData();
-          const orderDetails = Object.values(this.orderDetail);
-          fd.append("userId", this.user.userId);
-          fd.append("transactionId", this.orderInfo.id);
-          fd.append("proofId", respone.data);
-          fd.append("createTime", this.orderInfo.create_time);
-          fd.append(
-            "amount",
-            parseFloat(this.orderInfo.purchase_units[0].amount.value)
-          );
-          fd.append("payerId", this.orderInfo.payer.payer_id);
-          fd.append("payerPaypalEmail", this.orderInfo.payer.email_address);
-          for (let i = 0; i < orderDetails.length; i++) {
-            fd.append("ListPhotoId", orderDetails[i]);
-          }
-          axios({
-            url: "https://imago.azurewebsites.net/api/Order",
-            data: fd,
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-          })
-          .then((res) => {
-            if (res.status == 201) {
-              alert("Transaction successfully");
-              this.paidFor = true;
-            } else {
-              alert("Transaction error");
+        .then((respone) => {
+          if (respone.status == 200) {
+            const fd = new FormData();
+            const orderDetails = Object.values(this.orderDetail);
+            fd.append('userId', this.user.userId);
+            fd.append('transactionId', this.orderInfo.id);
+            fd.append('proofId', respone.data);
+            fd.append('createTime', this.orderInfo.create_time);
+            fd.append(
+              'amount',
+              parseFloat(this.orderInfo.purchase_units[0].amount.value)
+            );
+            fd.append('payerId', this.orderInfo.payer.payer_id);
+            fd.append('payerPaypalEmail', this.orderInfo.payer.email_address);
+            for (let i = 0; i < orderDetails.length; i++) {
+              fd.append('ListPhotoId', orderDetails[i]);
             }
-            console.log(res.status);
-          })
-          .catch((error) => {
-            console.log(error);
+            axios({
+              url: 'https://imago.azurewebsites.net/api/Order',
+              data: fd,
+              method: 'POST',
+              headers: {'Content-Type': 'application/json'},
+            })
+              .then((res) => {
+                if (res.status == 201) {
+                  this.$toasts.push({
+                    type: 'success',
+                    message: 'Transaction successfully',
+                  });
+                  this.paidFor = true;
+                } else {
+                  this.$toasts.push({
+                    type: 'error',
+                    message: 'Transaction error',
+                  });
+                }
+              })
+              .catch((error) => {
+                this.$toasts.push({
+                  type: 'error',
+                  message: error,
+                });
+              });
+          } else {
+            this.$toasts.push({
+              type: 'error',
+              message: 'Transaction error',
+            });
+          }
+        })
+        .catch((error) => {
+          this.$toasts.push({
+            type: 'error',
+            message: error,
           });
-        } else {
-          alert("Transaction error");
-        }
-        console.log(respone.status);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+        });
     },
   },
 };

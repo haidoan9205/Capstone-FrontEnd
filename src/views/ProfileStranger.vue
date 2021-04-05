@@ -19,10 +19,7 @@
               <div class="col-lg-3 order-lg-2">
                 <div class="card-profile-image">
                   <a href="#">
-                    <img
-                      v-lazy="'img/theme/user.png'"
-                      class="rounded-circle"
-                    />
+                    <img v-lazy="'img/theme/user.png'" class="rounded-circle" />
                   </a>
                 </div>
               </div>
@@ -30,14 +27,20 @@
                 class="col-lg-4 order-lg-3 text-lg-right align-self-lg-center"
               >
                 <div class="card-profile-actions py-4 mt-lg-0">
-                  
-                  <base-button type="default" size="sm"  v-show="alreadyFollowed == false" class="float-right" @click="followUser(strange)">Follow This User</base-button>
+                  <base-button
+                    type="default"
+                    size="sm"
+                    v-show="alreadyFollowed == false"
+                    class="float-right"
+                    @click="followUser(strange)"
+                    >Follow This User</base-button
+                  >
                 </div>
               </div>
               <div class="col-lg-4 order-lg-1">
                 <div class="card-profile-stats d-flex justify-content-center">
                   <div class="modalCursor" @click="modals.modalFollower = true">
-                    <span class="heading">{{countFollower}}</span>
+                    <span class="heading">{{ followers.length }}</span>
                     <span class="description">Follower</span>
                   </div>
                   <div>
@@ -80,22 +83,22 @@
               </div>
             </div>
             <div class="container">
-            <div class="ct-example-row">
-              <div class="row">
-                <div
-                  class="col-6 col-md-4"
-                  v-for="item in images"
-                  :key="item.photoId"
-                >
-                  <router-link
-                    :to="{ name: 'photo', params: { photoId: item.photoId } }"
+              <div class="ct-example-row">
+                <div class="row">
+                  <div
+                    class="col-6 col-md-4"
+                    v-for="item in images"
+                    :key="item.photoId"
                   >
-                    <img v-lazy="item.wmlink" class="img-fit" />
-                  </router-link>
+                    <router-link
+                      :to="{name: 'photo', params: {photoId: item.photoId}}"
+                    >
+                      <img v-lazy="item.wmlink" class="img-fit" />
+                    </router-link>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
           </div>
         </card>
       </div>
@@ -103,23 +106,23 @@
   </div>
 </template>
 <script>
-import DatePicker from "vue2-datepicker";
-import "vue2-datepicker/index.css";
-import axios from "axios";
-import Modal from "@/components/Modal.vue";
+import DatePicker from 'vue2-datepicker';
+import 'vue2-datepicker/index.css';
+import axios from 'axios';
+import Modal from '@/components/Modal.vue';
 
 export default {
-  components: { DatePicker, Modal },
+  components: {DatePicker, Modal},
   data() {
     return {
-      userId:"",
+      userId: '',
       alreadyFollowed: false,
       countFollower: this.$store.getters.followerCount,
-      user: JSON.parse(localStorage.getItem("user")),
+      user: JSON.parse(localStorage.getItem('user')),
       disabledAfter: new Date().toLocaleDateString(),
       modals: {
         modalFollower: false,
-        modalEditProfile: false
+        modalEditProfile: false,
       },
     };
   },
@@ -127,75 +130,67 @@ export default {
     isLoggedIn() {
       return this.$store.getters.isLoggedIn;
     },
-    followingUsers() {
-      return this.$store.state.followingUsers;
-    },
-     strange(){
+    strange() {
       return this.$store.state.stranger;
     },
-    images(){
+    images() {
       return this.$store.state.approved_images_stranger;
+    },
+    followers(){
+      return this.$store.state.followingUsers;
     }
-
   },
   mounted() {
-    this.$store.dispatch("getFollowingUsers");
-    this.$store.dispatch("getStrangeUser", this.$route.params.userId);
+    this.$store.dispatch('getFollowingUsers');
+    this.$store.dispatch('getStrangeUser', this.$route.params.userId);
     window.localStorage.setItem('strangerId', this.$route.params.userId);
-    this.$store.dispatch("getApprovedImageByStranger")
+    this.$store.dispatch('getApprovedImageByStranger');
     axios({
-      method: "GET",
+      method: 'GET',
       url:
-        "https://imago.azurewebsites.net/api/v1/Follow/CheckFollowedUser?userId=" +
+        'https://imago.azurewebsites.net/api/v1/Follow/CheckFollowedUser?userId=' +
         JSON.parse(this.$store.state.user).userId +
-        "&followId=" +
+        '&followId=' +
         window.localStorage.getItem('strangerId'),
     }).then((response) => {
       this.alreadyFollowed = response.data;
     });
-    
   },
   methods: {
-  
-    
     followUser(strange) {
       // console.log(user.userId)
       axios({
-        method: "POST",
-        url: "https://imago.azurewebsites.net/api/v1/Follow/Follow",
+        method: 'POST',
+        url: 'https://imago.azurewebsites.net/api/v1/Follow/Follow',
         data: {
           userId: JSON.parse(this.$store.state.user).userId,
           followUserId: this.$route.params.userId,
         },
       }).then((response) => {
-        if(response.data == true){
-          this.$alert(
-              "Follow Successfully",
-              "Success",
-              "success"
-            ).then(() => console.log("Closed"));
-        }else  this.$alert(
-              "Something went wrong",
-              "Error",
-              "error"
-            )
+        if (response.data == true) {
+          this.$alert('Follow Successfully', 'Success', 'success').then(() =>
+            console.log('Closed')
+          );
+        } else {
+          this.$toasts.push({
+            type: 'error',
+            message: 'Something went wrong',
+          });
+        }
       });
     },
     unFollowUser(follower) {
       // console.log(user.userId)
-       axios({
-
-                method : 'POST',
-                url : 'https://imago.azurewebsites.net/api/v1/Follow/UnFollow',
-                data: {
-                    userId :  JSON.parse(this.$store.state.user).userId,
-                    followUserId : follower.userId,
-                },
-
-            })
-        .then((response) => {
-          console.log(response.data);
-        });
+      axios({
+        method: 'POST',
+        url: 'https://imago.azurewebsites.net/api/v1/Follow/UnFollow',
+        data: {
+          userId: JSON.parse(this.$store.state.user).userId,
+          followUserId: follower.userId,
+        },
+      }).then((response) => {
+        console.log(response.data);
+      });
     },
   },
 };
@@ -242,7 +237,7 @@ export default {
 .styled-table tbody tr:last-of-type {
   border-bottom: 2px solid #009879;
 }
-.mini-button{
+.mini-button {
   font-weight: 200 !important;
   padding: 0.2rem 1rem !important;
 }

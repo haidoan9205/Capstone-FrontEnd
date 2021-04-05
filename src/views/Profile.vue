@@ -113,7 +113,7 @@
                   type="submit"
                   @click="onEditProfile"
                 >
-                  Edit
+                  Save
                 </button>
               </div>
               <div class="row justify-content-center">
@@ -149,6 +149,7 @@ export default {
     isLoggedIn() {
       return this.$store.getters.isLoggedIn;
     },
+    
   },
   methods: {
     onEditProfile() {
