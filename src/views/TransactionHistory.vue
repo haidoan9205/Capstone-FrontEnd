@@ -48,76 +48,7 @@
                   class="flex-container"
                   style="border-style: solid; border-width: thin; margin-top: 15px"
                 >
-                  <!-- <div
-                    disabled="true"
-                    style="
-                      width: 380px;
-                      height: 400px;
-                      border-style: solid;
-                      border-width: thin;
-                      border-radius: 15px 0px 0px 15px;
-                    "
-                    resize="none"
-                    v-bind="proofResponse"
-                  >
-                    <p v-if="proofResponse == ''"></p>
-
-                    <p
-                      v-else
-                      style="
-                        padding-top: 5px;
-                        padding-left: 10px;
-                        font-size: 16px;
-                      "
-                    >
-                      <span style="color: #6a5acd">Proof: </span>
-                      {{ proofResponse[0].proofId }}<br />
-                      <span style="color: #6a5acd">Submitted Date: </span>
-                      {{ new Date(proofResponse[0].submitted) }} <br />
-                      <span style="color: #6a5acd"> Submitted Version: </span>
-                      {{ proofResponse[0].version }}<br />
-                      <span style="color: #6a5acd">Status: </span>
-                      {{ proofResponse[0].status }}
-                    </p>
-                  </div>
-
-                  <div
-                    disabled="true"
-                    style="
-                      width: 500px;
-                      height: 400px;
-                      border-style: solid;
-                      border-width: thin;
-                      border-radius: 0px 15px 15px 0px;
-                    "
-                    resize="none"
-                    v-bind="history"
-                  >
-
-                    <p
-                      style="
-                        padding-top: 5px;
-                        padding-left: 10px;
-                        font-size: 16px;
-                      "
-                    >
-                      <span style="color: #6a5acd">Current Version: </span>
-                      {{ history.versions[0].minVersion }}<br />
-                      <span style="color: #6a5acd">Transaction Date: </span>
-                      {{ new Date(history.versions[0].started) }} <br />
-                      <span style="color: #6a5acd">Status: </span>
-                      {{ history.versions[0].status }} <br />
-                      <span style="color: #6a5acd">Details: </span> <br />
-                      Transaction ID:
-                      {{ history.versions[0].document.transactionId }} <br />
-                      User ID: {{ history.versions[0].document.userId }} <br />
-                      Name: {{ history.versions[0].document.name }} <br />
-                      Photo ID: {{ history.versions[0].document.photoId }}
-                      <br />
-                      Amount: {{ history.versions[0].document.amount }} <br />
-                    </p>
-                  </div> -->
-
+                  
                   <div
                     style="
                       width: 780px;

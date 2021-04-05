@@ -36,8 +36,8 @@ router.post('/', async (req, res) => {
     console.log(`Version was ${result.version}.`);
     const transaction = new Transaction({
         transactionId: req.body.transactionId,
+        prevOwner: req.body.prevOwner,
         userId: req.body.userId,
-        name: req.body.name,
         photoId: req.body.photoId,
         photoHash: req.body.photoHash,
         amount: req.body.amount + ' USD',
