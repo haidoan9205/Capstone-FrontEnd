@@ -21,15 +21,24 @@
               >
                 <td>{{ frontEndDateFormat(transaction.boughtTime) }}</td>
                 <td>{{ transaction.photoName }}</td>
-                <td>Normal</td>
+                <td>
+                  <p v-if="transaction.typeId == 1">Normal</p>
+                  <p v-if="transaction.typeId == 2">Exclusive</p>
+                </td>
                 <td>${{ transaction.boughtPrice }}</td>
                 <!-- <td>{{transaction.transactionId}}</td>  -->
                 <td>
-                  <base-button outline type="primary" @click="download(transaction)">Download</base-button>
+                  <base-button
+                    outline
+                    type="primary"
+                    @click="download(transaction)"
+                    >Download</base-button
+                  >
                 </td>
               </tr>
             </tbody>
           </table>
+          
         </tab-pane>
 
         <tab-pane title="Exclusive Transaction">
@@ -136,8 +145,7 @@
                         text-align: center
                       "
                     >
-                      <span
-                        >
+                      <span>
                         <img
                           :src="photo.wmlink"
                           @click="openGallery(0)"
@@ -146,7 +154,7 @@
                             width: 400px;
                             cursor: pointer;
                             padding-top: 5px;
-                          " />
+                          "/>
                         <p style="padding: 3px">
                           Click on image for full size
                         </p>
@@ -169,7 +177,13 @@
                           /> </LightBox
                       ></span>
 
-                      <span v-bind="proofResponse">The transaction of this photo has been added to the Blockchain at <span style="color: #6a5acd">{{ new Date(proofResponse[0].submitted) }}</span></span>
+                      <span v-bind="proofResponse"
+                        >The transaction of this photo has been added to the
+                        Blockchain at
+                        <span style="color: #6a5acd">{{
+                          new Date(proofResponse[0].submitted)
+                        }}</span></span
+                      >
                     </p>
                   </div>
                 </div>
@@ -213,11 +227,28 @@ export default {
       photo: [],
       user: JSON.parse(localStorage.getItem("user")),
       version: "",
+      sort: {
+        key: "",
+        isAsc: false,
+      },
     };
   },
   computed: {
     transactions() {
       return this.$store.state.transactions;
+    },
+    sortedItems() {
+      const list = transactions.slice(); 
+      if (!!this.sort.key) {
+        list.sort((a, b) => {
+          a = a[this.sort.key];
+          b = b[this.sort.key];
+
+          return (a === b ? 0 : a > b ? 1 : -1) * (this.sort.isAsc ? 1 : -1);
+        });
+      }
+  
+      return list;
     },
   },
   mounted() {
@@ -242,11 +273,12 @@ export default {
             this.proofResponse = response.data;
             this.version = this.proofResponse[0].version;
             for (let index = 0; index < this.fullHistory.length; index++) {
-              if (this.fullHistory[index].versions[0].minVersion == this.version) {
+              if (
+                this.fullHistory[index].versions[0].minVersion == this.version
+              ) {
                 this.history = this.fullHistory[index];
                 this.getPhotoDetails(this.history.versions[0].document.photoId);
               }
-              
             }
           } else {
             alert("Network error, please try again!");
@@ -296,6 +328,8 @@ export default {
     frontEndDateFormat(date) {
       return moment(date, "YYYY-MM-DD HHmm").format("DD/MM/YYYY HH:mm");
     },
+
+    
   },
 };
 </script>
@@ -344,4 +378,5 @@ export default {
 .styled-table tbody tr:last-of-type {
   border-bottom: 2px solid #009879;
 }
+
 </style>

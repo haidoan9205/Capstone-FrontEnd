@@ -3,10 +3,10 @@
     <table class="table table-hover table-sm mx-auto">
       <h2>Items in order
       </h2>
-      <div class="itemCart" v-for="image in transactions" :key="image.photoId">
-        <tr>
+      <div class="itemCart" v-for="item in transactions.photo" :key="item.photoId">
+        <tr >
           <td class="col-sm-3  gallery-panel">
-            <img :src="image.wmlink" class="img-fluid" />
+            <img :src="item.wmlink" class="img-fluid" />
           </td>
           <td>
             <div class="detail">
@@ -15,15 +15,32 @@
                   <strong class="description">Photo:</strong>
                 </td>
                 <td class="col2">
-                  <p>{{ image.photoName }}</p>
+                  <p>{{ item.photoName }}</p>
+                </td>
+                <tr>
+                <td class="col1"><strong class="rejection">Type:</strong></td>
+                <td class="col2">
+                  <p v-if="item.typeId == 1">Normal</p>
+                  <p v-if="item.typeId == 2">Exclusive</p>
                 </td>
               </tr>
+              <tr>
+                <td class="col1">
+                  <strong class="rejection">Price:</strong>
+                </td>
+                <td class="col2">
+                  <p>{{ item.price }} $</p>
+                </td>
+              </tr>
+              
           
            
             </div>
+            
           </td>
         </tr>
       </div>
+      <div class="col-sm-4" style="float:right;"><strong style="font-size:20px">Amount:{{transactions.total}} $ </strong></div>
     </table>
   </div>
  
@@ -47,6 +64,7 @@ export default {
   },
   mounted() {
     this.$store.dispatch("getTransactionDetail", this.$route.params.transactionId);
+    console.log(this.transactions)
   },
   methods:{
       frontEndDateFormat(date) {
