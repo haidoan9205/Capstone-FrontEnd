@@ -289,8 +289,8 @@ export default {
         url: 'http://localhost:3000/transactions',
         data: {
           transactionId: this.orderInfo.id,
+          prevOwner: this.$store.state.ucart[0].image.userName,
           userId: this.user.userId,
-          name: this.user.fullName,
           photoId: this.$store.state.ucart[0].image.photoId,
           photoHash: this.$store.state.ucart[0].image.hash,
           amount: parseFloat(this.orderInfo.purchase_units[0].amount.value),

@@ -41,10 +41,14 @@
                   type="text"
                   class="form-control"
                   v-model="proofId"
+                  placeholder="Input proofID to get receipt from the Blockchain..."
                   required
                 />
-                <div class="flex-container">
-                  <div
+                <div
+                  class="flex-container"
+                  style="border-style: solid; border-width: thin; margin-top: 15px"
+                >
+                  <!-- <div
                     disabled="true"
                     style="
                       width: 380px;
@@ -66,14 +70,14 @@
                         font-size: 16px;
                       "
                     >
-                      <!-- <span style="color: #6a5acd">Proof: </span>
+                      <span style="color: #6a5acd">Proof: </span>
                       {{ proofResponse[0].proofId }}<br />
                       <span style="color: #6a5acd">Submitted Date: </span>
                       {{ new Date(proofResponse[0].submitted) }} <br />
                       <span style="color: #6a5acd"> Submitted Version: </span>
                       {{ proofResponse[0].version }}<br />
                       <span style="color: #6a5acd">Status: </span>
-                      {{ proofResponse[0].status }} -->
+                      {{ proofResponse[0].status }}
                     </p>
                   </div>
 
@@ -97,7 +101,7 @@
                         font-size: 16px;
                       "
                     >
-                      <!-- <span style="color: #6a5acd">Current Version: </span>
+                      <span style="color: #6a5acd">Current Version: </span>
                       {{ history.versions[0].minVersion }}<br />
                       <span style="color: #6a5acd">Transaction Date: </span>
                       {{ new Date(history.versions[0].started) }} <br />
@@ -110,7 +114,62 @@
                       Name: {{ history.versions[0].document.name }} <br />
                       Photo ID: {{ history.versions[0].document.photoId }}
                       <br />
-                      Amount: {{ history.versions[0].document.amount }} <br /> -->
+                      Amount: {{ history.versions[0].document.amount }} <br />
+                    </p>
+                  </div> -->
+
+                  <div
+                    style="
+                      width: 700px;
+                      height: 700px;
+                    "
+                    v-bind="history"
+                  >
+                    <p v-if="history == ''"></p>
+
+                    <p
+                      v-else
+                      style="
+                        padding-top: 5px;
+                        padding-left: 10px;
+                        font-size: 16px;
+                        text-align: center
+                      "
+                    >
+                      <span
+                        >
+                        <img
+                          :src="photo.wmlink"
+                          @click="openGallery(0)"
+                          style="
+                            height: 350px;
+                            width: 400px;
+                            cursor: pointer;
+                            padding-top: 5px;
+                          " />
+                        <p style="padding: 3px">
+                          Click on image for full size
+                        </p>
+
+                        <LightBox
+                          ref="lightbox"
+                          :showLightBox="false"
+                          :showThumbs="false"
+                          :media="[
+                            {
+                              thumb: photo.wmlink,
+                              src: photo.wmlink,
+                              srcset: photo.wmlink,
+                            },
+                          ]"
+                        >
+                          <inner-image-zoom
+                            :src="photo.wmlink"
+                            :zoomSrc="photo.wmlink"
+                          /> </LightBox
+                      ></span>
+
+                      <span v-bind="proofResponse">The transaction of this photo has been added to the Blockchain at <span style="color: #6a5acd">{{ new Date(proofResponse[0].submitted) }}</span></span>
                     </p>
                   </div>
                 </div>
@@ -135,11 +194,14 @@
 import axios from "axios";
 import Tabs from "@/components/Tabs/Tabs.vue";
 import TabPane from "@/components/Tabs/TabPane.vue";
-import moment from 'moment'
+import moment from "moment";
+import LightBox from "vue-it-bigger";
+import("vue-it-bigger/dist/vue-it-bigger.min.css");
 export default {
   components: {
     Tabs,
     TabPane,
+    LightBox,
   },
   data() {
     return {
@@ -148,6 +210,7 @@ export default {
       proofResponse: "",
       history: [],
       fullHistory: [],
+      photo: [],
       user: JSON.parse(localStorage.getItem("user")),
       version: "",
     };
@@ -159,14 +222,19 @@ export default {
   },
   mounted() {
     this.$store.dispatch("getTransactions");
-    //this.getExclusiveHistory();
+    // this.getExclusiveHistory();
   },
   methods: {
     download(transaction) {
       this.$store.dispatch("downloadImage", transaction.photoId);
     },
 
+    openGallery(index) {
+      this.$refs.lightbox.showImage(index);
+    },
+
     getProofConfimation(proofId) {
+      this.getExclusiveHistory();
       axios
         .get("http://localhost:3000/transactions/getProof/" + proofId)
         .then((response) => {
@@ -176,7 +244,9 @@ export default {
             for (let index = 0; index < this.fullHistory.length; index++) {
               if (this.fullHistory[index].versions[0].minVersion == this.version) {
                 this.history = this.fullHistory[index];
+                this.getPhotoDetails(this.history.versions[0].document.photoId);
               }
+              
             }
           } else {
             alert("Network error, please try again!");
@@ -187,19 +257,18 @@ export default {
           console.log(error);
         });
     },
-    
 
     getExclusiveHistory() {
       axios
         .get(
           "http://localhost:3000/transactions/getDocumentHistory/" +
-            this.user.fullName
+            this.user.userId
         )
         .then((response) => {
           if (response.status == 200) {
             this.fullHistory = response.data;
-            let length = this.fullHistory.length;
-            this.history = this.fullHistory[length - 1];
+            // let length = this.fullHistory.length;
+            // this.history = this.fullHistory[length - 1];
           } else {
             alert("Network error, please try again!");
           }
@@ -209,9 +278,24 @@ export default {
           console.log(error);
         });
     },
+
+    getPhotoDetails(id) {
+      axios
+        .get("https://imago.azurewebsites.net/api/v1/Photo/" + id)
+        .then((response) => {
+          if (response.status == 200) {
+            this.photo = response.data;
+          }
+        })
+        .catch((error) => {
+          // alert("System error, please contact admin!");
+          console.log(error);
+        });
+    },
+
     frontEndDateFormat(date) {
-        		return moment(date, 'YYYY-MM-DD HHmm').format('DD/MM/YYYY HH:mm');
-        	},
+      return moment(date, "YYYY-MM-DD HHmm").format("DD/MM/YYYY HH:mm");
+    },
   },
 };
 </script>
