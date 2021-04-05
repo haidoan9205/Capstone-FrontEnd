@@ -120,12 +120,12 @@
 
                   <div
                     style="
-                      width: 700px;
-                      height: 700px;
+                      width: 780px;
+                      height: 750px;
                     "
-                    v-bind="history"
+                    v-bind="proofResponse"
                   >
-                    <p v-if="history == ''"></p>
+                    <p v-if="proofResponse == ''"></p>
 
                     <p
                       v-else
@@ -169,7 +169,11 @@
                           /> </LightBox
                       ></span>
 
-                      <span v-bind="proofResponse">The transaction of this photo has been added to the Blockchain at <span style="color: #6a5acd">{{ new Date(proofResponse[0].submitted) }}</span></span>
+                      <span>The transaction of this photo has been added to the Blockchain at:<br/>
+                      <span style="color: #6a5acd">{{ new Date(proofResponse[0].submitted) }}</span></span> <br/><br/>
+                      <span>Hash:<br/> <span style="color: #6a5acd">{{ proofResponse[0].hash }}</span></span> <br/><br/>
+                      <span>Transaction ID:<br/> <span style="color: #6a5acd">{{ proofResponse[0].anchorData.txnId }}</span></span> <br/><br/>
+                      <span>Verify the Blockchain info at:<br/> <a style="color: #6a5acd">{{ proofResponse[0].anchorData.txnUri }}</a></span> <br/><br/>
                     </p>
                   </div>
                 </div>
