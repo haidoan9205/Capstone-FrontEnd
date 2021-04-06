@@ -21,7 +21,10 @@
               >
                 <td>{{ frontEndDateFormat(transaction.boughtTime) }}</td>
                 <td>{{ transaction.photoName }}</td>
-                <td>Normal</td>
+                <td>
+                  <p v-if="transaction.typeId == 1">Normal</p>
+                  <p v-if="transaction.typeId == 2">Exclusive</p>
+                </td>
                 <td>${{ transaction.boughtPrice }}</td>
                 <!-- <td>{{transaction.transactionId}}</td>  -->
                 <td>
@@ -35,6 +38,7 @@
               </tr>
             </tbody>
           </table>
+          
         </tab-pane>
 
         <tab-pane title="Exclusive Transaction">
@@ -102,6 +106,10 @@
                             padding-top: 5px;
                           " />
                         <p style="padding: 3px">Click on image for full size</p>
+                          "/>
+                        <p style="padding: 3px">
+                          Click on image for full size
+                        </p>
 
                         <LightBox
                           ref="lightbox"
@@ -188,11 +196,28 @@ export default {
       photo: [],
       user: JSON.parse(localStorage.getItem("user")),
       version: "",
+      sort: {
+        key: "",
+        isAsc: false,
+      },
     };
   },
   computed: {
     transactions() {
       return this.$store.state.transactions;
+    },
+    sortedItems() {
+      const list = transactions.slice(); 
+      if (!!this.sort.key) {
+        list.sort((a, b) => {
+          a = a[this.sort.key];
+          b = b[this.sort.key];
+
+          return (a === b ? 0 : a > b ? 1 : -1) * (this.sort.isAsc ? 1 : -1);
+        });
+      }
+  
+      return list;
     },
   },
   mounted() {
@@ -276,6 +301,8 @@ export default {
     frontEndDateFormat(date) {
       return moment(date, "YYYY-MM-DD HHmm").format("DD/MM/YYYY HH:mm");
     },
+
+    
   },
 };
 </script>
@@ -324,4 +351,5 @@ export default {
 .styled-table tbody tr:last-of-type {
   border-bottom: 2px solid #009879;
 }
+
 </style>
