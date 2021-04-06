@@ -25,7 +25,12 @@
                 <td>${{ transaction.boughtPrice }}</td>
                 <!-- <td>{{transaction.transactionId}}</td>  -->
                 <td>
-                  <base-button outline type="primary" @click="download(transaction)">Download</base-button>
+                  <base-button
+                    outline
+                    type="primary"
+                    @click="download(transaction)"
+                    >Download</base-button
+                  >
                 </td>
               </tr>
             </tbody>
@@ -36,24 +41,43 @@
           <div class="row justify-content-center">
             <div class="row align-items-center">
               <div class="form-group">
-                <label class="control-label">Proof ID:</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  v-model="proofId"
-                  placeholder="Input proofID to get receipt from the Blockchain..."
-                  required
-                />
+                <div class="row align-items-center">
+                  <label
+                    class="control-label"
+                    style="
+                      padding-left: 2.5%;
+                      font-size: 20px;
+                      font-weight: bold;
+                    "
+                    >Proof ID:</label
+                  >
+                  <input
+                    type="text"
+                    class="form-control"
+                    v-model="proofId"
+                    placeholder="Input proofID to get receipt from the Blockchain..."
+                    required
+                    style="width: 500px; margin: auto; display: flex"
+                  />
+                  <button
+                    class="btn btn-success"
+                    style="margin: auto; display: flex"
+                    type="submit"
+                    @click="getProofConfimation(proofId)"
+                  >
+                    <span class="text-nowrap">Submit</span>
+                  </button>
+                </div>
+
                 <div
                   class="flex-container"
-                  style="border-style: solid; border-width: thin; margin-top: 15px"
+                  style="
+                    
+                    margin-top: 18px;
+                  "
                 >
-                  
                   <div
-                    style="
-                      width: 780px;
-                      height: 750px;
-                    "
+                    style="width: 780px; height: 750px"
                     v-bind="proofResponse"
                   >
                     <p v-if="proofResponse == ''"></p>
@@ -64,11 +88,10 @@
                         padding-top: 5px;
                         padding-left: 10px;
                         font-size: 16px;
-                        text-align: center
+                        text-align: center;
                       "
                     >
-                      <span
-                        >
+                      <span>
                         <img
                           :src="photo.wmlink"
                           @click="openGallery(0)"
@@ -78,9 +101,7 @@
                             cursor: pointer;
                             padding-top: 5px;
                           " />
-                        <p style="padding: 3px">
-                          Click on image for full size
-                        </p>
+                        <p style="padding: 3px">Click on image for full size</p>
 
                         <LightBox
                           ref="lightbox"
@@ -100,25 +121,44 @@
                           /> </LightBox
                       ></span>
 
-                      <span>The transaction of this photo has been added to the Blockchain at:<br/>
-                      <span style="color: #6a5acd">{{ new Date(proofResponse[0].submitted) }}</span></span> <br/><br/>
-                      <span>Hash:<br/> <span style="color: #6a5acd">{{ proofResponse[0].hash }}</span></span> <br/><br/>
-                      <span>Transaction ID:<br/> <span style="color: #6a5acd">{{ proofResponse[0].anchorData.txnId }}</span></span> <br/><br/>
-                      <span>Verify the Blockchain info at:<br/> <a style="color: #6a5acd">{{ proofResponse[0].anchorData.txnUri }}</a></span> <br/><br/>
+                      <span
+                        >The transaction of this photo has been added to the
+                        Blockchain at:<br />
+                        <span style="color: #6a5acd">{{
+                          new Date(proofResponse[0].submitted)
+                        }}</span></span
+                      >
+                      <br /><br />
+                      <span
+                        >Hash:<br />
+                        <span style="color: #6a5acd">{{
+                          proofResponse[0].hash
+                        }}</span></span
+                      >
+                      <br /><br />
+                      <span
+                        >Transaction ID:<br />
+                        <span style="color: #6a5acd">{{
+                          proofResponse[0].anchorData.txnId
+                        }}</span></span
+                      >
+                      <br /><br />
+                      <span
+                        >Verify the Blockchain info at:<br />
+                        <a
+                          :href="`${proofResponse[0].anchorData.txnUri}`"
+                          target="_blank"
+                          style="color: #6a5acd"
+                          >{{ proofResponse[0].anchorData.txnUri }}</a
+                        ></span
+                      >
+                      <br /><br />
                     </p>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-          <button
-            class="btn btn-success"
-            style="margin: auto; display: flex"
-            type="submit"
-            @click="getProofConfimation(proofId)"
-          >
-            <span class="text-nowrap">Submit</span>
-          </button>
         </tab-pane>
       </card>
     </tabs>
@@ -164,6 +204,10 @@ export default {
       this.$store.dispatch("downloadImage", transaction.photoId);
     },
 
+    openLink(link) {
+      window.open(link, "_blank");
+    },
+
     openGallery(index) {
       this.$refs.lightbox.showImage(index);
     },
@@ -177,11 +221,12 @@ export default {
             this.proofResponse = response.data;
             this.version = this.proofResponse[0].version;
             for (let index = 0; index < this.fullHistory.length; index++) {
-              if (this.fullHistory[index].versions[0].minVersion == this.version) {
+              if (
+                this.fullHistory[index].versions[0].minVersion == this.version
+              ) {
                 this.history = this.fullHistory[index];
                 this.getPhotoDetails(this.history.versions[0].document.photoId);
               }
-              
             }
           } else {
             alert("Network error, please try again!");
