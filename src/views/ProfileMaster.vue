@@ -181,11 +181,22 @@
                           <td>{{ follower.description }}</td>
                           <td>
                             <base-button
-                              class="btn-1 mini-button"
+                              class="btn-1 mini-button" 
                               @click="unFollowUser(follower)"
                               type="neutral"
+                              v-show="follower.isClick == false" 
+                              style="float:right"
                               >Unfollow</base-button
                             >
+                            <base-button
+                    type="default"
+                    size="sm"
+                    v-if="follower.isClick == true"
+                    
+                    class="float-right"
+                  :disabled="follower.isClick == true"
+                    >Unfollowed</base-button
+                  >
                           </td>
                           <!-- <td>{{ follower.typeId }}</td>
                           <td>${{ follower.price }}</td> -->
@@ -266,7 +277,7 @@ import 'vue2-datepicker/index.css';
 import axios from 'axios';
 import Modal from '@/components/Modal.vue';
 
-export default {
+export default {  
   components: {DatePicker, Modal},
   data() {
     return {
@@ -277,6 +288,8 @@ export default {
         modalFollower: false,
         modalEditProfile: false,
       },
+      isClick: false,
+      flag: [],
     };
   },
   computed: {
@@ -284,7 +297,14 @@ export default {
       return this.$store.getters.isLoggedIn;
     },
     followingUsers() {
-      return this.$store.state.followingUsers;
+      const users = this.$store.state.followingUsers;
+      users.forEach(element => {
+        element.isClick = false;
+      });
+      console.log(users)
+      
+      return users;
+      
     },
     images() {
       return this.$store.state.approved_images;
@@ -348,7 +368,14 @@ export default {
           followUserId: follower.userId,
         },
       }).then((response) => {
-        console.log(response.data);
+        if (response.data == true) {
+          follower.isClick = true;
+        } else {
+          this.$toasts.push({
+            type: 'error',
+            message: 'Something went wrong',
+          });
+        }
       });
     },
   },

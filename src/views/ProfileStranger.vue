@@ -30,10 +30,20 @@
                   <base-button
                     type="default"
                     size="sm"
-                    v-show="alreadyFollowed == false"
+                    v-show="alreadyFollowed == false && isClick == false"
+                    
                     class="float-right"
                     @click="followUser(strange)"
                     >Follow This User</base-button
+                  >
+                  <base-button
+                    type="default"
+                    size="sm"
+                    v-show="isClick == true"
+                    
+                    class="float-right"
+                  :disabled="isClick == true"
+                    >Followed</base-button
                   >
                 </div>
               </div>
@@ -115,6 +125,7 @@ export default {
   components: {DatePicker, Modal},
   data() {
     return {
+      isClick: false,
       userId: '',
       alreadyFollowed: false,
       countFollower: this.$store.getters.followerCount,
@@ -168,9 +179,11 @@ export default {
         },
       }).then((response) => {
         if (response.data == true) {
+          
           this.$alert('Follow Successfully', 'Success', 'success').then(() =>
             console.log('Closed')
           );
+          this.isClick = true;
         } else {
           this.$toasts.push({
             type: 'error',
