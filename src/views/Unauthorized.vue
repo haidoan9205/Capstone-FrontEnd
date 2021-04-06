@@ -4,7 +4,9 @@
         <section class="content"
             style="background-image: url('img/theme/error.png')"
         >
-        <a href="http://localhost:8081/#/login">Click here to login</a>
+        <router-link to="/login">
+        <a>Click here to login</a>
+        </router-link>
         </section>
     </div>
 </template>
@@ -44,7 +46,7 @@ export default {
     margin-top: 5%;
 }
 .content {
-    tex-align: center;
+    text-align: center;
     height: 600px;
     width: 800px;
     display: block;
