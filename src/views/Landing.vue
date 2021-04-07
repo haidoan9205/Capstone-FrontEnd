@@ -81,6 +81,10 @@ export default {
   },
   methods: {
     onSearch() {
+      let searchValue = this.searchValue;
+      if (searchValue.length == 0) {
+        return;
+      }
       return this.$router.push({
         name: 'search',
         query: {searchValue: this.searchValue},
