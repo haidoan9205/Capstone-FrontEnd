@@ -20,6 +20,7 @@
                 addonRightIcon="fa fa-search"
                 type="text"
                 v-model="searchValue"
+                v-on:keyup.enter="onSearch"
               ></base-input>
             </div>
             <!-- <div>
