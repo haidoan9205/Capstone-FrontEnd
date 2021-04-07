@@ -292,7 +292,7 @@ export default {
         url: 'http://localhost:3000/transactions',
         data: {
           transactionId: this.orderInfo.id,
-          prevOwner: this.$store.state.ucart[0].image.userName,
+          prevOwner: this.$store.state.ucart[0].image.userId,
           userId: this.user.userId,
           photoId: this.$store.state.ucart[0].image.photoId,
           photoHash: this.$store.state.ucart[0].image.hash,
