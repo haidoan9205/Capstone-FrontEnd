@@ -38,7 +38,6 @@
               </tr>
             </tbody>
           </table>
-          
         </tab-pane>
 
         <tab-pane title="Exclusive Transaction">
@@ -73,21 +72,16 @@
                   </button>
                 </div>
 
-                <div
-                  class="flex-container"
-                  style="
-                    
-                    margin-top: 18px;
-                  "
-                >
+                <div class="flex-container" style="margin-top: 18px">
                   <div
                     style="width: 780px; height: 750px"
                     v-bind="proofResponse"
                   >
-                    <p v-if="proofResponse == ''"></p>
+
+                  <p v-if="proofResponse == ''"></p>
 
                     <p
-                      v-else
+                      v-else-if="proofResponse[0].status == 'Valid'"
                       style="
                         padding-top: 5px;
                         padding-left: 10px;
@@ -106,10 +100,6 @@
                             padding-top: 5px;
                           " />
                         <p style="padding: 3px">Click on image for full size</p>
-                          "/>
-                        <p style="padding: 3px">
-                          Click on image for full size
-                        </p>
 
                         <LightBox
                           ref="lightbox"
@@ -129,7 +119,7 @@
                           /> </LightBox
                       ></span>
 
-                      <span
+                      <!-- <span
                         >The transaction of this photo has been added to the
                         Blockchain at:<br />
                         <span style="color: #6a5acd">{{
@@ -160,7 +150,37 @@
                           >{{ proofResponse[0].anchorData.txnUri }}</a
                         ></span
                       >
-                      <br /><br />
+                      <br /><br /> -->
+
+                      <span>Previous <span style="color: #6a5acd">owner</span> of this image<br/>
+                      <span>Mr/Mrs.<span v-bind="preOwner" style="color: #6a5acd">{{preOwner.fullName}}</span></span><br/>
+                      <!-- <span>Email: <span v-bind="preOwner" style="color: #6a5acd">{{preOwner.email}}</span></span><br/> -->
+                      </span><br/>
+
+                      <span>The transaction of this image, with the amount of 
+                        <span v-bind="history" style="color: #6a5acd">{{history.versions[0].document.amount}}</span><br/>
+                        <span>finished on <span v-bind="history" style="color: #6a5acd">{{new Date(history.versions[0].document.transactionCreationTime)}}</span>,</span>
+                        <span> transfer the <span style="color: #6a5acd">ownership</span> to Mr/Mrs.<span style="color: #6a5acd">{{this.user.fullName}}</span> and has been recorded to the Blockchain database.</span>
+                        </span><br/><br/>
+
+                        <span
+                        >Verify the Blockchain info of this transaction at 
+                        <a
+                          :href="`${proofResponse[0].anchorData.txnUri}`"
+                          target="_blank"
+                          style="color: #6a5acd"
+                          >here</a
+                        ></span
+                      >
+                    </p>
+
+                    <p v-else style="
+                        padding-top: 35px;
+                        padding-left: 10px;
+                        font-size: 25px;
+                        text-align: center;
+                      ">
+                      <span style="color: #B22222">The transaction has not been submitted to the Blockchain yet, please try again later!</span>
                     </p>
                   </div>
                 </div>
@@ -194,6 +214,7 @@ export default {
       history: [],
       fullHistory: [],
       photo: [],
+      preOwner: [],
       user: JSON.parse(localStorage.getItem("user")),
       version: "",
       sort: {
@@ -207,7 +228,7 @@ export default {
       return this.$store.state.transactions;
     },
     sortedItems() {
-      const list = transactions.slice(); 
+      const list = transactions.slice();
       if (!!this.sort.key) {
         list.sort((a, b) => {
           a = a[this.sort.key];
@@ -216,7 +237,7 @@ export default {
           return (a === b ? 0 : a > b ? 1 : -1) * (this.sort.isAsc ? 1 : -1);
         });
       }
-  
+
       return list;
     },
   },
@@ -251,6 +272,7 @@ export default {
               ) {
                 this.history = this.fullHistory[index];
                 this.getPhotoDetails(this.history.versions[0].document.photoId);
+                this.getPrevOwnerDetails(this.history.versions[0].document.prevOwner);
               }
             }
           } else {
@@ -298,11 +320,23 @@ export default {
         });
     },
 
+    getPrevOwnerDetails(id) {
+      axios
+        .get("https://imago.azurewebsites.net/api/v1/User/GetById/" + id)
+        .then((response) => {
+          if (response.status == 200) {
+            this.preOwner = response.data;
+          }
+        })
+        .catch((error) => {
+          // alert("System error, please contact admin!");
+          console.log(error);
+        });
+    },
+
     frontEndDateFormat(date) {
       return moment(date, "YYYY-MM-DD HHmm").format("DD/MM/YYYY HH:mm");
     },
-
-    
   },
 };
 </script>
@@ -351,5 +385,4 @@ export default {
 .styled-table tbody tr:last-of-type {
   border-bottom: 2px solid #009879;
 }
-
 </style>
