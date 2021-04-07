@@ -1,6 +1,7 @@
 <template>
-  <div class="row justify-content-center" style="background-color: #FFFAFA">
-  <div class="flex-container">
+  <div>
+    <unauthorized v-if="!isLoggedIn"></unauthorized>
+     <div class="row" v-if="isLoggedIn">
     <div
       v-if="!paidFor"
       style="
@@ -120,12 +121,17 @@
     </div>
   </div>
   </div>
+ 
 </template>
 
 <script>
 import axios from 'axios';
+import Unauthorized from './Unauthorized.vue';
 
 export default {
+  components:{
+    Unauthorized,
+  },
   computed: {
     cart() {
       if (this.$store.state.cartFlag === true) {

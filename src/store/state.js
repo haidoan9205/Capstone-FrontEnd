@@ -20,4 +20,5 @@ export default {
     history: [],
     transaction_detail: [],
     pending_images: [],
+    followingStranger: [],
 }

@@ -75,15 +75,14 @@ export default {
       let username = this.username;
       let password = this.password;
       if (username === "" || password === "") {
-        alert("Username and password must not empty");
+        this.$toast.warning('Please input username and password!')
       } else {
         this.$store
           .dispatch("login", { username, password })
           .then(() => this.$router.push("/"))
           .catch(
             (err) => (
-              console.log(err),
-              alert("The username and / or password is incorrect")
+              console.log(err)
             )
           );
         this.$store.dispatch("auth");

@@ -4,9 +4,7 @@
         <section class="content"
             style="background-image: url('img/theme/error.png')"
         >
-        <router-link to="/login">
-        <a>Click here to login</a>
-        </router-link>
+        <a href="#/login">Click here to login</a>
         </section>
     </div>
 </template>

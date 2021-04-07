@@ -159,7 +159,7 @@
                 <div class="card-profile-stats d-flex justify-content-center">
                   <div class="modalCursor" @click="modals.modalFollower = true">
                     <span class="heading">{{ followers.length }}</span>
-                    <span class="description">Follower</span>
+                    <span class="description">Following</span>
                   </div>
                   <modal :show.sync="modals.modalFollower">
                     <h6
@@ -175,17 +175,21 @@
                           v-for="follower in followingUsers"
                           :key="follower.username"
                         >
-                       
                           <td>{{ follower.username }}</td>
-                      
+
                           <td>{{ follower.description }}</td>
                           <td>
-                            <base-button
-                              class="btn-1 mini-button"
-                              @click="unFollowUser(follower)"
-                              type="neutral"
-                              >Unfollow</base-button
-                            >
+                          
+                              <base-button
+                                class="btn-1 mini-button button-follow"
+                                @click="unFollowUser(follower)"
+                                type="neutral"
+                                v-show="follower.isDelete == false"
+                                style="float:right"
+                                :disabled="isActive"
+                                >Unfollow</base-button
+                              >
+                         
                           </td>
                           <!-- <td>{{ follower.typeId }}</td>
                           <td>${{ follower.price }}</td> -->
@@ -203,12 +207,8 @@
                     </template>
                   </modal>
                   <div>
-                    <span class="heading">{{images.length}}</span>
+                    <span class="heading">{{ images.length }}</span>
                     <span class="description">Photos</span>
-                  </div>
-                  <div>
-                    <span class="heading">89</span>
-                    <span class="description">Following</span>
                   </div>
                 </div>
               </div>
@@ -261,22 +261,24 @@
   </div>
 </template>
 <script>
-import DatePicker from 'vue2-datepicker';
-import 'vue2-datepicker/index.css';
-import axios from 'axios';
-import Modal from '@/components/Modal.vue';
+import DatePicker from "vue2-datepicker";
+import "vue2-datepicker/index.css";
+import axios from "axios";
+import Modal from "@/components/Modal.vue";
 
 export default {
-  components: {DatePicker, Modal},
+  components: { DatePicker, Modal },
   data() {
     return {
       countFollower: this.$store.getters.followerCount,
-      user: JSON.parse(localStorage.getItem('user')),
+      user: JSON.parse(localStorage.getItem("user")),
       disabledAfter: new Date().toLocaleDateString(),
       modals: {
         modalFollower: false,
         modalEditProfile: false,
       },
+      flag: [],
+       isActive: true,
     };
   },
   computed: {
@@ -284,24 +286,29 @@ export default {
       return this.$store.getters.isLoggedIn;
     },
     followingUsers() {
-      return this.$store.state.followingUsers;
+      const users = this.$store.state.followingUsers;
+      users.forEach((element) => {
+        element.isDelete = false;
+      });
+      console.log(users);
+      return users;
     },
     images() {
       return this.$store.state.approved_images;
     },
-    followers(){
+    followers() {
       return this.$store.state.followingUsers;
-    }
+    },
   },
   mounted() {
-    this.$store.dispatch('getFollowingUsers');
-    this.$store.dispatch('getApprovedImageByUser');
+    this.$store.dispatch("getFollowingUsers");
+    this.$store.dispatch("getApprovedImageByUser");
   },
   methods: {
     onEditProfile() {
       let userId = this.user.userId;
       axios
-        .put('https://imago.azurewebsites.net/api/v1/User/' + userId, {
+        .put("https://imago.azurewebsites.net/api/v1/User/" + userId, {
           userId: this.user.userId,
           fullName: this.user.fullName,
           description: this.user.description,
@@ -312,28 +319,28 @@ export default {
         .then((response) => {
           if (response.status == 201) {
             this.$alert(
-              'Your information is updated',
-              'Success',
-              'success'
-            ).then(() => console.log('Closed'));
+              "Your information is updated",
+              "Success",
+              "success"
+            ).then(() => console.log("Closed"));
             this.modals.modalEditProfile = false;
-            const userUpdated = JSON.parse(window.localStorage.getItem('user'));
+            const userUpdated = JSON.parse(window.localStorage.getItem("user"));
             (userUpdated.fullName = response.data.fullName),
               (userUpdated.description = response.data.description),
               (userUpdated.email = response.data.email),
               (userUpdated.phone = response.data.phone),
               (userUpdated.dayOfBirth = response.data.birthDay);
-            window.localStorage.setItem('user', JSON.stringify(userUpdated));
+            window.localStorage.setItem("user", JSON.stringify(userUpdated));
           } else {
             this.$toasts.push({
-              type: 'error',
-              message: 'Edit error',
+              type: "error",
+              message: "Edit error",
             });
           }
         })
         .catch((error) => {
           this.$toasts.push({
-            type: 'error',
+            type: "error",
             message: error,
           });
         });
@@ -341,19 +348,30 @@ export default {
     unFollowUser(follower) {
       // console.log(user.userId)
       axios({
-        method: 'POST',
-        url: 'https://imago.azurewebsites.net/api/v1/Follow/UnFollow',
+        method: "POST",
+        url: "https://imago.azurewebsites.net/api/v1/Follow/UnFollow",
         data: {
           userId: JSON.parse(this.$store.state.user).userId,
           followUserId: follower.userId,
         },
       }).then((response) => {
-        console.log(response.data);
+        console.log("abc");
+        console.log(follower);
+        if (response.data == true) {
+          follower.isDelete = true;
+        } else {
+          this.$toasts.push({
+            type: "error",
+            message: "Something went wrong",
+          });
+        }
       });
     },
   },
 };
 </script>
+
+
 <style lang="scss">
 #app .dateBirthDay .mx-input {
   display: block;
@@ -428,4 +446,5 @@ export default {
   margin-bottom: 15px;
   border-radius: 10px;
 }
+
 </style>

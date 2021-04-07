@@ -20,6 +20,7 @@
                 addonRightIcon="fa fa-search"
                 type="text"
                 v-model="searchValue"
+                v-on:keyup.enter="onSearch"
               ></base-input>
             </div>
             <!-- <div>
@@ -169,6 +170,9 @@ export default {
   methods: {
     onSearch() {
         let searchValue = this.searchValue;
+        if (searchValue.length == 0) {
+          return;
+        }
         if (this.$route.query.searchValue !== searchValue) {
             this.$router.push({ name: 'search', query: { searchValue: this.searchValue } });
         }
