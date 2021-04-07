@@ -8,6 +8,7 @@
               <tr>
                 <th>Date</th>
                 <th>Photo Name</th>
+                <th>Picture</th>
                 <th>Type</th>
                 <th>Amount</th>
                 <!-- <th  width="15%">Transaction ID</th> -->
@@ -20,7 +21,11 @@
                 :key="transaction.photoId"
               >
                 <td>{{ frontEndDateFormat(transaction.boughtTime) }}</td>
-                <td>{{ transaction.photoName }}</td>
+                <td>
+                  
+                  {{ transaction.photoName }}
+                  </td>
+                  <td><img v-lazy="transaction.wmlink" class="img-fit" /></td>
                 <td>
                   <p v-if="transaction.typeId == 1">Normal</p>
                   <p v-if="transaction.typeId == 2">Exclusive</p>
@@ -338,7 +343,7 @@ export default {
 }
 .styled-table th,
 .styled-table td {
-  padding: 12px 15px;
+  padding: 12px 50px;
 }
 .styled-table tbody tr {
   border-bottom: 1px solid #dddddd;
@@ -350,6 +355,12 @@ export default {
 
 .styled-table tbody tr:last-of-type {
   border-bottom: 2px solid #009879;
+}
+.img-fit {
+  height: 5vw;
+  object-fit: cover;
+  margin-bottom: 15px;
+  border-radius: 10px;
 }
 
 </style>
