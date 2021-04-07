@@ -334,11 +334,12 @@ export default {
             })
               .then((res) => {
                 if (res.status == 201) {
-                  this.$toasts.push({
-                    type: "success",
-                    message: "Transaction successfully",
-                  });
+                  this.$alert('Transaction complete', 'Success', 'success').then(() =>
+                    console.log('Closed')
+                  );
                   this.paidFor = true;
+                  window.localStorage.removeItem('ucart');
+                  this.$store.state.cart = [];
                 } else {
                   this.$toasts.push({
                     type: "error",

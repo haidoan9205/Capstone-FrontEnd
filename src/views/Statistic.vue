@@ -30,8 +30,11 @@
           </div>
           <line-chart :data="linetwo"></line-chart>
         </tab-pane>
-        <tab-pane title="Statistics of photo status">
-          <pie-chart :data="chartData"></pie-chart>
+        <tab-pane title="Photo status">
+          <div class="pietop">
+            <pie-chart :data="chartData"></pie-chart>
+          </div>
+          <div class="center">{{str}}</div>
         </tab-pane>
       </card>
     </tabs>
@@ -59,6 +62,7 @@ export default {
       lineone: null,
       linetwo: null,
       chartData: [],
+      str: '',
       user: JSON.parse(window.localStorage.getItem('user')),
     };
   },
@@ -121,9 +125,15 @@ export default {
       .then((response) => {
         this.chartData = {
           'Approved Photo': response.data.approvedPhoto,
-          'Pending Photo': response.data.pendingPhoto,
           'Denied Photo': response.data.deniedPhoto,
+          'Pending Photo': response.data.pendingPhoto,
         };
+        var a = parseInt(response.data.approvedPhoto);
+        var t = parseInt(response.data.deniedPhoto) + a;
+        var r = ~~((a/t)*100);
+        this.str = "You have " + response.data.approvedPhoto + " photos approved, " + response.data.deniedPhoto + " denied photos and "
+          + response.data.pendingPhoto + " pending approval. Your photo approval rate is " + r + "%.";
+          console.log(this.str);
       })
       .catch((error) => {
         console.log(error);
@@ -180,14 +190,15 @@ export default {
 }
 </style>
 <style>
+.pietop {
+  margin-top: 2%;
+}
 .button {
   height: 34px;
 }
 .center {
-  margin: auto;
-  width: 60%;
+  margin-top: 2%;
   text-align: center;
-  padding: 10px;
 }
 .linechartkick {
   margin-left: 10%;

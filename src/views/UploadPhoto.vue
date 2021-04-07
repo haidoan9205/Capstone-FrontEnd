@@ -145,23 +145,30 @@ export default {
         this.isImage = false;
         this.file = null;
       } 
+      if (this.file.size > 4194304) {
+         this.$toast.warning('File is too big! Please choose image size smaller than 4MB')
+      }
       if(this.file.type.match('image.*')) {
         this.isImage = true;
       }
-      console.log(this.isImage);
+      console.log(this.file.size);
     },
     onUploadPhoto() {
       this.upload = true;
       this.loading = true;
+      if (this.isImage === false) {
+        this.$toast.warning('Please choose image')
+        this.loading = false;
+        return;
+      }
+      if (this.file.size > 4194304) {
+         this.$toast.warning('File is too big! Please choose image size smaller than 4MB')
+        this.loading = false;
+        return;
+      }
       if (this.value.length === 0) {
         this.$toast.warning('Please select category')
          this.loading = false;
-        return;
-      }
-      if (this.isImage === false) {
-        
-         this.$toast.warning('Please choose image')
-        this.loading = false;
         return;
       }
       if (isNaN(this.price)) {
