@@ -51,15 +51,11 @@
                 <div class="card-profile-stats d-flex justify-content-center">
                   <div class="modalCursor" @click="modals.modalFollower = true">
                     <span class="heading">{{ followers.length }}</span>
-                    <span class="description">Follower</span>
+                    <span class="description">Following</span>
                   </div>
                   <div>
                     <span class="heading">10</span>
                     <span class="description">Photos</span>
-                  </div>
-                  <div>
-                    <span class="heading">89</span>
-                    <span class="description">Following</span>
                   </div>
                 </div>
               </div>
@@ -148,11 +144,11 @@ export default {
       return this.$store.state.approved_images_stranger;
     },
     followers(){
-      return this.$store.state.followingUsers;
-    }
+      return this.$store.state.followingStranger;
+    },
   },
   mounted() {
-    this.$store.dispatch('getFollowingUsers');
+    this.$store.dispatch('getFollowingStranger', window.localStorage.getItem('strangerId'));
     this.$store.dispatch('getStrangeUser', this.$route.params.userId);
     window.localStorage.setItem('strangerId', this.$route.params.userId);
     this.$store.dispatch('getApprovedImageByStranger');

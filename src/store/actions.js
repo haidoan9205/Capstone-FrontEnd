@@ -21,6 +21,7 @@ export const getImage = ({ commit },photoId) => {
 };
 
 export const getStrangeUser = ({ commit }, userId) => {
+    state.stranger = null;
     axios
         .get(`https://imago.azurewebsites.net/api/v1/User/GetById/${userId}`)
         .then((response) => {
@@ -90,6 +91,9 @@ export const login = ({ commit }, user) => {
             })
             .catch((err) => {
                 commit("auth_error");
+                Vue.$toast.error('Username or password is not correct.',{
+                    position: "top",
+                })
                 window.localStorage.removeItem("token");
                 reject(err);
             });
@@ -111,6 +115,7 @@ export const getTransactions = ({ commit }) => {
 };
 
 export const getFollowingUsers = ({ commit }) => {
+
     const user = localStorage.getItem("user");
     const user_parsed = JSON.parse(user);
     console.log("user parse");
@@ -121,6 +126,17 @@ export const getFollowingUsers = ({ commit }) => {
         )
         .then((response) => {
             commit("SET_FOLLOWINGUSERS", response.data);
+        });
+};
+
+export const getFollowingStranger = ({ commit }, strangerId) => {
+    state.followingStranger = [];
+    axios
+        .get(
+            `https://imago.azurewebsites.net/api/v1/Follow/GetFollowingUser/${strangerId}`
+        )
+        .then((response) => {
+            commit("SET_FOLLOWINGSTRANGERS", response.data);
         });
 };
 
@@ -138,11 +154,12 @@ export const register = ({ commit }, user) => {
                 localStorage.setItem("token", token);
                 axios.defaults.headers.common["Authorization"] = token;
                 commit("auth_success", user);
-
+                Vue.$toast.success('Welcome to imago, your account is created.')
                 resolve(resp);
             })
             .catch((err) => {
                 commit("auth_error", err);
+                Vue.$toast.error('Something went wrong, please check your register information.')
                 localStorage.removeItem("token");
                 reject(err);
             });

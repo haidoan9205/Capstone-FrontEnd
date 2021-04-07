@@ -21,6 +21,7 @@
             accept="image/*"
             required
           />
+          <span style="color:red" v-if="msg.file">{{ msg.file }}</span>
         </div>
         <div class="multiselect-div">
           <label class="typo__label" for="ajax">Select 2 Category</label>
@@ -119,6 +120,7 @@ export default {
       options: [],
       type: null,
       typeList: [],
+      msg: [],
       user: JSON.parse(localStorage.getItem("user")),
     };
   },
@@ -139,8 +141,9 @@ export default {
     onFileSeleted(event) {
       this.file = event.target.files[0];
       if(!this.file.type.match('image.*')) {
-        alert('Invalid image');
+        this.$toast.warning('Sorry but the file use choosed is not an image, please try again')
         this.isImage = false;
+        this.file = null;
       } 
       if(this.file.type.match('image.*')) {
         this.isImage = true;
@@ -151,15 +154,19 @@ export default {
       this.upload = true;
       this.loading = true;
       if (this.value.length === 0) {
-        alert("Please select category");
+        this.$toast.warning('Please select category')
+         this.loading = false;
         return;
       }
       if (this.isImage === false) {
-        alert("Please select an image");
+        
+         this.$toast.warning('Please choose image')
+        this.loading = false;
         return;
       }
       if (isNaN(this.price)) {
-        alert("Please enter only the number to the price");
+         this.$toast.warning('Price must be an number!')
+        this.loading = false;
         return;
       }
       const fd = new FormData();
@@ -196,14 +203,16 @@ export default {
             ).then(() => console.log("Closed"));
            
           } else {
-            alert("Upload error");
+            Vue.$toast.error('Upload error, please try again')
+            this.loading = false;
           }
-          console.log(respone.status);
         })
         .catch((error) => {
-          console.log(error);
+          this.$toast.error('Something went wrong, please try again')
+          this.loading = false;
         });
     },
+   
   },
 };
 </script>

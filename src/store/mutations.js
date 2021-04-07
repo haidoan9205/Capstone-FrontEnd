@@ -17,6 +17,10 @@ export const SET_FOLLOWINGUSERS = (state, followingUsers) => {
   state.followingUsers = followingUsers;
 };
 
+export const SET_FOLLOWINGSTRANGERS = (state, followingStranger) =>{
+  state.followingStranger = followingStranger;
+}
+
 export const SET_STRANGER = (state, stranger) => {
   state.stranger = stranger;
   window.localStorage.setItem('stranger', JSON.stringify(state.stranger));

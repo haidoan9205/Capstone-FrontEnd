@@ -4,7 +4,7 @@
         <section class="content"
             style="background-image: url('img/theme/error.png')"
         >
-        <a href="http://localhost:8081/#/login">Click here to login</a>
+        <a href="#/login">Click here to login</a>
         </section>
     </div>
 </template>

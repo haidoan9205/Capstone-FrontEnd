@@ -1,6 +1,5 @@
 <template>
   <div class="mb-3" style="background-color:#F2F2F2">
-    <cube-spin></cube-spin>
     <div class="row ml-2 imageInfo">
       <!-- <div class="imageInfo"> -->
       <div class="col-md-5 col-sm-5 col-xs-12 positionImage">
@@ -16,6 +15,7 @@
         </h3>
 
         <h5 class="h5"><strong>Price</strong> : $ {{ image.price }}</h5>
+       
         <p class="lead">
           {{ image.description }}
         </p>
@@ -36,6 +36,14 @@
             {{ badge.categoryName }}
           </span>
         </badge>
+        <br/>
+         <h3 class="h5" v-if="image.typeId == 1">
+          <strong>Type</strong> : Normal
+        </h3>
+        <h3
+         class="h5" v-if="image.typeId == 2">
+          <strong>Type</strong> : Exclusive
+        </h3>
         <modal :show.sync="modals.modalTag">
           <div class="container">
             <div class="modalStyle">
@@ -71,14 +79,16 @@
 
         <blockquote class="blockquote mt-2">
           <p><strong> Upload By:</strong></p>
-          <router-link v-if="this.isYour == true"
+          <router-link
+            v-if="this.isYour == true"
             :to="{ name: 'profileMaster', params: { userId: image.userId } }"
           >
             <footer class="blockquote-footer">
               <cite title="Source Title">{{ image.userName }}</cite>
             </footer>
           </router-link>
-           <router-link v-else-if="this.isYour == false"
+          <router-link
+            v-else-if="this.isYour == false"
             :to="{ name: 'Profile', params: { userId: image.userId } }"
           >
             <footer class="blockquote-footer">
@@ -105,12 +115,11 @@
 <script>
 import Modal from "@/components/Modal.vue";
 import axios from "axios";
-import CubeSpin from "vue-loading-spinner";
 import { merge, of } from "rxjs";
 
 // const { map, pluck, startWith, scan } = rxjs.operators;
 export default {
-  components: { Modal, CubeSpin },
+  components: { Modal },
   props: ["follows"],
 
   data() {
@@ -202,7 +211,7 @@ export default {
     console.log(this.photoId);
     this.$store.dispatch("getImage", this.photoId);
     const abc = merge(this.functionA(), this.functionB());
-    console.log(abc)
+    console.log(abc);
     abc.pipe((res) => {
       loader.hide();
     });
