@@ -337,7 +337,7 @@ export default {
                     console.log('Closed')
                   );
                   this.paidFor = true;
-                  window.localStorage.removeItem('cart');
+                  window.localStorage.removeItem('ucart');
                   this.$store.state.cart = [];
                 } else {
                   this.$toasts.push({
