@@ -44,7 +44,7 @@ export default {
     margin-top: 5%;
 }
 .content {
-    tex-align: center;
+    text-align: center;
     height: 600px;
     width: 800px;
     display: block;

@@ -3,27 +3,27 @@
     <unauthorized v-if="!isLoggedIn"></unauthorized>
      <div class="row" v-if="isLoggedIn">
     <div
-      class="col-md-7"
       v-if="!paidFor"
       style="
         border-radius: 15px;
-        border: 2px solid rgba(0, 0, 0, 0.48);
-        width: 60%;
+        border: 0px solid rgba(0, 0, 0, 0.48);
+        width: 870px;
         margin-top: 30px;
         margin-bottom: 30px;
         margin-left: 7%;
-        margin-right: 40px;
+        margin-right: 15px;
         overflow: auto;
-        padding-left: 40px;
+        background-color:#F2F2F2
       "
     >
-      <h2 style="padding-left: 10px">Checkout List</h2>
+      <h2 style="padding-left: 35px">Checkout List</h2>
+      <hr style="width: 90%" />
       <table
         id="cart"
         class="table table-hover table-sm"
         v-if="checkLocal != 0"
       >
-        <div>
+        <div class="itemList">
           <tr v-for="item in cart" :key="item.image.photoId">
             <td class="gallery-panel">
               <img
@@ -58,7 +58,7 @@
                 <tr>
                   <td>
                     <h5>
-                      <b>${{ item.image.price }}USD</b>
+                      <b>${{ item.image.price }} USD</b>
                     </h5>
                   </td>
                 </tr>
@@ -85,12 +85,12 @@
     </div>
     <div
       v-if="!paidFor"
-      class="col-md-3"
+      class="column"
       style="
         border-radius: 15px;
-        border: 2px solid rgba(0, 0, 0, 0.48);
+        border: 0px solid rgba(0, 0, 0, 0.48);
         height: 600px;
-        width: 25%;
+        width: 400px;
         margin-top: 30px;
         margin-left: 1.5%;
         margin-bottom: 30px;
@@ -103,14 +103,15 @@
           border: 2px solid rgba(0, 0, 0, 0.25);
           height: 200px;
           margin: 15px;
+          background-color: #FFFAF0
         "
       >
-        <h4 style="padding-top: 10px; padding-left: 25px">User</h4>
-        <p style="padding-left: 25px">{{ user.fullName }}</p>
-        <p style="padding-left: 25px">{{ user.email }}</p>
+        <h4 style="padding-top: 10px; padding-left: 25px">Customer</h4>
+        <p style="padding-left: 25px">Name: {{ user.fullName }}</p>
+        <p style="padding-left: 25px">Email: {{ user.email }}</p>
         <hr style="width: 80%" />
-        <p style="padding-left: 140px">
-          TOTAL: <span style="color: red">${{ total }}USD</span>
+        <p style="padding-left:180px; margin-top:-30px">
+          TOTAL: <br/> <span style="color: red; font-weight:bold">${{ total }} USD</span>
         </p>
       </div>
       <div
@@ -297,7 +298,7 @@ export default {
         url: 'http://localhost:3000/transactions',
         data: {
           transactionId: this.orderInfo.id,
-          prevOwner: this.$store.state.ucart[0].image.userName,
+          prevOwner: this.$store.state.ucart[0].image.userId,
           userId: this.user.userId,
           photoId: this.$store.state.ucart[0].image.photoId,
           photoHash: this.$store.state.ucart[0].image.hash,
@@ -368,7 +369,26 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+.flex-container {
+  display: flex;
+  flex-direction: row;
+  margin-top: 5px;
+}
+@media (max-width: 970px) {
+  .flex-container {
+    flex-direction: column;
+  }
+}
+.container {
+  display: flex;
+  flex-direction: column;
+}
+.itemList {
+  border-radius: 20px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
 .gallery-panel {
   width: 20vw;
 }
