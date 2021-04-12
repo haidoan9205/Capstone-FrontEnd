@@ -95,8 +95,7 @@
                       "
                     >
                       <span>
-                        <img
-                          :src="photo.wmlink"
+                        <img v-lazy="photo.wmlink"
                           @click="openGallery(0)"
                           style="
                             height: 350px;
@@ -169,14 +168,14 @@
                         </span><br/><br/>
 
                         <span
-                        >Verify the Blockchain info of this transaction at 
+                        >View the Cryptographic info of this transaction at 
                         <a
                           :href="`${proofResponse[0].anchorData.txnUri}`"
                           target="_blank"
                           style="color: #6a5acd"
                           >here</a
-                        ></span
-                      >
+                        ></span><br/>
+                        <span><a :href="createPDF()" target="_blank">Your Cryptographic PDF Receipt</a></span>
                     </p>
 
                     <p v-else style="
@@ -205,11 +204,13 @@ import TabPane from "@/components/Tabs/TabPane.vue";
 import moment from "moment";
 import LightBox from "vue-it-bigger";
 import("vue-it-bigger/dist/vue-it-bigger.min.css");
+import { jsPDF } from "jspdf";
 export default {
   components: {
     Tabs,
     TabPane,
     LightBox,
+    jsPDF,
   },
   data() {
     return {
@@ -261,6 +262,15 @@ export default {
 
     openGallery(index) {
       this.$refs.lightbox.showImage(index);
+    },
+
+    createPDF() {
+      var doc = new jsPDF();
+      doc.setFontSize(22);
+      doc.text(30, 30, 'Proof Of Existence');
+      doc.text(30, 50, 'Transaction ID: ' + this.proofResponse[0].anchorData.txnId);
+      doc.text(30, 55, new Date(this.proofResponse[0].submitted));
+      doc.line(30, 60, 80, 60);
     },
 
     getProofConfimation(proofId) {
