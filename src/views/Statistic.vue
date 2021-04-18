@@ -83,7 +83,7 @@ export default {
       };
       axios
         .post(
-          'https://imago.azurewebsites.net/api/v1/User/GetSellPhotoStatistic',
+          'https://capstoneprojectapi20210418160622.azurewebsites.net/api/v1/User/GetSellPhotoStatistic',
           dt
         )
         .then((response) => {
@@ -119,7 +119,7 @@ export default {
     console.log(user.userId);
     axios
       .get(
-        'https://imago.azurewebsites.net/api/v1/User/GetPhotoStatusStatistic/' +
+        'https://capstoneprojectapi20210418160622.azurewebsites.net/api/v1/User/GetPhotoStatusStatistic/' +
           user.userId
       )
       .then((response) => {
@@ -145,7 +145,7 @@ export default {
     };
     axios
       .post(
-        'https://imago.azurewebsites.net/api/v1/User/GetSellPhotoStatistic',
+        'https://capstoneprojectapi20210418160622.azurewebsites.net/api/v1/User/GetSellPhotoStatistic',
         dt
       )
       .then((response) => {

@@ -28,7 +28,9 @@ import ProfileStranger from "./views/ProfileStranger.vue";
 import TransactionDetail from "./views/TransactionDetail.vue";
 import Statistic from "./views/Statistic.vue";
 import YourPhotoPending from "./views/YourPhotoPending.vue"
-
+import Feeds from "./views/Feeds.vue"
+import ListNormalImage from "./views/ListNormalImage.vue"
+import ListExclusiveImage from "./views/ListExclusiveImage.vue"
 
 Vue.use(Router);
 
@@ -44,6 +46,24 @@ export default new Router({
             }
         },
         {
+            path: "/normal_images",
+            name: "normal",
+            components: {
+                header: AppHeader,
+                default: ListNormalImage,
+                footer: AppFooter
+            }
+        },
+        {
+            path: "/exclusive_images",
+            name: "exclusive",
+            components: {
+                header: AppHeader,
+                default: ListExclusiveImage,
+                footer: AppFooter
+            }
+        },
+        {
             path: "/changepassword/:userId",
             name: "changepassword",
             components: {
@@ -53,6 +73,7 @@ export default new Router({
             },
             props: true,
         },
+       
         {
             path: "/changeforgotpassword",
             name: "changeforgotpassword",
@@ -60,6 +81,16 @@ export default new Router({
                 header: AppHeader,
                 default: ChangeForgotPassword,
                 footer: AppFooter
+            },
+            props: true,
+        },
+        {
+            path: "/news",
+            name: "New Feeds",
+            components: {
+                header: AppHeader,
+                default: Feeds,
+                footer:Sidebar,
             },
             props: true,
         },

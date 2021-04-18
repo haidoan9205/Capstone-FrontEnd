@@ -228,6 +228,7 @@
                     >Checkout <i class="fa fa-angle-right d-inline"></i
                   ></span>
                 </button>
+                
               </td>
             </tr>
           </tfoot>
@@ -255,6 +256,9 @@ export default {
     },
     ucart() {
       return this.$store.state.ucart;
+    },
+     isLoggedIn() {
+      return this.$store.getters.isLoggedIn;
     },
   },
 

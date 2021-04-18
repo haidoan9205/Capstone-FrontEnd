@@ -23,72 +23,46 @@
                 v-on:keyup.enter="onSearch"
               ></base-input>
             </div>
-            <!-- <div>
-              <base-button type="secondary" @click="onSearch">
-                Search
-              </base-button>
-            </div> -->
-            <!-- <div class="col-md-2">
-                    <div class="row row-grid justify-content-center">
-                        <i class="fa fa-camera"></i>
-                    </div>
-                    <div class="row justify-content-center">
-                        <p>search by image</p>
-                    </div>
-                    </div> -->
           </div>
           <br />
         </div>
       </section>
-      <div class="container container-lg gallery">
+      <type/>
+      <div
+        class="container container-lg gallery"
+        style="background-color: #FFFFFF
+"
+      >
         <div class="row mt-4 ">
           <div
             class="col-md-4 mb-5 mb-md-0 gallery-panel"
-            v-for="image in imagesearch"
+            v-for="image in images"
             :key="image.photoId"
             :image="image"
           >
             <div class="card card-lift--hover shadow border-0">
               <router-link
-                :to="{name: 'photo', params: {photoId: image.photoId}}"
+                :to="{ name: 'photo', params: { photoId: image.photoId } }"
               >
-                <img v-lazy="image.wmlink" class="img-fit" />
+                <img
+                  v-lazy="image.wmlink"
+                  class="img-fit"
+                  v-if="image.typeId == 2"
+                />
               </router-link>
             </div>
           </div>
         </div>
       </div>
-      <section class="search-pagination">
-        <button
-          v-if="HasPrevious === 'true'"
-          class="btn btn-outline-dark"
-          v-on:click="onPreviouse"
-        >
-          Previous
-        </button>
-        <input
-          type="text"
-          class="form-control paging border-dark"
-          v-model="CurrentPage"
-        />
-        <span class="paging-text">of {{ TotalPages }} </span>
-        <button
-          v-if="HasNext === 'true'"
-          class="btn btn-outline-dark"
-          v-on:click="onNext"
-        >
-          Next
-        </button>
-      </section>
     </div>
   </div>
 </template>
 
 <script>
-import axios from 'axios';
-
+import VirtualGrid from "vue-virtual-grid";
+import Type from "./Type.vue";
 export default {
-  data() {
+ data() {
     return {
       searchValue: '',
       pageSize: 21,
@@ -100,6 +74,9 @@ export default {
       CurrentPage: 0,
       xpagination: null
     }
+  },
+  components:{
+    Type,
   },
   watch: {
     $route(to, from) {
@@ -137,8 +114,17 @@ export default {
   created(){
       this.searchValue = this.$route.query.searchValue;
   },
+
+  computed: {
+    images() {
+      return this.$store.state.allImagesExclusive;
+    },
+  },
+
   mounted() {
-    let searchValue = this.searchValue;
+    this.$store.dispatch("getImagesAllExclusive");
+
+     let searchValue = this.searchValue;
     axios.get("https://capstoneprojectapi20210418160622.azurewebsites.net/api/v1/Photo/SearchPhoto/" + searchValue + "?PageSize=21&CurrentPage=1")
         .then((response) => {
             this.imagesearch = response.data;
@@ -167,7 +153,7 @@ export default {
         console.log(error);
         });
   },
-  methods: {
+  methods:{
     onSearch() {
         let searchValue = this.searchValue;
         if (searchValue.length == 0) {
@@ -244,8 +230,8 @@ export default {
   }
 };
 </script>
+
 <style scoped>
-@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;1,300&display=swap');
 .searchbar-title {
   font-family: monospace;
   position: relative;
@@ -269,13 +255,13 @@ export default {
   grid-gap: 1rem;
   max-width: 100rem;
   margin: 3rem auto;
-  padding: 0 5rem;
+  padding: 0 1rem !important;
 }
 .gallery-panel img {
   width: 100%;
   height: 22vw;
   object-fit: cover;
-  border-radius: 0.75rem;
+  border-radius: 0;
 }
 .gallery-panel {
   padding-bottom: 15px;

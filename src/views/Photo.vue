@@ -151,7 +151,7 @@ export default {
       console.log(this.$store.state.image.userId);
       axios({
         method: "POST",
-        url: "https://imago.azurewebsites.net/api/v1/Follow/Follow",
+        url: "https://capstoneprojectapi20210418160622.azurewebsites.net/api/v1/Follow/Follow",
         data: {
           userId: JSON.parse(this.$store.state.user).userId,
           followUserId: this.$store.state.image.userId,
@@ -164,7 +164,7 @@ export default {
       axios({
         method: "GET",
         url:
-          "https://imago.azurewebsites.net/api/v1/Photo/GetByCategory/?catName=" +
+          "https://capstoneprojectapi20210418160622.azurewebsites.net/api/v1/Photo/GetByCategory/?catName=" +
           badge.categoryName +
           "&photoId=" +
           this.photoId +
@@ -177,7 +177,7 @@ export default {
       axios({
         method: "GET",
         url:
-          "https://imago.azurewebsites.net/api/v1/Photo/CheckBoughtPhoto?id=" +
+          "https://capstoneprojectapi20210418160622.azurewebsites.net/api/v1/Photo/CheckBoughtPhoto?id=" +
           this.photoId +
           "&userId=" +
           JSON.parse(this.$store.state.user).userId,
@@ -190,7 +190,7 @@ export default {
       axios({
         method: "GET",
         url:
-          "https://imago.azurewebsites.net/api/v1/Photo/CheckMyPhoto?photoId=" +
+          "https://capstoneprojectapi20210418160622.azurewebsites.net/api/v1/Photo/CheckMyPhoto?photoId=" +
           this.photoId +
           "&userId=" +
           JSON.parse(this.$store.state.user).userId,

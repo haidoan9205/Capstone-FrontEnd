@@ -126,13 +126,13 @@ export default {
   },
   mounted: function() {
     axios
-      .get("https://imago.azurewebsites.net/api/v1/Category")
+      .get("https://capstoneprojectapi20210418160622.azurewebsites.net/api/v1/Category")
       .then((response) => {
         this.options = response.data;
         this.clone_options = response.data;
       });
     axios
-      .get("https://imago.azurewebsites.net/api/v1/Type/GetAllType")
+      .get("https://capstoneprojectapi20210418160622.azurewebsites.net/api/v1/Type/GetAllType")
       .then((response) => {
         this.typeList = response.data;
       });
@@ -196,7 +196,7 @@ export default {
 
       axios
         .post(
-          "https://imago.azurewebsites.net/api/v1/Photo/CreatePhoto",
+          "https://capstoneprojectapi20210418160622.azurewebsites.net/api/v1/Photo/CreatePhoto",
           fd,
           config
         )

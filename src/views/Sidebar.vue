@@ -94,6 +94,11 @@ export default {
           title: "Upload",
           icon: "fa fa-upload",
         },
+          {
+          href: { path: "/news" },
+          title: "News Feed",
+          icon: "fa fa-users",
+        },
       
       ],
       collapsed: true,

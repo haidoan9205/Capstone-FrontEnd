@@ -155,7 +155,7 @@ export default {
     axios({
       method: 'GET',
       url:
-        'https://imago.azurewebsites.net/api/v1/Follow/CheckFollowedUser?userId=' +
+        'https://capstoneprojectapi20210418160622.azurewebsites.net/api/v1/Follow/CheckFollowedUser?userId=' +
         JSON.parse(this.$store.state.user).userId +
         '&followId=' +
         window.localStorage.getItem('strangerId'),
@@ -168,7 +168,7 @@ export default {
       // console.log(user.userId)
       axios({
         method: 'POST',
-        url: 'https://imago.azurewebsites.net/api/v1/Follow/Follow',
+        url: 'https://capstoneprojectapi20210418160622.azurewebsites.net/api/v1/Follow/Follow',
         data: {
           userId: JSON.parse(this.$store.state.user).userId,
           followUserId: this.$route.params.userId,
@@ -192,7 +192,7 @@ export default {
       // console.log(user.userId)
       axios({
         method: 'POST',
-        url: 'https://imago.azurewebsites.net/api/v1/Follow/UnFollow',
+        url: 'https://capstoneprojectapi20210418160622.azurewebsites.net/api/v1/Follow/UnFollow',
         data: {
           userId: JSON.parse(this.$store.state.user).userId,
           followUserId: follower.userId,

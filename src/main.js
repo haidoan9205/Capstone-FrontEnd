@@ -25,6 +25,7 @@ Vue.use(Loading);
 Vue.use(VueMaterial);
 Vue.use(VueSidebarMenu);
 
+
 // import Vue from 'vue'
 
 Vue.use(VueToast);

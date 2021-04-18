@@ -21,4 +21,8 @@ export default {
     transaction_detail: [],
     pending_images: [],
     followingStranger: [],
+    imagesOfFollowing: [],
+    unknownPeople: [],
+    allImages: [],
+    allImagesExclusive: [],
 }

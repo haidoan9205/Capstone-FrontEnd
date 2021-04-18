@@ -2,11 +2,11 @@ const webpack = require("webpack");
 
 module.exports = {
   configureWebpack: {
-    devServer: {
-      host: "0.0.0.0",
-      port: 9000,
-      proxy:'http://0.0.0.0:9000'
-    },
+    // devServer: {
+    //   host: "0.0.0.0",
+    //   port: 8080,
+    //   proxy:'http://0.0.0.0:8080'
+    // },
     // Set up all the aliases we use in our app.
     plugins: [
       new webpack.optimize.LimitChunkCountPlugin({
