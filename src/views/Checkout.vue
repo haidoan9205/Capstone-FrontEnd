@@ -266,7 +266,7 @@ export default {
       }
 
       axios({
-        url: "https://imago.azurewebsites.net/api/Order",
+        url: "https://capstoneprojectapi20210418160622.azurewebsites.net/api/Order",
         data: fd,
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -327,7 +327,7 @@ export default {
               fd.append("ListPhotoId", orderDetails[i]);
             }
             axios({
-              url: "https://imago.azurewebsites.net/api/Order",
+              url: "https://capstoneprojectapi20210418160622.azurewebsites.net/api/Order",
               data: fd,
               method: "POST",
               headers: { "Content-Type": "application/json" },
