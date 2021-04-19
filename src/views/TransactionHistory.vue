@@ -396,7 +396,7 @@ export default {
 
     getPhotoDetails(id) {
       axios
-        .get("https://imago.azurewebsites.net/api/v1/Photo/" + id)
+        .get("https://capstoneprojectapi20210418160622.azurewebsites.net/api/v1/Photo/" + id)
         .then((response) => {
           if (response.status == 200) {
             this.photo = response.data;
@@ -410,7 +410,7 @@ export default {
 
     getPrevOwnerDetails(id) {
       axios
-        .get("https://imago.azurewebsites.net/api/v1/User/GetById/" + id)
+        .get("https://capstoneprojectapi20210418160622.azurewebsites.net/api/v1/User/GetById/" + id)
         .then((response) => {
           if (response.status == 200) {
             this.preOwner = response.data;

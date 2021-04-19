@@ -5,16 +5,33 @@ import Vue from "vue";
 
 export const getImages = ({ commit }) => {
     axios
-        .get("https://imago.azurewebsites.net/api/v1/Photo/random")
+        .get("https://capstoneprojectapi20210418160622.azurewebsites.net/api/v1/Photo/random")
         .then((response) => {
             commit("SET_IMAGES", response.data);
         });
 };
 
+export const getImagesAll = ({ commit }) => {
+    axios
+        .get("https://capstoneprojectapi20210418160622.azurewebsites.net/api/v1/Photo/GetAllNormalPhoto")
+        .then((response) => {
+            commit("SET_IMAGES_ALL", response.data);
+        });
+};
+
+export const getImagesAllExclusive = ({ commit }) => {
+    axios
+        .get("https://capstoneprojectapi20210418160622.azurewebsites.net/api/v1/Photo/GetAllExclusivePhoto")
+        .then((response) => {
+            commit("SET_IMAGES_ALL_EXCLUSIVE", response.data);
+        });
+};
+
+
 export const getImage = ({ commit },photoId) => {
   state.image = '';
   axios
-    .get(`https://imago.azurewebsites.net/api/v1/Photo/${photoId}`)
+    .get(`https://capstoneprojectapi20210418160622.azurewebsites.net/api/v1/Photo/${photoId}`)
     .then((response) => {
       commit("SET_IMAGE", response.data);
     });
@@ -23,7 +40,7 @@ export const getImage = ({ commit },photoId) => {
 export const getStrangeUser = ({ commit }, userId) => {
     state.stranger = null;
     axios
-        .get(`https://imago.azurewebsites.net/api/v1/User/GetById/${userId}`)
+        .get(`https://capstoneprojectapi20210418160622.azurewebsites.net/api/v1/User/GetById/${userId}`)
         .then((response) => {
             commit("SET_STRANGER", response.data);
         });
@@ -31,7 +48,7 @@ export const getStrangeUser = ({ commit }, userId) => {
 
 export const downloadImage = ({ commit }, photoId) => {
     axios({
-        url: `https://imago.azurewebsites.net/api/v1/Photo/DownloadPhoto/${photoId}`,
+        url: `https://capstoneprojectapi20210418160622.azurewebsites.net/api/v1/Photo/DownloadPhoto/${photoId}`,
         method: "GET",
         responseType: "blob",
     }).then((response) => {
@@ -50,7 +67,7 @@ export const downloadImage = ({ commit }, photoId) => {
 
 // export const downloadImage = ({ commit }, photoId) => {
 //   axios({
-//     url: `https://imago.azurewebsites.net/api/v1/Photo/DownloadPhoto/${photoId}`,
+//     url: `https://capstoneprojectapi20210418160622.azurewebsites.net/api/v1/Photo/DownloadPhoto/${photoId}`,
 //     method: "GET"
 //   }).then((response) => {
 //     var fileURL = window.URL.createObjectURL(new Blob([response.data]));
@@ -76,7 +93,7 @@ export const login = ({ commit }, user) => {
     return new Promise((resolve, reject) => {
         commit("auth_request");
         axios({
-                url: "https://imago.azurewebsites.net/api/v1/Auth",
+                url: "https://capstoneprojectapi20210418160622.azurewebsites.net/api/v1/Auth",
                 data: user,
                 method: "POST",
             })
@@ -100,19 +117,43 @@ export const login = ({ commit }, user) => {
     });
 };
 
+export const getImagesOfFollowing = ({commit}) =>{
+    const user = localStorage.getItem("user");
+    const user_parsed = JSON.parse(user);
+    axios
+        .get(
+            `https://capstoneprojectapi20210418160622.azurewebsites.net/api/v1/Follow/GetPhotoOfAllUserWeAreFollowing/${user_parsed.userId}?userId=${user_parsed.userId}`
+        )
+        .then((response) => {
+            commit("SET_IMAGES_FOLLOWING", response.data);
+        });
+}
+
 export const getTransactions = ({ commit }) => {
+    const user = localStorage.getItem("user");
+    const user_parsed = JSON.parse(user);
+    axios
+        .get(
+            `https://capstoneprojectapi20210418160622.azurewebsites.net/api/v1/User/GetBoughtPhoto/${user_parsed.userId}`
+        )
+        .then((response) => {
+            commit("SET_TRANSACTIONS", response.data);
+        });
+};
+
+export const getUnknownPeople = ({commit}) =>{
     const user = localStorage.getItem("user");
     const user_parsed = JSON.parse(user);
     console.log("user parse");
     console.log(user_parsed);
     axios
         .get(
-            `https://imago.azurewebsites.net/api/v1/User/GetBoughtPhoto/${user_parsed.userId}`
+            `https://capstoneprojectapi20210418160622.azurewebsites.net/api/v1/Follow/Get5UserOfUserThatWeAreFollowThatTheyAreFollowing/${user_parsed.userId}`
         )
         .then((response) => {
-            commit("SET_TRANSACTIONS", response.data);
+            commit("SET_UNKNOWNPEOPLE", response.data);
         });
-};
+}
 
 export const getFollowingUsers = ({ commit }) => {
 
@@ -122,7 +163,7 @@ export const getFollowingUsers = ({ commit }) => {
     console.log(user_parsed);
     axios
         .get(
-            `https://imago.azurewebsites.net/api/v1/Follow/GetFollowingUser/${user_parsed.userId}`
+            `https://capstoneprojectapi20210418160622.azurewebsites.net/api/v1/Follow/GetFollowingUser/${user_parsed.userId}`
         )
         .then((response) => {
             commit("SET_FOLLOWINGUSERS", response.data);
@@ -133,7 +174,7 @@ export const getFollowingStranger = ({ commit }, strangerId) => {
     state.followingStranger = [];
     axios
         .get(
-            `https://imago.azurewebsites.net/api/v1/Follow/GetFollowingUser/${strangerId}`
+            `https://capstoneprojectapi20210418160622.azurewebsites.net/api/v1/Follow/GetFollowingUser/${strangerId}`
         )
         .then((response) => {
             commit("SET_FOLLOWINGSTRANGERS", response.data);
@@ -144,7 +185,7 @@ export const register = ({ commit }, user) => {
     return new Promise((resolve, reject) => {
         commit("auth_request");
         axios({
-                url: "https://imago.azurewebsites.net/api/v1/Auth/Register",
+                url: "https://capstoneprojectapi20210418160622.azurewebsites.net/api/v1/Auth/Register",
                 data: user,
                 method: "POST",
             })
@@ -184,7 +225,7 @@ export const getApprovedImageByUser = ({ commit }) => {
     console.log(user_parsed);
     axios
         .get(
-            `https://imago.azurewebsites.net/api/v1/User/GetUserApprovedPhoto/${user_parsed.userId}`
+            `https://capstoneprojectapi20210418160622.azurewebsites.net/api/v1/User/GetUserApprovedPhoto/${user_parsed.userId}`
         )
         .then((response) => {
             commit("GET_APPROVED_IMAGE", response.data);
@@ -198,7 +239,7 @@ export const getPendingImageByUser = ({ commit }) => {
   console.log(user_parsed);
   axios
     .get(
-      `https://imago.azurewebsites.net/api/v1/User/GetUserPendingPhoto/${user_parsed.userId}`
+      `https://capstoneprojectapi20210418160622.azurewebsites.net/api/v1/User/GetUserPendingPhoto/${user_parsed.userId}`
     )
     .then((response) => {
       commit("GET_PENDING_IMAGE", response.data);
@@ -209,7 +250,7 @@ export const getApprovedImageByStranger = ({ commit }) => {
     const strangerId = window.localStorage.getItem('strangerId');
     axios
         .get(
-            `https://imago.azurewebsites.net/api/v1/User/GetUserApprovedPhoto/${strangerId}`
+            `https://capstoneprojectapi20210418160622.azurewebsites.net/api/v1/User/GetUserApprovedPhoto/${strangerId}`
         )
         .then((response) => {
             commit("GET_APPROVED_IMAGE_STRANGER", response.data);
@@ -219,7 +260,7 @@ export const getApprovedImageByStranger = ({ commit }) => {
 export const getTransactionDetail =({commit}, transactionId) =>{
   axios
   .get(
-    `https://imago.azurewebsites.net/api/v1/Transaction/GetTransaction/${transactionId}`
+    `https://capstoneprojectapi20210418160622.azurewebsites.net/api/v1/Transaction/GetTransaction/${transactionId}`
   )
   .then((response) => {
     commit("GET_HISTORY_DETAIL", response.data);
@@ -233,7 +274,7 @@ export const getHistory = ({ commit }) => {
     console.log(user_parsed);
     axios
         .get(
-            `https://imago.azurewebsites.net/api/v1/Transaction/GetAllTransactionByUserID/${user_parsed.userId}`
+            `https://capstoneprojectapi20210418160622.azurewebsites.net/api/v1/Transaction/GetAllTransactionByUserID/${user_parsed.userId}`
         )
         .then((response) => {
             commit("SET_HISTORY", response.data);
@@ -248,7 +289,7 @@ export const getDeniedImageByUser = ({ commit }) => {
     console.log(user_parsed);
     axios
         .get(
-            `https://imago.azurewebsites.net/api/v1/User/GetUserDeniedPhoto/${user_parsed.userId}`
+            `https://capstoneprojectapi20210418160622.azurewebsites.net/api/v1/User/GetUserDeniedPhoto/${user_parsed.userId}`
         )
         .then((response) => {
             commit("GET_DENIED_IMAGE", response.data);

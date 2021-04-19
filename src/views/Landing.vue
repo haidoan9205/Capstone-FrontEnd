@@ -32,9 +32,15 @@
         </div>
 
         <div class="overlay"></div>
+        
       </section>
+     
+      </div>
+    
       <div>
+        <type/>
         <list-image v-if="flag === true"></list-image>
+            
         <div v-if="flag === false" class="container container-lg gallery">
           <div class="row mt-4 ">
             <div
@@ -55,19 +61,21 @@
         </div>
 
         <div class="overlay2"></div>
-      </div>
+       
     </div>
   </div>
 </template>
 
 <script>
 import ListImage from '../components/ListImage.vue';
+import Type from "./Type.vue";
 import axios from 'axios';
 
 export default {
   name: 'home',
   components: {
     listImage: ListImage,
+    Type,
   },
   data() {
     return {
@@ -157,5 +165,11 @@ export default {
   width: 100%;
   height: 100px;
   background: linear-gradient(180deg, hsla(0, 0%, 100%, 0) 0, #c6d1e4);
+}
+
+
+.tabs-type{
+vertical-align:baseline;
+height: 100px !important;
 }
 </style>

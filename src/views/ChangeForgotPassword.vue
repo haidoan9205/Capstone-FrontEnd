@@ -75,7 +75,7 @@ export default {
                 alert("Password must have 12 - 30 characters");
             } else {
                 if (newpassword === confirmpassword) {
-                    axios.put("https://imago.azurewebsites.net/api/v1/Auth/RecoveryPasswordForUser", {
+                    axios.put("https://capstoneprojectapi20210418160622.azurewebsites.net/api/v1/Auth/RecoveryPasswordForUser", {
                         userId: this.userId,
                         newPassword: this.newpassword
                     })

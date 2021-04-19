@@ -51,7 +51,7 @@ export default {
         onChangePassword() {
             const fd = new FormData();
             fd.append("email", this.email);
-            axios.post("https://imago.azurewebsites.net/api/v1/Auth/RequestRecoveryPassword", fd)
+            axios.post("https://capstoneprojectapi20210418160622.azurewebsites.net/api/v1/Auth/RequestRecoveryPassword", fd)
             .then((respone) => {
             if (respone.status == 200) {
                 localStorage.removeItem("token");

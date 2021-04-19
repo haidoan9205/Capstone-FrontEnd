@@ -155,7 +155,7 @@ export default {
     onEditProfile() {
       let userId = this.user.userId;
       axios
-        .put("https://imago.azurewebsites.net/api/v1/User/" + userId, {
+        .put("https://capstoneprojectapi20210418160622.azurewebsites.net/api/v1/User/" + userId, {
           userId: this.user.userId,
           fullName: this.user.fullName,
           description: this.user.description,

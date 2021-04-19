@@ -10,6 +10,7 @@
         v-for="image in images"
         :key="image.photoId"
         :image="image"
+  
       >
         <div class="card card-lift--hover shadow border-0">
           <router-link
@@ -65,13 +66,13 @@ export default {
   grid-gap: 1rem;
   max-width: 100rem;
   margin: 3rem auto;
-  padding: 0 5rem;
+  padding: 0 2rem !important;
 }
 .gallery-panel img {
   width: 100%;
   height: 22vw;
   object-fit: cover;
-  border-radius: 0.75rem;
+  border-radius: 0;
 }
 .gallery-panel {
   padding-bottom: 15px;

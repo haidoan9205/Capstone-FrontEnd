@@ -1,3 +1,4 @@
+import { VirtualTimeScheduler } from 'rxjs';
 import Vue from 'vue';
 import {mapActions} from 'vuex';
 
@@ -5,9 +6,24 @@ export const SET_IMAGES = (state, images) => {
   state.images = images;
 };
 
+export const SET_IMAGES_FOLLOWING = (state, imagesOfFollowing) =>{
+  state.imagesOfFollowing = imagesOfFollowing;
+}
+
+export const SET_UNKNOWNPEOPLE = (state, unknownPeople) =>{
+  state.unknownPeople = unknownPeople;
+}
+
+export const SET_IMAGES_ALL = (state, allImages) =>{
+  state.allImages = allImages;
+}
 export const SET_IMAGE = (state, image) => {
   state.image = image;
 };
+
+export const SET_IMAGES_ALL_EXCLUSIVE = (state, allImagesExclusive) =>{
+  state.allImagesExclusive = allImagesExclusive
+}
 
 export const SET_TRANSACTIONS = (state, transactions) => {
   state.transactions = transactions;

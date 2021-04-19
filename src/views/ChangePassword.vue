@@ -89,7 +89,7 @@ export default {
             let confirmpassword = this.confirmpassword;
             const fd = new FormData();
             if (newpassword === confirmpassword) {
-                axios.put("https://imago.azurewebsites.net/api/v1/User", {
+                axios.put("https://capstoneprojectapi20210418160622.azurewebsites.net/api/v1/User", {
                     username: this.user.username,
                     oldPassword: this.oldpassword,
                     newPassword: this.newpassword

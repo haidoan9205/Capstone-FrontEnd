@@ -133,15 +133,7 @@
                           Edit
                         </button>
                       </div>
-                      <div class="row justify-content-center pt-3">
-                        <a
-                          v-bind:href="
-                            'http://localhost:8081/#/changepassword/' +
-                              user.userId
-                          "
-                          >Click here to change password</a
-                        >
-                      </div>
+              
                     </div>
 
                     <!-- <template slot="footer">
@@ -181,15 +173,23 @@
                           <td>
                           
                               <base-button
-                                class="btn-1 mini-button button-follow"
+                                class="btn-1 mini-button button-follow unfl"
                                 @click="unFollowUser(follower)"
                                 type="neutral"
                                 v-show="follower.isDelete == false"
                                 style="float:right"
-                                :disabled="isActive"
+                              
                                 >Unfollow</base-button
                               >
-                         
+                              <base-button
+                                class="btn-1 mini-button button-follow unfl"
+                                @click="unFollowUser(follower)"
+                                type="neutral"
+                                v-show="follower.isDelete == true"
+                                style="float:right"
+                                :disabled="follower.isDelete == true"
+                                >Unfollowed</base-button
+                              >
                           </td>
                           <!-- <td>{{ follower.typeId }}</td>
                           <td>${{ follower.price }}</td> -->
@@ -308,7 +308,7 @@ export default {
     onEditProfile() {
       let userId = this.user.userId;
       axios
-        .put("https://imago.azurewebsites.net/api/v1/User/" + userId, {
+        .put("https://capstoneprojectapi20210418160622.azurewebsites.net/api/v1/User/" + userId, {
           userId: this.user.userId,
           fullName: this.user.fullName,
           description: this.user.description,
@@ -345,20 +345,20 @@ export default {
           });
         });
     },
+  
     unFollowUser(follower) {
       // console.log(user.userId)
       axios({
         method: "POST",
-        url: "https://imago.azurewebsites.net/api/v1/Follow/UnFollow",
+        url: "https://capstoneprojectapi20210418160622.azurewebsites.net/api/v1/Follow/UnFollow",
         data: {
           userId: JSON.parse(this.$store.state.user).userId,
           followUserId: follower.userId,
         },
       }).then((response) => {
-        console.log("abc");
-        console.log(follower);
         if (response.data == true) {
           follower.isDelete = true;
+          this.$forceUpdate();
         } else {
           this.$toasts.push({
             type: "error",
@@ -446,5 +446,12 @@ export default {
   margin-bottom: 15px;
   border-radius: 10px;
 }
+
+.unfl:active:disabled{
+    background: grey;
+
+}
+
+
 
 </style>
