@@ -21,10 +21,11 @@ import 'vue-toast-notification/dist/theme-sugar.css';
 
 import Loading from "vue-loading-overlay";
 import "vue-loading-overlay/dist/vue-loading.css";
+import  VueContext  from 'vue-context';
 Vue.use(Loading);
 Vue.use(VueMaterial);
 Vue.use(VueSidebarMenu);
-
+Vue.use(VueContext);
 
 // import Vue from 'vue'
 

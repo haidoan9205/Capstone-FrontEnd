@@ -27,6 +27,41 @@ export const getImagesAllExclusive = ({ commit }) => {
         });
 };
 
+export const getUserNonExlusiveImages = ({commit}) =>{
+    const user = localStorage.getItem("user");
+    const user_parsed = JSON.parse(user);
+    axios
+        .get(
+            `https://capstoneprojectapi20210418160622.azurewebsites.net/api/v1/User/GetUserNormalPhoto/${user_parsed.userId}`
+        )
+        .then((response) => {
+            commit("SET_IMAGES_USER_NON_EXCLUSIVE", response.data);
+        });
+}
+
+export const getUserExlusiveImages = ({commit}) =>{
+    const user = localStorage.getItem("user");
+    const user_parsed = JSON.parse(user);
+    axios
+        .get(
+            `https://capstoneprojectapi20210418160622.azurewebsites.net/api/v1/User/GetUserExclusivePhoto/${user_parsed.userId}`
+        )
+        .then((response) => {
+            commit("SET_IMAGES_USER_EXCLUSIVE", response.data);
+        });
+}
+
+export const getUserExlusiveProperty = ({commit}) =>{
+    const user = localStorage.getItem("user");
+    const user_parsed = JSON.parse(user);
+    axios
+        .get(
+            `https://capstoneprojectapi20210418160622.azurewebsites.net/api/v1/User/GetUserExclusivePropertyPhoto/${user_parsed.userId}`
+        )
+        .then((response) => {
+            commit("SET_IMAGES_EXCLUSIVE_PROPERTY", response.data);
+        });
+}
 
 export const getImage = ({ commit },photoId) => {
   state.image = '';

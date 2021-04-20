@@ -25,4 +25,7 @@ export default {
     unknownPeople: [],
     allImages: [],
     allImagesExclusive: [],
+    user_non_exlusive_images: [],
+    user_exlusive_images: [],
+    user_exlusive_property: [],
 }

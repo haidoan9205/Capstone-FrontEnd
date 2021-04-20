@@ -100,6 +100,18 @@ export const SET_HISTORY = (state, history) => {
   state.history = history;
 };
 
+export const SET_IMAGES_USER_NON_EXCLUSIVE = (state, user_non_exlusive_images) =>{
+  state.user_non_exlusive_images = user_non_exlusive_images;
+}
+
+export const SET_IMAGES_USER_EXCLUSIVE = (state, user_exlusive_images) =>{
+  state.user_exlusive_images = user_exlusive_images;
+}
+
+export const SET_IMAGES_EXCLUSIVE_PROPERTY = (state, user_exlusive_property) =>{
+  state.user_exlusive_property = user_exlusive_property;
+}
+
 export const GET_HISTORY_DETAIL = (state, transaction_detail) => {
   state.transaction_detail = transaction_detail;
 };

@@ -133,7 +133,6 @@
                           Edit
                         </button>
                       </div>
-              
                     </div>
 
                     <!-- <template slot="footer">
@@ -171,28 +170,24 @@
 
                           <td>{{ follower.description }}</td>
                           <td>
-                          
-                              <base-button
-                                class="btn-1 mini-button button-follow unfl"
-                                @click="unFollowUser(follower)"
-                                type="neutral"
-                                v-show="follower.isDelete == false"
-                                style="float:right"
-                              
-                                >Unfollow</base-button
-                              >
-                              <base-button
-                                class="btn-1 mini-button button-follow unfl"
-                                @click="unFollowUser(follower)"
-                                type="neutral"
-                                v-show="follower.isDelete == true"
-                                style="float:right"
-                                :disabled="follower.isDelete == true"
-                                >Unfollowed</base-button
-                              >
+                            <base-button
+                              class="btn-1 mini-button button-follow unfl"
+                              @click="unFollowUser(follower)"
+                              type="neutral"
+                              v-show="follower.isDelete == false"
+                              style="float:right"
+                              >Unfollow</base-button
+                            >
+                            <base-button
+                              class="btn-1 mini-button button-follow unfl"
+                              @click="unFollowUser(follower)"
+                              type="neutral"
+                              v-show="follower.isDelete == true"
+                              style="float:right"
+                              :disabled="follower.isDelete == true"
+                              >Unfollowed</base-button
+                            >
                           </td>
-                          <!-- <td>{{ follower.typeId }}</td>
-                          <td>${{ follower.price }}</td> -->
                         </tr>
                       </tbody>
                     </table>
@@ -216,7 +211,6 @@
             <div class="text-center mt-5">
               <h3>
                 {{ user.fullName }}
-                <!-- <span class="font-weight-light">, 27</span> -->
               </h3>
               <div class="h6 font-weight-300">Email : {{ user.email }}</div>
               <div class="h6 font-weight-300">
@@ -241,19 +235,89 @@
                 </div>
               </div>
             </div>
-            <div class="container">
-              <div class="ct-example-row">
-                <div class="row">
-                  <div
-                    class="col-6 col-md-4"
-                    v-for="item in images"
-                    :key="item.photoId"
-                  >
-                    <img v-lazy="item.wmlink" class="img-fit" />
+            <tabs fill class="flex-column flex-md-row">
+              <card shadow slot-scope="{ activeTabIndex }">
+                <tab-pane key="tab1">
+                  <template slot="title">
+                    Non-Exclusive
+                  </template>
+
+                  <div class="container">
+                    <div class="ct-example-row">
+                      <div class="row">
+                        <div
+                          class="col-6 col-md-4"
+                          v-for="item in imageNonExlusive"
+                          :key="item.photoId"
+                        >
+                          <img v-lazy="item.wmlink" class="img-fit" />
+                        </div>
+                      </div>
+                    </div>
                   </div>
-                </div>
-              </div>
-            </div>
+                </tab-pane>
+
+                <tab-pane key="tab2">
+                  <template slot="title">
+                    Exclusive
+                  </template>
+
+                  <div class="container">
+                    <div class="ct-example-row">
+                      <div class="row">
+                        <div
+                          class="col-6 col-md-4"
+                          v-for="item in imageExlusive"
+                          :key="item.photoId"
+                        >
+                          <img v-lazy="item.wmlink" class="img-fit" />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </tab-pane>
+
+                <tab-pane key="tab3">
+                  <template slot="title">
+                    Exclusive Property
+                  </template>
+
+                  <div class="container" >
+                    <div class="ct-example-row">
+                      <div class="row">
+                        <div
+                          class="col-6 col-md-4"
+                          v-for="(item, index) in imageExlusiveProperty"
+                          :key="index"
+                        >
+                          <img
+                             @contextmenu.prevent="$refs.menu.open($event, item)"
+                            v-lazy="item.wmlink"
+                            class="img-fit"
+                          />
+                         
+                        </div>
+                         <vue-context ref="menu" v-slot="{data: item}" >
+                            <li v-if="disableFlg == true">
+                              <base-button @click.prevent="enableExclusive(item)">
+                                Enable
+                              </base-button>
+                            
+                            </li>
+                            <!-- <li >
+                              <base-button @click.prevent="enableExclusive(item)">
+                                Edit
+                              </base-button>
+                            
+                            </li> -->
+                          </vue-context>
+          
+                      </div>
+                    </div>
+                  </div>
+                </tab-pane>
+              </card>
+            </tabs>
           </div>
         </card>
       </div>
@@ -265,9 +329,12 @@ import DatePicker from "vue2-datepicker";
 import "vue2-datepicker/index.css";
 import axios from "axios";
 import Modal from "@/components/Modal.vue";
-
+import Tabs from "@/components/Tabs/Tabs.vue";
+import TabPane from "@/components/Tabs/TabPane.vue";
+import VueContext from "vue-context";
+import "vue-context/src/sass/vue-context.scss";
 export default {
-  components: { DatePicker, Modal },
+  components: { DatePicker, Modal, Tabs, TabPane, VueContext },
   data() {
     return {
       countFollower: this.$store.getters.followerCount,
@@ -278,7 +345,8 @@ export default {
         modalEditProfile: false,
       },
       flag: [],
-       isActive: true,
+      isActive: true,
+      photoId: 0,
     };
   },
   computed: {
@@ -296,6 +364,15 @@ export default {
     images() {
       return this.$store.state.approved_images;
     },
+    imageNonExlusive() {
+      return this.$store.state.user_non_exlusive_images;
+    },
+    imageExlusive() {
+      return this.$store.state.user_exlusive_images;
+    },
+    imageExlusiveProperty() {
+      return this.$store.state.user_exlusive_property;
+    },
     followers() {
       return this.$store.state.followingUsers;
     },
@@ -303,19 +380,26 @@ export default {
   mounted() {
     this.$store.dispatch("getFollowingUsers");
     this.$store.dispatch("getApprovedImageByUser");
+    this.$store.dispatch("getUserNonExlusiveImages");
+    this.$store.dispatch("getUserExlusiveImages");
+    this.$store.dispatch("getUserExlusiveProperty");
   },
   methods: {
     onEditProfile() {
       let userId = this.user.userId;
       axios
-        .put("https://capstoneprojectapi20210418160622.azurewebsites.net/api/v1/User/" + userId, {
-          userId: this.user.userId,
-          fullName: this.user.fullName,
-          description: this.user.description,
-          email: this.user.email,
-          phone: this.user.phone,
-          dayOfBirth: this.user.birthDay,
-        })
+        .put(
+          "https://capstoneprojectapi20210418160622.azurewebsites.net/api/v1/User/" +
+            userId,
+          {
+            userId: this.user.userId,
+            fullName: this.user.fullName,
+            description: this.user.description,
+            email: this.user.email,
+            phone: this.user.phone,
+            dayOfBirth: this.user.birthDay,
+          }
+        )
         .then((response) => {
           if (response.status == 201) {
             this.$alert(
@@ -345,12 +429,37 @@ export default {
           });
         });
     },
-  
+    enableExclusive(item) {
+      
+      // console.log(user.userId)
+      axios({
+        method: "PUT",
+        url:
+          "https://capstoneprojectapi20210418160622.azurewebsites.net/api/v1/Photo/ChangeWatermarkPhoto/" + item.photoId,
+       
+      }).then((response) => {
+        console.log('aaaa')
+        console.log(response)
+        if(response.status == 200){
+          this.$alert('Enable Sucessfully', 'Success', 'success').then(() =>
+            console.log('Closed')
+          );
+          this.$forceUpdate();
+        }else{
+          this.$alert('Something went wrong, please try again', 'Error', 'error').then(() =>
+            console.log('Closed')
+          );
+          this.$forceUpdate();
+        }
+      });
+    },
+
     unFollowUser(follower) {
       // console.log(user.userId);
       axios({
         method: "POST",
-        url: "https://capstoneprojectapi20210418160622.azurewebsites.net/api/v1/Follow/UnFollow",
+        url:
+          "https://capstoneprojectapi20210418160622.azurewebsites.net/api/v1/Follow/UnFollow",
         data: {
           userId: JSON.parse(this.$store.state.user).userId,
           followUserId: follower.userId,
@@ -370,7 +479,6 @@ export default {
   },
 };
 </script>
-
 
 <style lang="scss">
 #app .dateBirthDay .mx-input {
@@ -447,11 +555,7 @@ export default {
   border-radius: 10px;
 }
 
-.unfl:active:disabled{
-    background: grey;
-
+.unfl:active:disabled {
+  background: grey;
 }
-
-
-
 </style>

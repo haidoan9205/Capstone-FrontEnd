@@ -34,6 +34,7 @@
         "vue-axios": "^3.2.2",
         "vue-burger-menu": "^2.0.5",
         "vue-chartkick": "0.6.1",
+        "vue-context": "^6.0.0",
         "vue-cover-gallery": "^1.0.7",
         "vue-flatpickr-component": "^8.1.1",
         "vue-it-bigger": "^0.2.2",
