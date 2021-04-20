@@ -347,7 +347,7 @@ export default {
     },
   
     unFollowUser(follower) {
-      // console.log(user.userId)
+      // console.log(user.userId);
       axios({
         method: "POST",
         url: "https://capstoneprojectapi20210418160622.azurewebsites.net/api/v1/Follow/UnFollow",
