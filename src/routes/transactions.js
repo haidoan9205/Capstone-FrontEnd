@@ -90,7 +90,7 @@ router.post('/', async (req, res) => {
 router.get('/getProof/:id', async (req, res) => {
     await getConnection();
     try {
-        // Get an existing Proof
+        // Get an existing Proof with input proofId
         result = await pdb.getProof(req.params.id);
         if (result.proofs == "") {
             return res.send('ProofId is invalid!');
@@ -129,13 +129,9 @@ router.get('/getDocumentHistory/:userId', async (req, res) => {
 // router.get('/verifyProof/:id', async (req, res) => {
 //     await getConnection();
 //     try {
-//         // Fetch the history of that document.
+//         // Verify the proof of that document.
 //         result = await pdb.verifyProof(req.params.id);
 //         console.log(result);
-//         // let length = result.history.length;
-//         // console.log(
-//         //     `History for document: ${JSON.stringify(result.history, null, 4)}`
-//         // );
 //         return res.json(result, null, 4);
 //     } catch (error) {
 //         res.json({ message: error });

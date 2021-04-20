@@ -22,10 +22,9 @@
               >
                 <td>{{ frontEndDateFormat(transaction.boughtTime) }}</td>
                 <td>
-                  
                   {{ transaction.photoName }}
-                  </td>
-                  <td><img v-lazy="transaction.wmlink" class="img-fit" /></td>
+                </td>
+                <td><img v-lazy="transaction.wmlink" class="img-fit" /></td>
                 <td>
                   <p v-if="transaction.typeId == 1">Normal</p>
                   <p v-if="transaction.typeId == 2">Exclusive</p>
@@ -82,8 +81,7 @@
                     style="width: 780px; height: 750px"
                     v-bind="proofResponse"
                   >
-
-                  <p v-if="proofResponse == ''"></p>
+                    <p v-if="proofResponse == ''"></p>
 
                     <p
                       v-else-if="proofResponse[0].status == 'Valid'"
@@ -96,7 +94,7 @@
                     >
                       <span>
                         <img
-                          :src="photo.wmlink"
+                          v-lazy="photo.wmlink"
                           @click="openGallery(0)"
                           style="
                             height: 350px;
@@ -157,35 +155,79 @@
                       >
                       <br /><br /> -->
 
-                      <span>Previous <span style="color: #6a5acd">owner</span> of this image<br/>
-                      <span>Mr/Mrs.<span v-bind="preOwner" style="color: #6a5acd">{{preOwner.fullName}}</span></span><br/>
-                      <!-- <span>Email: <span v-bind="preOwner" style="color: #6a5acd">{{preOwner.email}}</span></span><br/> -->
-                      </span><br/>
-
-                      <span>The transaction of this image, with the amount of 
-                        <span v-bind="history" style="color: #6a5acd">{{history.versions[0].document.amount}}</span><br/>
-                        <span>finished on <span v-bind="history" style="color: #6a5acd">{{new Date(history.versions[0].document.transactionCreationTime)}}</span>,</span>
-                        <span> transfer the <span style="color: #6a5acd">ownership</span> to Mr/Mrs.<span style="color: #6a5acd">{{this.user.fullName}}</span> and has been recorded to the Blockchain database.</span>
-                        </span><br/><br/>
-
+                      <span
+                        >Previous <span style="color: #6a5acd">owner</span> of
+                        this image<br />
                         <span
-                        >Verify the Blockchain info of this transaction at 
+                          >Mr/Mrs.<span
+                            v-bind="preOwner"
+                            style="color: #6a5acd"
+                            >{{ preOwner.fullName }}</span
+                          ></span
+                        ><br />
+                        <!-- <span>Email: <span v-bind="preOwner" style="color: #6a5acd">{{preOwner.email}}</span></span><br/> --> </span
+                      ><br />
+
+                      <span
+                        >The transaction of this image, with the amount of
+                        <span v-bind="history" style="color: #6a5acd">{{
+                          history.versions[0].document.amount
+                        }}</span
+                        ><br />
+                        <span
+                          >finished on
+                          <span v-bind="history" style="color: #6a5acd">{{
+                            new Date(
+                              history.versions[0].document.transactionCreationTime
+                            )
+                          }}</span
+                          >,</span
+                        >
+                        <span>
+                          transfer the
+                          <span style="color: #6a5acd">ownership</span> to
+                          Mr/Mrs.<span style="color: #6a5acd">{{
+                            this.user.fullName
+                          }}</span>
+                          and has been recorded to the Blockchain
+                          database.</span
+                        > </span
+                      ><br /><br />
+
+                      <span
+                        >View the Cryptographic info of this transaction at
                         <a
                           :href="`${proofResponse[0].anchorData.txnUri}`"
                           target="_blank"
                           style="color: #6a5acd"
                           >here</a
                         ></span
+                      ><br />
+                      <span
+                        ><a
+                          href="javascript:createPDF()"
+                          @click="
+                            createPDF();
+                            return false;
+                          "
+                          >Your Cryptographic PDF Receipt</a
+                        ></span
                       >
                     </p>
 
-                    <p v-else style="
+                    <p
+                      v-else
+                      style="
                         padding-top: 35px;
                         padding-left: 10px;
                         font-size: 25px;
                         text-align: center;
-                      ">
-                      <span style="color: #B22222">The transaction has not been submitted to the Blockchain yet, please try again later!</span>
+                      "
+                    >
+                      <span style="color: #b22222"
+                        >The transaction has not been submitted to the
+                        Blockchain yet, please try again later!</span
+                      >
                     </p>
                   </div>
                 </div>
@@ -205,11 +247,13 @@ import TabPane from "@/components/Tabs/TabPane.vue";
 import moment from "moment";
 import LightBox from "vue-it-bigger";
 import("vue-it-bigger/dist/vue-it-bigger.min.css");
+import { jsPDF } from "jspdf";
 export default {
   components: {
     Tabs,
     TabPane,
     LightBox,
+    jsPDF,
   },
   data() {
     return {
@@ -263,9 +307,46 @@ export default {
       this.$refs.lightbox.showImage(index);
     },
 
-    getProofConfimation(proofId) {
-      this.getExclusiveHistory();
-      axios
+    createPDF() {
+      var doc = new jsPDF();
+      doc.setFontSize(20);
+      doc.setTextColor("red");
+      doc.text("Proof Of Existence", 30, 35);
+      doc.setFontSize(10);
+      doc.setTextColor("black");
+      doc.text(
+        "Receipt ID: " + this.history.versions[0].document.transactionId,
+        30,
+        55
+      );
+      doc.text(new Date(this.proofResponse[0].submitted).toUTCString(), 30, 60);
+      doc.setFontSize(12);
+      doc.setFont("times", "bold");
+      doc.text("BLOCKCHAIN INFO", 30, 75);
+      doc.line(30, 77, 150, 77);
+      doc.setFontSize(10);
+      doc.setFont("times", "normal");
+      doc.setTextColor("red");
+      doc.text("TnxID:", 30, 85);
+      doc.setTextColor("black");
+      doc.text(this.proofResponse[0].anchorData.txnId, 42, 85);
+      doc.setTextColor("red");
+      doc.text("Hash:", 30, 90);
+      doc.setTextColor("black");
+      doc.text(this.proofResponse[0].hash, 42, 90);
+      doc.line(30, 95, 150, 95);
+      doc.text("View your Blockchain info at:", 30, 110);
+      doc.setTextColor("blue");
+      doc.textWithLink(this.proofResponse[0].anchorData.txnUri, 30, 117, {
+        url: this.proofResponse[0].anchorData.txnUri,
+      });
+      // doc.output('bloburi', 'your-proof.pdf');
+      doc.save("your-proof");
+    },
+
+    async getProofConfimation(proofId) {
+      await this.getExclusiveHistory();
+      await axios
         .get("http://localhost:3000/transactions/getProof/" + proofId)
         .then((response) => {
           if (response.status == 200) {
@@ -277,7 +358,9 @@ export default {
               ) {
                 this.history = this.fullHistory[index];
                 this.getPhotoDetails(this.history.versions[0].document.photoId);
-                this.getPrevOwnerDetails(this.history.versions[0].document.prevOwner);
+                this.getPrevOwnerDetails(
+                  this.history.versions[0].document.prevOwner
+                );
               }
             }
           } else {
@@ -290,8 +373,8 @@ export default {
         });
     },
 
-    getExclusiveHistory() {
-      axios
+    async getExclusiveHistory() {
+      await axios
         .get(
           "http://localhost:3000/transactions/getDocumentHistory/" +
             this.user.userId
@@ -396,5 +479,4 @@ export default {
   margin-bottom: 15px;
   border-radius: 10px;
 }
-
 </style>
