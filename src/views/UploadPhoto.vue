@@ -207,7 +207,7 @@ export default {
               "Upload Successfully",
               "Success",
               "success"
-            ).then(() => console.log("Closed"));
+            ).then(() => console.log("Closed"), setTimeout(window.location.reload()), 500);
            
           } else {
             Vue.$toast.error('Upload error, please try again')
