@@ -51,6 +51,18 @@ export const getUserExlusiveImages = ({commit}) =>{
         });
 }
 
+export const getNotification =({commit}) =>{
+    const user = localStorage.getItem("user");
+    const user_parsed = JSON.parse(user);
+    axios
+        .get(
+            `https://capstoneprojectapi20210418160622.azurewebsites.net/api/v1/User/GetNotification/${user_parsed.userId}`
+        )
+        .then((response) => {
+            commit("SET_NOTIFICATIONS", response.data);
+        });
+}
+
 export const getUserExlusiveProperty = ({commit}) =>{
     const user = localStorage.getItem("user");
     const user_parsed = JSON.parse(user);

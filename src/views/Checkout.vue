@@ -49,7 +49,7 @@
                       </td>
                       <td class="col2">
                         <p style="color: black" v-if="item.image.typeId === 1">
-                          Casual
+                          Non-Exclusive
                         </p>
                         <p style="color: black" v-if="item.image.typeId === 2">
                           Exclusive

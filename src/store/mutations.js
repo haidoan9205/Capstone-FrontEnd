@@ -108,6 +108,10 @@ export const SET_IMAGES_USER_EXCLUSIVE = (state, user_exlusive_images) =>{
   state.user_exlusive_images = user_exlusive_images;
 }
 
+export const SET_NOTIFICATIONS = (state, notifications) =>{
+  state.notifications = notifications;
+}
+
 export const SET_IMAGES_EXCLUSIVE_PROPERTY = (state, user_exlusive_property) =>{
   state.user_exlusive_property = user_exlusive_property;
 }
