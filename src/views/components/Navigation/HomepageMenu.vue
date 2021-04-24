@@ -118,12 +118,9 @@ export default {
     isLoggedIn() {
       return this.$store.getters.isLoggedIn;
     },
+    
     notifications() {
-      const notifications = this.$store.state.notifications;
-      notifications.forEach((element) => {
-        element.isClick = false;
-      });
-      return notifications;
+      return this.$store.state.notifications;
     },
     user() {
       const abc = window.localStorage.getItem("user");
@@ -134,8 +131,9 @@ export default {
     },
   },
   mounted() {
-    this.$store.dispatch("getNotification"); 
-
+    
+    
+this.interval = setInterval(() => this.$store.dispatch("getNotification"), 1000);
     
   },
   
