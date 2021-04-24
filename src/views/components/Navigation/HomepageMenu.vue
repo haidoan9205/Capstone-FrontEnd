@@ -54,19 +54,21 @@
       <div
         class="dropdown-menu dropdown-menu-right"
         aria-labelledby="navbar-success_dropdown_1"
-        v-for="(item, index) in notifications"
-        :key="index"
+       
       >
      
       
         <div class=" border-0 dropdown-item" v-for="(item, index) in notifications"
         :key="index" >
-            <router-link class="shadow border-1" v-on:click="deleteNoti(item)"
+        <div @click="deleteNoti(item)">
+            <router-link class="shadow border-1" 
+            
           :to="{ name: 'photo', params: { photoId: item.photoId } }"
         >
         
           <span>  {{ item.username }} has uploaded an image. </span>
         </router-link>
+        </div>
         </div>
       </div>
     </li>
@@ -100,7 +102,7 @@
 <script>
 import { Slide } from "vue-burger-menu";
 import NotificationBell from "vue-notification-bell";
-
+import axios from "axios";
 export default {
   components: {
     Slide,
@@ -117,7 +119,11 @@ export default {
       return this.$store.getters.isLoggedIn;
     },
     notifications() {
-      return this.$store.state.notifications;
+      const notifications = this.$store.state.notifications;
+      notifications.forEach((element) => {
+        element.isClick = false;
+      });
+      return notifications;
     },
     user() {
       const abc = window.localStorage.getItem("user");
@@ -128,22 +134,18 @@ export default {
     },
   },
   mounted() {
-    this.$store.dispatch("getNotification");
+    this.$store.dispatch("getNotification"); 
+
+    
   },
+  
   methods: {
      deleteNoti(item) {
       axios
          .put(
-          "https://capstoneprojectapi20210418160622.azurewebsites.net/api/v1/User/DeleteNotification" ,
-          {
-            userid: this.user1.userId,
-            followUserId: item.userId
-          }
+         "https://capstoneprojectapi20210418160622.azurewebsites.net/api/v1/User/DeleteNotification?userid=" + this.user1.userId + "&followUserId=" + item.userId
         )
-        .then((response) => {
-          console.log("delete thu");
-          console.log(response);
-        })
+       
         .catch((error) => {
           this.$toasts.push({
             type: "error",
