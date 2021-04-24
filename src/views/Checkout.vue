@@ -75,7 +75,7 @@
           </h2>
           <div class="row" style="padding-top: 10px; padding-left: 28px">
             <router-link to="/">
-              <button class="btn btn-primary">Continute Shopping</button>
+              <button class="btn btn-primary">Continue Shopping</button>
             </router-link>
           </div>
           <div class="row" style="padding-top: 10px; padding-left: 28px">

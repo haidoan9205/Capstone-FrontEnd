@@ -11,10 +11,10 @@
       </div>
       <div class="col-md-6 mb-5 mb-md-0 mt-5 positionImage">
         <h3>
-          <strong>{{ image.photoName }}</strong>
+          <strong>{{ image.photoName }} </strong>
         </h3>
 
-        <h5 class="h5"><strong>Price</strong> : $ {{ image.price }}</h5>
+        <h5 class="h5"><strong>Price</strong> : $ {{ image.price }}  - <strong>Type</strong> : <span v-if="image.typeId == 1">Non-Exclusive</span><span v-if="image.typeId == 2">Exclusive</span></h5>
        
         <p class="lead">
           {{ image.description }}
@@ -37,13 +37,7 @@
           </span>
         </badge>
         <br/>
-         <h3 class="h5" v-if="image.typeId == 1">
-          <strong>Type</strong> : Normal
-        </h3>
-        <h3
-         class="h5" v-if="image.typeId == 2">
-          <strong>Type</strong> : Exclusive
-        </h3>
+        
         <modal :show.sync="modals.modalTag">
           <div class="container">
             <div class="modalStyle">

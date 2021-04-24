@@ -31,7 +31,7 @@
     </li>
     <li class="nav-item dropdown" v-if="isLoggedIn">
       <a
-        class="nav-link nav-link-icon item-nav-bar nav-menu-item"
+        class="nav-link "
         title="Notification"
         id="navbar-success_dropdown_1"
         role="button"
@@ -47,7 +47,9 @@
           counterBackgroundColor="#FF0000"
           counterTextColor="#FFFFFF"
           iconColor="#000000"
+          style="float:right"
         />
+         
       </a>
       <div
         class="dropdown-menu dropdown-menu-right"
@@ -56,13 +58,16 @@
         :key="index"
       >
      
-        <router-link
-          class="dropdown-item"
-          @click="deleteNoti(item)"
+      
+        <div class=" border-0 dropdown-item" v-for="(item, index) in notifications"
+        :key="index" >
+            <router-link class="shadow border-1" v-on:click="deleteNoti(item)"
           :to="{ name: 'photo', params: { photoId: item.photoId } }"
         >
-          {{ item.username }} has uploaded an image.
+        
+          <span>  {{ item.username }} has uploaded an image. </span>
         </router-link>
+        </div>
       </div>
     </li>
     <li class="nav-item" v-if="isLoggedIn">
