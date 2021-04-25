@@ -49,7 +49,7 @@
                       </td>
                       <td class="col2">
                         <p style="color: black" v-if="item.image.typeId === 1">
-                          Casual
+                          Non-Exclusive
                         </p>
                         <p style="color: black" v-if="item.image.typeId === 2">
                           Exclusive
@@ -75,7 +75,7 @@
           </h2>
           <div class="row" style="padding-top: 10px; padding-left: 28px">
             <router-link to="/">
-              <button class="btn btn-primary">Continute Shopping</button>
+              <button class="btn btn-primary">Continue Shopping</button>
             </router-link>
           </div>
           <div class="row" style="padding-top: 10px; padding-left: 28px">

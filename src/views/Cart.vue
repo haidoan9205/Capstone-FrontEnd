@@ -12,7 +12,7 @@
             v-bind:class="{tabSelected: flag === true}"
             v-on:click="flag = true"
           >
-            Normal
+            Non-Exclusive
           </button>
         </div>
         <div class="inner">
@@ -133,7 +133,7 @@
             v-bind:class="{tabSelected: flag === true}"
             v-on:click="flag = true"
           >
-            Normal
+            Non-Exclusive
           </button>
         </div>
         <div class="inner">
@@ -185,7 +185,7 @@
                   </td>
                   <td class="col2">
                     <p style="color: black" v-if="item.image.typeId === 1">
-                      Casual
+                      Non-Exclusive
                     </p>
                     <p style="color: black" v-if="item.image.typeId === 2">
                       Exclusive
@@ -223,17 +223,19 @@
             <tr>
               <td colspan="2" class="d-none d-sm-table-cell"></td>
               <td class="px-0">
-                <button class="btn btn-success" @click="checkOut()">
-                  <span class="text-nowrap"
-                    >Checkout <i class="fa fa-angle-right d-inline"></i
-                  ></span>
-                </button>
+                
                 
               </td>
             </tr>
           </tfoot>
         </div>
+        <button class="btn btn-success" @click="checkOut()" style="float:right">
+                  <span class="text-nowrap"
+                    >Checkout <i class="fa fa-angle-right d-inline"></i
+                  ></span>
+                </button>
       </table>
+      
       <div class="nothing" v-else>
         <p style="margin-bottom:2rem">
           Put your favourite to the basket first!

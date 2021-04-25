@@ -73,20 +73,7 @@
                               required
                             />
                           </div>
-                          <div class="form-group  pl-3">
-                            <label class="control-label">Email</label>
-                            <input
-                              type="text"
-                              class="form-control"
-                              v-model="user.email"
-                              required
-                            />
-                          </div>
-                        </div>
-                      </div>
-                      <div class="row justify-content-center">
-                        <div class="row align-items-center">
-                          <div class="form-group">
+                          <div class="form-group pl-3">
                             <label class="control-label">Phone</label>
                             <input
                               type="text"
@@ -95,7 +82,12 @@
                               required
                             />
                           </div>
-                          <div class="form-group  pl-3">
+                        </div>
+                      </div>
+                      <div class="row justify-content-center">
+                        <div class="row align-items-center">
+                         
+                          <div class="form-group">
                             <div class="donateItem ">
                               <label class="control-label">Date of Birth</label>
                             </div>
@@ -106,24 +98,20 @@
                               :disabled-date="(date) => date >= new Date()"
                             ></date-picker>
                           </div>
-                        </div>
-                      </div>
-
-                      <div class="row justify-content-center">
-                        <div class="row align-items-center">
-                          <div class="form-group">
+                          <div class="form-group pl-3">
                             <div class="donateItem ">
                               <label class="control-label">Description</label>
                             </div>
-                            <textarea
+                            <input
                               type="text"
-                              class="form-control description"
+                              class="form-control"
                               v-model="user.description"
                               required
                             />
                           </div>
                         </div>
                       </div>
+
                       <div class="row justify-content-center">
                         <button
                           class="btn btn-primary"
@@ -270,19 +258,116 @@
                           v-for="item in imageExlusive"
                           :key="item.photoId"
                         >
-                          <img v-lazy="item.wmlink" class="img-fit" />
+                          <img
+                            @contextmenu.prevent="
+                              $refs.menu1.open($event, item)
+                            "
+                            v-lazy="item.wmlink"
+                            class="img-fit"
+                          />
+                           <modal :show.sync="modals.modalEditImage">
+                    <h6
+                      slot="header"
+                      class="modal-title mb-0"
+                      id="modal-title-default"
+                    >
+                      Edit Exclusive Image
+                    </h6>
+
+                    <div class=" text-center">
+                      <div class="page"><h2>Image Information</h2></div>
+                      <div class="row justify-content-center">
+                        <div class="row align-items-center">
+                          <div class="form-group">
+                            <input
+                              type="hidden"
+                              class="form-control"
+                              v-model="item.userId"
+                              required
+                            />
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row justify-content-center">
+                        <div class="row align-items-center">
+                          <div class="form-group">
+                            <div class="donateItem ">
+                              <label class="control-label">Photo Name</label>
+                            </div>
+                            <input
+                              type="text"
+                              class="form-control"
+                              v-model="item.photoName"
+                              required
+                            />
+                          </div>
+                          <div class="form-group  pl-3">
+                            <label class="control-label">Price</label>
+                            <input
+                              type="text"
+                              class="form-control"
+                              v-model="item.price"
+                              required
+                            /> 
+                          </div>
+                           <div class="form-group pl-1 mt-4">
+                            <label class="control-label">$</label>
+                           
+                          </div>
+                        </div>
+                      </div>
+                   
+
+                      <div class="row justify-content-center">
+                        <div class="row align-items-center">
+                          <div class="form-group">
+                            <div class="donateItem ">
+                              <label class="control-label">Description</label>
+                            </div>
+                            <textarea
+                              type="text"
+                              class="form-control description"
+                              v-model="item.description"
+                              required
+                            />
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row justify-content-center">
+                        <button
+                          class="btn btn-primary"
+                          type="submit"
+                          @click="onEditImage(item)"
+                        >
+                          Edit
+                        </button>
+                      </div>
+                    </div>
+
+                 
+                  </modal>
                         </div>
                       </div>
                     </div>
                   </div>
                 </tab-pane>
-
+                <vue-context ref="menu1">
+                  <li>
+                    <a
+                      class="modalCursor"
+                      @click="modals.modalEditImage = true"
+                    >
+                      Edit
+                    </a>
+                  </li>
+                </vue-context>
+                
                 <tab-pane key="tab3">
                   <template slot="title">
                     Exclusive Property
                   </template>
 
-                  <div class="container" >
+                  <div class="container">
                     <div class="ct-example-row">
                       <div class="row">
                         <div
@@ -291,27 +376,66 @@
                           :key="index"
                         >
                           <img
-                             @contextmenu.prevent="$refs.menu.open($event, item)"
+                            @contextmenu.prevent="$refs.menu.open($event, item)"
                             v-lazy="item.wmlink"
                             class="img-fit"
                           />
-                         
+                          <modal
+                            :show.sync="modals.modalEnable"
+                            gradient="default"
+                            modal-classes="modal-default modal-dialog-centered"
+                          >
+                            <h6
+                              slot="header"
+                              class="modal-title"
+                              id="modal-title-notification"
+                            >
+                              Enable this photo for resale
+                            </h6>
+
+                            <div class="py-3 text-center">
+                              <i class="ni ni-bell-55 ni-3x"></i>
+                              <h4 class="heading mt-4">
+                                You should read this!
+                              </h4>
+                              <p>
+                                If you enable this image, this image will be
+                                posted on the homepage for sale to other users.
+                              </p>
+                              <p>
+                                To change the information of this photo, please
+                                move to exclusive tab on your profile.
+                              </p>
+                            </div>
+
+                            <template>
+                              <base-button
+                                type="white"
+                                @click="enableExclusive(item)"
+                                >Ok, Got it</base-button
+                              >
+                              <base-button
+                                type="link"
+                                text-color="white"
+                                class="ml-auto"
+                                @click="modals.modalEnable = false"
+                                style="float:right"
+                              >
+                                Close
+                              </base-button>
+                            </template>
+                          </modal>
                         </div>
-                         <vue-context ref="menu" v-slot="{data: item}" >
-                            <li v-if="disableFlg == true">
-                              <base-button @click.prevent="enableExclusive(item)">
-                                Enable
-                              </base-button>
-                            
-                            </li>
-                            <!-- <li >
-                              <base-button @click.prevent="enableExclusive(item)">
-                                Edit
-                              </base-button>
-                            
-                            </li> -->
-                          </vue-context>
-          
+                        <vue-context ref="menu">
+                          <li>
+                            <a
+                              class="modalCursor"
+                              @click="modals.modalEnable = true"
+                            >
+                              Resale
+                            </a>
+                          </li>
+                        </vue-context>
                       </div>
                     </div>
                   </div>
@@ -343,6 +467,8 @@ export default {
       modals: {
         modalFollower: false,
         modalEditProfile: false,
+        modalEnable: false,
+        modalEditImage: false,
       },
       flag: [],
       isActive: true,
@@ -429,27 +555,63 @@ export default {
           });
         });
     },
+    onEditImage(item){
+     
+      axios
+        .put(
+          "https://capstoneprojectapi20210418160622.azurewebsites.net/api/v1/Photo/" +
+            item.photoId,
+          {
+            photoId: item.photoId,
+            photoName: item.photoName,
+            price: item.price,
+            description: item.description,
+          }
+        )
+        .then((response) => {
+          if (response.status == 200) {
+            this.$alert(
+              "Your information is updated",
+              "Success",
+              "success"
+            ).then(() => console.log("Closed"));
+            this.modals.modalEditImage = false;
+          } else {
+            this.$toasts.push({
+              type: "error",
+              message: "Edit error",
+            });
+          }
+        })
+        .catch((error) => {
+          this.$toasts.push({
+            type: "error",
+            message: error,
+          });
+        });
+    },
     enableExclusive(item) {
-      
       // console.log(user.userId)
       axios({
         method: "PUT",
         url:
-          "https://capstoneprojectapi20210418160622.azurewebsites.net/api/v1/Photo/ChangeWatermarkPhoto/" + item.photoId,
-       
+          "https://capstoneprojectapi20210418160622.azurewebsites.net/api/v1/Photo/ChangeWatermarkPhoto/" +
+          item.photoId,
       }).then((response) => {
-        console.log('aaaa')
-        console.log(response)
-        if(response.status == 200){
-          this.$alert('Enable Sucessfully', 'Success', 'success').then(() =>
-            console.log('Closed')
+        console.log("aaaa");
+        console.log(response);
+        if (response.status == 200) {
+          this.$alert("Enable Sucessfully", "Success", "success").then(() =>
+            console.log("Closed")
           );
-          this.$forceUpdate();
-        }else{
-          this.$alert('Something went wrong, please try again', 'Error', 'error').then(() =>
-            console.log('Closed')
-          );
-          this.$forceUpdate();
+          this.modals.modalEnable = false;
+        } else {
+          this.$alert(
+            "Something went wrong, please try again",
+            "Error",
+            "error"
+          ).then(() => console.log("Closed"));
+          this.modals.modalEnable = false;
         }
       });
     },

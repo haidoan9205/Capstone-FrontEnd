@@ -29,6 +29,49 @@
         </a>
       </router-link>
     </li>
+    <li class="nav-item dropdown" v-if="isLoggedIn">
+      <a
+        class="nav-link "
+        title="Notification"
+        id="navbar-success_dropdown_1"
+        role="button"
+        data-toggle="dropdown"
+        aria-haspopup="true"
+        aria-expanded="false"
+      >
+        <notification-bell
+          size="22"
+          counterLocation="upperRight"
+          :count="notifications.length"
+          counterStyle="roundRectangle"
+          counterBackgroundColor="#FF0000"
+          counterTextColor="#FFFFFF"
+          iconColor="#000000"
+          style="float:right"
+        />
+         
+      </a>
+      <div
+        class="dropdown-menu dropdown-menu-right"
+        aria-labelledby="navbar-success_dropdown_1"
+       
+      >
+     
+      
+        <div class=" border-0 dropdown-item" v-for="(item, index) in notifications"
+        :key="index" >
+        <div @click="deleteNoti(item)">
+            <router-link class="shadow border-1" 
+            
+          :to="{ name: 'photo', params: { photoId: item.photoId } }"
+        >
+        
+          <span>  {{ item.username }} has uploaded an image. </span>
+        </router-link>
+        </div>
+        </div>
+      </div>
+    </li>
     <li class="nav-item" v-if="isLoggedIn">
       <router-link to="/login" title="Login" style="text-decoration:none;">
         <a
@@ -57,31 +100,63 @@
   </ul>
 </template>
 <script>
-import {Slide} from 'vue-burger-menu';
+import { Slide } from "vue-burger-menu";
+import NotificationBell from "vue-notification-bell";
+import axios from "axios";
 export default {
   components: {
     Slide,
+    NotificationBell,
+  },
+  data() {
+    return {
+      user1: JSON.parse(localStorage.getItem("user")),
+    };
   },
 
   computed: {
     isLoggedIn() {
       return this.$store.getters.isLoggedIn;
     },
+    
+    notifications() {
+      return this.$store.state.notifications;
+    },
     user() {
-      const abc = window.localStorage.getItem('user');
+      const abc = window.localStorage.getItem("user");
       // console.log(abc);
       const appove = this.$store.state.approved_images;
       console.log(appove);
       return JSON.parse(abc);
     },
   },
-
+  mounted() {
+    
+    
+this.interval = setInterval(() => this.$store.dispatch("getNotification"), 1000);
+    
+  },
+  
   methods: {
+     deleteNoti(item) {
+      axios
+         .put(
+         "https://capstoneprojectapi20210418160622.azurewebsites.net/api/v1/User/DeleteNotification?userid=" + this.user1.userId + "&followUserId=" + item.userId
+        )
+       
+        .catch((error) => {
+          this.$toasts.push({
+            type: "error",
+            message: error,
+          });
+        });
+    },
     logout() {
-      this.$store.dispatch('logout').then(() => {
-        this.$router.push('/login');
+      this.$store.dispatch("logout").then(() => {
+        this.$router.push("/login");
       });
     },
+   
   },
 };
 </script>
