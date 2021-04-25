@@ -62,7 +62,7 @@
                     type="text"
                     class="form-control"
                     v-model="proofId"
-                    placeholder="Input proofID to get receipt from the Blockchain..."
+                    placeholder="Input proof ID to get receipt from the Blockchain..."
                     required
                     style="width: 500px; margin: auto; display: flex"
                   />
@@ -70,7 +70,7 @@
                     class="btn btn-success"
                     style="margin: auto; display: flex"
                     type="submit"
-                    @click="getProofConfimation(proofId)"
+                    @click="getProofInfo(proofId)"
                   >
                     <span class="text-nowrap">Submit</span>
                   </button>
@@ -344,7 +344,7 @@ export default {
       doc.save("your-proof");
     },
 
-    async getProofConfimation(proofId) {
+    async getProofInfo(proofId) {
       await this.getExclusiveHistory();
       await axios
         .get("http://localhost:3000/transactions/getProof/" + proofId)
@@ -381,12 +381,17 @@ export default {
         )
         .then((response) => {
           if (response.status == 200) {
-            this.fullHistory = response.data;
-            // let length = this.fullHistory.length;
-            // this.history = this.fullHistory[length - 1];
-          } else {
-            alert("Network error, please try again!");
+            if (response.data == "ProofId is invalid!") {
+              
+            } else {
+              this.fullHistory = response.data;
+              // let length = this.fullHistory.length;
+              // this.history = this.fullHistory[length - 1];
+            }
           }
+          // else {
+          //   alert("Network error, please try again!");
+          // }
         })
         .catch((error) => {
           alert("System error, please contact admin!");
@@ -396,7 +401,10 @@ export default {
 
     getPhotoDetails(id) {
       axios
-        .get("https://capstoneprojectapi20210418160622.azurewebsites.net/api/v1/Photo/" + id)
+        .get(
+          "https://capstoneprojectapi20210418160622.azurewebsites.net/api/v1/Photo/" +
+            id
+        )
         .then((response) => {
           if (response.status == 200) {
             this.photo = response.data;
@@ -410,7 +418,10 @@ export default {
 
     getPrevOwnerDetails(id) {
       axios
-        .get("https://capstoneprojectapi20210418160622.azurewebsites.net/api/v1/User/GetById/" + id)
+        .get(
+          "https://capstoneprojectapi20210418160622.azurewebsites.net/api/v1/User/GetById/" +
+            id
+        )
         .then((response) => {
           if (response.status == 200) {
             this.preOwner = response.data;
