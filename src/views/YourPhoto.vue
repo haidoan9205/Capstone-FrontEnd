@@ -142,9 +142,9 @@ strong {
   color: white;
   text-transform: uppercase;
   font-weight: bold;
-  background-color: green;
+  background-image: linear-gradient(to right, #bef0bd, #a2ed9f, #84e87f, #61e35c, #31de30);
   padding-left: 6px;
-  width: 30%;
+  width: 100px;
   border-radius: 10px;
 }
 </style>

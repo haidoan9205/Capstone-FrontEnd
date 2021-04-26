@@ -49,26 +49,29 @@
           iconColor="#000000"
           style="float:right"
         />
-         
       </a>
       <div
         class="dropdown-menu dropdown-menu-right"
         aria-labelledby="navbar-success_dropdown_1"
-       
       >
-     
-      
-        <div class=" border-0 dropdown-item" v-for="(item, index) in notifications"
-        :key="index" >
-        <div @click="deleteNoti(item)">
-            <router-link class="shadow border-1" 
-            
-          :to="{ name: 'photo', params: { photoId: item.photoId } }"
+        <div
+          class=" border-0 dropdown-item item"
+          v-for="(item, index) in notifications"
+          :key="index"
         >
-        
-          <span>  {{ item.username }} has uploaded an image. </span>
-        </router-link>
-        </div>
+          <div @click="deleteNoti(item)">
+            <router-link
+              class="shadow border-1 row"
+              :to="{ name: 'photo', params: { photoId: item.photoId } }"
+            >
+            <tr style="width: 60%">
+              <span> {{ item.username }} has uploaded: {{item.photoname}}. </span>
+            </tr>
+             <tr style="width: 30%">
+              <img v-lazy="item.WMLink" class="img-fit hov" />
+             </tr>
+            </router-link>
+          </div>
         </div>
       </div>
     </li>
@@ -84,19 +87,6 @@
         </a>
       </router-link>
     </li>
-
-    <!-- <li class="nav-item" v-if="isLoggedIn">
-      <router-link to="/profile">
-        <img
-          v-lazy="
-            'https://www.irishtimes.com/polopoly_fs/1.3170107.1501253408!/image/image.jpg_gen/derivatives/box_620_330/image.jpg'
-          "
-          alt="Raised circle image"
-          class="img-fluid rounded-circle shadow-lg"
-          style="width: 50px; height: 50px"
-        />
-      </router-link>
-    </li> -->
   </ul>
 </template>
 <script>
@@ -118,7 +108,7 @@ export default {
     isLoggedIn() {
       return this.$store.getters.isLoggedIn;
     },
-    
+
     notifications() {
       return this.$store.state.notifications;
     },
@@ -131,19 +121,20 @@ export default {
     },
   },
   mounted() {
-    
-    
-this.interval = setInterval(() => this.$store.dispatch("getNotification"), 1000);
-    
+    this.interval = setInterval(
+      () => this.$store.dispatch("getNotification"),
+      1000
+    );
   },
-  
+
   methods: {
-     deleteNoti(item) {
+    deleteNoti(item) {
       axios
-         .put(
-         "https://capstoneprojectapi20210418160622.azurewebsites.net/api/v1/User/DeleteNotification?userid=" + this.user1.userId + "&followUserId=" + item.userId
+        .put(
+          "https://capstoneprojectapi20210418160622.azurewebsites.net/api/v1/User/DeleteNotification/" +
+            item.notificationid
         )
-       
+
         .catch((error) => {
           this.$toasts.push({
             type: "error",
@@ -156,7 +147,6 @@ this.interval = setInterval(() => this.$store.dispatch("getNotification"), 1000)
         this.$router.push("/login");
       });
     },
-   
   },
 };
 </script>
@@ -211,6 +201,9 @@ ul.sidebar-panel-nav > li > a {
   right: 2px;
   cursor: pointer;
 }
+.item{
+  width: 300px !important;
+}
 .bm-cross {
   background: #bdc3c7;
 }
@@ -253,4 +246,12 @@ ul.sidebar-panel-nav > li > a {
   font-weight: 700;
   color: white;
 }
+.img-fit {
+  width: 60%;
+  height: 5vw;
+  float:right;
+  margin-bottom: 15px;
+  border-radius: 10px;
+}
+
 </style>

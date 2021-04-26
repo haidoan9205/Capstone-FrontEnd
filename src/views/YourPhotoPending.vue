@@ -15,8 +15,8 @@
                   <p style="color:black;">{{ image.photoName }}</p>
                 </td>
               </tr>
-              <tr>
-                <td class="col1"><strong class="rejection">Status:</strong></td>
+              <tr> 
+                <td class="col1" ><strong class="rejection">Status:</strong></td>
                 <td class="col2">
                   <p class="status">{{ image.approveStatus }}</p>
                 </td>
@@ -66,16 +66,14 @@ export default {
 
   mounted() {
     this.$store.dispatch('getPendingImageByUser');
-    this.$store.dispatch('getImage', this.photoId);
+   
   },
   methods: {
     select: function(event) {
       targetId = event.images.photoId;
       console.log(targetId); // returns 'foo'
     },
-    getImage() {
-      this.$store.dispatch('getImage', this.photoId);
-    },
+   
   },
 };
 </script>
@@ -136,9 +134,11 @@ p {
   color: white;
   text-transform: uppercase;
   font-weight: bold;
-  background-color: green;
+  width: 100px;
+  background-image: linear-gradient(to right, #f0ebbb, #eee599, #eddf76, #ecd84e, #ebd112);
   padding-left: 6px;
   border-radius: 10px;
+  
 }
 strong {
   font-size: 15px;

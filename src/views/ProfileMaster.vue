@@ -255,17 +255,16 @@
                       <div class="row">
                         <div
                           class="col-6 col-md-4"
-                          v-for="item in imageExlusive"
-                          :key="item.photoId"
+                          v-for="(item, index) in imageExlusive"
+                          :key="index"
                         >
                           <img
-                            @contextmenu.prevent="
-                              $refs.menu1.open($event, item)
-                            "
+                           @click="modals.modalEditImage = true, selected = index, objectSelected = item"
                             v-lazy="item.wmlink"
-                            class="img-fit"
+                            class="img-fit hov"
                           />
-                           <modal :show.sync="modals.modalEditImage">
+                          
+                           <modal :show.sync="modals.modalEditImage" >
                     <h6
                       slot="header"
                       class="modal-title mb-0"
@@ -274,20 +273,9 @@
                       Edit Exclusive Image
                     </h6>
 
-                    <div class=" text-center">
+                    <div class=" text-center" >
                       <div class="page"><h2>Image Information</h2></div>
-                      <div class="row justify-content-center">
-                        <div class="row align-items-center">
-                          <div class="form-group">
-                            <input
-                              type="hidden"
-                              class="form-control"
-                              v-model="item.userId"
-                              required
-                            />
-                          </div>
-                        </div>
-                      </div>
+                   
                       <div class="row justify-content-center">
                         <div class="row align-items-center">
                           <div class="form-group">
@@ -297,7 +285,7 @@
                             <input
                               type="text"
                               class="form-control"
-                              v-model="item.photoName"
+                              v-model="imageExlusive[selected].photoName"
                               required
                             />
                           </div>
@@ -306,7 +294,7 @@
                             <input
                               type="text"
                               class="form-control"
-                              v-model="item.price"
+                              v-model="imageExlusive[selected].price"
                               required
                             /> 
                           </div>
@@ -327,7 +315,7 @@
                             <textarea
                               type="text"
                               class="form-control description"
-                              v-model="item.description"
+                              v-model="imageExlusive[selected].description"
                               required
                             />
                           </div>
@@ -337,7 +325,7 @@
                         <button
                           class="btn btn-primary"
                           type="submit"
-                          @click="onEditImage(item)"
+                          @click="onEditImage(objectSelected)"
                         >
                           Edit
                         </button>
@@ -355,7 +343,7 @@
                   <li>
                     <a
                       class="modalCursor"
-                      @click="modals.modalEditImage = true"
+                     
                     >
                       Edit
                     </a>
@@ -376,9 +364,9 @@
                           :key="index"
                         >
                           <img
-                            @contextmenu.prevent="$refs.menu.open($event, item)"
+                              @click="modals.modalEnable = true, objectSelected = item"
                             v-lazy="item.wmlink"
-                            class="img-fit"
+                            class="img-fit hov"
                           />
                           <modal
                             :show.sync="modals.modalEnable"
@@ -411,7 +399,7 @@
                             <template>
                               <base-button
                                 type="white"
-                                @click="enableExclusive(item)"
+                                @click="enableExclusive(objectSelected)"
                                 >Ok, Got it</base-button
                               >
                               <base-button
@@ -473,6 +461,8 @@ export default {
       flag: [],
       isActive: true,
       photoId: 0,
+      selected: 0,
+      objectSelected: null,
     };
   },
   computed: {
@@ -555,17 +545,17 @@ export default {
           });
         });
     },
-    onEditImage(item){
+    onEditImage(objectSelected){
      
       axios
         .put(
           "https://capstoneprojectapi20210418160622.azurewebsites.net/api/v1/Photo/" +
-            item.photoId,
+            objectSelected.photoId,
           {
-            photoId: item.photoId,
-            photoName: item.photoName,
-            price: item.price,
-            description: item.description,
+            photoId: objectSelected.photoId,
+            photoName: objectSelected.photoName,
+            price: objectSelected.price,
+            description: objectSelected.description,
           }
         )
         .then((response) => {
@@ -590,13 +580,13 @@ export default {
           });
         });
     },
-    enableExclusive(item) {
+    enableExclusive(objectSelected) {
       // console.log(user.userId)
       axios({
         method: "PUT",
         url:
           "https://capstoneprojectapi20210418160622.azurewebsites.net/api/v1/Photo/ChangeWatermarkPhoto/" +
-          item.photoId,
+          objectSelected.photoId,
       }).then((response) => {
         console.log("aaaa");
         console.log(response);
@@ -715,6 +705,10 @@ export default {
   object-fit: cover;
   margin-bottom: 15px;
   border-radius: 10px;
+}
+
+.hov:hover{
+  box-shadow: 0 0 0 1px rgb(0, 0, 0 / 20%);
 }
 
 .unfl:active:disabled {

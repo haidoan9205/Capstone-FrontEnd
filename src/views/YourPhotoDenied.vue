@@ -74,16 +74,14 @@ export default {
 
   mounted() {
     this.$store.dispatch('getDeniedImageByUser');
-    this.$store.dispatch('getImage', this.photoId);
+   
   },
   methods: {
     select: function(event) {
       targetId = event.images.photoId;
       console.log(targetId); // returns 'foo'
     },
-    getImage() {
-      this.$store.dispatch('getImage', this.photoId);
-    },
+  
   },
 };
 </script>
@@ -144,7 +142,8 @@ p {
   color: white;
   text-transform: uppercase;
   font-weight: bold;
-  background-color: red;
+  width: 100px;
+  background-image: linear-gradient(to right, #f4a0a0, #f2898a, #ef7275, #ea5860, #e4394c);
   padding-left: 6px;
   border-radius: 10px;
 }
