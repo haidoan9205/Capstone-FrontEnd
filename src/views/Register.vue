@@ -1,7 +1,7 @@
 <template>
   <div
     class="pt-lg-md"
-    style="background-image: linear-gradient(to left bottom, #ffafbd, #ffb3b4, #ffb7ac, #ffbda5, #ffc3a0);"
+    style="background-image: url('img/theme/background.jpg')"
   >
     <div class="row justify-content-center">
       <div class="col-lg-5 mt-0">
