@@ -10,7 +10,6 @@
         v-for="image in images"
         :key="image.photoId"
         :image="image"
-  
       >
         <div class="card card-lift--hover shadow border-0">
           <router-link
@@ -32,23 +31,29 @@
 </template>
 
 <script>
-import VirtualGrid from 'vue-virtual-grid';
+import VirtualGrid from "vue-virtual-grid";
+import Loading from "vue-loading-overlay";
+import "vue-loading-overlay/dist/vue-loading.css";
 
 export default {
-  components:{
+  components: {
     VirtualGrid,
+    Loading,
   },
-  
+  data() {
+    return {
+      isLoading: false,
+      fullPage: true,
+    };
+  },
   computed: {
     images() {
       return this.$store.state.images;
     },
-   
   },
 
   mounted() {
     this.$store.dispatch("getImages");
-
   },
 };
 </script>

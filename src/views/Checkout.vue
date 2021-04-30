@@ -250,6 +250,11 @@ export default {
       });
     },
     onCheckOut() {
+       let loader = this.$loading.show({
+        loader: 'dots',
+        height: 50,
+        width: 50,
+    })
       const fd = new FormData();
       const orderDetails = Object.values(this.orderDetail);
       fd.append("userId", this.user.userId);
@@ -273,14 +278,17 @@ export default {
       })
         .then((respone) => {
           if (respone.status == 201) {
+            loader.hide();
             this.$alert("Transaction complete", "Success", "success").then(() =>
               console.log("Closed")
+              
             );
 
             this.paidFor = true;
             window.localStorage.removeItem("cart");
             this.$store.state.cart = [];
           } else {
+            loader.hide()
             this.$toasts.push({
               type: "error",
               message: "Error",
@@ -288,6 +296,7 @@ export default {
           }
         })
         .catch((error) => {
+          loader.hide()
           this.$toasts.push({
             type: "error",
             message: error,
@@ -295,6 +304,11 @@ export default {
         });
     },
     onCheckoutSaveToBC() {
+      let loader = this.$loading.show({
+        loader: 'dots',
+        height: 50,
+        width: 50,
+    })
       axios({
         url: "http://localhost:3000/transactions",
         data: {
@@ -326,6 +340,7 @@ export default {
             for (let i = 0; i < orderDetails.length; i++) {
               fd.append("ListPhotoId", orderDetails[i]);
             }
+            
             axios({
               url: "https://capstoneprojectapi20210418160622.azurewebsites.net/api/Order",
               data: fd,
@@ -334,6 +349,7 @@ export default {
             })
               .then((res) => {
                 if (res.status == 201) {
+                  loader.hide()
                   this.$alert('Transaction complete', 'Success', 'success').then(() =>
                     console.log('Closed')
                   );
@@ -348,12 +364,14 @@ export default {
                 }
               })
               .catch((error) => {
+                loader.hide()
                 this.$toasts.push({
                   type: "error",
                   message: error,
                 });
               });
           } else {
+            loader.hide()
             this.$toasts.push({
               type: "error",
               message: "Transaction error",

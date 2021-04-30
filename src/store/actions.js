@@ -4,10 +4,17 @@ import Vue from "vue";
 
 
 export const getImages = ({ commit }) => {
+    let loader = Vue.$loading.show({
+        loader: 'dots',
+        height: 50,
+        width: 50,
+    })
+
     axios
         .get("https://capstoneprojectapi20210418160622.azurewebsites.net/api/v1/Photo/random")
         .then((response) => {
             commit("SET_IMAGES", response.data);
+            loader.hide()
         });
 };
 
@@ -76,11 +83,17 @@ export const getUserExlusiveProperty = ({commit}) =>{
 }
 
 export const getImage = ({ commit },photoId) => {
+    let loader = Vue.$loading.show({
+        loader: 'dots',
+        height: 50,
+        width: 50,
+    })
   state.image = '';
   axios
     .get(`https://capstoneprojectapi20210418160622.azurewebsites.net/api/v1/Photo/${photoId}`)
     .then((response) => {
       commit("SET_IMAGE", response.data);
+      loader.hide();
     });
 };
 
@@ -165,6 +178,11 @@ export const login = ({ commit }, user) => {
 };
 
 export const getImagesOfFollowing = ({commit}) =>{
+    let loader = Vue.$loading.show({
+        loader: 'dots',
+        height: 50,
+        width: 50,
+    })
     const user = localStorage.getItem("user");
     const user_parsed = JSON.parse(user);
     axios
@@ -173,10 +191,16 @@ export const getImagesOfFollowing = ({commit}) =>{
         )
         .then((response) => {
             commit("SET_IMAGES_FOLLOWING", response.data);
+            loader.hide();
         });
 }
 
 export const getTransactions = ({ commit }) => {
+    let loader = Vue.$loading.show({
+        loader: 'dots',
+        height: 50,
+        width: 50,
+    })
     const user = localStorage.getItem("user");
     const user_parsed = JSON.parse(user);
     axios
@@ -185,6 +209,7 @@ export const getTransactions = ({ commit }) => {
         )
         .then((response) => {
             commit("SET_TRANSACTIONS", response.data);
+            loader.hide();
         });
 };
 
