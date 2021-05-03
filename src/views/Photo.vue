@@ -14,8 +14,12 @@
           <strong>{{ image.photoName }} </strong>
         </h3>
 
-        <h5 class="h5"><strong>Price</strong> : $ {{ image.price }}  - <strong>Type</strong> : <span v-if="image.typeId == 1">Non-Exclusive</span><span v-if="image.typeId == 2">Exclusive</span></h5>
-       
+        <h5 class="h5">
+          <strong>Price</strong> : $ {{ image.price }} - <strong>Type</strong> :
+          <span v-if="image.typeId == 1">Non-Exclusive</span
+          ><span v-if="image.typeId == 2">Exclusive</span>
+        </h5>
+
         <p class="lead">
           {{ image.description }}
         </p>
@@ -36,8 +40,8 @@
             {{ badge.categoryName }}
           </span>
         </badge>
-        <br/>
-        
+        <br />
+
         <modal :show.sync="modals.modalTag">
           <div class="container">
             <div class="modalStyle">
@@ -61,7 +65,13 @@
                   :key="item.photoId"
                 >
                   <router-link
-                    :to="{ name: 'photo', params: { photoId: item.photoId } }"
+                    @click.native="reloadPage"
+                    :to="{
+                      name: 'photo',
+                      params: { photoId: item.photoId },
+                    }" 
+                    
+                  
                   >
                     <img v-lazy="item.wmlink" class="img-fit" />
                   </router-link>
@@ -145,7 +155,8 @@ export default {
       console.log(this.$store.state.image.userId);
       axios({
         method: "POST",
-        url: "https://capstoneprojectapi20210418160622.azurewebsites.net/api/v1/Follow/Follow",
+        url:
+          "https://capstoneprojectapi20210418160622.azurewebsites.net/api/v1/Follow/Follow",
         data: {
           userId: JSON.parse(this.$store.state.user).userId,
           followUserId: this.$store.state.image.userId,
@@ -193,6 +204,10 @@ export default {
       });
       return [];
     },
+    reloadPage(){
+      this.$router.go();
+    }
+  
   },
 
   computed: {

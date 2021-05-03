@@ -1,16 +1,16 @@
 <template>
-  <div style="background-color: #c6d1e4;">
+  <div>
     <div class="position-relative">
       <!-- shape Hero -->
 
       <section class="section section-lg pt-0 pb-0 ">
-        <div class="container search-bar">
+        <div class="container search-bar" style="background-image: linear-gradient(to right top, #92bbd5, #8abbda, #82bbde, #79bae3, #6fbae8);">
           <div class="row row-grid justify-content-center">
             <h3 class="mt-3 searchbar-title">Moving the world with images</h3>
           </div>
           <div class="row row-grid justify-content-center ">
             <!-- <i class="fa fa-search my-auto"></i>-->
-            <div class="col-md-7">
+            <div class="col-md-7  mb-5">
               <base-input
                 class="search-aria"
                 alternative
@@ -30,49 +30,44 @@
           </div>
           <br />
         </div>
-
-        <div class="overlay"></div>
-        
       </section>
-     
-      </div>
-    
-      <div>
-        <type/>
-        <list-image v-if="flag === true"></list-image>
-            
-        <div v-if="flag === false" class="container container-lg gallery">
-          <div class="row mt-4 ">
-            <div
-              class="col-md-4 mb-5 mb-md-0 gallery-panel"
-              v-for="image in imagesearch"
-              :key="image.photoId"
-              :image="image"
-            >
-              <div class="card card-lift--hover shadow border-0">
-                <router-link
-                  :to="{name: 'photo', params: {photoId: image.photoId}}"
-                >
-                  <img v-lazy="image.wmlink" class="img-fit" />
-                </router-link>
-              </div>
+      <type />
+    </div>
+
+    <div>
+      <list-image v-if="flag === true"></list-image>
+
+      <div v-if="flag === false" class="container container-lg gallery">
+        <div class="row mt-4 ">
+          <div
+            class="col-md-4 mb-5 mb-md-0 gallery-panel"
+            v-for="image in imagesearch"
+            :key="image.photoId"
+            :image="image"
+          >
+            <div class="card card-lift--hover shadow border-0">
+              <router-link
+                :to="{ name: 'photo', params: { photoId: image.photoId } }"
+              >
+                <img v-lazy="image.wmlink" class="img-fit" />
+              </router-link>
             </div>
           </div>
         </div>
+      </div>
 
-        <div class="overlay2"></div>
-       
+      <div class="overlay2"></div>
     </div>
   </div>
 </template>
 
 <script>
-import ListImage from '../components/ListImage.vue';
+import ListImage from "../components/ListImage.vue";
 import Type from "./Type.vue";
-import axios from 'axios';
+import axios from "axios";
 
 export default {
-  name: 'home',
+  name: "home",
   components: {
     listImage: ListImage,
     Type,
@@ -80,7 +75,7 @@ export default {
   data() {
     return {
       flag: true,
-      searchValue: '',
+      searchValue: "",
       pageSize: 21,
       currentPage: 1,
       imagesearch: [],
@@ -94,15 +89,15 @@ export default {
         return;
       }
       return this.$router.push({
-        name: 'search',
-        query: {searchValue: this.searchValue},
+        name: "search",
+        query: { searchValue: this.searchValue },
       });
     },
   },
 };
 </script>
 <style lang="scss" scoped>
-@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;1,300&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;1,300&display=swap");
 .searchbar-title {
   font-family: monospace;
   position: relative;
@@ -167,9 +162,8 @@ export default {
   background: linear-gradient(180deg, hsla(0, 0%, 100%, 0) 0, #c6d1e4);
 }
 
-
-.tabs-type{
-vertical-align:baseline;
-height: 100px !important;
+.tabs-type {
+  vertical-align: baseline;
+  height: 100px !important;
 }
 </style>

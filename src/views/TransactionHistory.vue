@@ -374,6 +374,11 @@ export default {
     },
 
     async getExclusiveHistory() {
+       let loader = this.$loading.show({
+        loader: 'dots',
+        height: 50,
+        width: 50,
+    })
       await axios
         .get(
           "http://localhost:3000/transactions/getDocumentHistory/" +
@@ -381,14 +386,17 @@ export default {
         )
         .then((response) => {
           if (response.status == 200) {
+            loader.hide();
             this.fullHistory = response.data;
             // let length = this.fullHistory.length;
             // this.history = this.fullHistory[length - 1];
           } else {
+            loader.hide();
             alert("Network error, please try again!");
           }
         })
         .catch((error) => {
+          loader.hide();
           alert("System error, please contact admin!");
           console.log(error);
         });

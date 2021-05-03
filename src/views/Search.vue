@@ -4,7 +4,7 @@
       <section class="section section-lg pt-0 pb-0">
         <div
           class="container search-bar"
-          style="background-image: linear-gradient(to right, #a3bded, #95b2e3, #86a7da, #789cd0, #6991c7);"
+          style="background-image: linear-gradient(to right top, #92bbd5, #8abbda, #82bbde, #79bae3, #6fbae8);"
         >
           <div class="row row-grid justify-content-center">
             <h3 class="searchbar-title mt-3">Moving the world with images</h3>
@@ -40,6 +40,7 @@
           <br />
         </div>
       </section>
+      <type/>
       <div class="container container-lg gallery">
         <div class="row mt-4 ">
           <div
@@ -86,7 +87,7 @@
 
 <script>
 import axios from 'axios';
-
+import Type from "./Type.vue";
 export default {
   data() {
     return {
@@ -100,6 +101,9 @@ export default {
       CurrentPage: 0,
       xpagination: null
     }
+  },
+  components:{
+    Type,
   },
   watch: {
     $route(to, from) {
