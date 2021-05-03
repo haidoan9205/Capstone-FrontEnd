@@ -1,6 +1,7 @@
 import { VirtualTimeScheduler } from 'rxjs';
 import Vue from 'vue';
 import {mapActions} from 'vuex';
+import { checkIsYour } from './actions';
 
 export const SET_IMAGES = (state, images) => {
   state.images = images;
@@ -141,6 +142,15 @@ export const REMOVE_ITEM = (state, {image}) => {
 export const auth_request = (state) => {
   state.status = 'loading';
 };
+
+export const CHECK_IS_BOUGHT = (state, checkIsBought) =>{
+  state.checkIsBought = checkIsBought;
+
+}
+
+export const CHECK_IS_YOUR = (state , checkIsYour) =>{
+  state.checkIsYour = checkIsYour;
+}
 
 export const auth_success = (state, user) => {
   state.status = 'success';

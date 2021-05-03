@@ -84,7 +84,7 @@
         <blockquote class="blockquote mt-2">
           <p><strong> Upload By:</strong></p>
           <router-link
-            v-if="this.isYour == true"
+            v-if="checkIsYour == true"
             :to="{ name: 'profileMaster', params: { userId: image.userId } }"
           >
             <footer class="blockquote-footer">
@@ -92,7 +92,7 @@
             </footer>
           </router-link>
           <router-link
-            v-else-if="this.isYour == false"
+            v-else-if="checkIsYour == false"
             :to="{ name: 'Profile', params: { userId: image.userId } }"
           >
             <footer class="blockquote-footer">
@@ -105,7 +105,7 @@
             class="btn-1"
             type="primary"
             @click="addToCart()"
-            v-if="this.isYour == false && alreadyBought == false"
+            v-if="checkIsYour == false && checkIsBought == false"
             >Add to cart</base-button
           >
         </div>
@@ -178,32 +178,6 @@ export default {
         this.testPicture = response.data;
       });
     },
-    functionA() {
-      axios({
-        method: "GET",
-        url:
-          "https://capstoneprojectapi20210418160622.azurewebsites.net/api/v1/Photo/CheckBoughtPhoto?id=" +
-          this.photoId +
-          "&userId=" +
-          JSON.parse(this.$store.state.user).userId,
-      }).then((response) => {
-        this.alreadyBought = response.data;
-      });
-      return [];
-    },
-    functionB() {
-      axios({
-        method: "GET",
-        url:
-          "https://capstoneprojectapi20210418160622.azurewebsites.net/api/v1/Photo/CheckMyPhoto?photoId=" +
-          this.photoId +
-          "&userId=" +
-          JSON.parse(this.$store.state.user).userId,
-      }).then((response) => {
-        this.isYour = response.data;
-      });
-      return [];
-    },
     reloadPage(){
       this.$router.go();
     }
@@ -214,16 +188,19 @@ export default {
     image() {
       return this.$store.state.image;
     },
+    checkIsYour(){
+      return this.$store.state.checkIsYour;
+    },
+    checkIsBought(){
+      return this.$store.state.checkIsBought;
+    }
   },
 
   mounted() {
     console.log(this.photoId);
     this.$store.dispatch("getImage", this.photoId);
-    const abc = merge(this.functionA(), this.functionB());
-    console.log(abc);
-    abc.pipe((res) => {
-      loader.hide();
-    });
+    this.$store.dispatch("checkIsYour", this.photoId);
+    this.$store.dispatch("checkIsBought", this.photoId);
   },
 
   created() {

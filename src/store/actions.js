@@ -118,7 +118,10 @@ export const getImage = ({ commit },photoId) => {
         height: 50,
         width: 50,
     })
+    
   state.image = '';
+  state.checkIsYour = false;
+  state.checkIsBought = false;
   axios
     .get(`https://capstoneprojectapi20210418160622.azurewebsites.net/api/v1/Photo/${photoId}`)
     .then((response) => {
@@ -178,6 +181,33 @@ export const addPhotoToCart = ({ commit }, { image }) => {
 export const removeItem = ({ commit }, { image }) => {
     commit("REMOVE_ITEM", { image });
 };
+
+export const checkIsBought =({commit}, photoId) =>{
+    
+    axios({
+        method: "GET",
+        url:
+          "https://capstoneprojectapi20210418160622.azurewebsites.net/api/v1/Photo/CheckBoughtPhoto?id=" +
+          photoId +
+          "&userId=" +
+          JSON.parse(state.user).userId,
+      }).then((response) => {
+        commit('CHECK_IS_BOUGHT', response.data);
+      });
+}
+
+export const checkIsYour = ({commit}, photoId) =>{
+    axios({
+        method: "GET",
+        url:
+          "https://capstoneprojectapi20210418160622.azurewebsites.net/api/v1/Photo/CheckMyPhoto?photoId=" +
+          photoId +
+          "&userId=" +
+          JSON.parse(state.user).userId,
+      }).then((response) => {
+        commit('CHECK_IS_YOUR', response.data)
+      });
+}
 
 export const login = ({ commit }, user) => {
     return new Promise((resolve, reject) => {
