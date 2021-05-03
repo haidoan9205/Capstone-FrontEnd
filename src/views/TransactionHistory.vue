@@ -62,7 +62,7 @@
                     type="text"
                     class="form-control"
                     v-model="proofId"
-                    placeholder="Input proofID to get receipt from the Blockchain..."
+                    placeholder="Input proof ID to get verification receipt from the Blockchain..."
                     required
                     style="width: 500px; margin: auto; display: flex"
                   />
@@ -70,9 +70,9 @@
                     class="btn btn-success"
                     style="margin: auto; display: flex"
                     type="submit"
-                    @click="getProofConfimation(proofId)"
+                    @click="getProofInfo(proofId)"
                   >
-                    <span class="text-nowrap">Submit</span>
+                    <span class="text-nowrap">Verify</span>
                   </button>
                 </div>
 
@@ -309,42 +309,87 @@ export default {
 
     createPDF() {
       var doc = new jsPDF();
-      doc.setFontSize(20);
-      doc.setTextColor("red");
-      doc.text("Proof Of Existence", 30, 35);
-      doc.setFontSize(10);
-      doc.setTextColor("black");
-      doc.text(
-        "Receipt ID: " + this.history.versions[0].document.transactionId,
-        30,
-        55
-      );
-      doc.text(new Date(this.proofResponse[0].submitted).toUTCString(), 30, 60);
+      doc.addImage("img/brand/ProvenDB.JPG", "JPEG", 65, 20, 90, 35);
+      doc.setFontSize(22);
+      doc.setTextColor(47,79,79);
+      doc.text("Certificate of", 85, 75);
+      doc.text("Blockchain Proof", 78, 84);
+
+      var tmp = new Image();
+      tmp.crossOrigin = "Anonymous";
+      tmp.src = this.photo.wmlink;s
+      doc.addImage(tmp, "JPEG", 65, 95, 65, 65);
+
       doc.setFontSize(12);
-      doc.setFont("times", "bold");
-      doc.text("BLOCKCHAIN INFO", 30, 75);
-      doc.line(30, 77, 150, 77);
+      doc.setTextColor(47,79,79);
+      doc.text("Image name: ", 82, 105);
+      doc.setTextColor(135,206,235);
+      doc.textWithLink(this.photo.photoName, 108, 105, {
+        url: this.photo.wmlink,
+      });
+      doc.setTextColor(47,79,79);
+      doc.text("This certificate constitutes proof that a transaction between", 52, 115);
+      doc.text("The previous owner -", 77, 122);
+      doc.setTextColor(135,206,235);
+      doc.text(this.preOwner.fullName, 118, 122);
+      doc.setTextColor(47,79,79);
+      doc.text("The new owner -", 77, 127);
+      doc.setTextColor(135,206,235);
+      doc.text(this.user.fullName, 109, 127);
+      doc.setTextColor(47,79,79);
+      doc.text("has completed on", 89, 134);
+      doc.setTextColor(135,206,235);
+      doc.text(new Date(this.history.versions[0].document.transactionCreationTime).toUTCString(), 74, 140);
+      doc.setTextColor(47,79,79);
+      doc.text("and anchored to the Blockchain at", 73, 146);
+      doc.setTextColor(135,206,235);
+      doc.text(new Date(this.proofResponse[0].submitted).toUTCString(), 74, 152);
+      doc.setTextColor(47,79,79);
+      doc.text("thereby proving that the transaction existed in its current form on", 48, 158);
+      doc.text("the date at which the Blockchain entry was created.", 58, 164);
+      doc.text("You can use this proof to attest that:", 72, 175);
+      doc.text("(a) the transaction has not been altered in any way.", 56, 180);
+      doc.text("(b) the transaction existed in its current form on the day it was submitted to the Blockchain.", 24, 185);
       doc.setFontSize(10);
-      doc.setFont("times", "normal");
-      doc.setTextColor("red");
-      doc.text("TnxID:", 30, 85);
-      doc.setTextColor("black");
-      doc.text(this.proofResponse[0].anchorData.txnId, 42, 85);
-      doc.setTextColor("red");
-      doc.text("Hash:", 30, 90);
-      doc.setTextColor("black");
-      doc.text(this.proofResponse[0].hash, 42, 90);
-      doc.line(30, 95, 150, 95);
-      doc.text("View your Blockchain info at:", 30, 110);
-      doc.setTextColor("blue");
-      doc.textWithLink(this.proofResponse[0].anchorData.txnUri, 30, 117, {
+      doc.text("View your Blockchain info at:", 26, 200);
+      doc.setTextColor(135,206,235);
+      doc.textWithLink(this.proofResponse[0].anchorData.txnUri, 26, 205, {
         url: this.proofResponse[0].anchorData.txnUri,
       });
-      // doc.output('bloburi', 'your-proof.pdf');
+      doc.addImage("img/brand/provendb-stamp.jpg", "JPEG", 140, 215, 35, 35);
+
+      // doc.setFontSize(10);
+      // doc.setTextColor("black");
+      // doc.text(
+      //   "Receipt ID: " + this.history.versions[0].document.transactionId,
+      //   30,
+      //   75
+      // );
+      // doc.text(new Date(this.proofResponse[0].submitted).toUTCString(), 30, 80);
+      // doc.setFontSize(12);
+      // doc.setFont("times", "bold");
+      // doc.text("BLOCKCHAIN INFO", 30, 95);
+      // doc.line(30, 97, 150, 97);
+      // doc.setFontSize(10);
+      // doc.setFont("times", "normal");
+      // doc.setTextColor("red");
+      // doc.text("TnxID:", 30, 105);
+      // doc.setTextColor("black");
+      // doc.text(this.proofResponse[0].anchorData.txnId, 42, 105);
+      // doc.setTextColor("red");
+      // doc.text("Hash:", 30, 110);
+      // doc.setTextColor("black");
+      // doc.text(this.proofResponse[0].hash, 42, 110);
+      // doc.line(30, 115, 150, 115);
+      // doc.text("View your Blockchain info at:", 30, 130);
+      // doc.setTextColor("blue");
+      // doc.textWithLink(this.proofResponse[0].anchorData.txnUri, 30, 137, {
+      //   url: this.proofResponse[0].anchorData.txnUri,
+      // });
       doc.save("your-proof");
     },
 
-    async getProofConfimation(proofId) {
+    async getProofInfo(proofId) {
       await this.getExclusiveHistory();
       await axios
         .get("http://localhost:3000/transactions/getProof/" + proofId)
@@ -386,6 +431,12 @@ export default {
         )
         .then((response) => {
           if (response.status == 200) {
+            if (response.data == "ProofId is invalid!") {
+            } else {
+              this.fullHistory = response.data;
+              // let length = this.fullHistory.length;
+              // this.history = this.fullHistory[length - 1];
+            }
             loader.hide();
             this.fullHistory = response.data;
             // let length = this.fullHistory.length;
@@ -394,6 +445,9 @@ export default {
             loader.hide();
             alert("Network error, please try again!");
           }
+          // else {
+          //   alert("Network error, please try again!");
+          // }
         })
         .catch((error) => {
           loader.hide();
@@ -404,7 +458,10 @@ export default {
 
     getPhotoDetails(id) {
       axios
-        .get("https://capstoneprojectapi20210418160622.azurewebsites.net/api/v1/Photo/" + id)
+        .get(
+          "https://capstoneprojectapi20210418160622.azurewebsites.net/api/v1/Photo/" +
+            id
+        )
         .then((response) => {
           if (response.status == 200) {
             this.photo = response.data;
@@ -418,7 +475,10 @@ export default {
 
     getPrevOwnerDetails(id) {
       axios
-        .get("https://capstoneprojectapi20210418160622.azurewebsites.net/api/v1/User/GetById/" + id)
+        .get(
+          "https://capstoneprojectapi20210418160622.azurewebsites.net/api/v1/User/GetById/" +
+            id
+        )
         .then((response) => {
           if (response.status == 200) {
             this.preOwner = response.data;
