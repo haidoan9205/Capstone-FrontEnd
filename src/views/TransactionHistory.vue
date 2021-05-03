@@ -317,7 +317,7 @@ export default {
 
       var tmp = new Image();
       tmp.crossOrigin = "Anonymous";
-      tmp.src = this.photo.wmlink;s
+      tmp.src = this.photo.wmlink;
       doc.addImage(tmp, "JPEG", 65, 95, 65, 65);
 
       doc.setFontSize(12);
