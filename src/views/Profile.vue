@@ -119,7 +119,7 @@
               <div class="row justify-content-center">
                 <a
                   v-bind:href="
-                    'http://localhost:8081/#/changepassword/' + user.userId
+                    'http://localhost:8080/#/changepassword/' + user.userId
                   "
                   >Click here to change password</a
                 >

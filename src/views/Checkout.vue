@@ -79,7 +79,7 @@
             </router-link>
           </div>
           <div class="row" style="padding-top: 10px; padding-left: 28px">
-            <router-link to="/">
+            <router-link to="/boughtphoto">
               <button class="btn btn-primary">View History</button>
             </router-link>
           </div>
@@ -354,8 +354,8 @@ export default {
                     console.log('Closed')
                   );
                   this.paidFor = true;
+                   window.localStorage.removeItem("ucart");
                   this.$store.state.ucart = []
-                  this.$store.state.cart = [];
                 } else {
                   this.$toasts.push({
                     type: "error",

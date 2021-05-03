@@ -1,91 +1,128 @@
 <template>
-  <div class="container mb-2" style="background-image: linear-gradient(to right top, #e2e6ed, #d4e9f2, #c7edeb, #c8eed8, #ddeac0);">
-    <div class="form bg-text">
-      <h4>Upload a new photo</h4>
-      <form @submit.prevent="onUploadPhoto" method="post">
-        <div class="form-group">
-          <label class="control-label">Title</label>
-          <input
-            type="text"
-            class="form-control"
-            v-model="photoName"
-            required
-          />
-        </div>
-        <div class="form-group">
-          <label class="control-label">Select Picture</label>
-          <input
-            type="file"
-            class="form-control"
-            @change="onFileSeleted"
-            accept="image/*"
-            required
-          />
-          <span style="color:red" v-if="msg.file">{{ msg.file }}</span>
-        </div>
-        <div class="multiselect-div">
-          <label class="typo__label" for="ajax">Select 2 Category</label>
-          <multiselect
-            v-model="value"
-            id="ajax"
-            label="categoryName"
-            track-by="categoryId"
-            placeholder="Type to search"
-            open-direction="bottom"
-            :options="options"
-            :multiple="true"
-            :searchable="true"
-            :internal-search="true"
-            :clear-on-select="false"
-            :close-on-select="false"
-            :options-limit="100"
-            :limit="2"
-            :max-height="150"
-            :hide-selected="true"
-            :max="2"
-          >
-          </multiselect>
-        </div>
-        <div class="multiselect-div">
-          <label class="typo__label">License Type</label>
-          <multiselect
-            v-model="type"
-            deselect-label="Can't remove this value"
-            open-direction="bottom"
-            track-by="typeId"
-            label="typeName"
-            placeholder="Select one"
-            :options="typeList"
-            :searchable="false"
-            :allow-empty="false"
-          >
-          </multiselect>
-        </div>
-        <div class="form-group">
-          <label class="control-label">Description</label>
-          <input
-            type="text"
-            class="form-control"
-            v-model="description"
-            required
-          />
-        </div>
-        <div class="form-group">
-          <label class="control-label">Price</label>
-          <input type="text" class="form-control" v-model="price" required />
-        </div>
-        <div class="buttonHolder">
-          <button class="btn btn-primary submit-button" type="submit">
-            <div class="lds-ring" v-if="loading">
-              <div></div>
-              <div></div>
-              <div></div>
-              <div></div>
+  <div
+    class="container text-center"
+    style="background-image: linear-gradient(to right top, #e2e6ed, #d4e9f2, #c7edeb, #c8eed8, #ddeac0);"
+  >
+    <div class="row align-items-center justify-content-center">
+      <div class="col-md-7 py-5">
+        <h4 class="mb-3 mt-0">Upload a new photo</h4>
+        <form @submit.prevent="onUploadPhoto" method="post">
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group ">
+                <label class="control-label">Title</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  v-model="photoName"
+                  required
+                />
+              </div>
             </div>
-            Upload
-          </button>
-        </div>
-      </form>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label class="control-label">Price</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  v-model="price"
+                  required
+                />
+              </div>
+            </div>
+           
+              <div class="col-md-12">
+                <div class="form-group first">
+                  <label class="control-label">Select Picture</label>
+                  <input
+                    type="file"
+                    class="form-control"
+                    @change="onFileSeleted"
+                    accept="image/*"
+                    required
+                  />
+                  <span style="color:red" v-if="msg.file">{{ msg.file }}</span>
+                </div>
+              </div>
+           
+           
+              <div class="col-md-12">
+                <div class="multiselect-div first">
+                  <label class="typo__label" for="ajax"
+                    >Select 2 Category</label
+                  >
+                  <multiselect
+                    v-model="value"
+                    id="ajax"
+                    label="categoryName"
+                    track-by="categoryId"
+                    placeholder="Type to search"
+                    open-direction="bottom"
+                    :options="options"
+                    :multiple="true"
+                    :searchable="true"
+                    :internal-search="true"
+                    :clear-on-select="false"
+                    :close-on-select="false"
+                    :options-limit="100"
+                    :limit="2"
+                    :max-height="150"
+                    :hide-selected="true"
+                    :max="2"
+                  >
+                  </multiselect>
+                </div>
+              </div>
+            
+            <br />
+            <div class="row">
+              <div class="col-md-12">
+                <div class="multiselect-div pl-3">
+                  <label class="typo__label">License Type</label>
+                  <multiselect
+                  class="license"
+                    v-model="type"
+                    deselect-label="Can't remove this value"
+                    open-direction="bottom"
+                    track-by="typeId"
+                    label="typeName"
+                    placeholder="Select one"
+                    :options="typeList"
+                    :searchable="false"
+                    :allow-empty="false"
+                  >
+                  </multiselect>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-group pl-3">
+                  <label class="control-label">Description</label>
+                  <input
+                    type="text"
+                    class="form-control description"
+                    v-model="description"
+                    required
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div class="buttonHolder">
+              <button class="btn btn-primary submit-button" type="submit">
+                <div class="lds-ring" v-if="loading">
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                </div>
+                Upload
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
     </div>
   </div>
 </template>
@@ -126,13 +163,17 @@ export default {
   },
   mounted: function() {
     axios
-      .get("https://capstoneprojectapi20210418160622.azurewebsites.net/api/v1/Category")
+      .get(
+        "https://capstoneprojectapi20210418160622.azurewebsites.net/api/v1/Category"
+      )
       .then((response) => {
         this.options = response.data;
         this.clone_options = response.data;
       });
     axios
-      .get("https://capstoneprojectapi20210418160622.azurewebsites.net/api/v1/Type/GetAllType")
+      .get(
+        "https://capstoneprojectapi20210418160622.azurewebsites.net/api/v1/Type/GetAllType"
+      )
       .then((response) => {
         this.typeList = response.data;
       });
@@ -140,15 +181,19 @@ export default {
   methods: {
     onFileSeleted(event) {
       this.file = event.target.files[0];
-      if(!this.file.type.match('image.*')) {
-        this.$toast.warning('Sorry but the file use choosed is not an image, please try again')
+      if (!this.file.type.match("image.*")) {
+        this.$toast.warning(
+          "Sorry but the file use choosed is not an image, please try again"
+        );
         this.isImage = false;
         this.file = null;
-      } 
-      if (this.file.size > 4194304) {
-         this.$toast.warning('File is too big! Please choose image size smaller than 4MB')
       }
-      if(this.file.type.match('image.*')) {
+      if (this.file.size > 4194304) {
+        this.$toast.warning(
+          "File is too big! Please choose image size smaller than 4MB"
+        );
+      }
+      if (this.file.type.match("image.*")) {
         this.isImage = true;
       }
       console.log(this.file.size);
@@ -157,22 +202,24 @@ export default {
       this.upload = true;
       this.loading = true;
       if (this.isImage === false) {
-        this.$toast.warning('Please choose image')
+        this.$toast.warning("Please choose image");
         this.loading = false;
         return;
       }
       if (this.file.size > 4194304) {
-         this.$toast.warning('File is too big! Please choose image size smaller than 4MB')
+        this.$toast.warning(
+          "File is too big! Please choose image size smaller than 4MB"
+        );
         this.loading = false;
         return;
       }
       if (this.value.length === 0) {
-        this.$toast.warning('Please select category')
-         this.loading = false;
+        this.$toast.warning("Please select category");
+        this.loading = false;
         return;
       }
       if (isNaN(this.price)) {
-         this.$toast.warning('Price must be an number!')
+        this.$toast.warning("Price must be an number!");
         this.loading = false;
         return;
       }
@@ -203,33 +250,37 @@ export default {
         .then((respone) => {
           if (respone.status == 201) {
             this.loading = false;
-            this.$alert(
-              "Upload Successfully",
-              "Success",
-              "success"
-            ).then(() => console.log("Closed"), setTimeout(window.location.reload(), 3000));
-           
+            this.$alert("Upload Successfully", "Success", "success").then(
+              () => console.log("Closed"),
+              setTimeout(this.$router.push({ name: "yourphotopending" })),
+              1000
+            );
           } else {
-            Vue.$toast.error('Upload error, please try again')
+            Vue.$toast.error("Upload error, please try again");
             this.loading = false;
           }
         })
         .catch((error) => {
-          this.$toast.error('Something went wrong, please try again')
+          this.$toast.error("Something went wrong, please try again");
           this.loading = false;
         });
     },
-   
   },
 };
 </script>
 
 <style lang="scss" scoped>
-
 .container {
   // border: 1px solid;
   border-radius: 12px;
   max-width: 60%;
+}
+.license{
+  width: 19rem;
+}
+.description {
+  width: 19rem;
+  height: 5rem;
 }
 div.form {
   display: block;
@@ -244,6 +295,7 @@ form {
 }
 .buttonHolder {
   text-align: center;
+  margin-inline: auto;
 }
 h4 {
   padding-top: 5%;

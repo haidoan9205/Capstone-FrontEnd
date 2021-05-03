@@ -4,7 +4,7 @@
       <section class="section section-lg pt-0 pb-0">
         <div
           class="container search-bar"
-          style="background-image: linear-gradient(to right, #a3bded, #95b2e3, #86a7da, #789cd0, #6991c7);"
+          style="background-image: linear-gradient(to right top, #92d59b, #86d398, #79d295, #6bd093, #5ace91);"
         >
           <div class="row row-grid justify-content-center">
             <h3 class="searchbar-title mt-3">Moving the world with images</h3>

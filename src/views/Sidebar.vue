@@ -73,17 +73,17 @@ export default {
               icon: "fa fa-file-alt",
             },
             {
-              href: { path: "/uploaded/:userId" },
+              href: { path: "/uploaded/" },
               title: "Approved",
               icon: "fa fa-file-alt",
             },
             {
-              href: { path: "/denied/:userId" },
+              href: { path: "/denied/" },
               title: "Denied",
               icon: "fa fa-file-alt",
             },
             {
-              href: "/pending/:userId",
+              href: "/pending/",
               title: "Pending",
               icon: "fa fa-file-alt",
             },

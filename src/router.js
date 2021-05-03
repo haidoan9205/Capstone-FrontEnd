@@ -216,7 +216,7 @@ export default new Router({
             props: true,
         },
         {
-            path: "/uploaded/:userId",
+            path: "/uploaded",
             name: "yourphoto",
             components: {
                 header: AppHeader,
@@ -226,7 +226,7 @@ export default new Router({
             props: true,
         },
         {
-            path: "/denied/:userId",
+            path: "/denied",
             name: "yourphotodenied",
             components: {
                 header: AppHeader,
@@ -236,7 +236,7 @@ export default new Router({
             props: true,
         },
         {
-            path: "/pending/:userId",
+            path: "/pending",
             name: "yourphotopending",
             components: {
                 header: AppHeader,

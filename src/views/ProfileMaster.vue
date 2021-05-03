@@ -86,7 +86,6 @@
                       </div>
                       <div class="row justify-content-center">
                         <div class="row align-items-center">
-                         
                           <div class="form-group">
                             <div class="donateItem ">
                               <label class="control-label">Date of Birth</label>
@@ -258,82 +257,7 @@
                           v-for="(item, index) in imageExlusive"
                           :key="index"
                         >
-                          <img
-                           @click="modals.modalEditImage = true, selected = index, objectSelected = item"
-                            v-lazy="item.wmlink"
-                            class="img-fit hov"
-                          />
-                          
-                           <modal :show.sync="modals.modalEditImage" >
-                    <h6
-                      slot="header"
-                      class="modal-title mb-0"
-                      id="modal-title-default"
-                    >
-                      Edit Exclusive Image
-                    </h6>
-
-                    <div class=" text-center" >
-                      <div class="page"><h2>Image Information</h2></div>
-                   
-                      <div class="row justify-content-center">
-                        <div class="row align-items-center">
-                          <div class="form-group">
-                            <div class="donateItem ">
-                              <label class="control-label">Photo Name</label>
-                            </div>
-                            <input
-                              type="text"
-                              class="form-control"
-                              v-model="imageExlusive[selected].photoName"
-                              required
-                            />
-                          </div>
-                          <div class="form-group  pl-3">
-                            <label class="control-label">Price</label>
-                            <input
-                              type="text"
-                              class="form-control"
-                              v-model="imageExlusive[selected].price"
-                              required
-                            /> 
-                          </div>
-                           <div class="form-group pl-1 mt-4">
-                            <label class="control-label">$</label>
-                           
-                          </div>
-                        </div>
-                      </div>
-                   
-
-                      <div class="row justify-content-center">
-                        <div class="row align-items-center">
-                          <div class="form-group">
-                            <div class="donateItem ">
-                              <label class="control-label">Description</label>
-                            </div>
-                            <textarea
-                              type="text"
-                              class="form-control description"
-                              v-model="imageExlusive[selected].description"
-                              required
-                            />
-                          </div>
-                        </div>
-                      </div>
-                      <div class="row justify-content-center">
-                        <button
-                          class="btn btn-primary"
-                          type="submit"
-                          @click="onEditImage(objectSelected)"
-                        >
-                          Edit
-                        </button>
-                      </div>
-                    </div>
-
-                 
-                  </modal>
+                          <img v-lazy="item.wmlink" class="img-fit hov" />
                         </div>
                       </div>
                     </div>
@@ -341,15 +265,12 @@
                 </tab-pane>
                 <vue-context ref="menu1">
                   <li>
-                    <a
-                      class="modalCursor"
-                     
-                    >
+                    <a class="modalCursor">
                       Edit
                     </a>
                   </li>
                 </vue-context>
-                
+
                 <tab-pane key="tab3">
                   <template slot="title">
                     Exclusive Property
@@ -364,7 +285,11 @@
                           :key="index"
                         >
                           <img
-                              @click="modals.modalEnable = true, objectSelected = item"
+                            @click="
+                              (modals.modalEnable = true),
+                                (selected = index),
+                                (objectSelected = item)
+                            "
                             v-lazy="item.wmlink"
                             class="img-fit hov"
                           />
@@ -387,19 +312,16 @@
                                 You should read this!
                               </h4>
                               <p>
-                                If you enable this image, this image will be
-                                posted on the homepage for sale to other users.
-                              </p>
-                              <p>
-                                To change the information of this photo, please
-                                move to exclusive tab on your profile.
+                                If you enable this image for sale, this image
+                                will have to wait for the approval of the admin
+                                .
                               </p>
                             </div>
 
                             <template>
                               <base-button
                                 type="white"
-                                @click="enableExclusive(objectSelected)"
+                                @click="modals.modalEditImage = true"
                                 >Ok, Got it</base-button
                               >
                               <base-button
@@ -412,6 +334,87 @@
                                 Close
                               </base-button>
                             </template>
+                          </modal>
+                          <modal :show.sync="modals.modalEditImage">
+                            <h6
+                              slot="header"
+                              class="modal-title mb-0"
+                              id="modal-title-default"
+                            >
+                              Edit Exclusive Image
+                            </h6>
+
+                            <div class=" text-center">
+                              <div class="page"><h2>Image Information</h2></div>
+
+                              <div class="row justify-content-center">
+                                <div class="row align-items-center">
+                                  <div class="form-group">
+                                    <div class="donateItem ">
+                                      <label class="control-label"
+                                        >Photo Name</label
+                                      >
+                                    </div>
+                                    <input
+                                      type="text"
+                                      class="form-control"
+                                      v-model="
+                                        imageExlusiveProperty[selected]
+                                          .photoName
+                                      "
+                                      required
+                                    />
+                                  </div>
+                                  <div class="form-group  pl-3">
+                                    <label class="control-label">Price</label>
+                                    <input
+                                      type="text"
+                                      class="form-control"
+                                      v-model="
+                                        imageExlusiveProperty[selected].price
+                                      "
+                                      required
+                                    />
+                                  </div>
+                                  <div class="form-group pl-1 mt-4">
+                                    <label class="control-label">$</label>
+                                  </div>
+                                </div>
+                              </div>
+
+                              <div class="row justify-content-center">
+                                <div class="row align-items-center">
+                                  <div class="form-group">
+                                    <div class="donateItem ">
+                                      <label class="control-label"
+                                        >Description</label
+                                      >
+                                    </div>
+                                    <textarea
+                                      type="text"
+                                      class="form-control description"
+                                      v-model="
+                                        imageExlusiveProperty[selected]
+                                          .description
+                                      "
+                                      required
+                                    />
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="row justify-content-center">
+                                <button
+                                  class="btn btn-primary"
+                                  type="submit"
+                                  @click="
+                                    onEditImage(objectSelected),
+                                      (modals.modalEnable = false)
+                                  "
+                                >
+                                  Edit
+                                </button>
+                              </div>
+                            </div>
                           </modal>
                         </div>
                         <vue-context ref="menu">
@@ -545,8 +548,7 @@ export default {
           });
         });
     },
-    onEditImage(objectSelected){
-     
+    onEditImage(objectSelected) {
       axios
         .put(
           "https://capstoneprojectapi20210418160622.azurewebsites.net/api/v1/Photo/" +
@@ -565,7 +567,9 @@ export default {
               "Success",
               "success"
             ).then(() => console.log("Closed"));
+            
             this.modals.modalEditImage = false;
+            this.$router.go();
           } else {
             this.$toasts.push({
               type: "error",
@@ -707,7 +711,7 @@ export default {
   border-radius: 10px;
 }
 
-.hov:hover{
+.hov:hover {
   box-shadow: 0 0 0 1px rgb(0, 0, 0 / 20%);
 }
 

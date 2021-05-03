@@ -59,17 +59,14 @@
           v-for="(item, index) in notifications"
           :key="index"
         >
-          <div @click="deleteNoti(item)">
+          <div @click.prevent="deleteNoti(item)">
             <router-link
-              class="shadow border-1 row"
+              class="shadow border-1 ml-2"
               :to="{ name: 'photo', params: { photoId: item.photoId } }"
             >
-            <tr style="width: 60%">
-              <span> {{ item.username }} has uploaded: {{item.photoname}}. </span>
-            </tr>
-             <tr style="width: 30%">
-              <img v-lazy="item.WMLink" class="img-fit hov" />
-             </tr>
+              <span>
+                {{ item.username }} has uploaded: {{ item.photoname }}.
+              </span>
             </router-link>
           </div>
         </div>
@@ -77,14 +74,14 @@
     </li>
     <li class="nav-item" v-if="isLoggedIn">
       <router-link to="/login" title="Login" style="text-decoration:none;">
-        <a
+        <button
           class="nav-link nav-link-icon item-nav-bar nav-menu-item"
           @click="logout"
           href="#"
         >
-          <i class="fa fa-sign-in"></i>
+          <i class="fa fa-sign-out"></i>
           <span class="nav-link-inner--text">Sign out</span>
-        </a>
+        </button>
       </router-link>
     </li>
   </ul>
@@ -134,7 +131,11 @@ export default {
           "https://capstoneprojectapi20210418160622.azurewebsites.net/api/v1/User/DeleteNotification/" +
             item.notificationid
         )
-
+        .then(res =>{
+          if(res.status == 200){
+            this.$router.go()
+          }
+        }) 
         .catch((error) => {
           this.$toasts.push({
             type: "error",
@@ -150,7 +151,7 @@ export default {
   },
 };
 </script>
-<style>
+<style scoped>
 .nav-menu-item {
   color: black !important;
   text-decoration: none !important;
@@ -201,7 +202,10 @@ ul.sidebar-panel-nav > li > a {
   right: 2px;
   cursor: pointer;
 }
-.item{
+.sign-out {
+  padding: 0.75rem 1.5rem !important;
+}
+.item {
   width: 300px !important;
 }
 .bm-cross {
@@ -249,9 +253,8 @@ ul.sidebar-panel-nav > li > a {
 .img-fit {
   width: 60%;
   height: 5vw;
-  float:right;
+  float: right;
   margin-bottom: 15px;
   border-radius: 10px;
 }
-
 </style>
