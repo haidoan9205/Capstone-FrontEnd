@@ -7,14 +7,7 @@ require('dotenv/config');
 
 //MIDDLEWARES
 // Enable CORS
-app.use(function( req, res, next ) {
-    res.header("Access-Control-Allow-Origin", req.headers.origin);
-    res.header("Access-Control-Allow-Headers", "x-requested-with, content-type");
-    res.header("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE,OPTIONS");
-    res.header("Access-Control-Allow-Credentials", "true");
-    res.header("Access-Control-Max-Age", "1000000000");
-    // intercept OPTIONS method
-     if ('OPTIONS' == req.method) { res.send(200); } else { next(); } });
+app.use(cors());
 app.use(bodyParser.json());
 
 //IMPORTS ROUTES
