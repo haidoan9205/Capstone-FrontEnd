@@ -1,128 +1,132 @@
 <template>
-  <div class="profile-page">
-    <section class="section-profile-cover section-shaped my-0">
-      <div class="shape shape-style-1 shape-primary shape-skew alpha-4">
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-      </div>
-    </section>
-    <section class="section section-skew">
-      <div class="container">
-        <card shadow class="card-profile " no-body>
-          <div class="px-4">
-            <div class="row justify-content-center">
-              <div class="col-lg-3 order-lg-2">
-                <div class="card-profile-image">
-                  <a href="#">
-                    <img
-                      v-lazy="'img/theme/profile.png'"
-                      class="rounded-circle"
-                    />
-                  </a>
+  <div>
+    <unauthorized v-if="!isLoggedIn"></unauthorized>
+    <div class="profile-page" v-if="isLoggedIn">
+      <section class="section-profile-cover section-shaped my-0">
+        <div class="shape shape-style-1 shape-primary shape-skew alpha-4">
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+      </section>
+      <section class="section section-skew">
+        <div class="container">
+          <card shadow class="card-profile " no-body>
+            <div class="px-4">
+              <div class="row justify-content-center">
+                <div class="col-lg-3 order-lg-2">
+                  <div class="card-profile-image">
+                    <a href="#">
+                      <img
+                        v-lazy="'img/theme/profile.png'"
+                        class="rounded-circle"
+                      />
+                    </a>
+                  </div>
                 </div>
-              </div>
-              <div
-                class="col-lg-4 order-lg-3 text-lg-right align-self-lg-center"
-              >
-                <div class="card-profile-actions py-4 mt-lg-0">
-                  <base-button
-                    type="info"
-                    size="sm"
-                    @click="modals.modalEditProfile = true"
-                    class="mr-4"
-                    >Edit Profile</base-button
-                  >
-                  <modal :show.sync="modals.modalEditProfile">
-                    <h6
-                      slot="header"
-                      class="modal-title mb-0"
-                      id="modal-title-default"
+                <div
+                  class="col-lg-4 order-lg-3 text-lg-right align-self-lg-center"
+                >
+                  <div class="card-profile-actions py-4 mt-lg-0">
+                    <base-button
+                      type="info"
+                      size="sm"
+                      @click="modals.modalEditProfile = true"
+                      class="mr-4"
+                      >Edit Profile</base-button
                     >
-                      Edit Profile
-                    </h6>
+                    <modal :show.sync="modals.modalEditProfile">
+                      <h6
+                        slot="header"
+                        class="modal-title mb-0"
+                        id="modal-title-default"
+                      >
+                        Edit Profile
+                      </h6>
 
-                    <div class=" text-center">
-                      <div class="page"><h2>Profile</h2></div>
-                      <div class="row justify-content-center">
-                        <div class="row align-items-center">
-                          <div class="form-group">
-                            <input
-                              type="hidden"
-                              class="form-control"
-                              v-model="user.userId"
-                              required
-                            />
+                      <div class=" text-center">
+                        <div class="page"><h2>Profile</h2></div>
+                        <div class="row justify-content-center">
+                          <div class="row align-items-center">
+                            <div class="form-group">
+                              <input
+                                type="hidden"
+                                class="form-control"
+                                v-model="user.userId"
+                                required
+                              />
+                            </div>
                           </div>
                         </div>
-                      </div>
-                      <div class="row justify-content-center">
-                        <div class="row align-items-center">
-                          <div class="form-group">
-                            <div class="donateItem ">
-                              <label class="control-label">Full Name</label>
+                        <div class="row justify-content-center">
+                          <div class="row align-items-center">
+                            <div class="form-group">
+                              <div class="donateItem ">
+                                <label class="control-label">Full Name</label>
+                              </div>
+                              <input
+                                type="text"
+                                class="form-control"
+                                v-model="user.fullName"
+                                required
+                              />
                             </div>
-                            <input
-                              type="text"
-                              class="form-control"
-                              v-model="user.fullName"
-                              required
-                            />
-                          </div>
-                          <div class="form-group pl-3">
-                            <label class="control-label">Phone</label>
-                            <input
-                              type="text"
-                              class="form-control"
-                              v-model="user.phone"
-                              required
-                            />
+                            <div class="form-group pl-3">
+                              <label class="control-label">Phone</label>
+                              <input
+                                type="text"
+                                class="form-control"
+                                v-model="user.phone"
+                                required
+                              />
+                            </div>
                           </div>
                         </div>
-                      </div>
-                      <div class="row justify-content-center">
-                        <div class="row align-items-center">
-                          <div class="form-group">
-                            <div class="donateItem ">
-                              <label class="control-label">Date of Birth</label>
+                        <div class="row justify-content-center">
+                          <div class="row align-items-center">
+                            <div class="form-group">
+                              <div class="donateItem ">
+                                <label class="control-label"
+                                  >Date of Birth</label
+                                >
+                              </div>
+                              <date-picker
+                                class="dateBirthDay"
+                                v-model="user.birthDay"
+                                valueType="format"
+                                :disabled-date="(date) => date >= new Date()"
+                              ></date-picker>
                             </div>
-                            <date-picker
-                              class="dateBirthDay"
-                              v-model="user.birthDay"
-                              valueType="format"
-                              :disabled-date="(date) => date >= new Date()"
-                            ></date-picker>
-                          </div>
-                          <div class="form-group pl-3">
-                            <div class="donateItem ">
-                              <label class="control-label">Description</label>
+                            <div class="form-group pl-3">
+                              <div class="donateItem ">
+                                <label class="control-label">Description</label>
+                              </div>
+                              <input
+                                type="text"
+                                class="form-control"
+                                v-model="user.description"
+                                required
+                              />
                             </div>
-                            <input
-                              type="text"
-                              class="form-control"
-                              v-model="user.description"
-                              required
-                            />
                           </div>
+                        </div>
+
+                        <div class="row justify-content-center">
+                          <button
+                            class="btn btn-primary"
+                            type="submit"
+                            @click="onEditProfile"
+                          >
+                            Edit
+                          </button>
                         </div>
                       </div>
 
-                      <div class="row justify-content-center">
-                        <button
-                          class="btn btn-primary"
-                          type="submit"
-                          @click="onEditProfile"
-                        >
-                          Edit
-                        </button>
-                      </div>
-                    </div>
-
-                    <!-- <template slot="footer">
+                      <!-- <template slot="footer">
                       <base-button
                         type="link"
                         class="ml-auto"
@@ -130,80 +134,83 @@
                         >Close
                       </base-button>
                     </template> -->
-                  </modal>
-                </div>
-              </div>
-              <div class="col-lg-4 order-lg-1">
-                <div class="card-profile-stats d-flex justify-content-center">
-                  <div class="modalCursor" @click="modals.modalFollower = true">
-                    <span class="heading">{{ followers.length }}</span>
-                    <span class="description">Following</span>
+                    </modal>
                   </div>
-                  <modal :show.sync="modals.modalFollower">
-                    <h6
-                      slot="header"
-                      class="modal-title"
-                      id="modal-title-default"
+                </div>
+                <div class="col-lg-4 order-lg-1">
+                  <div class="card-profile-stats d-flex justify-content-center">
+                    <div
+                      class="modalCursor"
+                      @click="modals.modalFollower = true"
                     >
-                      Followers
-                    </h6>
-                    <table class="styled-table">
-                      <tbody>
-                        <tr
-                          v-for="follower in followingUsers"
-                          :key="follower.username"
-                        >
-                          <td>{{ follower.username }}</td>
+                      <span class="heading">{{ followers.length }}</span>
+                      <span class="description">Following</span>
+                    </div>
+                    <modal :show.sync="modals.modalFollower">
+                      <h6
+                        slot="header"
+                        class="modal-title"
+                        id="modal-title-default"
+                      >
+                        Followers
+                      </h6>
+                      <table class="styled-table">
+                        <tbody>
+                          <tr
+                            v-for="follower in followingUsers"
+                            :key="follower.username"
+                          >
+                            <td>{{ follower.username }}</td>
 
-                          <td>{{ follower.description }}</td>
-                          <td>
-                            <base-button
-                              class="btn-1 mini-button button-follow unfl"
-                              @click="unFollowUser(follower)"
-                              type="neutral"
-                              v-show="follower.isDelete == false"
-                              style="float:right"
-                              >Unfollow</base-button
-                            >
-                            <base-button
-                              class="btn-1 mini-button button-follow unfl"
-                              @click="unFollowUser(follower)"
-                              type="neutral"
-                              v-show="follower.isDelete == true"
-                              style="float:right"
-                              :disabled="follower.isDelete == true"
-                              >Unfollowed</base-button
-                            >
-                          </td>
-                        </tr>
-                      </tbody>
-                    </table>
+                            <td>{{ follower.description }}</td>
+                            <td>
+                              <base-button
+                                class="btn-1 mini-button button-follow unfl"
+                                v-on:click="unFollowUser(follower)"
+                                type="neutral"
+                                v-show="follower.isDelete == false"
+                                style="float:right"
+                                >Unfollow</base-button
+                              >
+                              <base-button
+                                class="btn-1 mini-button button-follow unfl"
+                                @click="unFollowUser(follower)"
+                                type="neutral"
+                                v-show="follower.isDelete == true"
+                                style="float:right"
+                                :disabled="follower.isDelete == true"
+                                >Unfollowed</base-button
+                              >
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
 
-                    <template slot="footer">
-                      <base-button
-                        type="link"
-                        class="ml-auto"
-                        @click="modals.modalFollower = false"
-                        >Close
-                      </base-button>
-                    </template>
-                  </modal>
-                  <div>
-                    <span class="heading">{{ images.length }}</span>
-                    <span class="description">Photos</span>
+                      <template slot="footer">
+                        <base-button
+                          type="link"
+                          class="ml-auto"
+                          @click="modals.modalFollower = false"
+                          >Close
+                        </base-button>
+                      </template>
+                    </modal>
+                    <div>
+                      <span class="heading">{{ images.length }}</span>
+                      <span class="description">Photos</span>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-            <div class="text-center mt-5">
-              <h3>
-                {{ user.fullName }}
-              </h3>
-              <div class="h6 font-weight-300">Email : {{ user.email }}</div>
-              <div class="h6 font-weight-300">
-                Phone Number : {{ user.phone }}
-              </div>
-              <!-- <div class="h6 mt-4">
+              <div class="text-center mt-5">
+                <h3>
+                  {{ user.fullName }}
+                </h3>
+                <div class="h6 font-weight-300">Email : {{ user.email }}</div>
+                <div class="h6 font-weight-300">
+                  Phone Number : {{ user.phone }}
+                </div>
+                <!-- <div class="h6 mt-4">
                 <i class="ni business_briefcase-24 mr-2"></i>Solution Manager -
                 Creative Tim Officer
               </div>
@@ -211,232 +218,235 @@
                 <i class="ni education_hat mr-2"></i>University of Computer
                 Science
               </div> -->
-            </div>
-            <div class="mt-5 py-5 border-top text-center">
-              <div class="row justify-content-center">
-                <div class="col-lg-9">
-                  <p>
-                    {{ user.description }}
-                  </p>
-                  <!-- <a href="#">Show more</a> -->
+              </div>
+              <div class="mt-5 py-5 border-top text-center">
+                <div class="row justify-content-center">
+                  <div class="col-lg-9">
+                    <p>
+                      {{ user.description }}
+                    </p>
+                    <!-- <a href="#">Show more</a> -->
+                  </div>
                 </div>
               </div>
-            </div>
-            <tabs fill class="flex-column flex-md-row">
-              <card shadow slot-scope="{ activeTabIndex }">
-                <tab-pane key="tab1">
-                  <template slot="title">
-                    Non-Exclusive
-                  </template>
+              <tabs fill class="flex-column flex-md-row">
+                <card shadow slot-scope="{ activeTabIndex }">
+                  <tab-pane key="tab1">
+                    <template slot="title">
+                      Non-Exclusive
+                    </template>
 
-                  <div class="container">
-                    <div class="ct-example-row">
-                      <div class="row">
-                        <div
-                          class="col-6 col-md-4"
-                          v-for="item in imageNonExlusive"
-                          :key="item.photoId"
-                        >
-                          <img v-lazy="item.wmlink" class="img-fit" />
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </tab-pane>
-
-                <tab-pane key="tab2">
-                  <template slot="title">
-                    Exclusive
-                  </template>
-
-                  <div class="container">
-                    <div class="ct-example-row">
-                      <div class="row">
-                        <div
-                          class="col-6 col-md-4"
-                          v-for="(item, index) in imageExlusive"
-                          :key="index"
-                        >
-                          <img v-lazy="item.wmlink" class="img-fit hov" />
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </tab-pane>
-                <vue-context ref="menu1">
-                  <li>
-                    <a class="modalCursor">
-                      Edit
-                    </a>
-                  </li>
-                </vue-context>
-
-                <tab-pane key="tab3">
-                  <template slot="title">
-                    Exclusive Property
-                  </template>
-
-                  <div class="container">
-                    <div class="ct-example-row">
-                      <div class="row">
-                        <div
-                          class="col-6 col-md-4"
-                          v-for="(item, index) in imageExlusiveProperty"
-                          :key="index"
-                        >
-                          <img
-                            @click="
-                              (modals.modalEnable = true),
-                                (selected = index),
-                                (objectSelected = item)
-                            "
-                            v-lazy="item.wmlink"
-                            class="img-fit hov"
-                          />
-                          <modal
-                            :show.sync="modals.modalEnable"
-                            gradient="default"
-                            modal-classes="modal-default modal-dialog-centered"
+                    <div class="container">
+                      <div class="ct-example-row">
+                        <div class="row">
+                          <div
+                            class="col-6 col-md-4"
+                            v-for="item in imageNonExlusive"
+                            :key="item.photoId"
                           >
-                            <h6
-                              slot="header"
-                              class="modal-title"
-                              id="modal-title-notification"
-                            >
-                              Enable this photo for resale
-                            </h6>
-
-                            <div class="py-3 text-center">
-                              <i class="ni ni-bell-55 ni-3x"></i>
-                              <h4 class="heading mt-4">
-                                You should read this!
-                              </h4>
-                              <p>
-                                If you enable this image for sale, this image
-                                will have to wait for the approval of the admin
-                                .
-                              </p>
-                            </div>
-
-                            <template>
-                              <base-button
-                                type="white"
-                                @click="modals.modalEditImage = true"
-                                >Ok, Got it</base-button
-                              >
-                              <base-button
-                                type="link"
-                                text-color="white"
-                                class="ml-auto"
-                                @click="modals.modalEnable = false"
-                                style="float:right"
-                              >
-                                Close
-                              </base-button>
-                            </template>
-                          </modal>
-                          <modal :show.sync="modals.modalEditImage">
-                            <h6
-                              slot="header"
-                              class="modal-title mb-0"
-                              id="modal-title-default"
-                            >
-                              Edit Exclusive Image
-                            </h6>
-
-                            <div class=" text-center">
-                              <div class="page"><h2>Image Information</h2></div>
-
-                              <div class="row justify-content-center">
-                                <div class="row align-items-center">
-                                  <div class="form-group">
-                                    <div class="donateItem ">
-                                      <label class="control-label"
-                                        >Photo Name</label
-                                      >
-                                    </div>
-                                    <input
-                                      type="text"
-                                      class="form-control"
-                                      v-model="
-                                        imageExlusiveProperty[selected]
-                                          .photoName
-                                      "
-                                      required
-                                    />
-                                  </div>
-                                  <div class="form-group  pl-3">
-                                    <label class="control-label">Price</label>
-                                    <input
-                                      type="text"
-                                      class="form-control"
-                                      v-model="
-                                        imageExlusiveProperty[selected].price
-                                      "
-                                      required
-                                    />
-                                  </div>
-                                  <div class="form-group pl-1 mt-4">
-                                    <label class="control-label">$</label>
-                                  </div>
-                                </div>
-                              </div>
-
-                              <div class="row justify-content-center">
-                                <div class="row align-items-center">
-                                  <div class="form-group">
-                                    <div class="donateItem ">
-                                      <label class="control-label"
-                                        >Description</label
-                                      >
-                                    </div>
-                                    <textarea
-                                      type="text"
-                                      class="form-control description"
-                                      v-model="
-                                        imageExlusiveProperty[selected]
-                                          .description
-                                      "
-                                      required
-                                    />
-                                  </div>
-                                </div>
-                              </div>
-                              <div class="row justify-content-center">
-                                <button
-                                  class="btn btn-primary"
-                                  type="submit"
-                                  @click="
-                                    onEditImage(objectSelected),
-                                      (modals.modalEnable = false)
-                                  "
-                                >
-                                  Edit
-                                </button>
-                              </div>
-                            </div>
-                          </modal>
+                            <img v-lazy="item.wmlink" class="img-fit" />
+                          </div>
                         </div>
-                        <vue-context ref="menu">
-                          <li>
-                            <a
-                              class="modalCursor"
-                              @click="modals.modalEnable = true"
-                            >
-                              Resale
-                            </a>
-                          </li>
-                        </vue-context>
                       </div>
                     </div>
-                  </div>
-                </tab-pane>
-              </card>
-            </tabs>
-          </div>
-        </card>
-      </div>
-    </section>
+                  </tab-pane>
+
+                  <tab-pane key="tab2">
+                    <template slot="title">
+                      Exclusive
+                    </template>
+
+                    <div class="container">
+                      <div class="ct-example-row">
+                        <div class="row">
+                          <div
+                            class="col-6 col-md-4"
+                            v-for="(item, index) in imageExlusive"
+                            :key="index"
+                          >
+                            <img v-lazy="item.wmlink" class="img-fit hov" />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </tab-pane>
+                  <vue-context ref="menu1">
+                    <li>
+                      <a class="modalCursor">
+                        Edit
+                      </a>
+                    </li>
+                  </vue-context>
+
+                  <tab-pane key="tab3">
+                    <template slot="title">
+                      Exclusive Property
+                    </template>
+
+                    <div class="container">
+                      <div class="ct-example-row">
+                        <div class="row">
+                          <div
+                            class="col-6 col-md-4"
+                            v-for="(item, index) in imageExlusiveProperty"
+                            :key="index"
+                          >
+                            <img
+                              @click="
+                                (modals.modalEnable = true),
+                                  (selected = index),
+                                  (objectSelected = item)
+                              "
+                              v-lazy="item.wmlink"
+                              class="img-fit hov"
+                            />
+                            <modal
+                              :show.sync="modals.modalEnable"
+                              gradient="default"
+                              modal-classes="modal-default modal-dialog-centered"
+                            >
+                              <h6
+                                slot="header"
+                                class="modal-title"
+                                id="modal-title-notification"
+                              >
+                                Enable this photo for resale
+                              </h6>
+
+                              <div class="py-3 text-center">
+                                <i class="ni ni-bell-55 ni-3x"></i>
+                                <h4 class="heading mt-4">
+                                  You should read this!
+                                </h4>
+                                <p>
+                                  If you enable this image for sale, this image
+                                  will have to wait for the approval of the
+                                  admin .
+                                </p>
+                              </div>
+
+                              <template>
+                                <base-button
+                                  type="white"
+                                  @click="modals.modalEditImage = true"
+                                  >Ok, Got it</base-button
+                                >
+                                <base-button
+                                  type="link"
+                                  text-color="white"
+                                  class="ml-auto"
+                                  @click="modals.modalEnable = false"
+                                  style="float:right"
+                                >
+                                  Close
+                                </base-button>
+                              </template>
+                            </modal>
+                            <modal :show.sync="modals.modalEditImage">
+                              <h6
+                                slot="header"
+                                class="modal-title mb-0"
+                                id="modal-title-default"
+                              >
+                                Edit Exclusive Image
+                              </h6>
+
+                              <div class=" text-center">
+                                <div class="page">
+                                  <h2>Image Information</h2>
+                                </div>
+
+                                <div class="row justify-content-center">
+                                  <div class="row align-items-center">
+                                    <div class="form-group">
+                                      <div class="donateItem ">
+                                        <label class="control-label"
+                                          >Photo Name</label
+                                        >
+                                      </div>
+                                      <input
+                                        type="text"
+                                        class="form-control"
+                                        v-model="
+                                          imageExlusiveProperty[selected]
+                                            .photoName
+                                        "
+                                        required
+                                      />
+                                    </div>
+                                    <div class="form-group  pl-3">
+                                      <label class="control-label">Price</label>
+                                      <input
+                                        type="text"
+                                        class="form-control"
+                                        v-model="
+                                          imageExlusiveProperty[selected].price
+                                        "
+                                        required
+                                      />
+                                    </div>
+                                    <div class="form-group pl-1 mt-4">
+                                      <label class="control-label">$</label>
+                                    </div>
+                                  </div>
+                                </div>
+
+                                <div class="row justify-content-center">
+                                  <div class="row align-items-center">
+                                    <div class="form-group">
+                                      <div class="donateItem ">
+                                        <label class="control-label"
+                                          >Description</label
+                                        >
+                                      </div>
+                                      <textarea
+                                        type="text"
+                                        class="form-control description"
+                                        v-model="
+                                          imageExlusiveProperty[selected]
+                                            .description
+                                        "
+                                        required
+                                      />
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="row justify-content-center">
+                                  <button
+                                    class="btn btn-primary"
+                                    type="submit"
+                                    @click="
+                                      onEditImage(objectSelected),
+                                        (modals.modalEnable = false)
+                                    "
+                                  >
+                                    Edit
+                                  </button>
+                                </div>
+                              </div>
+                            </modal>
+                          </div>
+                          <vue-context ref="menu">
+                            <li>
+                              <a
+                                class="modalCursor"
+                                @click="modals.modalEnable = true"
+                              >
+                                Resale
+                              </a>
+                            </li>
+                          </vue-context>
+                        </div>
+                      </div>
+                    </div>
+                  </tab-pane>
+                </card>
+              </tabs>
+            </div>
+          </card>
+        </div>
+      </section>
+    </div>
   </div>
 </template>
 <script>
@@ -448,8 +458,9 @@ import Tabs from "@/components/Tabs/Tabs.vue";
 import TabPane from "@/components/Tabs/TabPane.vue";
 import VueContext from "vue-context";
 import "vue-context/src/sass/vue-context.scss";
+import Unauthorized from "./Unauthorized.vue";
 export default {
-  components: { DatePicker, Modal, Tabs, TabPane, VueContext },
+  components: { DatePicker, Modal, Tabs, TabPane, VueContext, Unauthorized },
   data() {
     return {
       countFollower: this.$store.getters.followerCount,
@@ -567,7 +578,7 @@ export default {
               "Success",
               "success"
             ).then(() => console.log("Closed"));
-            
+
             this.modals.modalEditImage = false;
             this.$router.go();
           } else {
@@ -611,13 +622,13 @@ export default {
     },
 
     unFollowUser(follower) {
-      // console.log(user.userId);
+     const user = this.$store.state.user;
       axios({
         method: "POST",
         url:
           "https://capstoneprojectapi20210418160622.azurewebsites.net/api/v1/Follow/UnFollow",
         data: {
-          userId: JSON.parse(this.$store.state.user).userId,
+          userId: JSON.parse(user).userId,
           followUserId: follower.userId,
         },
       }).then((response) => {

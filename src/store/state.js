@@ -31,4 +31,5 @@ export default {
     notifications: [],
     checkIsYour: false,
     checkIsBought: false,
+    checkIsFollowed: false,
 }

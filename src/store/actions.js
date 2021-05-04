@@ -15,7 +15,9 @@ export const getImages = ({ commit }) => {
         .then((response) => {
             commit("SET_IMAGES", response.data);
             loader.hide()
-        });
+        }).catch((err) =>{
+            loader.hide();
+        })
 };
 
 export const getImagesAll = ({ commit }) => {
@@ -29,7 +31,9 @@ export const getImagesAll = ({ commit }) => {
         .then((response) => {
             commit("SET_IMAGES_ALL", response.data);
             loader.hide()
-        });
+        }).catch((err) =>{
+            loader.hide();
+        })
 };
 
 export const getImagesAllExclusive = ({ commit }) => {
@@ -43,7 +47,9 @@ export const getImagesAllExclusive = ({ commit }) => {
         .then((response) => {
             commit("SET_IMAGES_ALL_EXCLUSIVE", response.data);
             loader.hide();
-        });
+        }).catch((err) =>{
+            loader.hide();
+        })
 };
 
 export const getUserNonExlusiveImages = ({commit}) =>{
@@ -61,7 +67,9 @@ export const getUserNonExlusiveImages = ({commit}) =>{
         .then((response) => {
             commit("SET_IMAGES_USER_NON_EXCLUSIVE", response.data);
             loader.hide()
-        });
+        }).catch((err) =>{
+            loader.hide();
+        })
 }
 
 export const getUserExlusiveImages = ({commit}) =>{
@@ -79,7 +87,47 @@ export const getUserExlusiveImages = ({commit}) =>{
         .then((response) => {
             commit("SET_IMAGES_USER_EXCLUSIVE", response.data);
             loader.hide();
-        });
+        }).catch((err) =>{
+            loader.hide();
+        })
+}
+
+export const getStrangerExlusiveImages = ({commit}) =>{
+    let loader = Vue.$loading.show({
+        loader: 'dots',
+        height: 50,
+        width: 50,
+    })
+ 
+    axios
+        .get(
+            `https://capstoneprojectapi20210418160622.azurewebsites.net/api/v1/User/GetUserExclusivePhoto/${window.localStorage.getItem('strangerId')}`
+        )
+        .then((response) => {
+            commit("SET_IMAGES_STRANGER_EXCLUSIVE", response.data);
+            loader.hide();
+        }).catch((err) =>{
+            loader.hide();
+        })
+}
+
+export const getStrangerNonExlusiveImages = ({commit}) =>{
+    let loader = Vue.$loading.show({
+        loader: 'dots',
+        height: 50,
+        width: 50,
+    })
+   
+    axios
+        .get(
+            `https://capstoneprojectapi20210418160622.azurewebsites.net/api/v1/User/GetUserNormalPhoto/${window.localStorage.getItem('strangerId')}`
+        )
+        .then((response) => {
+            commit("SET_IMAGES_STRANGER_NON_EXCLUSIVE", response.data);
+            loader.hide()
+        }).catch((err) =>{
+            loader.hide();
+        })
 }
 
 export const getNotification =({commit}) =>{
@@ -109,7 +157,9 @@ export const getUserExlusiveProperty = ({commit}) =>{
         .then((response) => {
             commit("SET_IMAGES_EXCLUSIVE_PROPERTY", response.data);
             loader.hide();
-        });
+        }).catch((err) =>{
+            loader.hide();
+        })
 }
 
 export const getImage = ({ commit },photoId) => {
@@ -127,11 +177,27 @@ export const getImage = ({ commit },photoId) => {
     .then((response) => {
       commit("SET_IMAGE", response.data);
       loader.hide();
-    });
+    }).catch((err) =>{
+        loader.hide();
+    })
 };
+
+export const checkIsFollowed =({commit}) =>{
+    axios({
+        method: "GET",
+        url:
+          "https://capstoneprojectapi20210418160622.azurewebsites.net/api/v1/Follow/CheckFollowedUser?userId=" +
+          JSON.parse(state.user).userId +
+          "&followId=" +
+          window.localStorage.getItem("strangerId"),
+      }).then((response) => {
+         commit("CHECK_IS_FOLLOWED", response.data);
+      });
+}
 
 export const getStrangeUser = ({ commit }, userId) => {
     state.stranger = null;
+    state.checkIsFollowed = false;
     axios
         .get(`https://capstoneprojectapi20210418160622.azurewebsites.net/api/v1/User/GetById/${userId}`)
         .then((response) => {
@@ -252,7 +318,9 @@ export const getImagesOfFollowing = ({commit}) =>{
         .then((response) => {
             commit("SET_IMAGES_FOLLOWING", response.data);
             loader.hide();
-        });
+        }).catch((err) =>{
+            loader.hide();
+        })
 }
 
 export const getTransactions = ({ commit }) => {
@@ -270,7 +338,9 @@ export const getTransactions = ({ commit }) => {
         .then((response) => {
             commit("SET_TRANSACTIONS", response.data);
             loader.hide();
-        });
+        }).catch((err) =>{
+            loader.hide();
+        })
 };
 
 export const getUnknownPeople = ({commit}) =>{
@@ -288,7 +358,11 @@ export const getUnknownPeople = ({commit}) =>{
 }
 
 export const getFollowingUsers = ({ commit }) => {
-
+    let loader = Vue.$loading.show({
+        loader: 'dots',
+        height: 50,
+        width: 50,
+    })
     const user = localStorage.getItem("user");
     const user_parsed = JSON.parse(user);
     console.log("user parse");
@@ -299,7 +373,11 @@ export const getFollowingUsers = ({ commit }) => {
         )
         .then((response) => {
             commit("SET_FOLLOWINGUSERS", response.data);
-        });
+            loader.hide();
+        }).catch((err) =>{
+            loader.hide();
+        })
+        
 };
 
 export const getFollowingStranger = ({ commit }, strangerId) => {

@@ -1,128 +1,136 @@
 <template>
   <div
-    class="container text-center"
-    style="background-image: linear-gradient(to right top, #e2e6ed, #d4e9f2, #c7edeb, #c8eed8, #ddeac0);"
+    class="row align-items-center justify-content-center text-center"
+    
   >
-    <div class="row align-items-center justify-content-center">
-      <div class="col-md-7 py-5">
-        <h4 class="mb-3 mt-0">Upload a new photo</h4>
-        <form @submit.prevent="onUploadPhoto" method="post">
-          <div class="row">
-            <div class="col-md-6">
-              <div class="form-group ">
-                <label class="control-label">Title</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  v-model="photoName"
-                  required
-                />
-              </div>
-            </div>
-            <div class="col-md-6">
-              <div class="form-group">
-                <label class="control-label">Price</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  v-model="price"
-                  required
-                />
-              </div>
-            </div>
-           
-              <div class="col-md-12">
-                <div class="form-group first">
-                  <label class="control-label">Select Picture</label>
-                  <input
-                    type="file"
-                    class="form-control"
-                    @change="onFileSeleted"
-                    accept="image/*"
-                    required
-                  />
-                  <span style="color:red" v-if="msg.file">{{ msg.file }}</span>
-                </div>
-              </div>
-           
-           
-              <div class="col-md-12">
-                <div class="multiselect-div first">
-                  <label class="typo__label" for="ajax"
-                    >Select 2 Category</label
-                  >
-                  <multiselect
-                    v-model="value"
-                    id="ajax"
-                    label="categoryName"
-                    track-by="categoryId"
-                    placeholder="Type to search"
-                    open-direction="bottom"
-                    :options="options"
-                    :multiple="true"
-                    :searchable="true"
-                    :internal-search="true"
-                    :clear-on-select="false"
-                    :close-on-select="false"
-                    :options-limit="100"
-                    :limit="2"
-                    :max-height="150"
-                    :hide-selected="true"
-                    :max="2"
-                  >
-                  </multiselect>
-                </div>
-              </div>
-            
-            <br />
-            <div class="row">
-              <div class="col-md-12">
-                <div class="multiselect-div pl-3">
-                  <label class="typo__label">License Type</label>
-                  <multiselect
-                  class="license"
-                    v-model="type"
-                    deselect-label="Can't remove this value"
-                    open-direction="bottom"
-                    track-by="typeId"
-                    label="typeName"
-                    placeholder="Select one"
-                    :options="typeList"
-                    :searchable="false"
-                    :allow-empty="false"
-                  >
-                  </multiselect>
-                </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-12">
-                <div class="form-group pl-3">
-                  <label class="control-label">Description</label>
-                  <input
-                    type="text"
-                    class="form-control description"
-                    v-model="description"
-                    required
-                  />
-                </div>
-              </div>
-            </div>
-
-            <div class="buttonHolder">
-              <button class="btn btn-primary submit-button" type="submit">
-                <div class="lds-ring" v-if="loading">
-                  <div></div>
-                  <div></div>
-                  <div></div>
-                  <div></div>
-                </div>
-                Upload
-              </button>
+    <div class="col-md-7 mt-3 content" style="background-image: linear-gradient(to right top, #e8d891, #eddc93, #f2df95, #f8e398, #fde69a);">
+      <h4 class="mb-3 mt-0">Upload a new photo</h4>
+      <form @submit.prevent="onUploadPhoto" method="post">
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group ">
+              <label class="control-label" style="font-weight:bold"
+                >Title</label
+              >
+              <input
+                type="text"
+                class="form-control"
+                v-model="photoName"
+                required
+              />
             </div>
           </div>
-        </form>
-      </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label class="control-label" style="font-weight:bold"
+                >Price $</label
+              >
+              <input
+                type="text"
+                style="text-align: right;"
+                class="form-control"
+                v-model="price"
+                required
+              />
+            </div>
+          </div>
+
+          <div class="col-md-12">
+            <div class="form-group first">
+              <label class="control-label" style="font-weight:bold"
+                >Select Picture</label
+              >
+              <input
+                type="file"
+                class="form-control"
+                @change="onFileSeleted"
+                accept="image/*"
+                required
+              />
+              <span style="color:red" v-if="msg.file">{{ msg.file }}</span>
+            </div>
+          </div>
+
+          <div class="col-md-12">
+            <div class="multiselect-div first">
+              <label class="typo__label" for="ajax" style="font-weight:bold"
+                >Select 2 Category</label
+              >
+              <multiselect
+                v-model="value"
+                id="ajax"
+                label="categoryName"
+                track-by="categoryId"
+                placeholder="Type to search"
+                open-direction="bottom"
+                :options="options"
+                :multiple="true"
+                :searchable="true"
+                :internal-search="true"
+                :clear-on-select="false"
+                :close-on-select="false"
+                :options-limit="100"
+                :limit="2"
+                :max-height="150"
+                :hide-selected="true"
+                :max="2"
+              >
+              </multiselect>
+            </div>
+          </div>
+
+          <br />
+          <div class="row">
+            <div class="col-md-12">
+              <div class="multiselect-div pl-3">
+                <label class="typo__label" style="font-weight:bold"
+                  >License Type</label
+                >
+                <multiselect
+                  class="license"
+                  v-model="type"
+                  deselect-label="Can't remove this value"
+                  open-direction="bottom"
+                  track-by="typeId"
+                  label="typeName"
+                  placeholder="Select one"
+                  :options="typeList"
+                  :searchable="false"
+                  :allow-empty="false"
+                >
+                </multiselect>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="form-group pl-3">
+                <label class="control-label" style="font-weight:bold"
+                  >Description</label
+                >
+                <input
+                  type="text"
+                  class="form-control description"
+                  v-model="description"
+                  required
+                />
+              </div>
+            </div>
+          </div>
+
+          <div class="buttonHolder">
+            <button class="btn btn-primary submit-button" type="submit">
+              <div class="lds-ring" v-if="loading">
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+              </div>
+              Upload
+            </button>
+          </div>
+        </div>
+      </form>
     </div>
   </div>
 </template>
@@ -275,7 +283,7 @@ export default {
   border-radius: 12px;
   max-width: 60%;
 }
-.license{
+.license {
   width: 19rem;
 }
 .description {
@@ -303,7 +311,23 @@ h4 {
 .multiselect-div {
   margin-bottom: 28px;
 }
+.content {
+  padding-bottom: 20px;
+  border: 0.5px solid;
+  border-radius: 15px;
+}
+.bg {
+  filter: blur(8px);
+  -webkit-filter: blur(8px);
 
+  /* Full height */
+  height: 100%;
+
+  /* Center and scale the image nicely */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
 .submit-button {
   width: 170px;
   margin-bottom: 5px;

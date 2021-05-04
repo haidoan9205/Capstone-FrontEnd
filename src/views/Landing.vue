@@ -75,6 +75,7 @@ export default {
   data() {
     return {
       flag: true,
+      checkReload: false,
       searchValue: "",
       pageSize: 21,
       currentPage: 1,
@@ -82,6 +83,7 @@ export default {
       x_pagination: [],
     };
   },
+ 
   methods: {
     onSearch() {
       let searchValue = this.searchValue;

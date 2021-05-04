@@ -315,10 +315,10 @@ export default {
       doc.text("Certificate of", 85, 75);
       doc.text("Blockchain Proof", 78, 84);
 
-      var tmp = new Image();
-      tmp.crossOrigin = "Anonymous";
-      tmp.src = this.photo.wmlink;
-      doc.addImage(tmp, "JPEG", 65, 95, 65, 65);
+      // var tmp = new Image();
+      // tmp.crossOrigin = "Anonymous";
+      // tmp.src = this.photo.wmlink;s
+      // doc.addImage(tmp, "JPEG", 65, 95, 65, 65);
 
       doc.setFontSize(12);
       doc.setTextColor(47,79,79);

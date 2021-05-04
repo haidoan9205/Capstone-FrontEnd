@@ -143,6 +143,17 @@ export const auth_request = (state) => {
   state.status = 'loading';
 };
 
+export const CHECK_IS_FOLLOWED = (state, checkIsFollowed) =>{
+  state.checkIsFollowed = checkIsFollowed;
+}
+
+export const SET_IMAGES_STRANGER_EXCLUSIVE = (state, stranger_exlusive_images) =>{
+  state.stranger_exlusive_images = stranger_exlusive_images;
+}
+export const SET_IMAGES_STRANGER_NON_EXCLUSIVE = (state, stranger_non_exlusive_images) =>{
+  state.stranger_non_exlusive_images = stranger_non_exlusive_images;
+}
+
 export const CHECK_IS_BOUGHT = (state, checkIsBought) =>{
   state.checkIsBought = checkIsBought;
 
