@@ -310,7 +310,7 @@ export default {
         width: 50,
     })
       axios({
-        url: "http://35.185.185.238:9000/transactions",
+        url: "http://35.185.185.238:3000/transactions",
         data: {
           transactionId: this.orderInfo.id,
           prevOwner: this.$store.state.ucart[0].image.userId,
