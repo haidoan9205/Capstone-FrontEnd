@@ -392,7 +392,7 @@ export default {
     async getProofInfo(proofId) {
       await this.getExclusiveHistory();
       await axios
-        .get("35.185.185.238/transactions/getProof/" + proofId)
+        .get("https://35.185.185.238/transactions/getProof/" + proofId)
         .then((response) => {
           if (response.status == 200) {
             this.proofResponse = response.data;
@@ -426,7 +426,7 @@ export default {
     })
       await axios
         .get(
-          "35.185.185.238/transactions/getDocumentHistory/" +
+          "https://35.185.185.238/transactions/getDocumentHistory/" +
             this.user.userId
         )
         .then((response) => {
