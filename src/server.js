@@ -25,4 +25,4 @@ app.get('/', (req, res) =>
 console.log(`Server is up!`);
 
 
-app.listen(3000, '0.0.0.0');
+app.listen(3000,);
