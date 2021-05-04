@@ -3,6 +3,7 @@ const app = express();
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const cors = require('cors');
+const connect = require('connect');
 require('dotenv/config');
 
 //MIDDLEWARES
@@ -26,3 +27,4 @@ console.log(`Server is up!`);
 
 
 app.listen(3000);
+
