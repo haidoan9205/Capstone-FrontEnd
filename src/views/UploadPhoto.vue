@@ -1,62 +1,38 @@
 <template>
   <div
     class="row align-items-center justify-content-center text-center"
-    
+     style="padding-top: 40px;"
   >
     <div class="col-md-7 mt-3 content" style="background-image: linear-gradient(to right top, #e8d891, #eddc93, #f2df95, #f8e398, #fde69a);">
       <h4 class="mb-3 mt-0">Upload a new photo</h4>
       <form @submit.prevent="onUploadPhoto" method="post">
         <div class="row">
-          <div class="col-md-6">
-            <div class="form-group ">
-              <label class="control-label" style="font-weight:bold"
-                >Title</label
+              <label class="control-label" style="font-weight:bold; padding-top: 12px; margin-left: 15px;"
+                >Photo Name:</label
               >
               <input
+                style="width: 136px; height: 42px; margin-left: 25px;"
                 type="text"
                 class="form-control"
                 v-model="photoName"
                 required
               />
-            </div>
-          </div>
-          <div class="col-md-6">
-            <div class="form-group">
-              <label class="control-label" style="font-weight:bold"
-                >Price $</label
+              <label class="control-label" style="font-weight:bold; padding-top: 12px; margin-left: 15px;"
+                >Price $:</label
               >
               <input
                 type="text"
-                style="text-align: right;"
+                style="width: 80px; height: 42px; margin-left: 15px;"
                 class="form-control"
                 v-model="price"
                 required
               />
-            </div>
-          </div>
 
-          <div class="col-md-12">
-            <div class="form-group first">
-              <label class="control-label" style="font-weight:bold"
-                >Select Picture</label
-              >
-              <input
-                type="file"
-                class="form-control"
-                @change="onFileSeleted"
-                accept="image/*"
-                required
-              />
-              <span style="color:red" v-if="msg.file">{{ msg.file }}</span>
-            </div>
-          </div>
-
-          <div class="col-md-12">
-            <div class="multiselect-div first">
-              <label class="typo__label" for="ajax" style="font-weight:bold"
-                >Select 2 Category</label
+              <label class="typo__label" for="ajax" style="font-weight:bold; padding-top: 12px; margin-left: 15px;"
+                >Select 2 Category:</label
               >
               <multiselect
+                style="width: 300px; margin-left: 15px;"
                 v-model="value"
                 id="ajax"
                 label="categoryName"
@@ -76,17 +52,29 @@
                 :max="2"
               >
               </multiselect>
-            </div>
-          </div>
+        </div>
 
-          <br />
-          <div class="row">
-            <div class="col-md-12">
-              <div class="multiselect-div pl-3">
-                <label class="typo__label" style="font-weight:bold"
-                  >License Type</label
+        <div class="row" style="margin-top: 30px;">
+              <label class="control-label" style="font-weight:bold; padding-top: 12px; margin-left: 15px;"
+                >Select Picture:</label
+              >
+              <input
+                style="width: 296px; margin-left: 15px;"
+                type="file"
+                class="form-control"
+                @change="onFileSeleted"
+                accept="image/*"
+                required
+              />
+              <span style="color:red" v-if="msg.file">{{ msg.file }}</span>
+
+          
+
+                <label class="control-label" style="font-weight:bold; padding-top: 12px; margin-left: 15px;"
+                  >License Type:</label
                 >
                 <multiselect
+                  style="width: 300px; margin-left: 46px;"
                   class="license"
                   v-model="type"
                   deselect-label="Can't remove this value"
@@ -99,26 +87,23 @@
                   :allow-empty="false"
                 >
                 </multiselect>
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-12">
-              <div class="form-group pl-3">
-                <label class="control-label" style="font-weight:bold"
-                  >Description</label
+          
+        </div>
+        
+        <div class="row"  style="margin-top: 30px;"> 
+                <label class="control-label" style="font-weight:bold; padding-top: 12px; margin-left: 15px;"
+                  >Description:</label
                 >
                 <input
+                  style="width: 752px; margin-left: 30px;"
                   type="text"
-                  class="form-control description"
+                  class="form-control"
                   v-model="description"
                   required
                 />
-              </div>
-            </div>
-          </div>
 
-          <div class="buttonHolder">
+        </div>
+          <div class="buttonHolder"  style="margin-top: 30px;">
             <button class="btn btn-primary submit-button" type="submit">
               <div class="lds-ring" v-if="loading">
                 <div></div>
@@ -129,7 +114,6 @@
               Upload
             </button>
           </div>
-        </div>
       </form>
     </div>
   </div>
@@ -286,10 +270,6 @@ export default {
 .license {
   width: 19rem;
 }
-.description {
-  width: 19rem;
-  height: 5rem;
-}
 div.form {
   display: block;
   text-align: center;
@@ -299,7 +279,7 @@ form {
   margin-left: auto;
   margin-right: auto;
   text-align: left;
-  max-width: 300px;
+  max-width: 900px;
 }
 .buttonHolder {
   text-align: center;
