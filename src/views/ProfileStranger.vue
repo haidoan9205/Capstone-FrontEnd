@@ -35,9 +35,9 @@
                     <base-button
                       type="default"
                       size="sm"
-                      v-if="isFollowed != true && isClick == false"
+                      v-if="dataResponse.isFollowed != true && isClick == false"
                       class="float-right"
-                      @click="followUser(strange)"
+                      @click="followUser(dataResponse.strange)"
                       >Follow This User</base-button
                     >
                     <base-button
@@ -56,7 +56,9 @@
                       class="modalCursor"
                       @click="modals.modalFollower = true"
                     >
-                      <span class="heading">{{ followers.length }}</span>
+                      <span class="heading">{{
+                        dataResponse.followers.length
+                      }}</span>
                       <span class="description">Following</span>
                     </div>
                     <div>
@@ -68,14 +70,14 @@
               </div>
               <div class="text-center mt-5">
                 <h3>
-                  {{ strange.fullName }}
+                  {{ dataResponse.strange.fullName }}
                   <!-- <span class="font-weight-light">, 27</span> -->
                 </h3>
                 <div class="h6 font-weight-300">
-                  Email : {{ strange.email }}
+                  Email : {{ dataResponse.strange.email }}
                 </div>
                 <div class="h6 font-weight-300">
-                  Phone Number : {{ strange.phone }}
+                  Phone Number : {{ dataResponse.strange.phone }}
                 </div>
                 <!-- <div class="h6 mt-4">
                 <i class="ni business_briefcase-24 mr-2"></i>Solution Manager -
@@ -90,13 +92,13 @@
                 <div class="row justify-content-center">
                   <div class="col-lg-9">
                     <p>
-                      {{ strange.description }}
+                      {{ dataResponse.strange.description }}
                     </p>
                     <!-- <a href="#">Show more</a> -->
                   </div>
                 </div>
               </div>
-               <tabs fill class="flex-column flex-md-row">
+              <tabs fill class="flex-column flex-md-row">
                 <card shadow slot-scope="{ activeTabIndex }">
                   <tab-pane key="tab1">
                     <template slot="title">
@@ -108,10 +110,17 @@
                         <div class="row">
                           <div
                             class="col-6 col-md-4"
-                            v-for="item in imageNonExlusive"
+                            v-for="item in dataResponse.imageNonExlusive"
                             :key="item.photoId"
                           >
-                            <img v-lazy="item.wmlink" class="img-fit" />
+                            <router-link
+                              :to="{
+                                name: 'photo',
+                                params: { photoId: item.photoId },
+                              }"
+                            >
+                              <img v-lazy="item.wmlink" class="img-fit" />
+                            </router-link>
                           </div>
                         </div>
                       </div>
@@ -128,17 +137,22 @@
                         <div class="row">
                           <div
                             class="col-6 col-md-4"
-                            v-for="(item, index) in imageExlusive"
+                            v-for="(item, index) in dataResponse.imageExlusive"
                             :key="index"
                           >
-                            <img v-lazy="item.wmlink" class="img-fit hov" />
+                            <router-link
+                              :to="{
+                                name: 'photo',
+                                params: { photoId: item.photoId },
+                              }"
+                            >
+                              <img v-lazy="item.wmlink" class="img-fit hov" />
+                            </router-link>
                           </div>
                         </div>
                       </div>
                     </div>
                   </tab-pane>
-               
-                
                 </card>
               </tabs>
             </div>
@@ -176,26 +190,20 @@ export default {
     isLoggedIn() {
       return this.$store.getters.isLoggedIn;
     },
-    strange() {
-      return this.$store.state.stranger;
-    },
-    images() {
-      return this.$store.state.approved_images_stranger;
-    },
-    followers() {
-      return this.$store.state.followingStranger;
-    },
-    isFollowed(){
-      return this.$store.state.checkIsFollowed;
-    },
-    imageNonExlusive() {
-      return this.$store.state.stranger_non_exlusive_images;
-    },
-    imageExlusive() {
-      return this.$store.state.stranger_exlusive_images;
+    dataResponse() {
+      return {
+        strange: this.$store.state.stranger,
+        images: this.$store.state.approved_images_stranger,
+        followers: this.$store.state.followingStranger,
+        isFollowed: this.$store.state.checkIsFollowed,
+        imageNonExlusive: this.$store.state.stranger_non_exlusive_images,
+        imageExlusive: this.$store.state.stranger_exlusive_images,
+      };
     },
   },
   mounted() {
+    console.log('debug')
+    console.log(this.dataResponse)
     this.$store.dispatch(
       "getFollowingStranger",
       window.localStorage.getItem("strangerId")
