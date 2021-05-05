@@ -210,6 +210,9 @@ export default {
             //console.log("VALUE");
             //console.log(order.create_time);
           },
+          onCancel: function (data) {
+            this.$alert.error("The transaction has been canceled");
+          },
           onError: (err) => {
             console.log("ERR: " + err);
             alert("Transaction error!");
