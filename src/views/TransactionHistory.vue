@@ -428,8 +428,8 @@ export default {
     async getProofInfo(proofId) {
       await this.getExclusiveHistory();
       await axios
-        // .get("http://35.185.185.238:3000/transactions/getProof/" + proofId)
-        .get("http://localhost:3000/transactions/getProof/" + proofId)
+        .get("http://35.185.185.238:3000/transactions/getProof/" + proofId)
+        // .get("http://localhost:3000/transactions/getProof/" + proofId)
         .then((response) => {
           if (response.status == 200) {
             let flag = false;
