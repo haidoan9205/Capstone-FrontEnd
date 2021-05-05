@@ -241,10 +241,97 @@
                         <div class="row">
                           <div
                             class="col-6 col-md-4"
-                            v-for="item in imageNonExlusive"
-                            :key="item.photoId"
+                            v-for="(item, index) in imageNonExlusive"
+                            :key="index"
                           >
-                            <img v-lazy="item.wmlink" class="img-fit" />
+                            <img
+                              @click="
+                                (modals.modalEditImage = true),
+                                  (selectedNor = index),
+                                  (objectSelectedNor = item)
+                              "
+                              :src="item.wmlink"
+                              class="img-fit hov"
+                            />
+                            <modal :show.sync="modals.modalEditImage">
+                              <h6
+                                slot="header"
+                                class="modal-title mb-0"
+                                id="modal-title-default"
+                              >
+                                Edit Non-Exclusive Image
+                              </h6>
+
+                              <div class=" text-center">
+                                <div class="page">
+                                  <h2>Image Information</h2>
+                                </div>
+
+                                <div class="row justify-content-center">
+                                  <div class="row align-items-center">
+                                    <div class="form-group">
+                                      <div class="donateItem ">
+                                        <label class="control-label"
+                                          >Photo Name</label
+                                        >
+                                      </div>
+                                      <input
+                                        type="text"
+                                        class="form-control"
+                                        v-model="
+                                          imageNonExlusive[selectedNor].photoName
+                                        "
+                                        required
+                                      />
+                                    </div>
+                                    <div class="form-group  pl-3">
+                                      <label class="control-label">Price</label>
+                                      <input
+                                        type="text"
+                                        class="form-control"
+                                        v-model="imageNonExlusive[selectedNor].price"
+                                        required
+                                      />
+                                    </div>
+                                    <div class="form-group pl-1 mt-4">
+                                      <label class="control-label">$</label>
+                                    </div>
+                                  </div>
+                                </div>
+
+                                <div class="row justify-content-center">
+                                  <div class="row align-items-center">
+                                    <div class="form-group">
+                                      <div class="donateItem ">
+                                        <label class="control-label"
+                                          >Description</label
+                                        >
+                                      </div>
+                                      <textarea
+                                        type="text"
+                                        class="form-control description"
+                                        v-model="
+                                          imageNonExlusive[selectedNor].description
+                                        "
+                                        required
+                                      />
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="row justify-content-center">
+                                  <button
+                                    class="btn btn-primary"
+                                    type="submit"
+                                    @click="
+                                      onEditImage(objectSelectedNor)
+                                       
+                                    "
+                                  >
+                                    Edit
+                                  </button>
+                                </div>
+                              </div>
+                            </modal>
                           </div>
                         </div>
                       </div>
@@ -264,7 +351,94 @@
                             v-for="(item, index) in imageExlusive"
                             :key="index"
                           >
-                            <img v-lazy="item.wmlink" class="img-fit hov" />
+                            <img
+                              @click="
+                                (modals.modalEditImage = true),
+                                  (selected = index),
+                                  (objectSelected = item)
+                              "
+                              :src="item.wmlink"
+                              class="img-fit hov"
+                            />
+                             <modal :show.sync="modals.modalEditImage">
+                              <h6
+                                slot="header"
+                                class="modal-title mb-0"
+                                id="modal-title-default"
+                              >
+                                Edit Exclusive Image
+                              </h6>
+
+                              <div class=" text-center">
+                                <div class="page">
+                                  <h2>Image Information</h2>
+                                </div>
+
+                                <div class="row justify-content-center">
+                                  <div class="row align-items-center">
+                                    <div class="form-group">
+                                      <div class="donateItem ">
+                                        <label class="control-label"
+                                          >Photo Name</label
+                                        >
+                                      </div>
+                                      <input
+                                        type="text"
+                                        class="form-control"
+                                        v-model="
+                                          imageExlusive[selected].photoName
+                                        "
+                                        required
+                                      />
+                                    </div>
+                                    <div class="form-group  pl-3">
+                                      <label class="control-label">Price</label>
+                                      <input
+                                        type="text"
+                                        class="form-control"
+                                        v-model="imageExlusive[selected].price"
+                                        required
+                                      />
+                                    </div>
+                                    <div class="form-group pl-1 mt-4">
+                                      <label class="control-label">$</label>
+                                    </div>
+                                  </div>
+                                </div>
+
+                                <div class="row justify-content-center">
+                                  <div class="row align-items-center">
+                                    <div class="form-group">
+                                      <div class="donateItem ">
+                                        <label class="control-label"
+                                          >Description</label
+                                        >
+                                      </div>
+                                      <textarea
+                                        type="text"
+                                        class="form-control description"
+                                        v-model="
+                                          imageExlusive[selected].description
+                                        "
+                                        required
+                                      />
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="row justify-content-center">
+                                  <button
+                                    class="btn btn-primary"
+                                    type="submit"
+                                    @click="
+                                      onEditImage(objectSelected)
+                                       
+                                    "
+                                  >
+                                    Edit
+                                  </button>
+                                </div>
+                              </div>
+                            </modal>
                           </div>
                         </div>
                       </div>
@@ -294,8 +468,8 @@
                             <img
                               @click="
                                 (modals.modalEnable = true),
-                                  (selected = index),
-                                  (objectSelected = item)
+                                  (selectedEnable = index),
+                                  (objectSelectedEnable = item)
                               "
                               v-lazy="item.wmlink"
                               class="img-fit hov"
@@ -319,28 +493,26 @@
                                   You should read this!
                                 </h4>
                                 <p>
-                                  If you enable this image for sale, this image
-                                  will have to wait for the approval of the
-                                  admin .
+                                  If you enable click to enable button, this image will move to homepage for selling to another customer.
                                 </p>
+                                <p>Click Edit button to edit image information, then this image will wait for the approval of admin.</p>
                               </div>
 
-                              <template>
+                              <div>
                                 <base-button
-                                  type="white"
-                                  @click="modals.modalEditImage = true"
-                                  >Ok, Got it</base-button
+                                @click="enableExclusive(objectSelectedEnable)"
+                                  type="warning"
+                                  >Enable</base-button
                                 >
                                 <base-button
-                                  type="link"
-                                  text-color="white"
+                                 type="success"
                                   class="ml-auto"
-                                  @click="modals.modalEnable = false"
+                                  @click="modals.modalEnable = false, modals.modalEditImage = true"
                                   style="float:right"
                                 >
-                                  Close
+                                  Edit
                                 </base-button>
-                              </template>
+                              </div>
                             </modal>
                             <modal :show.sync="modals.modalEditImage">
                               <h6
@@ -368,8 +540,8 @@
                                         type="text"
                                         class="form-control"
                                         v-model="
-                                          imageExlusiveProperty[selected]
-                                            .photoName
+                                          imageExlusiveProperty[selectedEnable].photoName
+                                            
                                         "
                                         required
                                       />
@@ -380,7 +552,7 @@
                                         type="text"
                                         class="form-control"
                                         v-model="
-                                          imageExlusiveProperty[selected].price
+                                          imageExlusiveProperty[selectedEnable].price
                                         "
                                         required
                                       />
@@ -403,7 +575,7 @@
                                         type="text"
                                         class="form-control description"
                                         v-model="
-                                          imageExlusiveProperty[selected]
+                                          imageExlusiveProperty[selectedEnable]
                                             .description
                                         "
                                         required
@@ -416,7 +588,7 @@
                                     class="btn btn-primary"
                                     type="submit"
                                     @click="
-                                      onEditImage(objectSelected),
+                                      onEditImage(objectSelectedEnable),
                                         (modals.modalEnable = false)
                                     "
                                   >
@@ -477,6 +649,10 @@ export default {
       photoId: 0,
       selected: 0,
       objectSelected: null,
+       selectedNor: 0,
+      objectSelectedNor: null,
+       selectedEnable: 0,
+      objectSelectedEnable: null,
     };
   },
   computed: {
@@ -622,7 +798,7 @@ export default {
     },
 
     unFollowUser(follower) {
-     const user = this.$store.state.user;
+      const user = this.$store.state.user;
       axios({
         method: "POST",
         url:

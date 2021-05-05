@@ -206,8 +206,10 @@ export const getStrangeUser = ({ commit }, userId) => {
 };
 
 export const downloadImage = ({ commit }, photoId) => {
+    const user = localStorage.getItem("user");
+    const user_parsed = JSON.parse(user);
     axios({
-        url: `https://capstoneprojectapi20210418160622.azurewebsites.net/api/v1/Photo/DownloadPhoto/${photoId}`,
+        url: `https://capstoneprojectapi20210418160622.azurewebsites.net/api/v1/Photo/DownloadPhoto/${photoId}?userId=${user_parsed.userId}`,
         method: "GET",
         responseType: "blob",
     }).then((response) => {

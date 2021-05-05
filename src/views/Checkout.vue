@@ -36,7 +36,7 @@
                 <td>
                   <div class="detail">
                     <tr>
-                      <td class="col1"><p style="color: black">Photo:</p></td>
+                      <td class="col1"><p style="color: black; font-weight: bold">Photo:</p></td>
                       <td class="col2">
                         <p style="color: black">
                           {{ item.image.photoName }}
@@ -45,7 +45,7 @@
                     </tr>
                     <tr>
                       <td class="col1">
-                        <p style="color: black">Lisence type:</p>
+                        <p style="color: black;font-weight: bold">Lisence type:</p>
                       </td>
                       <td class="col2">
                         <p style="color: black" v-if="item.image.typeId === 1">
@@ -101,19 +101,20 @@
           <div
             style="
           border-radius: 15px;
-          border: 2px solid rgba(0, 0, 0, 0.25);
-          height: 200px;
+          border: 0px solid rgba(0, 0, 0, 0.25);
+          height: 230px;
           margin: 15px;
-          background-color: #FFFAF0
+          padding-top:15px;
+          background-color: #F2F2F2
         "
           >
             <h4 style="padding-top: 10px; padding-left: 25px">Customer</h4>
-            <p style="padding-left: 25px">Name: {{ user.fullName }}</p>
+            <p style="padding-left: 25px;">Name: {{ user.fullName }}</p>
             <p style="padding-left: 25px">Email: {{ user.email }}</p>
             <hr style="width: 80%" />
-            <p style="padding-left:180px; margin-top:-30px">
+            <p style="padding-left:180px; margin-top:-30px; margin-bottom:10px">
               TOTAL: <br />
-              <span style="color: red; font-weight:bold">${{ total }} USD</span>
+              <span style="color: red; font-weight:bold; ">${{ total }} USD</span>
             </p>
           </div>
           <div

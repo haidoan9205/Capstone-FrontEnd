@@ -1,9 +1,11 @@
 const express = require('express');
 const router = express.Router();
+const axios = require('axios');
 require('dotenv/config');
 const Transaction = require('../models/Transaction');
 const ProvenDB = require('@southbanksoftware/provendb-node-driver').Database;
 const MongoClient = require('mongodb').MongoClient;
+const { response } = require('express');
 
 let client;
 let result;
@@ -125,6 +127,18 @@ router.get('/getDocumentHistory/:userId', async (req, res) => {
     } finally {
         await client.close();
     }
+
+});
+
+router.put('/checkCart/:photoId', async (req, res) => {
+    setTimeout(async function () {
+        await
+        axios.put('https://capstoneprojectapi20210418160622.azurewebsites.net/api/v1/Photo/ChangeIsBought/' +
+            req.params.photoId).then((response) => {
+                console.log(response.status);
+                console.log(response.data);
+            })
+    }, 900000);
 
 });
 
