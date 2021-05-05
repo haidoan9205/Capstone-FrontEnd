@@ -131,14 +131,19 @@ router.get('/getDocumentHistory/:userId', async (req, res) => {
 });
 
 router.put('/checkCart/:photoId', async (req, res) => {
-    setTimeout(async function () {
-        await
+    setTimeout( function () {
+        
         axios.put('https://capstoneprojectapi20210418160622.azurewebsites.net/api/v1/Photo/ChangeIsBought/' +
             req.params.photoId).then((response) => {
                 console.log(response.status);
                 console.log(response.data);
             })
     }, 900000);
+    // axios.put('https://capstoneprojectapi20210418160622.azurewebsites.net/api/v1/Photo/ChangeIsBought/' +
+    //         req.params.photoId).then((response) => {
+    //             console.log(response.status);
+    //             console.log(response.data);
+    //         })
 
 });
 

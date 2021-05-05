@@ -89,6 +89,12 @@ export default {
       }
     },
   },
+  mounted: function() {
+    let chk = this.$store.getters.isLoggedIn;
+    if (chk) {
+      this.$router.push("/");
+    }
+  }
 };
 </script>
 <style scoped>
