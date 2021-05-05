@@ -21,7 +21,7 @@ import 'vue-toast-notification/dist/theme-sugar.css';
 
 import Loading from "vue-loading-overlay";
 import "vue-loading-overlay/dist/vue-loading.css";
-import  VueContext  from 'vue-context';
+import VueContext from 'vue-context';
 Vue.use(Loading);
 Vue.use(VueMaterial);
 Vue.use(VueSidebarMenu);
@@ -33,19 +33,19 @@ Vue.use(VueToast);
 
 Vue.use(VueRouter);
 const vuexLocalStorage = new VuexPersist({
-  key: "vuex", // The key to store the state on in the storage provider.
-  storage: window.localStorage, // or window.sessionStorage or localForage
-  // Function that passes the state and returns the state with only the objects you want to store.
-  // reducer: state => state,
-  // Function that passes a mutation and lets you decide if it should update the state in localStorage.
-  // filter: mutation => (true)
+    key: "vuex", // The key to store the state on in the storage provider.
+    storage: window.localStorage, // or window.sessionStorage or localForage
+    // Function that passes the state and returns the state with only the objects you want to store.
+    // reducer: state => state,
+    // Function that passes a mutation and lets you decide if it should update the state in localStorage.
+    // filter: mutation => (true)
 });
 
 const token = window.localStorage.getItem("token");
 if (token) {
-  Vue.prototype.$http.defaults.headers.common["Authorization"] = token;
+    Vue.prototype.$http.defaults.headers.common["Authorization"] = token;
 }
-
+window.Event = new Vue();
 Vue.use(Chartkick.use(Chart));
 Vue.use(VueSimpleAlert);
 Vue.config.productionTip = false;
@@ -53,7 +53,7 @@ Vue.use(Argon);
 Vue.use(Vuex);
 
 new Vue({
-  router,
-  store,
-  render: (h) => h(App),
+    router,
+    store,
+    render: (h) => h(App),
 }).$mount("#app");

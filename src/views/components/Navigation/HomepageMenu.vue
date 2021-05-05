@@ -117,7 +117,12 @@ export default {
       return JSON.parse(abc);
     },
   },
+  
+     
   mounted() {
+    Event.$on('clicked', setTimeout(function(){ window.localStorage.removeItem('ucart'), this.$store.state.ucart =[]
+        },900000));
+      
     this.interval = setInterval(
       () => this.$store.dispatch("getNotification"),
       1000
