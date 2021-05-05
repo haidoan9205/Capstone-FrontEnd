@@ -243,6 +243,7 @@
                             class="col-6 col-md-4"
                             v-for="(item, index) in imageNonExlusive"
                             :key="index"
+                            style="cursor: pointer"
                           >
                             <img
                               @click="
@@ -334,6 +335,7 @@
                             </modal>
                           </div>
                         </div>
+
                       </div>
                     </div>
                   </tab-pane>
@@ -345,11 +347,12 @@
 
                     <div class="container">
                       <div class="ct-example-row">
-                        <div class="row">
+                        <div class="row" v-if="imageExlusive != ''">
                           <div
                             class="col-6 col-md-4"
                             v-for="(item, index) in imageExlusive"
                             :key="index"
+                            style="cursor: pointer"
                           >
                             <img
                               @click="
@@ -441,6 +444,9 @@
                             </modal>
                           </div>
                         </div>
+                        <div class="row" v-else style="border: 2px solid #000; text-align: center">
+                          <p>There is no item !</p>
+                        </div>
                       </div>
                     </div>
                   </tab-pane>
@@ -464,6 +470,7 @@
                             class="col-6 col-md-4"
                             v-for="(item, index) in imageExlusiveProperty"
                             :key="index"
+                            style="cursor: pointer"
                           >
                             <img
                               @click="
