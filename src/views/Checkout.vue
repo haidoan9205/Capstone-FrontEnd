@@ -211,6 +211,9 @@ export default {
             //console.log("VALUE");
             //console.log(order.create_time);
           },
+          onCancel: function (data) {
+            this.$alert.error("The transaction has been canceled");
+          },
           onError: (err) => {
             console.log("ERR: " + err);
             alert("Transaction error!");
@@ -311,7 +314,7 @@ export default {
         width: 50,
     })
       axios({
-        url: "http://localhost:3000/transactions",
+        url: "http://35.185.185.238:3000/transactions",
         data: {
           transactionId: this.orderInfo.id,
           prevOwner: this.$store.state.ucart[0].image.userId,

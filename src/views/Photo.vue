@@ -146,8 +146,19 @@ export default {
 
   methods: {
     addToCart() {
-      this.$store.dispatch("addPhotoToCart", {
-        image: this.image,
+      axios.get(
+          "https://capstoneprojectapi20210418160622.azurewebsites.net/api/v1/Photo/AddToCart?photoId=" + this.photoId
+      ).then((response) => {
+        if (response.data == true) {
+          this.$store.dispatch("addPhotoToCart", {
+            image: this.image,
+          });
+        } else
+         this.$toast.warning('Sorry, this photo is being bought by someone else', {
+            // override the global option
+            position: 'bottom-right'
+          })
+        
       });
     },
     followUser() {

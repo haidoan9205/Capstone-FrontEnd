@@ -48,7 +48,7 @@
           <div class="row justify-content-center">
             <div class="row align-items-center">
               <div class="form-group">
-                <div class="row align-items-center">
+                <div class="row align-items-center" style="display: flex">
                   <label
                     class="control-label"
                     style="
@@ -82,6 +82,20 @@
                     v-bind="proofResponse"
                   >
                     <p v-if="proofResponse == ''"></p>
+
+                    <p
+                      v-else-if="msg != ''"
+                      v-bind="msg"
+                      style="
+                        padding-top: 35px;
+                        padding-left: 10px;
+                        font-size: 25px;
+                        text-align: center;
+                        color: #b22222;
+                      "
+                    >
+                      {{ msg }}
+                    </p>
 
                     <p
                       v-else-if="proofResponse[0].status == 'Valid'"
@@ -222,12 +236,11 @@
                         padding-left: 10px;
                         font-size: 25px;
                         text-align: center;
+                        color: #b22222;
                       "
                     >
-                      <span style="color: #b22222"
-                        >The transaction has not been submitted to the
-                        Blockchain yet, please try again later!</span
-                      >
+                      The transaction has not been submitted to the Blockchain
+                      yet, please try again later!
                     </p>
                   </div>
                 </div>
@@ -270,6 +283,7 @@ export default {
         key: "",
         isAsc: false,
       },
+      msg: "",
     };
   },
   computed: {
@@ -311,7 +325,7 @@ export default {
       var doc = new jsPDF();
       doc.addImage("img/brand/ProvenDB.JPG", "JPEG", 65, 20, 90, 35);
       doc.setFontSize(22);
-      doc.setTextColor(47,79,79);
+      doc.setTextColor(47, 79, 79);
       doc.text("Certificate of", 85, 75);
       doc.text("Blockchain Proof", 78, 84);
 
@@ -321,38 +335,60 @@ export default {
       // doc.addImage(tmp, "JPEG", 65, 95, 65, 65);
 
       doc.setFontSize(12);
-      doc.setTextColor(47,79,79);
+      doc.setTextColor(47, 79, 79);
       doc.text("Image name: ", 82, 105);
-      doc.setTextColor(135,206,235);
+      doc.setTextColor(135, 206, 235);
       doc.textWithLink(this.photo.photoName, 108, 105, {
         url: this.photo.wmlink,
       });
-      doc.setTextColor(47,79,79);
-      doc.text("This certificate constitutes proof that a transaction between", 52, 115);
+      doc.setTextColor(47, 79, 79);
+      doc.text(
+        "This certificate constitutes proof that a transaction between",
+        52,
+        115
+      );
       doc.text("The previous owner -", 77, 122);
-      doc.setTextColor(135,206,235);
+      doc.setTextColor(135, 206, 235);
       doc.text(this.preOwner.fullName, 118, 122);
-      doc.setTextColor(47,79,79);
+      doc.setTextColor(47, 79, 79);
       doc.text("The new owner -", 77, 127);
-      doc.setTextColor(135,206,235);
+      doc.setTextColor(135, 206, 235);
       doc.text(this.user.fullName, 109, 127);
-      doc.setTextColor(47,79,79);
+      doc.setTextColor(47, 79, 79);
       doc.text("has completed on", 89, 134);
-      doc.setTextColor(135,206,235);
-      doc.text(new Date(this.history.versions[0].document.transactionCreationTime).toUTCString(), 74, 140);
-      doc.setTextColor(47,79,79);
+      doc.setTextColor(135, 206, 235);
+      doc.text(
+        new Date(
+          this.history.versions[0].document.transactionCreationTime
+        ).toUTCString(),
+        74,
+        140
+      );
+      doc.setTextColor(47, 79, 79);
       doc.text("and anchored to the Blockchain at", 73, 146);
-      doc.setTextColor(135,206,235);
-      doc.text(new Date(this.proofResponse[0].submitted).toUTCString(), 74, 152);
-      doc.setTextColor(47,79,79);
-      doc.text("thereby proving that the transaction existed in its current form on", 48, 158);
+      doc.setTextColor(135, 206, 235);
+      doc.text(
+        new Date(this.proofResponse[0].submitted).toUTCString(),
+        74,
+        152
+      );
+      doc.setTextColor(47, 79, 79);
+      doc.text(
+        "thereby proving that the transaction existed in its current form on",
+        48,
+        158
+      );
       doc.text("the date at which the Blockchain entry was created.", 58, 164);
       doc.text("You can use this proof to attest that:", 72, 175);
       doc.text("(a) the transaction has not been altered in any way.", 56, 180);
-      doc.text("(b) the transaction existed in its current form on the day it was submitted to the Blockchain.", 24, 185);
+      doc.text(
+        "(b) the transaction existed in its current form on the day it was submitted to the Blockchain.",
+        24,
+        185
+      );
       doc.setFontSize(10);
       doc.text("View your Blockchain info at:", 26, 200);
-      doc.setTextColor(135,206,235);
+      doc.setTextColor(135, 206, 235);
       doc.textWithLink(this.proofResponse[0].anchorData.txnUri, 26, 205, {
         url: this.proofResponse[0].anchorData.txnUri,
       });
@@ -392,21 +428,28 @@ export default {
     async getProofInfo(proofId) {
       await this.getExclusiveHistory();
       await axios
-        .get("http://localhost:3000/transactions/getProof/" + proofId)
+        .get("http://35.185.185.238:3000/transactions/getProof/" + proofId)
+        // .get("http://localhost:3000/transactions/getProof/" + proofId)
         .then((response) => {
           if (response.status == 200) {
+            let flag = false;
             this.proofResponse = response.data;
             this.version = this.proofResponse[0].version;
             for (let index = 0; index < this.fullHistory.length; index++) {
               if (
                 this.fullHistory[index].versions[0].minVersion == this.version
               ) {
+                flag = true;
                 this.history = this.fullHistory[index];
                 this.getPhotoDetails(this.history.versions[0].document.photoId);
                 this.getPrevOwnerDetails(
                   this.history.versions[0].document.prevOwner
                 );
+                console.log("check " + this.history);
               }
+            }
+            if (flag == false) {
+              this.msg = "You are not the owner of this proof!";
             }
           } else {
             alert("Network error, please try again!");
@@ -419,14 +462,18 @@ export default {
     },
 
     async getExclusiveHistory() {
-       let loader = this.$loading.show({
-        loader: 'dots',
+      let loader = this.$loading.show({
+        loader: "dots",
         height: 50,
         width: 50,
-    })
+      });
       await axios
+        // .get(
+        //   "http://35.185.185.238:3000/transactions/getDocumentHistory/" +
+        //     this.user.userId
+        // )
         .get(
-          "http://localhost:3000/transactions/getDocumentHistory/" +
+          "http://35.185.185.238:3000/transactions/getDocumentHistory/" +
             this.user.userId
         )
         .then((response) => {
