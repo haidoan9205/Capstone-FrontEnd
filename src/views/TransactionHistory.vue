@@ -336,9 +336,9 @@ export default {
 
       doc.setFontSize(12);
       doc.setTextColor(47, 79, 79);
-      doc.text("Image name: ", 82, 105);
+      doc.text("Image name: ", 75, 105);
       doc.setTextColor(135, 206, 235);
-      doc.textWithLink(this.photo.photoName, 108, 105, {
+      doc.textWithLink(this.photo.photoName, 101, 105, {
         url: this.photo.wmlink,
       });
       doc.setTextColor(47, 79, 79);
@@ -389,7 +389,7 @@ export default {
       doc.setFontSize(10);
       doc.text("View your Blockchain info at:", 26, 200);
       doc.setTextColor(135, 206, 235);
-      doc.textWithLink(this.proofResponse[0].anchorData.txnUri, 26, 205, {
+      doc.textWithLink("This Link", 72, 200, {
         url: this.proofResponse[0].anchorData.txnUri,
       });
       doc.addImage("img/brand/provendb-stamp.jpg", "JPEG", 140, 215, 35, 35);
@@ -428,8 +428,8 @@ export default {
     async getProofInfo(proofId) {
       await this.getExclusiveHistory();
       await axios
-        .get("http://35.185.185.238:3000/transactions/getProof/" + proofId)
-        // .get("http://localhost:3000/transactions/getProof/" + proofId)
+        // .get("http://35.185.185.238:3000/transactions/getProof/" + proofId)
+        .get("http://localhost:3000/transactions/getProof/" + proofId)
         .then((response) => {
           if (response.status == 200) {
             let flag = false;
@@ -473,7 +473,7 @@ export default {
         //     this.user.userId
         // )
         .get(
-          "http://35.185.185.238:3000/transactions/getDocumentHistory/" +
+          "http://localhost:3000/transactions/getDocumentHistory/" +
             this.user.userId
         )
         .then((response) => {
