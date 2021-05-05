@@ -146,20 +146,27 @@ export default {
 
   methods: {
     addToCart() {
-      axios.get(
-          "https://capstoneprojectapi20210418160622.azurewebsites.net/api/v1/Photo/AddToCart?photoId=" + this.photoId
-      ).then((response) => {
-        if (response.data == true) {
-          this.$store.dispatch("addPhotoToCart", {
-            image: this.image,
-          });
-        } else
-         this.$toast.warning('Sorry, this photo is being bought by someone else', {
-            // override the global option
-            position: 'bottom-right'
-          })
-        
-      });
+      if(this.image.typeId == 2) {
+        axios.get(
+            "https://capstoneprojectapi20210418160622.azurewebsites.net/api/v1/Photo/AddToCart?photoId=" + this.photoId
+        ).then((response) => {
+          if (response.data == true) {
+            Event.$emit('clicked');
+            this.$store.dispatch("addPhotoToCart", {
+              image: this.image,
+            });
+          } else
+          this.$toast.warning('Sorry, this photo is being bought by someone else', {
+              // override the global option
+              position: 'bottom-right'
+            })
+          
+        });
+      } else {
+        this.$store.dispatch("addPhotoToCart", {
+              image: this.image,
+            });
+      }
     },
     followUser() {
       // console.log(user.userId)
