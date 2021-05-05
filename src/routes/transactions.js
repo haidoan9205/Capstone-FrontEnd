@@ -62,7 +62,9 @@ router.post('/', async (req, res) => {
         // );
 
         // Create a Proof
-        result = await pdb.submitProof();
+        result = await pdb.submitProof({
+            anchorType: 'HEDERA_MAINNET'
+        });
         console.log(`Submitted Proof: ${JSON.stringify(result, null, 4)}`);
         //console.log(`Your ProofID: ${JSON.stringify(result.proofId)}`);
         let proofId = JSON.stringify(result.proofId);
