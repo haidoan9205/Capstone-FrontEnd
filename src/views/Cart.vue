@@ -249,6 +249,7 @@
 </template>
 
 <script>
+import axios from "axios";
 export default {
   computed: {
     cart() {
@@ -281,6 +282,11 @@ export default {
       if (confirm('Are you sure to remove this item ?')) {
         this.$store.state.cartFlag = this.flag;
         this.$store.dispatch('removeItem', {image});
+        axios.put('https://capstoneprojectapi20210418160622.azurewebsites.net/api/v1/Photo/ChangeIsBought/' +
+          image.photoId).then((response) => {
+              console.log(response.status);
+              console.log(response.data);
+          })
       } else {
         return;
       }

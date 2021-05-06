@@ -28,7 +28,7 @@ router.get('/', (req, res) => {
     res.send('On transactions !')
 });
 
-router.post('/', async (req, res) => {
+router.post('/', async(req, res) => {
     //console.log("req body: " + JSON.stringify(req.body));
     await getConnection();
     // Use/Create the collection "Transactions"
@@ -91,7 +91,7 @@ router.post('/', async (req, res) => {
 
 });
 
-router.get('/getProof/:id', async (req, res) => {
+router.get('/getProof/:id', async(req, res) => {
     await getConnection();
     try {
         // Get an existing Proof with input proofId
@@ -110,7 +110,7 @@ router.get('/getProof/:id', async (req, res) => {
 
 });
 
-router.get('/getDocumentHistory/:userId', async (req, res) => {
+router.get('/getDocumentHistory/:userId', async(req, res) => {
     await getConnection();
     try {
         // Fetch the history of that document.
@@ -130,14 +130,14 @@ router.get('/getDocumentHistory/:userId', async (req, res) => {
 
 });
 
-router.put('/checkCart/:photoId', async (req, res) => {
-    setTimeout( function () {
-        
+router.put('/checkCart/:photoId', async(req, res) => {
+    setTimeout(function() {
+
         axios.put('https://capstoneprojectapi20210418160622.azurewebsites.net/api/v1/Photo/ChangeIsBought/' +
             req.params.photoId).then((response) => {
-                console.log(response.status);
-                console.log(response.data);
-            })
+            console.log(response.status);
+            console.log(response.data);
+        })
     }, 900000);
     // axios.put('https://capstoneprojectapi20210418160622.azurewebsites.net/api/v1/Photo/ChangeIsBought/' +
     //         req.params.photoId).then((response) => {

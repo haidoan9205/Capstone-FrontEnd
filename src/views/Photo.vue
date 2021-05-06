@@ -147,7 +147,7 @@ export default {
   methods: {
     addToCart() {
       if(this.image.typeId == 2) {
-        axios.put("http://localhost:3000/checkCart/" + this.photoId);
+        axios.put("http://35.185.185.238:3000/transactions/checkCart/" + this.photoId);
         axios.get(
             "https://capstoneprojectapi20210418160622.azurewebsites.net/api/v1/Photo/AddToCart?photoId=" + this.photoId
         ).then((response) => {
