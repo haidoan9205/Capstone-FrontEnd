@@ -468,14 +468,14 @@ export default {
         width: 50,
       });
       await axios
-        // .get(
-        //   "http://35.185.185.238:3000/transactions/getDocumentHistory/" +
-        //     this.user.userId
-        // )
-        .get(
-          "http://localhost:3000/transactions/getDocumentHistory/" +
-            this.user.userId
-        )
+         .get(
+           "http://35.185.185.238:3000/transactions/getDocumentHistory/" +
+             this.user.userId
+         )
+       // .get(
+         // "http://localhost:3000/transactions/getDocumentHistory/" +
+           // this.user.userId
+       // )
         .then((response) => {
           if (response.status == 200) {
             if (response.data == "ProofId is invalid!") {
