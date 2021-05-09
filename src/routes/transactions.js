@@ -130,6 +130,23 @@ router.get('/getDocumentHistory/:userId', async(req, res) => {
 
 });
 
+router.get('/getPhotoHistory/:photoHash', async (req, res) => {
+    await getConnection();
+    try {
+        result = await pdb.docHistory('Transactions', { photoHash: `${req.params.photoHash}` });
+        console.log(result);
+        let length = result.history.length;
+        console.log(
+            `History of photo: ${JSON.stringify(result.history[length - 1], null, 4)}`
+        );
+        return res.json(result.history, null, 4);
+    } catch (error) {
+        res.json({ message: error });
+    } finally {
+        await client.close();
+    }
+})
+
 router.put('/checkCart/:photoId', async(req, res) => {
     setTimeout(function() {
 
