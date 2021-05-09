@@ -43,7 +43,7 @@ const vuexLocalStorage = new VuexPersist({
 
 const token = window.localStorage.getItem("token");
 if (token) {
-    Vue.prototype.$http.defaults.headers.common["Authorization"] = token;
+    Vue.prototype.$http.defaults.headers.common["Authorization"] = "Bearer " + token;
 }
 window.Event = new Vue();
 Vue.use(Chartkick.use(Chart));
