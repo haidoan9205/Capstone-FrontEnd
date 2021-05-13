@@ -240,20 +240,22 @@
                       <div class="ct-example-row">
                         <div class="row">
                           <div
-                            class="col-6 col-md-4"
+                            class="col-6 col-md-4 cell"
                             v-for="(item, index) in imageNonExlusive"
                             :key="index"
                             style="cursor: pointer"
                           >
                             <img
-                              @click="
-                                (modals.modalEditImage = true),
+                              title="Click for more actions"
+                              @click.prevent.stop="
+                                $refs.menu2.open($event, item),
                                   (selectedNor = index),
                                   (objectSelectedNor = item)
                               "
                               :src="item.wmlink"
                               class="img-fit hov"
                             />
+
                             <modal :show.sync="modals.modalEditImage">
                               <h6
                                 slot="header"
@@ -280,7 +282,8 @@
                                         type="text"
                                         class="form-control"
                                         v-model="
-                                          imageNonExlusive[selectedNor].photoName
+                                          imageNonExlusive[selectedNor]
+                                            .photoName
                                         "
                                         required
                                       />
@@ -290,7 +293,9 @@
                                       <input
                                         type="text"
                                         class="form-control"
-                                        v-model="imageNonExlusive[selectedNor].price"
+                                        v-model="
+                                          imageNonExlusive[selectedNor].price
+                                        "
                                         required
                                       />
                                     </div>
@@ -312,7 +317,8 @@
                                         type="text"
                                         class="form-control description"
                                         v-model="
-                                          imageNonExlusive[selectedNor].description
+                                          imageNonExlusive[selectedNor]
+                                            .description
                                         "
                                         required
                                       />
@@ -323,10 +329,7 @@
                                   <button
                                     class="btn btn-primary"
                                     type="submit"
-                                    @click="
-                                      onEditImage(objectSelectedNor)
-                                       
-                                    "
+                                    @click="onEditImage(objectSelectedNor)"
                                   >
                                     Edit
                                   </button>
@@ -334,8 +337,59 @@
                               </div>
                             </modal>
                           </div>
-                        </div>
+                          <modal
+                            :show.sync="modals.modalConfirmDelete"
+                            gradient="danger"
+                            modal-classes="modal-danger modal-dialog-centered"
+                          >
 
+                            <div class="py-3 text-center">
+                              <i class="fa fa-meh-o" style="font-size:50px"></i>
+                              <h6 class="heading mt-4">
+                                Are you sure?
+                              </h6>
+                              <p>
+                               This image will be deleted.
+                              </p>
+                            </div>
+
+                            
+                              <base-button type="white" @click="deletePhoto(objectSelectedNor), modals.modalConfirmDelete = false">Ok, Delete It</base-button>
+                              <base-button
+                                type="link"
+                                text-color="white"
+                                class="ml-auto"
+                                style="float:right"
+                                @click=" modals.modalConfirmDelete = false"
+                              >
+                                Close
+                              </base-button>
+                            
+                          </modal>
+                          <vue-context ref="menu2">
+                            <li
+                              class="pd-3"
+                              @click="modals.modalEditImage = true"
+                            >
+                              <a class="modalCursor">
+                                Edit
+                                <i
+                                  class="fa fa-pencil-square-o mt-1"
+                                  style="float:right"
+                                ></i>
+                              </a>
+                            </li>
+                            <li @click="modals.modalConfirmDelete = true">
+                              <a class="modalCursor">
+                                Delete
+                                <i
+                                  class="fa fa-trash mt-1"
+                                  style="float:right"
+                                ></i>
+                              </a>
+                            </li>
+                          </vue-context>
+                        </div>
                       </div>
                     </div>
                   </tab-pane>
@@ -355,15 +409,16 @@
                             style="cursor: pointer"
                           >
                             <img
-                              @click="
-                                (modals.modalEditImage = true),
+                              title="Click for more actions"
+                              @click.prevent.stop="
+                                $refs.menu1.open($event, item),
                                   (selected = index),
                                   (objectSelected = item)
                               "
                               :src="item.wmlink"
                               class="img-fit hov"
                             />
-                             <modal :show.sync="modals.modalEditImage">
+                            <modal :show.sync="modals.modalEditImage">
                               <h6
                                 slot="header"
                                 class="modal-title mb-0"
@@ -432,10 +487,7 @@
                                   <button
                                     class="btn btn-primary"
                                     type="submit"
-                                    @click="
-                                      onEditImage(objectSelected)
-                                       
-                                    "
+                                    @click="onEditImage(objectSelected)"
                                   >
                                     Edit
                                   </button>
@@ -443,20 +495,74 @@
                               </div>
                             </modal>
                           </div>
+                             <modal
+                            :show.sync="modals.modalConfirmDelete1"
+                            gradient="danger"
+                            modal-classes="modal-danger modal-dialog-centered"
+                          >
+
+                            <div class="py-3 text-center">
+                              <i class="fa fa-meh-o" style="font-size:50px"></i>
+                              <h6 class="heading mt-4">
+                                Are you sure?
+                              </h6>
+                              <p>
+                               This image will be deleted.
+                              </p>
+                            </div>
+
+                            
+                              <base-button type="white" @click="deletePhoto(objectSelected), modals.modalConfirmDelete1 = false">Ok, Delete It</base-button>
+                              <base-button
+                                type="link"
+                                text-color="white"
+                                class="ml-auto"
+                                style="float:right"
+                                @click=" modals.modalConfirmDelete1 = false"
+                              >
+                                Close
+                              </base-button>
+                            
+                          </modal>
+                          <vue-context ref="menu1">
+                            <li
+                              class="pd-3"
+                              @click="modals.modalEditImage = true"
+                            >
+                              <a class="modalCursor">
+                                Edit
+                                <i
+                                  class="fa fa-pencil-square-o mt-1"
+                                  style="float:right"
+                                ></i>
+                              </a>
+                            </li>
+                            <li @click="modals.modalConfirmDelete1 = true">
+                              <a class="modalCursor">
+                                Delete
+                                <i
+                                  class="fa fa-trash mt-1"
+                                  style="float:right"
+                                ></i>
+                              </a>
+                            </li>
+                          </vue-context>
                         </div>
+<<<<<<< HEAD
                         <div class="row" v-else style="text-align: center">
                           <p>There is no item to show !</p>
+=======
+                        <div
+                          class="row"
+                          v-else
+                          style="border: 2px solid #000; text-align: center"
+                        >
+                          <p>There is no item !</p>
+>>>>>>> 0a0326d9d3b46f23ff346f50dff4df506aa821d3
                         </div>
                       </div>
                     </div>
                   </tab-pane>
-                  <vue-context ref="menu1">
-                    <li>
-                      <a class="modalCursor">
-                        Edit
-                      </a>
-                    </li>
-                  </vue-context>
 
                   <tab-pane key="tab3">
                     <template slot="title">
@@ -500,21 +606,30 @@
                                   You should read this!
                                 </h4>
                                 <p>
-                                  If you enable click to enable button, this image will move to homepage for selling to another customer.
+                                  If you enable click to enable button, this
+                                  image will move to homepage for selling to
+                                  another customer.
                                 </p>
-                                <p>Click Edit button to edit image information, then this image will wait for the approval of admin.</p>
+                                <p>
+                                  Click Edit button to edit image information,
+                                  then this image will wait for the approval of
+                                  admin.
+                                </p>
                               </div>
 
                               <div>
                                 <base-button
-                                @click="enableExclusive(objectSelectedEnable)"
+                                  @click="enableExclusive(objectSelectedEnable)"
                                   type="warning"
                                   >Enable</base-button
                                 >
                                 <base-button
-                                 type="success"
+                                  type="success"
                                   class="ml-auto"
-                                  @click="modals.modalEnable = false, modals.modalEditImage = true"
+                                  @click="
+                                    (modals.modalEnable = false),
+                                      (modals.modalEditImage = true)
+                                  "
                                   style="float:right"
                                 >
                                   Edit
@@ -547,8 +662,8 @@
                                         type="text"
                                         class="form-control"
                                         v-model="
-                                          imageExlusiveProperty[selectedEnable].photoName
-                                            
+                                          imageExlusiveProperty[selectedEnable]
+                                            .photoName
                                         "
                                         required
                                       />
@@ -559,7 +674,8 @@
                                         type="text"
                                         class="form-control"
                                         v-model="
-                                          imageExlusiveProperty[selectedEnable].price
+                                          imageExlusiveProperty[selectedEnable]
+                                            .price
                                         "
                                         required
                                       />
@@ -650,15 +766,17 @@ export default {
         modalEditProfile: false,
         modalEnable: false,
         modalEditImage: false,
+        modalConfirmDelete: false,
+        modalConfirmDelete1: false,
       },
       flag: [],
       isActive: true,
       photoId: 0,
       selected: 0,
       objectSelected: null,
-       selectedNor: 0,
+      selectedNor: 0,
       objectSelectedNor: null,
-       selectedEnable: 0,
+      selectedEnable: 0,
       objectSelectedEnable: null,
     };
   },
@@ -803,7 +921,30 @@ export default {
         }
       });
     },
-
+    deletePhoto(objectSelected) {
+      axios({
+        method: "PUT",
+        url:
+          "https://capstoneprojectapi20210418160622.azurewebsites.net/api/v1/Photo/DeletOrDisable/" +
+          objectSelected.photoId,
+      }).then((response) => {
+        console.log("aaaa");
+        console.log(response);
+        if (response.status == 200) {
+          this.$alert("Delete Sucessfully", "Success", "success").then(() =>
+            console.log("Closed")
+          );
+          this.modals.modalEnable = false;
+        } else {
+          this.$alert(
+            "Something went wrong, please try again",
+            "Error",
+            "error"
+          ).then(() => console.log("Closed"));
+          this.modals.modalEnable = false;
+        }
+      });
+    },
     unFollowUser(follower) {
       const user = this.$store.state.user;
       axios({
@@ -873,6 +1014,7 @@ export default {
   min-width: 500px;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
 }
+
 .styled-table thead tr {
   background-color: #009879;
   color: #ffffff;
@@ -904,7 +1046,14 @@ export default {
   margin-bottom: 15px;
   border-radius: 10px;
 }
-
+.img-fit:hover {
+  -webkit-filter: brightness(70%);
+  -webkit-transition: all 1s ease;
+  -moz-transition: all 1s ease;
+  -o-transition: all 1s ease;
+  -ms-transition: all 1s ease;
+  transition: all ease;
+}
 .hov:hover {
   box-shadow: 0 0 0 1px rgb(0, 0, 0 / 20%);
 }
