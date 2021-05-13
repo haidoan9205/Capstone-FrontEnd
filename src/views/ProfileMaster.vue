@@ -548,17 +548,8 @@
                             </li>
                           </vue-context>
                         </div>
-<<<<<<< HEAD
                         <div class="row" v-else style="text-align: center">
                           <p>There is no item to show !</p>
-=======
-                        <div
-                          class="row"
-                          v-else
-                          style="border: 2px solid #000; text-align: center"
-                        >
-                          <p>There is no item !</p>
->>>>>>> 0a0326d9d3b46f23ff346f50dff4df506aa821d3
                         </div>
                       </div>
                     </div>
