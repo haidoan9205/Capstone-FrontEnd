@@ -9,6 +9,7 @@
         "start": "nodemon src/server.js"
     },
     "dependencies": {
+        "@kouts/vue-modal": "^2.0.10",
         "@southbanksoftware/provendb-node-driver": "^0.1.13",
         "axios": "^0.21.1",
         "body-parser": "^1.19.0",

@@ -1,13 +1,9 @@
 <template>
-  <div class="mb-3" style="background-color:#F2F2F2">
+  <div class="mb-3" style="background-color: #f2f2f2">
     <div class="row ml-2 imageInfo">
       <!-- <div class="imageInfo"> -->
       <div class="col-md-5 col-sm-5 col-xs-12 positionImage">
-        <img
-          style="border-radius: 20px;
-    margin: 2rem 0;"
-          :src="image.wmlink"
-        />
+        <img style="border-radius: 20px; margin: 2rem 0" :src="image.wmlink" />
       </div>
       <div class="col-md-6 mb-5 mb-md-0 mt-5 positionImage">
         <h3>
@@ -27,12 +23,13 @@
         <badge
           type="info"
           class="text-uppercase"
+          style="cursor: pointer"
           v-for="(badge, index) in image.category"
           :key="index"
         >
           <span
             @click="
-              modals.modalTag = true;
+              openTagModal();
               openingBadgeModal = badge.categoryName;
               getPhotosByCategory(badge);
             "
@@ -42,22 +39,18 @@
         </badge>
         <br />
 
-        <modal :show.sync="modals.modalTag">
+        <Modal
+        v-model="tagModal"
+        title="Photo(s) with same tag"
+        :modal-style="{ 'max-width': '50%' }"
+        >
           <div class="container">
-            <div class="modalStyle">
+            <div style="border: 0px solid #000; padding-top: 10px; margin-left: 3.5%">
               <badge type="info" class="text-uppercase badgeTagModal">
                 {{ openingBadgeModal }}
               </badge>
-              <i
-                class="fa fa-times closeModal"
-                @click="
-                  modals.modalTag = false;
-                  openingBadgeModal = '';
-                "
-                aria-hidden="true"
-              ></i>
             </div>
-            <div class="ct-example-row">
+            <div class="ct-example-row" style="border: 0px solid #000; margin-top: -40px; padding-bottom: 8%">
               <div class="row">
                 <div
                   class="col-6 col-md-4"
@@ -69,9 +62,7 @@
                     :to="{
                       name: 'photo',
                       params: { photoId: item.photoId },
-                    }" 
-                    
-                  
+                    }"
                   >
                     <img v-lazy="item.wmlink" class="img-fit" />
                   </router-link>
@@ -79,7 +70,7 @@
               </div>
             </div>
           </div>
-        </modal>
+        </Modal>
 
         <blockquote class="blockquote mt-2">
           <p><strong> Upload By:</strong></p>
@@ -100,15 +91,32 @@
             </footer>
           </router-link>
         </blockquote>
-        <div class="mb-3 mt-2">
-          <base-button
-            class="btn-1"
-            type="primary"
-            @click="addToCart()"
-            v-if="checkIsYour == false && checkIsBought == false"
-            >Add to cart</base-button
-          >
+        <div class="flex-container" style="display: flex">
+          <div class="mb-3 mt-2" style="margin-right: 4%">
+            <base-button
+              class="btn-1"
+              type="primary"
+              @click="addToCart()"
+              v-if="checkIsYour == false && checkIsBought == false"
+              >Add to cart</base-button
+            >
+          </div>
+          <div class="mb-3 mt-2">
+            <base-button class="btn-1" type="primary" v-if="image.typeId == 2" @click="openTrackingModal()"
+              >Tracking</base-button
+            >
+          </div>
         </div>
+
+        <Modal
+          v-model="trackingModal"
+          title="Tracking Details"
+          :modal-style="{ 'max-width': '60%' }"
+        >
+          <div style="height: 600px">
+            Tracking
+          </div>
+        </Modal>
       </div>
       <!-- </div> -->
     </div>
@@ -120,10 +128,16 @@
 import Modal from "@/components/Modal.vue";
 import axios from "axios";
 import { merge, of } from "rxjs";
+import VueModal from "@kouts/vue-modal";
+import "@kouts/vue-modal/dist/vue-modal.css";
 
 // const { map, pluck, startWith, scan } = rxjs.operators;
 export default {
-  components: { Modal },
+  components: { 
+    Modal,
+    Modal: VueModal,
+    VueModal,
+    },
   props: ["follows"],
 
   data() {
@@ -141,32 +155,41 @@ export default {
       openingBadgeModal: "",
       testPicture: [],
       fullPage: true,
+      tagModal: false,
+      trackingModal: false,
     };
   },
 
   methods: {
     addToCart() {
-      if(this.image.typeId == 2) {
-        axios.put("http://35.185.185.238:3000/transactions/checkCart/" + this.photoId);
-        axios.get(
-            "https://capstoneprojectapi20210418160622.azurewebsites.net/api/v1/Photo/AddToCart?photoId=" + this.photoId
-        ).then((response) => {
-          if (response.data == true) {
-            Event.$emit('clicked');
-            this.$store.dispatch("addPhotoToCart", {
-              image: this.image,
-            });
-          } else
-          this.$toast.warning('Sorry, this photo is being bought by someone else', {
-              // override the global option
-              position: 'bottom-right'
-            })
-          
-        });
+      if (this.image.typeId == 2) {
+        axios.put(
+          "http://35.185.185.238:3000/transactions/checkCart/" + this.photoId
+        );
+        axios
+          .get(
+            "https://capstoneprojectapi20210418160622.azurewebsites.net/api/v1/Photo/AddToCart?photoId=" +
+              this.photoId
+          )
+          .then((response) => {
+            if (response.data == true) {
+              Event.$emit("clicked");
+              this.$store.dispatch("addPhotoToCart", {
+                image: this.image,
+              });
+            } else
+              this.$toast.warning(
+                "Sorry, this photo is being bought by someone else",
+                {
+                  // override the global option
+                  position: "bottom-right",
+                }
+              );
+          });
       } else {
         this.$store.dispatch("addPhotoToCart", {
-              image: this.image,
-            });
+          image: this.image,
+        });
       }
     },
     followUser() {
@@ -197,22 +220,27 @@ export default {
         this.testPicture = response.data;
       });
     },
-    reloadPage(){
+    reloadPage() {
       this.$router.go();
+    },
+    openTrackingModal() {
+      this.trackingModal = true;
+    },
+    openTagModal() {
+      this.tagModal = true;
     }
-  
   },
 
   computed: {
     image() {
       return this.$store.state.image;
     },
-    checkIsYour(){
+    checkIsYour() {
       return this.$store.state.checkIsYour;
     },
-    checkIsBought(){
+    checkIsBought() {
       return this.$store.state.checkIsBought;
-    }
+    },
   },
 
   mounted() {

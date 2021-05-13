@@ -1,21 +1,25 @@
 <template>
   <div>
     <unauthorized v-if="!isLoggedIn"></unauthorized>
-    <div class="row justify-content-center" style="background-color: #FFFAFA" v-if="isLoggedIn">
+    <div
+      class="row justify-content-center"
+      style="background-color: #fffafa"
+      v-if="isLoggedIn"
+    >
       <div class="flex-container">
         <div
           v-if="!paidFor"
           style="
-        border-radius: 15px;
-        border: 0px solid rgba(0, 0, 0, 0.48);
-        width: 870px;
-        margin-top: 30px;
-        margin-bottom: 30px;
-        margin-left: 7%;
-        margin-right: 15px;
-        overflow: auto;
-        background-color:#F2F2F2
-      "
+            border-radius: 15px;
+            border: 0px solid rgba(0, 0, 0, 0.48);
+            width: 870px;
+            margin-top: 30px;
+            margin-bottom: 30px;
+            margin-left: 7%;
+            margin-right: 15px;
+            overflow: auto;
+            background-color: #f2f2f2;
+          "
         >
           <h2 style="padding-left: 35px">Checkout List</h2>
           <hr style="width: 90%" />
@@ -36,7 +40,9 @@
                 <td>
                   <div class="detail">
                     <tr>
-                      <td class="col1"><p style="color: black; font-weight: bold">Photo:</p></td>
+                      <td class="col1">
+                        <p style="color: black; font-weight: bold">Photo:</p>
+                      </td>
                       <td class="col2">
                         <p style="color: black">
                           {{ item.image.photoName }}
@@ -45,7 +51,9 @@
                     </tr>
                     <tr>
                       <td class="col1">
-                        <p style="color: black;font-weight: bold">Lisence type:</p>
+                        <p style="color: black; font-weight: bold">
+                          Lisence type:
+                        </p>
                       </td>
                       <td class="col2">
                         <p style="color: black" v-if="item.image.typeId === 1">
@@ -88,37 +96,50 @@
           v-if="!paidFor"
           class="column"
           style="
-        border-radius: 15px;
-        border: 0px solid rgba(0, 0, 0, 0.48);
-        height: 600px;
-        width: 400px;
-        margin-top: 30px;
-        margin-left: 1.5%;
-        margin-bottom: 30px;
-        margin-right: 5%;
-      "
+            border-radius: 15px;
+            border: 0px solid rgba(0, 0, 0, 0.48);
+            height: 600px;
+            width: 400px;
+            margin-top: 30px;
+            margin-left: 1.5%;
+            margin-bottom: 30px;
+            margin-right: 5%;
+          "
         >
           <div
             style="
-          border-radius: 15px;
-          border: 0px solid rgba(0, 0, 0, 0.25);
-          height: 230px;
-          margin: 15px;
-          padding-top:15px;
-          background-color: #F2F2F2
-        "
+              border-radius: 15px;
+              border: 0px solid rgba(0, 0, 0, 0.25);
+              height: 230px;
+              margin: 15px;
+              padding-top: 15px;
+              background-color: #f2f2f2;
+            "
           >
             <h4 style="padding-top: 10px; padding-left: 25px">Customer</h4>
-            <p style="padding-left: 25px;">Name: {{ user.fullName }}</p>
+            <p style="padding-left: 25px">Name: {{ user.fullName }}</p>
             <p style="padding-left: 25px">Email: {{ user.email }}</p>
             <hr style="width: 80%" />
-            <p style="padding-left:180px; margin-top:-30px; margin-bottom:10px">
+            <p
+              style="
+                padding-left: 180px;
+                margin-top: -30px;
+                margin-bottom: 10px;
+              "
+            >
               TOTAL: <br />
-              <span style="color: red; font-weight:bold; ">${{ total }} USD</span>
+              <span style="color: red; font-weight: bold"
+                >${{ total }} USD</span
+              >
             </p>
           </div>
           <div
-            style="height: 150px; width: 75%; margin-top: 25px; margin-left: 45px"
+            style="
+              height: 150px;
+              width: 75%;
+              margin-top: 25px;
+              margin-left: 45px;
+            "
             ref="paypal"
           ></div>
         </div>
@@ -130,7 +151,6 @@
 <script>
 import axios from "axios";
 import Unauthorized from "./Unauthorized.vue";
-
 
 export default {
   components: { Unauthorized },
@@ -147,7 +167,7 @@ export default {
     },
   },
 
-  data: function() {
+  data: function () {
     return {
       total: [],
       loaded: false,
@@ -159,7 +179,7 @@ export default {
       user: JSON.parse(localStorage.getItem("user")),
     };
   },
-  mounted: function() {
+  mounted: function () {
     this.getTotal();
     this.createListItems();
     const script = document.createElement("script");
@@ -175,7 +195,7 @@ export default {
     //console.log(this.$store.state.ucart);
   },
   methods: {
-    setLoaded: function() {
+    setLoaded: function () {
       this.loaded = true;
       window.paypal
         .Buttons({
@@ -254,11 +274,11 @@ export default {
       });
     },
     onCheckOut() {
-       let loader = this.$loading.show({
-        loader: 'dots',
+      let loader = this.$loading.show({
+        loader: "dots",
         height: 50,
         width: 50,
-    })
+      });
       const fd = new FormData();
       const orderDetails = Object.values(this.orderDetail);
       fd.append("userId", this.user.userId);
@@ -275,7 +295,8 @@ export default {
       }
 
       axios({
-        url: "https://capstoneprojectapi20210418160622.azurewebsites.net/api/Order",
+        url:
+          "https://capstoneprojectapi20210418160622.azurewebsites.net/api/Order",
         data: fd,
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -285,14 +306,13 @@ export default {
             loader.hide();
             this.$alert("Transaction complete", "Success", "success").then(() =>
               console.log("Closed")
-              
             );
 
             this.paidFor = true;
             window.localStorage.removeItem("cart");
             this.$store.state.cart = [];
           } else {
-            loader.hide()
+            loader.hide();
             this.$toasts.push({
               type: "error",
               message: "Error",
@@ -300,7 +320,7 @@ export default {
           }
         })
         .catch((error) => {
-          loader.hide()
+          loader.hide();
           this.$toasts.push({
             type: "error",
             message: error,
@@ -309,20 +329,21 @@ export default {
     },
     onCheckoutSaveToBC() {
       let loader = this.$loading.show({
-        loader: 'dots',
+        loader: "dots",
         height: 50,
         width: 50,
-    })
+      });
       axios({
         url: "http://35.185.185.238:3000/transactions",
         data: {
           transactionId: this.orderInfo.id,
           prevOwner: this.$store.state.ucart[0].image.userId,
-          userId: this.user.userId,
+          ownerID: this.user.userId,
           photoId: this.$store.state.ucart[0].image.photoId,
-          photoHash: this.$store.state.ucart[0].image.hash,
+          photoHash: this.$store.state.ucart[0].image.phash,
+          isTransaction: true,
           amount: parseFloat(this.orderInfo.purchase_units[0].amount.value),
-          transactionCreationTime: this.orderInfo.create_time,
+          createDate: this.orderInfo.create_time,
         },
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -344,22 +365,25 @@ export default {
             for (let i = 0; i < orderDetails.length; i++) {
               fd.append("ListPhotoId", orderDetails[i]);
             }
-            
+
             axios({
-              url: "https://capstoneprojectapi20210418160622.azurewebsites.net/api/Order",
+              url:
+                "https://capstoneprojectapi20210418160622.azurewebsites.net/api/Order",
               data: fd,
               method: "POST",
               headers: { "Content-Type": "application/json" },
             })
               .then((res) => {
                 if (res.status == 201) {
-                  loader.hide()
-                  this.$alert('Transaction complete', 'Success', 'success').then(() =>
-                    console.log('Closed')
-                  );
+                  loader.hide();
+                  this.$alert(
+                    "Transaction complete",
+                    "Success",
+                    "success"
+                  ).then(() => console.log("Closed"));
                   this.paidFor = true;
-                   window.localStorage.removeItem("ucart");
-                  this.$store.state.ucart = []
+                  window.localStorage.removeItem("ucart");
+                  this.$store.state.ucart = [];
                 } else {
                   this.$toasts.push({
                     type: "error",
@@ -368,14 +392,14 @@ export default {
                 }
               })
               .catch((error) => {
-                loader.hide()
+                loader.hide();
                 this.$toasts.push({
                   type: "error",
                   message: error,
                 });
               });
           } else {
-            loader.hide()
+            loader.hide();
             this.$toasts.push({
               type: "error",
               message: "Transaction error",

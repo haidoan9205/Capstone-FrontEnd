@@ -3,11 +3,12 @@ const mongoose = require('mongoose');
 const TransactionSchema = mongoose.Schema({
     transactionId: String,
     prevOwner: String,
-    userId: String,
+    ownerID: String,
     photoId: String,
     photoHash: String,
+    isTransaction: Boolean,
     amount: String,
-    transactionCreationTime: Date,
+    createDate: Date,
     // transactionCreatonTime: {
     //     type: Date,
     //     default: Date.now
