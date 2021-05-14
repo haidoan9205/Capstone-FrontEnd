@@ -31,6 +31,7 @@ import YourPhotoPending from "./views/YourPhotoPending.vue"
 import Feeds from "./views/Feeds.vue"
 import ListNormalImage from "./views/ListNormalImage.vue"
 import ListExclusiveImage from "./views/ListExclusiveImage.vue"
+import Download from "./views/Donwload.vue"
 
 Vue.use(Router);
 
@@ -73,7 +74,16 @@ export default new Router({
             },
             props: true,
         },
-       
+        {
+            path: "/download/:tokenId/:photoId",
+            name: "download",
+            components: {
+                header: AppHeader,
+                default: Download,
+                footer: AppFooter
+            },
+            props: true,
+        },
         {
             path: "/changeforgotpassword",
             name: "changeforgotpassword",

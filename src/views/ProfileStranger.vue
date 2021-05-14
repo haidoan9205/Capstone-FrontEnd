@@ -215,6 +215,7 @@ export default {
     this.$store.dispatch("getStrangerNonExlusiveImages");
     this.$store.dispatch("getStrangerExlusiveImages");
   },
+
   methods: {
     followUser(strange) {
       // console.log(user.userId)
