@@ -39,11 +39,12 @@ router.post('/', async(req, res) => {
     const transaction = new Transaction({
         transactionId: req.body.transactionId,
         prevOwner: req.body.prevOwner,
-        userId: req.body.userId,
+        ownerID: req.body.ownerID,
         photoId: req.body.photoId,
         photoHash: req.body.photoHash,
+        isTransaction: req.body.isTransaction,
         amount: req.body.amount + ' USD',
-        transactionCreationTime: req.body.transactionCreationTime,
+        createDate: req.body.createDate,
     });
     try {
         result = await col.insertOne(transaction);
@@ -114,7 +115,7 @@ router.get('/getDocumentHistory/:userId', async(req, res) => {
     await getConnection();
     try {
         // Fetch the history of that document.
-        result = await pdb.docHistory('Transactions', { userId: `${req.params.userId}` });
+        result = await pdb.docHistory('Transactions', { ownerID: `${req.params.userId}` });
         console.log(result);
         let length = result.history.length;
         console.log(
@@ -129,6 +130,23 @@ router.get('/getDocumentHistory/:userId', async(req, res) => {
     }
 
 });
+
+router.get('/getPhotoHistory/:photoHash', async (req, res) => {
+    await getConnection();
+    try {
+        result = await pdb.docHistory('Transactions', { photoHash: `${req.params.photoHash}` });
+        console.log(result);
+        let length = result.history.length;
+        console.log(
+            `History of photo: ${JSON.stringify(result.history[length - 1], null, 4)}`
+        );
+        return res.json(result.history, null, 4);
+    } catch (error) {
+        res.json({ message: error });
+    } finally {
+        await client.close();
+    }
+})
 
 router.put('/checkCart/:photoId', async(req, res) => {
     setTimeout(function() {

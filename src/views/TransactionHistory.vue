@@ -192,7 +192,7 @@
                           >finished on
                           <span v-bind="history" style="color: #6a5acd">{{
                             new Date(
-                              history.versions[0].document.transactionCreationTime
+                              history.versions[0].document.createDate
                             )
                           }}</span
                           >,</span
@@ -359,7 +359,7 @@ export default {
       doc.setTextColor(135, 206, 235);
       doc.text(
         new Date(
-          this.history.versions[0].document.transactionCreationTime
+          this.history.versions[0].document.createDate
         ).toUTCString(),
         74,
         140
