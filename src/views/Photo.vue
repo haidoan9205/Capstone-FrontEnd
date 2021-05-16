@@ -40,17 +40,30 @@
         <br />
 
         <Modal
-        v-model="tagModal"
-        title="Photo(s) with same tag"
-        :modal-style="{ 'max-width': '50%' }"
+          v-model="tagModal"
+          title="Photo(s) with same tag"
+          :modal-style="{ 'max-width': '50%' }"
         >
           <div class="container">
-            <div style="border: 0px solid #000; padding-top: 10px; margin-left: 3.5%">
+            <div
+              style="
+                border: 0px solid #000;
+                padding-top: 10px;
+                margin-left: 3.5%;
+              "
+            >
               <badge type="info" class="text-uppercase badgeTagModal">
                 {{ openingBadgeModal }}
               </badge>
             </div>
-            <div class="ct-example-row" style="border: 0px solid #000; margin-top: -40px; padding-bottom: 8%">
+            <div
+              class="ct-example-row"
+              style="
+                border: 0px solid #000;
+                margin-top: -40px;
+                padding-bottom: 8%;
+              "
+            >
               <div class="row">
                 <div
                   class="col-6 col-md-4"
@@ -102,7 +115,11 @@
             >
           </div>
           <div class="mb-3 mt-2">
-            <base-button class="btn-1" type="primary" v-if="image.typeId == 2" @click="openTrackingModal()"
+            <base-button
+              class="btn-1"
+              type="primary"
+              v-if="image.typeId == 2"
+              @click="openTrackingModal()"
               >Tracking</base-button
             >
           </div>
@@ -113,8 +130,8 @@
           title="Tracking Details"
           :modal-style="{ 'max-width': '60%' }"
         >
-          <div style="height: 600px">
-            Tracking
+          <div class="container" style="height: 40%; overflow: auto">
+            <light-timeline :items="trackingItems"></light-timeline>
           </div>
         </Modal>
       </div>
@@ -130,14 +147,15 @@ import axios from "axios";
 import { merge, of } from "rxjs";
 import VueModal from "@kouts/vue-modal";
 import "@kouts/vue-modal/dist/vue-modal.css";
+// import { response } from "express";
 
 // const { map, pluck, startWith, scan } = rxjs.operators;
 export default {
-  components: { 
+  components: {
     Modal,
     Modal: VueModal,
     VueModal,
-    },
+  },
   props: ["follows"],
 
   data() {
@@ -157,6 +175,26 @@ export default {
       fullPage: true,
       tagModal: false,
       trackingModal: false,
+      trackingItems: [
+        // {
+        //   tag: "2018-01-12",
+        //   content: "hallo",
+        // },
+        // {
+        //   tag: "2018-01-13",
+        //   color: "#dcdcdc",
+        //   type: "circle",
+        //   content: "world",
+        // },
+        // {
+        //   tag: "2018-01-14",
+        //   type: "star",
+        //   htmlMode: true,
+        //   content: "demo",
+        // },
+      ],
+      prevOwnerInfo: [],
+      ownerInfo: [],
     };
   },
 
@@ -225,10 +263,103 @@ export default {
     },
     openTrackingModal() {
       this.trackingModal = true;
+      this.getTrackingInfo();
     },
     openTagModal() {
       this.tagModal = true;
-    }
+    },
+   getTrackingInfo() {
+      let loader = this.$loading.show({
+        loader: "dots",
+        height: 50,
+        width: 50,
+      });
+      axios
+        .get(
+          "http://localhost:3000/transactions/getPhotoHistory/" +
+            this.image.phash
+        )
+        .then((response) => {
+          if (response.status == 200) {
+            console.log(response.data);
+            var list = response.data;
+            var tmp = "";
+            this.trackingItems = [];
+            for (let index = 0; index < list.length; index++) {
+              // console.log("index no." + index + " " + JSON.stringify(list[index].versions[0].document));
+              tmp = list[index].versions[0].document.ownerID;
+              if (list[index].versions[0].document.isTransaction == false) {
+                this.trackingItems.push({
+                  tag: new Date(
+                    list[index].versions[0].document.createDate
+                  ).toLocaleDateString(),
+                  content: "Photo Approval for sale on IMAGO date",
+                });
+              } else if (
+                list[index].versions[0].document.isTransaction == true
+              ) {
+                
+                //this ass
+                this.getOwnerDetails(list[index].versions[0].document.ownerID);
+                this.getPrevOwnerDetails(list[index].versions[0].document.prevOwner);
+                console.log(this.ownerInfo + " - " + this.prevOwnerInfo);
+                this.trackingItems.push({
+                  tag: new Date(
+                    list[index].versions[0].document.createDate
+                  ).toLocaleDateString(),
+                  content:
+                    "Transaction from " +
+                    this.prevOwnerInfo.username +
+                    " to " +
+                    this.ownerInfo.username,
+                });
+              }
+            }
+
+            loader.hide();
+          } else {
+            loader.hide();
+            alert("Network error, please try again!");
+          }
+        })
+        .catch((error) => {
+          loader.hide();
+          alert("System error, please contact admin!");
+          console.log(error);
+        });
+    },
+    async getPrevOwnerDetails(id) {
+      await axios
+        .get(
+          "https://capstoneprojectapi20210418160622.azurewebsites.net/api/v1/User/GetById/" +
+            id
+        )
+        .then((response) => {
+          if (response.status == 200) {
+            this.prevOwnerInfo = response.data;
+          }
+        })
+        .catch((error) => {
+          // alert("System error, please contact admin!");
+          console.log(error);
+        });
+    },
+    async getOwnerDetails(id) {
+      await axios
+        .get(
+          "https://capstoneprojectapi20210418160622.azurewebsites.net/api/v1/User/GetById/" +
+            id
+        )
+        .then((response) => {
+          if (response.status == 200) {
+            this.ownerInfo = response.data;
+          }
+        })
+        .catch((error) => {
+          // alert("System error, please contact admin!");
+          console.log(error);
+        });
+    },
   },
 
   computed: {

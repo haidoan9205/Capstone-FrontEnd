@@ -42,6 +42,7 @@
         "vue-flatpickr-component": "^8.1.1",
         "vue-it-bigger": "^0.2.2",
         "vue-lazyload": "^1.2.6",
+        "vue-light-timeline": "^1.0.3",
         "vue-loading-overlay": "^3.4.2",
         "vue-loading-spinner": "^1.0.11",
         "vue-masonry": "^0.12.0",
