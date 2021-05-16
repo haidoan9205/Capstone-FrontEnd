@@ -557,8 +557,7 @@ export default {
         console.log("aaaa");
         console.log(response);
         if(response.status == 200){
-          this.$router.push({name: 'download'});
-          
+          window.location.href = response.data;
         }
       });
     },

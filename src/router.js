@@ -75,7 +75,7 @@ export default new Router({
             props: true,
         },
         {
-            path: "/download/:tokenId/:photoId",
+            path: "/download",
             name: "download",
             components: {
                 header: AppHeader,
@@ -100,7 +100,7 @@ export default new Router({
             components: {
                 header: AppHeader,
                 default: Feeds,
-                footer:Sidebar,
+                footer: Sidebar,
             },
             props: true,
         },
