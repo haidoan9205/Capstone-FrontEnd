@@ -166,9 +166,9 @@ export const CHECK_IS_YOUR = (state , checkIsYour) =>{
 export const auth_success = (state, user) => {
   state.status = 'success';
   state.token = user.token;
-  console.log('in user trong mutation');
+
   state.user = user;
-  console.log(user);
+  
 };
 
 export const auth_error = (state) => {

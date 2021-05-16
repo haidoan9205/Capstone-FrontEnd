@@ -15,7 +15,7 @@
       </section>
       <section class="section section-skew">
         <div class="container">
-          <card shadow class="card-profile " no-body>
+          <card shadow class="card-profile" no-body>
             <div class="px-4">
               <div class="row justify-content-center">
                 <div class="col-lg-3 order-lg-2">
@@ -48,7 +48,7 @@
                         Edit Profile
                       </h6>
 
-                      <div class=" text-center">
+                      <div class="text-center">
                         <div class="page"><h2>Profile</h2></div>
                         <div class="row justify-content-center">
                           <div class="row align-items-center">
@@ -65,7 +65,7 @@
                         <div class="row justify-content-center">
                           <div class="row align-items-center">
                             <div class="form-group">
-                              <div class="donateItem ">
+                              <div class="donateItem">
                                 <label class="control-label">Full Name</label>
                               </div>
                               <input
@@ -89,7 +89,7 @@
                         <div class="row justify-content-center">
                           <div class="row align-items-center">
                             <div class="form-group">
-                              <div class="donateItem ">
+                              <div class="donateItem">
                                 <label class="control-label"
                                   >Date of Birth</label
                                 >
@@ -102,7 +102,7 @@
                               ></date-picker>
                             </div>
                             <div class="form-group pl-3">
-                              <div class="donateItem ">
+                              <div class="donateItem">
                                 <label class="control-label">Description</label>
                               </div>
                               <input
@@ -169,7 +169,7 @@
                                 v-on:click="unFollowUser(follower)"
                                 type="neutral"
                                 v-show="follower.isDelete == false"
-                                style="float:right"
+                                style="float: right"
                                 >Unfollow</base-button
                               >
                               <base-button
@@ -177,7 +177,7 @@
                                 @click="unFollowUser(follower)"
                                 type="neutral"
                                 v-show="follower.isDelete == true"
-                                style="float:right"
+                                style="float: right"
                                 :disabled="follower.isDelete == true"
                                 >Unfollowed</base-button
                               >
@@ -232,9 +232,7 @@
               <tabs fill class="flex-column flex-md-row">
                 <card shadow slot-scope="{ activeTabIndex }">
                   <tab-pane key="tab1">
-                    <template slot="title">
-                      Non-Exclusive
-                    </template>
+                    <template slot="title"> Non-Exclusive </template>
 
                     <div class="container">
                       <div class="ct-example-row">
@@ -265,7 +263,7 @@
                                 Edit Non-Exclusive Image
                               </h6>
 
-                              <div class=" text-center">
+                              <div class="text-center">
                                 <div class="page">
                                   <h2>Image Information</h2>
                                 </div>
@@ -273,7 +271,7 @@
                                 <div class="row justify-content-center">
                                   <div class="row align-items-center">
                                     <div class="form-group">
-                                      <div class="donateItem ">
+                                      <div class="donateItem">
                                         <label class="control-label"
                                           >Photo Name</label
                                         >
@@ -288,7 +286,7 @@
                                         required
                                       />
                                     </div>
-                                    <div class="form-group  pl-3">
+                                    <div class="form-group pl-3">
                                       <label class="control-label">Price</label>
                                       <input
                                         type="text"
@@ -308,7 +306,7 @@
                                 <div class="row justify-content-center">
                                   <div class="row align-items-center">
                                     <div class="form-group">
-                                      <div class="donateItem ">
+                                      <div class="donateItem">
                                         <label class="control-label"
                                           >Description</label
                                         >
@@ -342,29 +340,32 @@
                             gradient="danger"
                             modal-classes="modal-danger modal-dialog-centered"
                           >
-
                             <div class="py-3 text-center">
-                              <i class="fa fa-meh-o" style="font-size:50px"></i>
-                              <h6 class="heading mt-4">
-                                Are you sure?
-                              </h6>
-                              <p>
-                               This image will be deleted.
-                              </p>
+                              <i
+                                class="fa fa-meh-o"
+                                style="font-size: 50px"
+                              ></i>
+                              <h6 class="heading mt-4">Are you sure?</h6>
+                              <p>This image will be deleted.</p>
                             </div>
 
-                            
-                              <base-button type="white" @click="deletePhoto(objectSelectedNor), modals.modalConfirmDelete = false">Ok, Delete It</base-button>
-                              <base-button
-                                type="link"
-                                text-color="white"
-                                class="ml-auto"
-                                style="float:right"
-                                @click=" modals.modalConfirmDelete = false"
-                              >
-                                Close
-                              </base-button>
-                            
+                            <base-button
+                              type="white"
+                              @click="
+                                deletePhoto(objectSelectedNor),
+                                  (modals.modalConfirmDelete = false)
+                              "
+                              >Ok, Delete It</base-button
+                            >
+                            <base-button
+                              type="link"
+                              text-color="white"
+                              class="ml-auto"
+                              style="float: right"
+                              @click="modals.modalConfirmDelete = false"
+                            >
+                              Close
+                            </base-button>
                           </modal>
                           <vue-context ref="menu2">
                             <li
@@ -375,7 +376,7 @@
                                 Edit
                                 <i
                                   class="fa fa-pencil-square-o mt-1"
-                                  style="float:right"
+                                  style="float: right"
                                 ></i>
                               </a>
                             </li>
@@ -384,7 +385,7 @@
                                 Delete
                                 <i
                                   class="fa fa-trash mt-1"
-                                  style="float:right"
+                                  style="float: right"
                                 ></i>
                               </a>
                             </li>
@@ -395,9 +396,7 @@
                   </tab-pane>
 
                   <tab-pane key="tab2">
-                    <template slot="title">
-                      Exclusive
-                    </template>
+                    <template slot="title"> Exclusive </template>
 
                     <div class="container">
                       <div class="ct-example-row">
@@ -427,7 +426,7 @@
                                 Edit Exclusive Image
                               </h6>
 
-                              <div class=" text-center">
+                              <div class="text-center">
                                 <div class="page">
                                   <h2>Image Information</h2>
                                 </div>
@@ -435,7 +434,7 @@
                                 <div class="row justify-content-center">
                                   <div class="row align-items-center">
                                     <div class="form-group">
-                                      <div class="donateItem ">
+                                      <div class="donateItem">
                                         <label class="control-label"
                                           >Photo Name</label
                                         >
@@ -449,7 +448,7 @@
                                         required
                                       />
                                     </div>
-                                    <div class="form-group  pl-3">
+                                    <div class="form-group pl-3">
                                       <label class="control-label">Price</label>
                                       <input
                                         type="text"
@@ -467,7 +466,7 @@
                                 <div class="row justify-content-center">
                                   <div class="row align-items-center">
                                     <div class="form-group">
-                                      <div class="donateItem ">
+                                      <div class="donateItem">
                                         <label class="control-label"
                                           >Description</label
                                         >
@@ -495,34 +494,37 @@
                               </div>
                             </modal>
                           </div>
-                             <modal
+                          <modal
                             :show.sync="modals.modalConfirmDelete1"
                             gradient="danger"
                             modal-classes="modal-danger modal-dialog-centered"
                           >
-
                             <div class="py-3 text-center">
-                              <i class="fa fa-meh-o" style="font-size:50px"></i>
-                              <h6 class="heading mt-4">
-                                Are you sure?
-                              </h6>
-                              <p>
-                               This image will be deleted.
-                              </p>
+                              <i
+                                class="fa fa-meh-o"
+                                style="font-size: 50px"
+                              ></i>
+                              <h6 class="heading mt-4">Are you sure?</h6>
+                              <p>This image will be deleted.</p>
                             </div>
 
-                            
-                              <base-button type="white" @click="deletePhoto(objectSelected), modals.modalConfirmDelete1 = false">Ok, Delete It</base-button>
-                              <base-button
-                                type="link"
-                                text-color="white"
-                                class="ml-auto"
-                                style="float:right"
-                                @click=" modals.modalConfirmDelete1 = false"
-                              >
-                                Close
-                              </base-button>
-                            
+                            <base-button
+                              type="white"
+                              @click="
+                                deletePhoto(objectSelected),
+                                  (modals.modalConfirmDelete1 = false)
+                              "
+                              >Ok, Delete It</base-button
+                            >
+                            <base-button
+                              type="link"
+                              text-color="white"
+                              class="ml-auto"
+                              style="float: right"
+                              @click="modals.modalConfirmDelete1 = false"
+                            >
+                              Close
+                            </base-button>
                           </modal>
                           <vue-context ref="menu1">
                             <li
@@ -533,7 +535,7 @@
                                 Edit
                                 <i
                                   class="fa fa-pencil-square-o mt-1"
-                                  style="float:right"
+                                  style="float: right"
                                 ></i>
                               </a>
                             </li>
@@ -542,7 +544,7 @@
                                 Delete
                                 <i
                                   class="fa fa-trash mt-1"
-                                  style="float:right"
+                                  style="float: right"
                                 ></i>
                               </a>
                             </li>
@@ -556,9 +558,7 @@
                   </tab-pane>
 
                   <tab-pane key="tab3">
-                    <template slot="title">
-                      Exclusive Property
-                    </template>
+                    <template slot="title"> Exclusive Property </template>
 
                     <div class="container">
                       <div class="ct-example-row">
@@ -621,7 +621,7 @@
                                     (modals.modalEnable = false),
                                       (modals.modalEditImage = true)
                                   "
-                                  style="float:right"
+                                  style="float: right"
                                 >
                                   Edit
                                 </base-button>
@@ -636,7 +636,7 @@
                                 Edit Exclusive Image
                               </h6>
 
-                              <div class=" text-center">
+                              <div class="text-center">
                                 <div class="page">
                                   <h2>Image Information</h2>
                                 </div>
@@ -644,7 +644,7 @@
                                 <div class="row justify-content-center">
                                   <div class="row align-items-center">
                                     <div class="form-group">
-                                      <div class="donateItem ">
+                                      <div class="donateItem">
                                         <label class="control-label"
                                           >Photo Name</label
                                         >
@@ -659,7 +659,7 @@
                                         required
                                       />
                                     </div>
-                                    <div class="form-group  pl-3">
+                                    <div class="form-group pl-3">
                                       <label class="control-label">Price</label>
                                       <input
                                         type="text"
@@ -680,7 +680,7 @@
                                 <div class="row justify-content-center">
                                   <div class="row align-items-center">
                                     <div class="form-group">
-                                      <div class="donateItem ">
+                                      <div class="donateItem">
                                         <label class="control-label"
                                           >Description</label
                                         >
@@ -745,6 +745,7 @@ import TabPane from "@/components/Tabs/TabPane.vue";
 import VueContext from "vue-context";
 import "vue-context/src/sass/vue-context.scss";
 import Unauthorized from "./Unauthorized.vue";
+// import { response } from "express";
 export default {
   components: { DatePicker, Modal, Tabs, TabPane, VueContext, Unauthorized },
   data() {
@@ -889,28 +890,57 @@ export default {
     },
     enableExclusive(objectSelected) {
       // console.log(user.userId)
+      console.log(objectSelected);
       axios({
-        method: "PUT",
-        url:
-          "https://capstoneprojectapi20210418160622.azurewebsites.net/api/v1/Photo/ChangeWatermarkPhoto/" +
-          objectSelected.photoId,
-      }).then((response) => {
-        console.log("aaaa");
-        console.log(response);
-        if (response.status == 200) {
-          this.$alert("Enable Sucessfully", "Success", "success").then(() =>
-            console.log("Closed")
-          );
-          this.modals.modalEnable = false;
-        } else {
+        url: "http://localhost:3000/transactions",
+        data: {
+          transactionId: "none",
+          prevOwner: "none",
+          ownerID: objectSelected.userId,
+          photoId: objectSelected.photoId,
+          photoHash: objectSelected.phash,
+          isTransaction: false,
+          amount: "0",
+          createDate: new Date().toISOString(),
+        },
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+      })
+        .then((response) => {
+          if (response.status == 200) {
+            axios({
+              method: "PUT",
+              url:
+                "https://capstoneprojectapi20210418160622.azurewebsites.net/api/v1/Photo/ChangeWatermarkPhoto/" +
+                objectSelected.photoId,
+            }).then((response) => {
+              console.log("aaaa");
+              console.log(response);
+              if (response.status == 200) {
+                this.$alert(
+                  "Enable Sucessfully",
+                  "Success",
+                  "success"
+                ).then(() => console.log("Closed"));
+                this.modals.modalEnable = false;
+              } else {
+                this.$alert(
+                  "Something went wrong, please try again",
+                  "Error",
+                  "error"
+                ).then(() => console.log("Closed"));
+                this.modals.modalEnable = false;
+              }
+            });
+          }
+        })
+        .catch((error) => {
           this.$alert(
             "Something went wrong, please try again",
             "Error",
-            "error"
+            'error'
           ).then(() => console.log("Closed"));
-          this.modals.modalEnable = false;
-        }
-      });
+        });
     },
     deletePhoto(objectSelected) {
       axios({
