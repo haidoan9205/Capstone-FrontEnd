@@ -125,6 +125,7 @@ export const getStrangerNonExlusiveImages = ({commit}) =>{
         .then((response) => {
             commit("SET_IMAGES_STRANGER_NON_EXCLUSIVE", response.data);
             loader.hide()
+            
         }).catch((err) =>{
             loader.hide();
         })
@@ -226,21 +227,6 @@ export const downloadImage = ({ commit }, token, photoId) => {
     });
 };
 
-// export const downloadImage = ({ commit }, photoId) => {
-//   axios({
-//     url: `https://capstoneprojectapi20210418160622.azurewebsites.net/api/v1/Photo/DownloadPhoto/${photoId}`,
-//     method: "GET"
-//   }).then((response) => {
-//     var fileURL = window.URL.createObjectURL(new Blob([response.data]));
-//     var fileLink = document.createElement("a");
-//     console.log(response.data.image)
-//     console.log(response.data)
-//     fileLink.href = fileURL;
-//     fileLink.setAttribute("download", "file.jpg");
-//     document.body.appendChild(fileLink);
-//     fileLink.click();
-//   });
-// };
 
 export const addPhotoToCart = ({ commit }, { image }) => {
     commit("ADD_TO_CART", { image });
@@ -293,6 +279,7 @@ export const login = ({ commit }, user) => {
                 axios.defaults.headers.common["Authorization"] = token;
                 commit("auth_success", user);
                 resolve(resp);
+                window.location.replace('/');
             })
             .catch((err) => {
                 commit("auth_error");
