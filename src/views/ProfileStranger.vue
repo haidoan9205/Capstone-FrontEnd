@@ -110,7 +110,7 @@
                         <div class="row">
                           <div
                             class="col-6 col-md-4"
-                            v-for="item in dataResponse.imageNonExlusive"
+                            v-for="item in imageNonExlusive"
                             :key="item.photoId"
                           >
                             <router-link
@@ -137,7 +137,7 @@
                         <div class="row">
                           <div
                             class="col-6 col-md-4"
-                            v-for="(item, index) in dataResponse.imageExlusive"
+                            v-for="(item, index) in imageExlusive"
                             :key="index"
                           >
                             <router-link
@@ -176,6 +176,8 @@ export default {
     return {
       isClick: false,
       userId: "",
+      isLoadingNon: false,
+      isLoadingEx: false,
       alreadyFollowed: false,
       countFollower: this.$store.getters.followerCount,
       user: JSON.parse(localStorage.getItem("user")),
@@ -184,6 +186,8 @@ export default {
         modalFollower: false,
         modalEditProfile: false,
       },
+      imageNonExlusive:[],
+      imageExlusive: [],
     };
   },
   computed: {
@@ -196,14 +200,13 @@ export default {
         images: this.$store.state.approved_images_stranger,
         followers: this.$store.state.followingStranger,
         isFollowed: this.$store.state.checkIsFollowed,
-        imageNonExlusive: this.$store.state.stranger_non_exlusive_images,
-        imageExlusive: this.$store.state.stranger_exlusive_images,
+        
       };
     },
   },
+  
   mounted() {
-    console.log('debug')
-    console.log(this.dataResponse)
+  
     this.$store.dispatch(
       "getFollowingStranger",
       window.localStorage.getItem("strangerId")
@@ -212,9 +215,10 @@ export default {
     window.localStorage.setItem("strangerId", this.$route.params.userId);
     this.$store.dispatch("getApprovedImageByStranger");
     this.$store.dispatch("checkIsFollowed");
-    this.$store.dispatch("getStrangerNonExlusiveImages");
-    this.$store.dispatch("getStrangerExlusiveImages");
+     
   },
+  
+
   methods: {
     followUser(strange) {
       // console.log(user.userId)
@@ -254,7 +258,32 @@ export default {
         console.log(response.data);
       });
     },
+    async getStrangerNonExlusiveImages(){
+      await axios
+        .get(
+            'https://capstoneprojectapi20210418160622.azurewebsites.net/api/v1/User/GetUserNormalPhoto/' + this.$route.params.userId,
+        )
+        .then((response) => {
+           this.imageNonExlusive = response.data
+            
+        })
+    },
+    async getStrangerExlusiveImages(){
+      await axios
+        .get(
+            'https://capstoneprojectapi20210418160622.azurewebsites.net/api/v1/User/GetUserExclusivePhoto/' +  this.$route.params.userId,
+        )
+        .then((response) => {
+           this.imageExlusive = response.data
+            
+        })
+    }
+    
   },
+  async created(){
+    await this.getStrangerNonExlusiveImages();
+    await this.getStrangerExlusiveImages();
+  }
 };
 </script>
 

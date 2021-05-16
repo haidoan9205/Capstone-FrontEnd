@@ -79,13 +79,15 @@ export default {
       } else {
         this.$store
           .dispatch("login", { username, password })
-          .then(() => this.$router.push("/"))
+          .then(() => 
+            this.$router.push("/"))
           .catch(
             (err) => (
               console.log(err)
             )
           );
         this.$store.dispatch("auth");
+        
       }
     },
   },

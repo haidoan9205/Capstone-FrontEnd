@@ -35,7 +35,7 @@
                   <base-button
                     outline
                     type="primary"
-                    @click="download(transaction)"
+                    @click="createToken(transaction)"
                     >Download</base-button
                   >
                 </td>
@@ -115,7 +115,7 @@
                             width: 400px;
                             cursor: pointer;
                             padding-top: 5px;
-                          " />
+                          "/>
                         <p style="padding: 3px">Click on image for full size</p>
 
                         <LightBox
@@ -468,14 +468,14 @@ export default {
         width: 50,
       });
       await axios
-         .get(
-           "http://localhost:3000/transactions/getDocumentHistory/" +
-             this.user.userId
-         )
-       // .get(
-         // "http://localhost:3000/transactions/getDocumentHistory/" +
-           // this.user.userId
-       // )
+        .get(
+          "http://localhost:3000/transactions/getDocumentHistory/" +
+            this.user.userId
+        )
+        // .get(
+        // "http://localhost:3000/transactions/getDocumentHistory/" +
+        // this.user.userId
+        // )
         .then((response) => {
           if (response.status == 200) {
             if (response.data == "ProofId is invalid!") {
@@ -539,6 +539,28 @@ export default {
 
     frontEndDateFormat(date) {
       return moment(date, "YYYY-MM-DD HHmm").format("DD/MM/YYYY HH:mm");
+    },
+    createToken(transaction) {
+      const user = localStorage.getItem("user");
+      const user_parsed = JSON.parse(user);
+      axios({
+        headers:{
+          "Access-Control-Allow-Origin": "*",
+        },
+        method: "POST",
+        url:
+          "https://capstoneprojectapi20210418160622.azurewebsites.net/api/v1/Photo/CreateToken?photoId=" +
+          transaction.photoId +
+          "&userId=" +
+          user_parsed.userId,
+      }).then((response) => {
+        console.log("aaaa");
+        console.log(response);
+        if(response.status == 200){
+          this.$router.push({name: 'download'});
+          
+        }
+      });
     },
   },
 };

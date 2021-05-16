@@ -113,7 +113,7 @@ export default {
       const abc = window.localStorage.getItem("user");
       // console.log(abc);
       const appove = this.$store.state.approved_images;
-      console.log(appove);
+      
       return JSON.parse(abc);
     },
   },
