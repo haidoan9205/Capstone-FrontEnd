@@ -302,6 +302,7 @@ export default {
                 //this ass
                 this.getOwnerDetails(list[index].versions[0].document.ownerID);
                 this.getPrevOwnerDetails(list[index].versions[0].document.prevOwner);
+                //
                 console.log(this.ownerInfo + " - " + this.prevOwnerInfo);
                 this.trackingItems.push({
                   tag: new Date(
