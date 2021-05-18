@@ -15,7 +15,7 @@ export const getImages = ({ commit }) => {
         .then((response) => {
             commit("SET_IMAGES", response.data);
             loader.hide()
-        }).catch((err) =>{
+        }).catch((err) => {
             loader.hide();
         })
 };
@@ -31,7 +31,7 @@ export const getImagesAll = ({ commit }) => {
         .then((response) => {
             commit("SET_IMAGES_ALL", response.data);
             loader.hide()
-        }).catch((err) =>{
+        }).catch((err) => {
             loader.hide();
         })
 };
@@ -47,12 +47,12 @@ export const getImagesAllExclusive = ({ commit }) => {
         .then((response) => {
             commit("SET_IMAGES_ALL_EXCLUSIVE", response.data);
             loader.hide();
-        }).catch((err) =>{
+        }).catch((err) => {
             loader.hide();
         })
 };
 
-export const getUserNonExlusiveImages = ({commit}) =>{
+export const getUserNonExlusiveImages = ({ commit }) => {
     let loader = Vue.$loading.show({
         loader: 'dots',
         height: 50,
@@ -67,12 +67,12 @@ export const getUserNonExlusiveImages = ({commit}) =>{
         .then((response) => {
             commit("SET_IMAGES_USER_NON_EXCLUSIVE", response.data);
             loader.hide()
-        }).catch((err) =>{
+        }).catch((err) => {
             loader.hide();
         })
 }
 
-export const getUserExlusiveImages = ({commit}) =>{
+export const getUserExlusiveImages = ({ commit }) => {
     let loader = Vue.$loading.show({
         loader: 'dots',
         height: 50,
@@ -87,18 +87,18 @@ export const getUserExlusiveImages = ({commit}) =>{
         .then((response) => {
             commit("SET_IMAGES_USER_EXCLUSIVE", response.data);
             loader.hide();
-        }).catch((err) =>{
+        }).catch((err) => {
             loader.hide();
         })
 }
 
-export const getStrangerExlusiveImages = ({commit}) =>{
+export const getStrangerExlusiveImages = ({ commit }) => {
     let loader = Vue.$loading.show({
         loader: 'dots',
         height: 50,
         width: 50,
     })
- 
+
     axios
         .get(
             `https://capstoneprojectapi20210418160622.azurewebsites.net/api/v1/User/GetUserExclusivePhoto/${window.localStorage.getItem('strangerId')}`
@@ -106,18 +106,18 @@ export const getStrangerExlusiveImages = ({commit}) =>{
         .then((response) => {
             commit("SET_IMAGES_STRANGER_EXCLUSIVE", response.data);
             loader.hide();
-        }).catch((err) =>{
+        }).catch((err) => {
             loader.hide();
         })
 }
 
-export const getStrangerNonExlusiveImages = ({commit}) =>{
+export const getStrangerNonExlusiveImages = ({ commit }) => {
     let loader = Vue.$loading.show({
         loader: 'dots',
         height: 50,
         width: 50,
     })
-   
+
     axios
         .get(
             `https://capstoneprojectapi20210418160622.azurewebsites.net/api/v1/User/GetUserNormalPhoto/${window.localStorage.getItem('strangerId')}`
@@ -125,13 +125,12 @@ export const getStrangerNonExlusiveImages = ({commit}) =>{
         .then((response) => {
             commit("SET_IMAGES_STRANGER_NON_EXCLUSIVE", response.data);
             loader.hide()
-            
-        }).catch((err) =>{
+        }).catch((err) => {
             loader.hide();
         })
 }
 
-export const getNotification =({commit}) =>{
+export const getNotification = ({ commit }) => {
     const user = localStorage.getItem("user");
     const user_parsed = JSON.parse(user);
     axios
@@ -143,7 +142,7 @@ export const getNotification =({commit}) =>{
         });
 }
 
-export const getUserExlusiveProperty = ({commit}) =>{
+export const getUserExlusiveProperty = ({ commit }) => {
     let loader = Vue.$loading.show({
         loader: 'dots',
         height: 50,
@@ -158,42 +157,41 @@ export const getUserExlusiveProperty = ({commit}) =>{
         .then((response) => {
             commit("SET_IMAGES_EXCLUSIVE_PROPERTY", response.data);
             loader.hide();
-        }).catch((err) =>{
+        }).catch((err) => {
             loader.hide();
         })
 }
 
-export const getImage = ({ commit },photoId) => {
+export const getImage = ({ commit }, photoId) => {
     let loader = Vue.$loading.show({
         loader: 'dots',
         height: 50,
         width: 50,
     })
-    
-  state.image = '';
-  state.checkIsYour = false;
-  state.checkIsBought = false;
-  axios
-    .get(`https://capstoneprojectapi20210418160622.azurewebsites.net/api/v1/Photo/${photoId}`)
-    .then((response) => {
-      commit("SET_IMAGE", response.data);
-      loader.hide();
-    }).catch((err) =>{
-        loader.hide();
-    })
+
+    state.image = '';
+    state.checkIsYour = false;
+    state.checkIsBought = false;
+    axios
+        .get(`https://capstoneprojectapi20210418160622.azurewebsites.net/api/v1/Photo/${photoId}`)
+        .then((response) => {
+            commit("SET_IMAGE", response.data);
+            loader.hide();
+        }).catch((err) => {
+            loader.hide();
+        })
 };
 
-export const checkIsFollowed =({commit}) =>{
+export const checkIsFollowed = ({ commit }) => {
     axios({
         method: "GET",
-        url:
-          "https://capstoneprojectapi20210418160622.azurewebsites.net/api/v1/Follow/CheckFollowedUser?userId=" +
-          JSON.parse(state.user).userId +
-          "&followId=" +
-          window.localStorage.getItem("strangerId"),
-      }).then((response) => {
-         commit("CHECK_IS_FOLLOWED", response.data);
-      });
+        url: "https://capstoneprojectapi20210418160622.azurewebsites.net/api/v1/Follow/CheckFollowedUser?userId=" +
+            JSON.parse(state.user).userId +
+            "&followId=" +
+            window.localStorage.getItem("strangerId"),
+    }).then((response) => {
+        commit("CHECK_IS_FOLLOWED", response.data);
+    });
 }
 
 export const getStrangeUser = ({ commit }, userId) => {
@@ -206,24 +204,40 @@ export const getStrangeUser = ({ commit }, userId) => {
         });
 };
 
-export const downloadImage = ({ commit }, token, photoId) => {
+export const downloadImage = ({ commit }, { tokenId, photoId }) => {
+    console.log(photoId);
+    console.log(tokenId);
     const user = localStorage.getItem("user");
     const user_parsed = JSON.parse(user);
     axios({
-        url: `https://capstoneprojectapi20210418160622.azurewebsites.net/api/v1/Photo/DownloadPhoto?tokenId=${token}&photoId=${photoId}&userId=${user_parsed.userId}`,
+        url: `https://capstoneprojectapi20210418160622.azurewebsites.net/api/v1/Photo/DownloadPhoto?tokenId=${tokenId}&photoId=${photoId}&userId=${user_parsed.userId}`,
         method: "GET",
         responseType: "blob",
     }).then((response) => {
-        var fileURL = window.URL.createObjectURL(new Blob([response.data]));
-        var fileLink = document.createElement("a");
-        var filename = response.headers["content-disposition"];
-        filename = filename.split(";");
-        filename = filename[1].substring(filename[1].lastIndexOf("="));
-        filename = filename.substring(1);
-        fileLink.href = fileURL;
-        fileLink.setAttribute("download", filename);
-        document.body.appendChild(fileLink);
-        fileLink.click();
+        console.log(response.status);
+        if (response.status == 200) {
+            var fileURL = window.URL.createObjectURL(new Blob([response.data]));
+            var fileLink = document.createElement("a");
+            var filename = response.headers["content-disposition"];
+            filename = filename.split(";");
+            filename = filename[1].substring(filename[1].lastIndexOf("="));
+            filename = filename.substring(1);
+            fileLink.href = fileURL;
+            fileLink.setAttribute("download", filename);
+            document.body.appendChild(fileLink);
+            fileLink.click();
+        }
+        if (response.status == 400) {
+            Vue.$toast.error('Sorry your token has expired!!!', {
+                // override the global option
+                position: 'bottom-right'
+            })
+        }
+    }).catch((error) => {
+        Vue.$toast.error('Sorry your token has expired!!!', {
+            // override the global option
+            position: 'bottom-right'
+        })
     });
 };
 
@@ -236,31 +250,29 @@ export const removeItem = ({ commit }, { image }) => {
     commit("REMOVE_ITEM", { image });
 };
 
-export const checkIsBought =({commit}, photoId) =>{
-    
+export const checkIsBought = ({ commit }, photoId) => {
+
     axios({
         method: "GET",
-        url:
-          "https://capstoneprojectapi20210418160622.azurewebsites.net/api/v1/Photo/CheckBoughtPhoto?id=" +
-          photoId +
-          "&userId=" +
-          JSON.parse(state.user).userId,
-      }).then((response) => {
+        url: "https://capstoneprojectapi20210418160622.azurewebsites.net/api/v1/Photo/CheckBoughtPhoto?id=" +
+            photoId +
+            "&userId=" +
+            JSON.parse(state.user).userId,
+    }).then((response) => {
         commit('CHECK_IS_BOUGHT', response.data);
-      });
+    });
 }
 
-export const checkIsYour = ({commit}, photoId) =>{
+export const checkIsYour = ({ commit }, photoId) => {
     axios({
         method: "GET",
-        url:
-          "https://capstoneprojectapi20210418160622.azurewebsites.net/api/v1/Photo/CheckMyPhoto?photoId=" +
-          photoId +
-          "&userId=" +
-          JSON.parse(state.user).userId,
-      }).then((response) => {
+        url: "https://capstoneprojectapi20210418160622.azurewebsites.net/api/v1/Photo/CheckMyPhoto?photoId=" +
+            photoId +
+            "&userId=" +
+            JSON.parse(state.user).userId,
+    }).then((response) => {
         commit('CHECK_IS_YOUR', response.data)
-      });
+    });
 }
 
 export const login = ({ commit }, user) => {
@@ -283,7 +295,7 @@ export const login = ({ commit }, user) => {
             })
             .catch((err) => {
                 commit("auth_error");
-                Vue.$toast.error('Username or password is not correct.',{
+                Vue.$toast.error('Username or password is not correct.', {
                     position: "top",
                 })
                 window.localStorage.removeItem("token");
@@ -292,7 +304,7 @@ export const login = ({ commit }, user) => {
     });
 };
 
-export const getImagesOfFollowing = ({commit}) =>{
+export const getImagesOfFollowing = ({ commit }) => {
     let loader = Vue.$loading.show({
         loader: 'dots',
         height: 50,
@@ -307,7 +319,7 @@ export const getImagesOfFollowing = ({commit}) =>{
         .then((response) => {
             commit("SET_IMAGES_FOLLOWING", response.data);
             loader.hide();
-        }).catch((err) =>{
+        }).catch((err) => {
             loader.hide();
         })
 }
@@ -327,12 +339,12 @@ export const getTransactions = ({ commit }) => {
         .then((response) => {
             commit("SET_TRANSACTIONS", response.data);
             loader.hide();
-        }).catch((err) =>{
+        }).catch((err) => {
             loader.hide();
         })
 };
 
-export const getUnknownPeople = ({commit}) =>{
+export const getUnknownPeople = ({ commit }) => {
     const user = localStorage.getItem("user");
     const user_parsed = JSON.parse(user);
     console.log("user parse");
@@ -363,10 +375,10 @@ export const getFollowingUsers = ({ commit }) => {
         .then((response) => {
             commit("SET_FOLLOWINGUSERS", response.data);
             loader.hide();
-        }).catch((err) =>{
+        }).catch((err) => {
             loader.hide();
         })
-        
+
 };
 
 export const getFollowingStranger = ({ commit }, strangerId) => {
@@ -444,18 +456,18 @@ export const getPendingImageByUser = ({ commit }) => {
         height: 50,
         width: 50,
     })
-  const user = localStorage.getItem("user");
-  const user_parsed = JSON.parse(user);
-  console.log("user parse");
-  console.log(user_parsed);
-  axios
-    .get(
-      `https://capstoneprojectapi20210418160622.azurewebsites.net/api/v1/User/GetUserPendingPhoto/${user_parsed.userId}`
-    )
-    .then((response) => {
-      commit("GET_PENDING_IMAGE", response.data);
-      loader.hide();
-    });
+    const user = localStorage.getItem("user");
+    const user_parsed = JSON.parse(user);
+    console.log("user parse");
+    console.log(user_parsed);
+    axios
+        .get(
+            `https://capstoneprojectapi20210418160622.azurewebsites.net/api/v1/User/GetUserPendingPhoto/${user_parsed.userId}`
+        )
+        .then((response) => {
+            commit("GET_PENDING_IMAGE", response.data);
+            loader.hide();
+        });
 };
 
 export const getApprovedImageByStranger = ({ commit }) => {
@@ -475,20 +487,20 @@ export const getApprovedImageByStranger = ({ commit }) => {
         });
 };
 
-export const getTransactionDetail =({commit}, transactionId) =>{
+export const getTransactionDetail = ({ commit }, transactionId) => {
     let loader = Vue.$loading.show({
         loader: 'dots',
         height: 50,
         width: 50,
     })
-  axios
-  .get(
-    `https://capstoneprojectapi20210418160622.azurewebsites.net/api/v1/Transaction/GetTransaction/${transactionId}`
-  )
-  .then((response) => {
-    commit("GET_HISTORY_DETAIL", response.data);
-    loader.hide();
-  });
+    axios
+        .get(
+            `https://capstoneprojectapi20210418160622.azurewebsites.net/api/v1/Transaction/GetTransaction/${transactionId}`
+        )
+        .then((response) => {
+            commit("GET_HISTORY_DETAIL", response.data);
+            loader.hide();
+        });
 }
 
 export const getHistory = ({ commit }) => {
