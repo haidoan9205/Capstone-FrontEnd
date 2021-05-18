@@ -3,7 +3,29 @@
     <div class="row ml-2 imageInfo">
       <!-- <div class="imageInfo"> -->
       <div class="col-md-5 col-sm-5 col-xs-12 positionImage">
-        <img style="border-radius: 20px; margin: 2rem 0" :src="image.wmlink" />
+        <!-- <img style="border-radius: 20px; margin: 2rem 0" :src="image.wmlink" /> -->
+        <img
+            :src="image.wmlink"
+            @click="openGallery(0)"
+            style="border-radius: 20px; margin: 2rem 0; cursor: pointer"
+          />
+          <LightBox
+            ref="lightbox"
+            :showLightBox="false"
+            :showThumbs="false"
+            :media="[
+              {
+                thumb: this.image.wmlink,
+                src: this.image.wmlink,
+                srcset: this.image.wmlink,
+              },
+            ]"
+          >
+            <inner-image-zoom
+              :src="this.image.wmlink"
+              :zoomSrc="this.image.wmlink"
+            />
+          </LightBox>
       </div>
       <div class="col-md-6 mb-5 mb-md-0 mt-5 positionImage">
         <h3>
@@ -131,6 +153,36 @@
           :modal-style="{ 'max-width': '60%' }"
         >
           <div class="container" style="height: 40%; overflow: auto">
+            <img
+            :src="this.image.wmlink"
+            @click="openGallery(0)"
+            style="
+              height: 400px;
+              width: 470px;
+              cursor: pointer;
+              margin-left: auto;
+              margin-right: auto;
+              display: block;
+            "
+          />
+          <LightBox
+            ref="lightbox"
+            :showLightBox="false"
+            :showThumbs="false"
+            :media="[
+              {
+                thumb: this.image.wmlink,
+                src: this.image.wmlink,
+                srcset: this.image.wmlink,
+              },
+            ]"
+          >
+            <inner-image-zoom
+              :src="this.image.wmlink"
+              :zoomSrc="this.image.wmlink"
+            />
+          </LightBox>
+
             <light-timeline :items="trackingItems"></light-timeline>
           </div>
         </Modal>
@@ -147,6 +199,8 @@ import axios from "axios";
 import { merge, of } from "rxjs";
 import VueModal from "@kouts/vue-modal";
 import "@kouts/vue-modal/dist/vue-modal.css";
+import LightBox from "vue-it-bigger";
+import("vue-it-bigger/dist/vue-it-bigger.min.css");
 // import { response } from "express";
 
 // const { map, pluck, startWith, scan } = rxjs.operators;
@@ -155,6 +209,7 @@ export default {
     Modal,
     Modal: VueModal,
     VueModal,
+    LightBox,
   },
   props: ["follows"],
 
@@ -199,6 +254,9 @@ export default {
   },
 
   methods: {
+    openGallery(index) {
+      this.$refs.lightbox.showImage(index);
+    },
     addToCart() {
       if (this.image.typeId == 2) {
         axios.put(
@@ -293,8 +351,13 @@ export default {
                   tag: new Date(
                     list[index].versions[0].document.createDate
                   ).toLocaleDateString(),
-                  content: "Photo Approval for sale on IMAGO date",
+                  content: "Photo Approval for sale on IMAGO",
                 });
+                this.trackingItems.push({
+                  content: "Current owner of this photo is " + list[index].versions[0].document.ownerID,
+                  type: 'star',
+                  color: '#90EE90'
+                })
               } else if (
                 list[index].versions[0].document.isTransaction == true
               ) {
@@ -314,9 +377,13 @@ export default {
                     " to " +
                     this.ownerInfo.username,
                 });
+                this.trackingItems.push({
+                  content: "Current owner of this photo is " + list[index].versions[0].document.ownerID,
+                  type: 'star',
+                  color: '#EE82EE'
+                })
               }
             }
-
             loader.hide();
           } else {
             loader.hide();
