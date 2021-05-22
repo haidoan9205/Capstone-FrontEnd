@@ -956,6 +956,7 @@ export default {
             console.log("Closed")
           );
           this.modals.modalEnable = false;
+          window.location.reload();
         } else {
           this.$alert(
             "Something went wrong, please try again",
@@ -963,6 +964,7 @@ export default {
             "error"
           ).then(() => console.log("Closed"));
           this.modals.modalEnable = false;
+         
         }
       });
     },

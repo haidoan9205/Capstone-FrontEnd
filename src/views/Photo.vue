@@ -5,27 +5,27 @@
       <div class="col-md-5 col-sm-5 col-xs-12 positionImage">
         <!-- <img style="border-radius: 20px; margin: 2rem 0" :src="image.wmlink" /> -->
         <img
-            :src="image.wmlink"
-            @click="openGallery(0)"
-            style="border-radius: 20px; margin: 2rem 0; cursor: pointer"
+          :src="image.wmlink"
+          @click="openGallery(0)"
+          style="border-radius: 20px; margin: 2rem 0; cursor: pointer"
+        />
+        <LightBox
+          ref="lightbox"
+          :showLightBox="false"
+          :showThumbs="false"
+          :media="[
+            {
+              thumb: this.image.wmlink,
+              src: this.image.wmlink,
+              srcset: this.image.wmlink,
+            },
+          ]"
+        >
+          <inner-image-zoom
+            :src="this.image.wmlink"
+            :zoomSrc="this.image.wmlink"
           />
-          <LightBox
-            ref="lightbox"
-            :showLightBox="false"
-            :showThumbs="false"
-            :media="[
-              {
-                thumb: this.image.wmlink,
-                src: this.image.wmlink,
-                srcset: this.image.wmlink,
-              },
-            ]"
-          >
-            <inner-image-zoom
-              :src="this.image.wmlink"
-              :zoomSrc="this.image.wmlink"
-            />
-          </LightBox>
+        </LightBox>
       </div>
       <div class="col-md-6 mb-5 mb-md-0 mt-5 positionImage">
         <h3>
@@ -154,9 +154,9 @@
         >
           <div class="container" style="height: 40%; overflow: auto">
             <img
-            :src="this.image.wmlink"
-            @click="openGallery(0)"
-            style="
+              :src="this.image.wmlink"
+              @click="openGallery(0)"
+              style="
               height: 400px;
               width: 470px;
               cursor: pointer;
@@ -164,24 +164,24 @@
               margin-right: auto;
               display: block;
             "
-          />
-          <LightBox
-            ref="lightbox"
-            :showLightBox="false"
-            :showThumbs="false"
-            :media="[
-              {
-                thumb: this.image.wmlink,
-                src: this.image.wmlink,
-                srcset: this.image.wmlink,
-              },
-            ]"
-          >
-            <inner-image-zoom
-              :src="this.image.wmlink"
-              :zoomSrc="this.image.wmlink"
             />
-          </LightBox>
+            <LightBox
+              ref="lightbox"
+              :showLightBox="false"
+              :showThumbs="false"
+              :media="[
+                {
+                  thumb: this.image.wmlink,
+                  src: this.image.wmlink,
+                  srcset: this.image.wmlink,
+                },
+              ]"
+            >
+              <inner-image-zoom
+                :src="this.image.wmlink"
+                :zoomSrc="this.image.wmlink"
+              />
+            </LightBox>
 
             <light-timeline :items="trackingItems"></light-timeline>
           </div>
@@ -202,7 +202,6 @@ import "@kouts/vue-modal/dist/vue-modal.css";
 import LightBox from "vue-it-bigger";
 import("vue-it-bigger/dist/vue-it-bigger.min.css");
 // import { response } from "express";
-
 // const { map, pluck, startWith, scan } = rxjs.operators;
 export default {
   components: {
@@ -212,7 +211,6 @@ export default {
     LightBox,
   },
   props: ["follows"],
-
   data() {
     return {
       photoId: 0,
@@ -230,29 +228,13 @@ export default {
       fullPage: true,
       tagModal: false,
       trackingModal: false,
-      trackingItems: [
-        // {
-        //   tag: "2018-01-12",
-        //   content: "hallo",
-        // },
-        // {
-        //   tag: "2018-01-13",
-        //   color: "#dcdcdc",
-        //   type: "circle",
-        //   content: "world",
-        // },
-        // {
-        //   tag: "2018-01-14",
-        //   type: "star",
-        //   htmlMode: true,
-        //   content: "demo",
-        // },
-      ],
+      trackingItems: [],
       prevOwnerInfo: [],
       ownerInfo: [],
+      list: [],
+      show: false,
     };
   },
-
   methods: {
     openGallery(index) {
       this.$refs.lightbox.showImage(index);
@@ -265,7 +247,7 @@ export default {
         axios
           .get(
             "https://capstoneprojectapi20210418160622.azurewebsites.net/api/v1/Photo/AddToCart?photoId=" +
-              this.photoId
+              this.$route.params.photoId
           )
           .then((response) => {
             if (response.data == true) {
@@ -319,20 +301,16 @@ export default {
     reloadPage() {
       this.$router.go();
     },
-    openTrackingModal() {
+    async openTrackingModal() {
       this.trackingModal = true;
-      this.getTrackingInfo();
+      await this.getTrackingInfo();
+      await this.getTrackingDetail();
     },
     openTagModal() {
       this.tagModal = true;
     },
-   getTrackingInfo() {
-      let loader = this.$loading.show({
-        loader: "dots",
-        height: 50,
-        width: 50,
-      });
-      axios
+    async getTrackingInfo() {
+      await axios
         .get(
           "http://localhost:3000/transactions/getPhotoHistory/" +
             this.image.phash
@@ -340,61 +318,77 @@ export default {
         .then((response) => {
           if (response.status == 200) {
             console.log(response.data);
-            var list = response.data;
-            var tmp = "";
-            this.trackingItems = [];
-            for (let index = 0; index < list.length; index++) {
-              // console.log("index no." + index + " " + JSON.stringify(list[index].versions[0].document));
-              tmp = list[index].versions[0].document.ownerID;
-              if (list[index].versions[0].document.isTransaction == false) {
-                this.trackingItems.push({
-                  tag: new Date(
-                    list[index].versions[0].document.createDate
-                  ).toLocaleDateString(),
-                  content: "Photo Approval for sale on IMAGO",
-                });
-                this.trackingItems.push({
-                  content: "Current owner of this photo is " + list[index].versions[0].document.ownerID,
-                  type: 'star',
-                  color: '#90EE90'
-                })
-              } else if (
-                list[index].versions[0].document.isTransaction == true
-              ) {
-                
-                //this ass
-                this.getOwnerDetails(list[index].versions[0].document.ownerID);
-                this.getPrevOwnerDetails(list[index].versions[0].document.prevOwner);
-                //
-                console.log(this.ownerInfo + " - " + this.prevOwnerInfo);
-                this.trackingItems.push({
-                  tag: new Date(
-                    list[index].versions[0].document.createDate
-                  ).toLocaleDateString(),
-                  content:
-                    "Transaction from " +
-                    this.prevOwnerInfo.username +
-                    " to " +
-                    this.ownerInfo.username,
-                });
-                this.trackingItems.push({
-                  content: "Current owner of this photo is " + list[index].versions[0].document.ownerID,
-                  type: 'star',
-                  color: '#EE82EE'
-                })
-              }
-            }
-            loader.hide();
-          } else {
-            loader.hide();
-            alert("Network error, please try again!");
+            this.list = response.data;
           }
         })
         .catch((error) => {
-          loader.hide();
           alert("System error, please contact admin!");
           console.log(error);
         });
+    },
+    async getTrackingDetail() {
+      console.log("alo abe");
+      var tmp = "";
+      console.log("abe" + JSON.stringify(this.list));
+      this.trackingItems = [];
+      for (let index = 0; index < this.list.length; index++) {
+        // console.log("index no." + index + " " + JSON.stringify(list[index].versions[0].document));
+        tmp = this.list[index].versions[0].document.ownerID;
+        if (this.list[index].versions[0].document.isTransaction == false) {
+          JSON.stringify(
+          await this.getOwnerDetails(this.list[index].versions[0].document.ownerID)
+          );
+          await this.trackingItems.push({
+            tag: new Date(
+              this.list[index].versions[0].document.createDate
+            ).toLocaleDateString(),
+            content: "Photo Approval for sale on IMAGO",
+          });
+          await this.trackingItems.push({
+            content:
+              "Owner of this photo: " +
+              JSON.stringify(this.ownerInfo.username),
+            type: "star",
+            color: "#90EE90",
+          });
+        } else if (
+          this.list[index].versions[0].document.isTransaction == true
+        ) {
+          JSON.stringify(
+          await this.getOwnerDetails(this.list[index].versions[0].document.ownerID)
+          );
+          JSON.stringify(
+           await this.getPrevOwnerDetails(
+              this.list[index].versions[0].document.prevOwner
+            )
+          );
+          console.log(
+            JSON.stringify(this.ownerInfo) + " - " + JSON.stringify(this.prevOwnerInfo)
+          );
+         await this.trackingItems.push({
+            tag: new Date(
+              this.list[index].versions[0].document.createDate
+            ).toLocaleDateString(),
+            content:
+              "Transaction from " +
+              JSON.stringify(this.prevOwnerInfo.username) +
+              " to " +
+              JSON.stringify(this.ownerInfo.username) 
+              + " for: " +  
+          (this.list[index].versions[0].document.amount)
+          
+          });
+          await this.trackingItems.push({
+            content:
+              "Current owner of this photo is " +
+              JSON.stringify(this.ownerInfo.username),
+            type: "star",
+            color: "#EE82EE",
+          });
+        } else {
+          alert("Network error, please try again!");
+        }
+      }
     },
     async getPrevOwnerDetails(id) {
       await axios
@@ -429,7 +423,6 @@ export default {
         });
     },
   },
-
   computed: {
     image() {
       return this.$store.state.image;
@@ -441,16 +434,16 @@ export default {
       return this.$store.state.checkIsBought;
     },
   },
-
   mounted() {
     console.log(this.photoId);
-    this.$store.dispatch("getImage", this.photoId);
-    this.$store.dispatch("checkIsYour", this.photoId);
-    this.$store.dispatch("checkIsBought", this.photoId);
-  },
 
-  created() {
-    this.photoId = this.$route.params.photoId;
+    this.$store.dispatch("checkIsYour", this.$route.params.photoId);
+    this.$store.dispatch("checkIsBought", this.$route.params.photoId);
+    this.getTrackingDetail();
+  },
+  async created() {
+    this.$store.dispatch("getImage", this.$route.params.photoId);
+    await this.getTrackingInfo();
   },
 };
 </script>
