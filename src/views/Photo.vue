@@ -5,27 +5,27 @@
       <div class="col-md-5 col-sm-5 col-xs-12 positionImage">
         <!-- <img style="border-radius: 20px; margin: 2rem 0" :src="image.wmlink" /> -->
         <img
-            :src="image.wmlink"
-            @click="openGallery(0)"
-            style="border-radius: 20px; margin: 2rem 0; cursor: pointer"
+          :src="image.wmlink"
+          @click="openGallery(0)"
+          style="border-radius: 20px; margin: 2rem 0; cursor: pointer"
+        />
+        <LightBox
+          ref="lightbox"
+          :showLightBox="false"
+          :showThumbs="false"
+          :media="[
+            {
+              thumb: this.image.wmlink,
+              src: this.image.wmlink,
+              srcset: this.image.wmlink,
+            },
+          ]"
+        >
+          <inner-image-zoom
+            :src="this.image.wmlink"
+            :zoomSrc="this.image.wmlink"
           />
-          <LightBox
-            ref="lightbox"
-            :showLightBox="false"
-            :showThumbs="false"
-            :media="[
-              {
-                thumb: this.image.wmlink,
-                src: this.image.wmlink,
-                srcset: this.image.wmlink,
-              },
-            ]"
-          >
-            <inner-image-zoom
-              :src="this.image.wmlink"
-              :zoomSrc="this.image.wmlink"
-            />
-          </LightBox>
+        </LightBox>
       </div>
       <div class="col-md-6 mb-5 mb-md-0 mt-5 positionImage">
         <h3>
@@ -154,34 +154,34 @@
         >
           <div class="container" style="height: 40%; overflow: auto">
             <img
-            :src="this.image.wmlink"
-            @click="openGallery(0)"
-            style="
-              height: 400px;
-              width: 470px;
-              cursor: pointer;
-              margin-left: auto;
-              margin-right: auto;
-              display: block;
-            "
-          />
-          <LightBox
-            ref="lightbox"
-            :showLightBox="false"
-            :showThumbs="false"
-            :media="[
-              {
-                thumb: this.image.wmlink,
-                src: this.image.wmlink,
-                srcset: this.image.wmlink,
-              },
-            ]"
-          >
-            <inner-image-zoom
               :src="this.image.wmlink"
-              :zoomSrc="this.image.wmlink"
+              @click="openGallery(0)"
+              style="
+                height: 400px;
+                width: 470px;
+                cursor: pointer;
+                margin-left: auto;
+                margin-right: auto;
+                display: block;
+              "
             />
-          </LightBox>
+            <LightBox
+              ref="lightbox"
+              :showLightBox="false"
+              :showThumbs="false"
+              :media="[
+                {
+                  thumb: this.image.wmlink,
+                  src: this.image.wmlink,
+                  srcset: this.image.wmlink,
+                },
+              ]"
+            >
+              <inner-image-zoom
+                :src="this.image.wmlink"
+                :zoomSrc="this.image.wmlink"
+              />
+            </LightBox>
 
             <light-timeline :items="trackingItems"></light-timeline>
           </div>
@@ -196,7 +196,7 @@
 <script>
 import Modal from "@/components/Modal.vue";
 import axios from "axios";
-import { merge, of } from "rxjs";
+import { async, merge, of } from "rxjs";
 import VueModal from "@kouts/vue-modal";
 import "@kouts/vue-modal/dist/vue-modal.css";
 import LightBox from "vue-it-bigger";
@@ -326,7 +326,7 @@ export default {
     openTagModal() {
       this.tagModal = true;
     },
-   getTrackingInfo() {
+    getTrackingInfo() {
       let loader = this.$loading.show({
         loader: "dots",
         height: 50,
@@ -350,27 +350,30 @@ export default {
                 this.trackingItems.push({
                   tag: new Date(
                     list[index].versions[0].document.createDate
-                  ).toLocaleDateString(),
+                  ).toLocaleString(),
                   content: "Photo Approval for sale on IMAGO",
                 });
                 this.trackingItems.push({
-                  content: "Current owner of this photo is " + list[index].versions[0].document.ownerID,
-                  type: 'star',
-                  color: '#90EE90'
-                })
+                  content:
+                    "Current owner of this photo is " +
+                    list[index].versions[0].document.ownerID,
+                  type: "star",
+                  color: "#90EE90",
+                });
               } else if (
                 list[index].versions[0].document.isTransaction == true
               ) {
-                
                 //this ass
                 this.getOwnerDetails(list[index].versions[0].document.ownerID);
-                this.getPrevOwnerDetails(list[index].versions[0].document.prevOwner);
+                this.getPrevOwnerDetails(
+                  list[index].versions[0].document.prevOwner
+                );
                 //
                 console.log(this.ownerInfo + " - " + this.prevOwnerInfo);
                 this.trackingItems.push({
                   tag: new Date(
                     list[index].versions[0].document.createDate
-                  ).toLocaleDateString(),
+                  ).toLocaleString(),
                   content:
                     "Transaction from " +
                     this.prevOwnerInfo.username +
@@ -378,10 +381,12 @@ export default {
                     this.ownerInfo.username,
                 });
                 this.trackingItems.push({
-                  content: "Current owner of this photo is " + list[index].versions[0].document.ownerID,
-                  type: 'star',
-                  color: '#EE82EE'
-                })
+                  content:
+                    "Current owner of this photo is " +
+                    list[index].versions[0].document.ownerID,
+                  type: "star",
+                  color: "#EE82EE",
+                });
               }
             }
             loader.hide();
