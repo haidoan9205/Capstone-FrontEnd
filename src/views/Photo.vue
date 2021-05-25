@@ -112,6 +112,7 @@
           <router-link
             v-if="checkIsYour == true"
             :to="{ name: 'profileMaster', params: { userId: image.userId } }"
+            target="_blank"
           >
             <footer class="blockquote-footer">
               <cite title="Source Title">{{ image.userName }}</cite>
@@ -120,6 +121,7 @@
           <router-link
             v-else-if="checkIsYour == false"
             :to="{ name: 'Profile', params: { userId: image.userId } }"
+            target="_blank"
           >
             <footer class="blockquote-footer">
               <cite title="Source Title">{{ image.userName }}</cite>
@@ -157,13 +159,13 @@
               :src="this.image.wmlink"
               @click="openGallery(0)"
               style="
-              height: 400px;
-              width: 470px;
-              cursor: pointer;
-              margin-left: auto;
-              margin-right: auto;
-              display: block;
-            "
+                height: 400px;
+                width: 470px;
+                cursor: pointer;
+                margin-left: auto;
+                margin-right: auto;
+                display: block;
+              "
             />
             <LightBox
               ref="lightbox"
@@ -183,7 +185,10 @@
               />
             </LightBox>
 
-            <light-timeline :items="trackingItems"></light-timeline>
+            <light-timeline
+              :items="trackingItems"
+              style="margin: auto; width: 50%"
+            ></light-timeline>
           </div>
         </Modal>
       </div>
@@ -233,6 +238,8 @@ export default {
       ownerInfo: [],
       list: [],
       show: false,
+      pivot1: "",
+      pivot2: "",
     };
   },
   methods: {
@@ -310,19 +317,19 @@ export default {
       this.tagModal = true;
     },
     async getTrackingInfo() {
-      let loader = this.$loading.show({
-        loader: "dots",
-        height: 50,
-        width: 50,
-      });
-     await axios
+      // let loader = this.$loading.show({
+      //   loader: "dots",
+      //   height: 50,
+      //   width: 50,
+      // });
+      await axios
         .get(
           "http://localhost:3000/transactions/getPhotoHistory/" +
             this.image.phash
         )
         .then((response) => {
           if (response.status == 200) {
-            console.log(response.data);
+            // console.log(response.data);
             this.list = response.data;
           }
         })
@@ -332,61 +339,120 @@ export default {
         });
     },
     async getTrackingDetail() {
-      console.log("alo abe");
-      var tmp = "";
-      console.log("abe" + JSON.stringify(this.list));
+      // console.log("abe" + JSON.stringify(this.list));
       this.trackingItems = [];
       for (let index = 0; index < this.list.length; index++) {
         // console.log("index no." + index + " " + JSON.stringify(list[index].versions[0].document));
-        tmp = this.list[index].versions[0].document.ownerID;
         if (this.list[index].versions[0].document.isTransaction == false) {
-          JSON.stringify(
-          await this.getOwnerDetails(this.list[index].versions[0].document.ownerID)
-          );
-          await this.trackingItems.push({
-            tag: new Date(
-              this.list[index].versions[0].document.createDate
-            ).toLocaleDateString(),
-            content: "Photo Approval for sale on IMAGO",
-          });
-          await this.trackingItems.push({
-            content:
-              "Owner of this photo: " +
-              JSON.stringify(this.ownerInfo.username),
-            type: "star",
-            color: "#90EE90",
-          });
+          if (index == 0) {
+            this.pivot1 = this.list[index].versions[0].document.prevOwner;
+            this.pivot2 = this.list[index].versions[0].document.amount;
+          }
+          console.log(this.pivot1);
+          console.log(this.list[index].versions[0].document.prevOwner);
+          console.log(this.pivot2);
+          console.log(this.list[index].versions[0].document.amount);
+          // compare if photo is edited
+          if (
+            this.pivot1.localeCompare(
+              this.list[index].versions[0].document.prevOwner
+            ) != 0
+          ) {
+            console.log("yessss");
+            JSON.stringify(
+              await this.getOwnerDetails(
+                this.list[index].versions[0].document.ownerID
+              )
+            );
+            await this.trackingItems.push({
+              tag: new Date(
+                this.list[index].versions[0].document.createDate
+              ).toLocaleDateString(),
+              htmlMode: true,
+              content: `<div><a href="#/stranger/${this.list[index].versions[0].document.ownerID}" target="_blank">${this.ownerInfo.username}</a> change photo name from ${this.pivot1} to ${this.list[index].versions[0].document.prevOwner}</div>`,
+            });
+          }
+          if (
+            this.pivot2.localeCompare(
+              this.list[index].versions[0].document.amount
+            ) != 0
+          ) {
+            console.log("noooooo");
+            JSON.stringify(
+              await this.getOwnerDetails(
+                this.list[index].versions[0].document.ownerID
+              )
+            );
+            await this.trackingItems.push({
+              tag: new Date(
+                this.list[index].versions[0].document.createDate
+              ).toLocaleDateString(),
+              htmlMode: true,
+              content: `<div><a href="#/stranger/${this.list[index].versions[0].document.ownerID}" target="_blank">${this.ownerInfo.username}</a> change photo price from ${this.pivot2} to ${this.list[index].versions[0].document.amount}</div>`,
+            });
+          }
+          if (
+            this.pivot1.localeCompare(
+              this.list[index].versions[0].document.prevOwner
+            ) === 0 &&
+            this.pivot2.localeCompare(
+              this.list[index].versions[0].document.amount
+            ) === 0
+          ) {
+            JSON.stringify(
+              await this.getOwnerDetails(
+                this.list[index].versions[0].document.ownerID
+              )
+            );
+            await this.trackingItems.push({
+              tag: new Date(
+                this.list[index].versions[0].document.createDate
+              ).toLocaleDateString(),
+              content: "Photo Approval for sale on IMAGO",
+            });
+            await this.trackingItems.push({
+              htmlMode: true,
+              content: `<div>Owner of this photo: <a href="#/stranger/${this.list[index].versions[0].document.ownerID}" target="_blank">${this.ownerInfo.username}</a></div>`,
+              type: "star",
+              color: "#90EE90",
+            });
+          }
+          //
+          this.pivot1 = this.list[index].versions[0].document.prevOwner;
+          this.pivot2 = this.list[index].versions[0].document.amount;
         } else if (
           this.list[index].versions[0].document.isTransaction == true
         ) {
           JSON.stringify(
-          await this.getOwnerDetails(this.list[index].versions[0].document.ownerID)
+            await this.getOwnerDetails(
+              this.list[index].versions[0].document.ownerID
+            )
           );
           JSON.stringify(
-           await this.getPrevOwnerDetails(
+            await this.getPrevOwnerDetails(
               this.list[index].versions[0].document.prevOwner
             )
           );
           console.log(
-            JSON.stringify(this.ownerInfo) + " - " + JSON.stringify(this.prevOwnerInfo)
+            JSON.stringify(this.ownerInfo) +
+              " - " +
+              JSON.stringify(this.prevOwnerInfo)
           );
-         await this.trackingItems.push({
+          await this.trackingItems.push({
             tag: new Date(
               this.list[index].versions[0].document.createDate
             ).toLocaleDateString(),
             content:
-              "Transaction from " +
+              "Photo License transaction from " +
               JSON.stringify(this.prevOwnerInfo.username) +
               " to " +
-              JSON.stringify(this.ownerInfo.username) 
-              + " for: " +  
-          (this.list[index].versions[0].document.amount)
-          
+              JSON.stringify(this.ownerInfo.username) +
+              " for " +
+              this.list[index].versions[0].document.amount,
           });
           await this.trackingItems.push({
-            content:
-              "Current owner of this photo is " +
-              JSON.stringify(this.ownerInfo.username),
+            htmlMode: true,
+            content: `<div>Owner of this photo: <a href="#/stranger/${this.list[index].versions[0].document.ownerID}" target="_blank">${this.ownerInfo.username}</a></div>`,
             type: "star",
             color: "#EE82EE",
           });
