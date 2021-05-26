@@ -291,7 +291,7 @@ export const login = ({ commit }, user) => {
                 axios.defaults.headers.common["Authorization"] = token;
                 commit("auth_success", user);
                 resolve(resp);
-                window.location.replace('/');
+                
             })
             .catch((err) => {
                 commit("auth_error");
