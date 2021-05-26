@@ -1,4 +1,4 @@
-runtime: nodejs10
+runtime: nodejs11
 handlers:
   # Serve all static files with urls ending with a file extension
 - url: /(.*\..+)$ 
