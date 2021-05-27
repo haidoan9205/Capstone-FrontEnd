@@ -513,7 +513,7 @@ export default {
     this.getTrackingDetail();
   },
   async created() {
-    this.$store.dispatch("getImage", this.$route.params.photoId);
+    await this.$store.dispatch("getImage", this.$route.params.photoId);
     await this.getTrackingInfo();
   },
 };
