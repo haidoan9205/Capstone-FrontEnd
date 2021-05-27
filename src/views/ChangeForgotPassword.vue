@@ -63,7 +63,7 @@ export default {
         var url = new URL(url_string);
         //this.userId = url.searchParams.get("userId");
         this.userId = url.hash.substring(30);
-        console.log(url.hash.substring(30));
+        (url.hash.substring(30));
     },
     methods: {
         onChangePassword() {
@@ -88,10 +88,10 @@ export default {
                         } else {
                             alert("Change password error");
                         }
-                        console.log(respone.status);
+                        (respone.status);
                     })
                     .catch((error) => {
-                        console.log(error);
+                        (error);
                     });
                 } else {
                     alert("Confirm password not match");

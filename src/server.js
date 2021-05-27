@@ -22,8 +22,8 @@ app.get('/', (req, res) =>
 
 //CONNECT TO DB
 // mongoose.connect(process.env.DB_CONNECTION2,{ useNewUrlParser: true },
-//             () => console.log('Connnected to db!'));
-console.log(`Server is up!`);
+//             () => ('Connnected to db!'));
+(`Server is up!`);
 
 
 app.listen(3000);

@@ -10,12 +10,12 @@
 <script>
 export default {
   mounted: function() {
-    console.log(this.$route.query.tokenId);
-    console.log(this.$route.query.photoId);
+    (this.$route.query.tokenId);
+    (this.$route.query.photoId);
   },
   methods: {
     download() {
-      console.log('chien');
+      ('chien');
       this.$store.dispatch("downloadImage", {
         tokenId: this.$route.query.tokenId,
         photoId: this.$route.query.photoId

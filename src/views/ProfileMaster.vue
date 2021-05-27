@@ -781,7 +781,7 @@ export default {
       users.forEach((element) => {
         element.isDelete = false;
       });
-      console.log(users);
+      (users);
       return users;
     },
     images() {
@@ -829,7 +829,7 @@ export default {
               "Your information is updated",
               "Success",
               "success"
-            ).then(() => console.log("Closed"));
+            ).then(() => ("Closed"));
             this.modals.modalEditProfile = false;
             const userUpdated = JSON.parse(window.localStorage.getItem("user"));
             (userUpdated.fullName = response.data.fullName),
@@ -870,7 +870,7 @@ export default {
               "Your information is updated",
               "Success",
               "success"
-            ).then(() => console.log("Closed"));
+            ).then(() => ("Closed"));
 
             this.modals.modalEditImage = false;
             this.$router.go();
@@ -889,10 +889,10 @@ export default {
         });
     },
     enableExclusive(objectSelected) {
-      // console.log(user.userId)
-      console.log(objectSelected);
+      // (user.userId)
+      (objectSelected);
       axios({
-        url: "http://localhost:3000/transactions",
+        url: "https://35.185.185.238:3000/transactions",
         data: {
           transactionId: "none",
           prevOwner: objectSelected.photoName,
@@ -914,21 +914,21 @@ export default {
                 "https://capstoneprojectapi20210418160622.azurewebsites.net/api/v1/Photo/ChangeWatermarkPhoto/" +
                 objectSelected.photoId,
             }).then((response) => {
-              console.log("aaaa");
-              console.log(response);
+              ("aaaa");
+              (response);
               if (response.status == 200) {
                 this.$alert(
                   "Enable Sucessfully",
                   "Success",
                   "success"
-                ).then(() => console.log("Closed"));
+                ).then(() => ("Closed"));
                 this.modals.modalEnable = false;
               } else {
                 this.$alert(
                   "Something went wrong, please try again",
                   "Error",
                   "error"
-                ).then(() => console.log("Closed"));
+                ).then(() => ("Closed"));
                 this.modals.modalEnable = false;
               }
             });
@@ -939,7 +939,7 @@ export default {
             "Something went wrong, please try again",
             "Error",
             'error'
-          ).then(() => console.log("Closed"));
+          ).then(() => ("Closed"));
         });
     },
     deletePhoto(objectSelected) {
@@ -949,11 +949,11 @@ export default {
           "https://capstoneprojectapi20210418160622.azurewebsites.net/api/v1/Photo/DeletOrDisable/" +
           objectSelected.photoId,
       }).then((response) => {
-        console.log("aaaa");
-        console.log(response);
+        ("aaaa");
+        (response);
         if (response.status == 200) {
           this.$alert("Delete Sucessfully", "Success", "success").then(() =>
-            console.log("Closed")
+            ("Closed")
           );
           this.modals.modalEnable = false;
           window.location.reload();
@@ -962,7 +962,7 @@ export default {
             "Something went wrong, please try again",
             "Error",
             "error"
-          ).then(() => console.log("Closed"));
+          ).then(() => ("Closed"));
           this.modals.modalEnable = false;
          
         }

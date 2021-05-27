@@ -205,8 +205,8 @@ export const getStrangeUser = ({ commit }, userId) => {
 };
 
 export const downloadImage = ({ commit }, { tokenId, photoId }) => {
-    console.log(photoId);
-    console.log(tokenId);
+    (photoId);
+    (tokenId);
     const user = localStorage.getItem("user");
     const user_parsed = JSON.parse(user);
     axios({
@@ -214,7 +214,7 @@ export const downloadImage = ({ commit }, { tokenId, photoId }) => {
         method: "GET",
         responseType: "blob",
     }).then((response) => {
-        console.log(response.status);
+        (response.status);
         if (response.status == 200) {
             var fileURL = window.URL.createObjectURL(new Blob([response.data]));
             var fileLink = document.createElement("a");
@@ -291,6 +291,7 @@ export const login = ({ commit }, user) => {
                 axios.defaults.headers.common["Authorization"] = token;
                 commit("auth_success", user);
                 resolve(resp);
+                window.location.replace('/')
                 
             })
             .catch((err) => {
@@ -347,8 +348,8 @@ export const getTransactions = ({ commit }) => {
 export const getUnknownPeople = ({ commit }) => {
     const user = localStorage.getItem("user");
     const user_parsed = JSON.parse(user);
-    console.log("user parse");
-    console.log(user_parsed);
+    ("user parse");
+    (user_parsed);
     axios
         .get(
             `https://capstoneprojectapi20210418160622.azurewebsites.net/api/v1/Follow/Get5UserOfUserThatWeAreFollowThatTheyAreFollowing/${user_parsed.userId}`
@@ -366,8 +367,8 @@ export const getFollowingUsers = ({ commit }) => {
     })
     const user = localStorage.getItem("user");
     const user_parsed = JSON.parse(user);
-    console.log("user parse");
-    console.log(user_parsed);
+    ("user parse");
+    (user_parsed);
     axios
         .get(
             `https://capstoneprojectapi20210418160622.azurewebsites.net/api/v1/Follow/GetFollowingUser/${user_parsed.userId}`
@@ -438,8 +439,8 @@ export const getApprovedImageByUser = ({ commit }) => {
     })
     const user = localStorage.getItem("user");
     const user_parsed = JSON.parse(user);
-    console.log("user parse");
-    console.log(user_parsed);
+    ("user parse");
+    (user_parsed);
     axios
         .get(
             `https://capstoneprojectapi20210418160622.azurewebsites.net/api/v1/User/GetUserApprovedPhoto/${user_parsed.userId}`
@@ -458,8 +459,8 @@ export const getPendingImageByUser = ({ commit }) => {
     })
     const user = localStorage.getItem("user");
     const user_parsed = JSON.parse(user);
-    console.log("user parse");
-    console.log(user_parsed);
+    ("user parse");
+    (user_parsed);
     axios
         .get(
             `https://capstoneprojectapi20210418160622.azurewebsites.net/api/v1/User/GetUserPendingPhoto/${user_parsed.userId}`
@@ -511,8 +512,8 @@ export const getHistory = ({ commit }) => {
     })
     const user = localStorage.getItem("user");
     const user_parsed = JSON.parse(user);
-    console.log("user parse");
-    console.log(user_parsed);
+    ("user parse");
+    (user_parsed);
     axios
         .get(
             `https://capstoneprojectapi20210418160622.azurewebsites.net/api/v1/Transaction/GetAllTransactionByUserID/${user_parsed.userId}`
@@ -532,8 +533,8 @@ export const getDeniedImageByUser = ({ commit }) => {
     })
     const user = localStorage.getItem("user");
     const user_parsed = JSON.parse(user);
-    console.log("user parse");
-    console.log(user_parsed);
+    ("user parse");
+    (user_parsed);
     axios
         .get(
             `https://capstoneprojectapi20210418160622.azurewebsites.net/api/v1/User/GetUserDeniedPhoto/${user_parsed.userId}`

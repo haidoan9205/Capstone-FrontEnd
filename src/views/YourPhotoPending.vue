@@ -113,7 +113,7 @@ export default {
     },
     user() {
       const abc = window.localStorage.getItem("user");
-      // console.log(abc);
+      // (abc);
       const appove = this.$store.state.approved_images;
       
       return JSON.parse(abc);
@@ -131,11 +131,11 @@ export default {
           "https://capstoneprojectapi20210418160622.azurewebsites.net/api/v1/Photo/DeletOrDisable/" +
           objectSelected.photoId,
       }).then((response) => {
-        console.log("aaaa");
-        console.log(response);
+        ("aaaa");
+        (response);
         if (response.status == 200) {
           this.$alert("Delete Sucessfully", "Success", "success").then(() =>
-            console.log("Closed")
+            ("Closed")
           );
           this.modals.modalEnable = false;
         } else {
@@ -143,7 +143,7 @@ export default {
             "Something went wrong, please try again",
             "Error",
             "error"
-          ).then(() => console.log("Closed"));
+          ).then(() => ("Closed"));
           this.modals.modalEnable = false;
         }
       });

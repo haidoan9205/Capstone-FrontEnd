@@ -65,7 +65,7 @@ export default {
     },
     user() {
       const abc = window.localStorage.getItem('user');
-      // console.log(abc);
+      // (abc);
       const appove = this.$store.state.approved_images;
       
       return JSON.parse(abc);
@@ -79,7 +79,7 @@ export default {
   methods: {
     select: function(event) {
       targetId = event.images.photoId;
-      console.log(targetId); // returns 'foo'
+      (targetId); // returns 'foo'
     },
   
   },

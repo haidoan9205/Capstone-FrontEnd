@@ -107,7 +107,7 @@ export default {
                 }
             })
             .catch((error) => {
-            console.log(error);
+            (error);
             });
     }
   },
@@ -150,7 +150,7 @@ export default {
             }
         })
         .catch((error) => {
-        console.log(error);
+        (error);
         });
   },
   methods:{
@@ -192,7 +192,7 @@ export default {
                 window.scrollTo(0,0);
             })
             .catch((error) => {
-            console.log(error);
+            (error);
             });
     },
     onNext() {
@@ -224,7 +224,7 @@ export default {
                 window.scrollTo(0,0);
             })
             .catch((error) => {
-            console.log(error);
+            (error);
             });
     }
   }

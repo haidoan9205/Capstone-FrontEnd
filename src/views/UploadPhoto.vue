@@ -188,7 +188,7 @@ export default {
       if (this.file.type.match("image.*")) {
         this.isImage = true;
       }
-      console.log(this.file.size);
+      (this.file.size);
     },
     onUploadPhoto() {
       this.upload = true;
@@ -243,7 +243,7 @@ export default {
           if (respone.status == 201) {
             this.loading = false;
             this.$alert("Upload Successfully", "Success", "success").then(
-              () => console.log("Closed"),
+              () => ("Closed"),
               setTimeout(this.$router.push({ name: "yourphotopending" })),
               1000
             );

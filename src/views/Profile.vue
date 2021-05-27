@@ -169,7 +169,7 @@ export default {
               "Your information is updated",
               "Success",
               "success"
-            ).then(() => console.log("Closed"));
+            ).then(() => ("Closed"));
             const userUpdated = JSON.parse(window.localStorage.getItem("user"));
             (userUpdated.fullName = response.data.fullName),
               (userUpdated.description = response.data.description),
@@ -180,10 +180,10 @@ export default {
           } else {
             alert("Edit error");
           }
-          console.log(response);
+          (response);
         })
         .catch((error) => {
-          console.log(error);
+          (error);
         });
     },
   },

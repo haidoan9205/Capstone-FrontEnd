@@ -96,7 +96,7 @@ export default {
       this.$store
         .dispatch("register", data)
         .then(() => this.$router.push("/login"))
-        .catch((err) => console.log(err));
+        .catch((err) => (err));
     },
     validateEmail(value) {
       if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(value)) {

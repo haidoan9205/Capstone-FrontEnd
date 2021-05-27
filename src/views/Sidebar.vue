@@ -126,7 +126,7 @@ export default {
     },
     user() {
       const abc = window.localStorage.getItem("user");
-      // console.log(abc);
+      // (abc);
       const appove = this.$store.state.approved_images;
       
       return JSON.parse(abc);
@@ -134,11 +134,11 @@ export default {
   },
   methods: {
     onToggleCollapse(collapsed) {
-      console.log(collapsed);
+      (collapsed);
       this.collapsed = collapsed;
     },
     onItemClick(event, item, node) {
-      console.log("onItemClick");
+      ("onItemClick");
     },
     onResize() {
       if (window.innerWidth <= 767) {

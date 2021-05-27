@@ -428,8 +428,8 @@ export default {
     async getProofInfo(proofId) {
       await this.getExclusiveHistory();
       await axios
-        .get("http://localhost:3000/transactions/getProof/" + proofId)
-        // .get("http://localhost:3000/transactions/getProof/" + proofId)
+        .get("https://35.185.185.238:3000/transactions/getProof/" + proofId)
+        // .get("http://https://35.185.185.238:3000/transactions/getProof/" + proofId)
         .then((response) => {
           if (response.status == 200) {
             let flag = false;
@@ -445,7 +445,7 @@ export default {
                 this.getPrevOwnerDetails(
                   this.history.versions[0].document.prevOwner
                 );
-                console.log("check " + this.history);
+                ("check " + this.history);
               }
             }
             if (flag == false) {
@@ -457,7 +457,7 @@ export default {
         })
         .catch((error) => {
           alert("System error, please contact admin!");
-          console.log(error);
+          (error);
         });
     },
 
@@ -469,11 +469,11 @@ export default {
       });
       await axios
         .get(
-          "http://localhost:3000/transactions/getDocumentHistory/" +
+          "https://35.185.185.238:3000/transactions/getDocumentHistory/" +
             this.user.userId
         )
         // .get(
-        // "http://localhost:3000/transactions/getDocumentHistory/" +
+        // "http://https://35.185.185.238:3000/transactions/getDocumentHistory/" +
         // this.user.userId
         // )
         .then((response) => {
@@ -499,7 +499,7 @@ export default {
         .catch((error) => {
           loader.hide();
           alert("System error, please contact admin!");
-          console.log(error);
+          (error);
         });
     },
 
@@ -516,7 +516,7 @@ export default {
         })
         .catch((error) => {
           // alert("System error, please contact admin!");
-          console.log(error);
+          (error);
         });
     },
 
@@ -533,7 +533,7 @@ export default {
         })
         .catch((error) => {
           // alert("System error, please contact admin!");
-          console.log(error);
+          (error);
         });
     },
 
@@ -554,7 +554,7 @@ export default {
           "&userId=" +
           user_parsed.userId,
       }).then((response) => {
-        console.log(response);
+        (response);
         if(response.status == 200){
           window.location.href = response.data;
         }

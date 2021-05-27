@@ -103,10 +103,10 @@ export default {
                 } else {
                     alert("Change password error");
                 }
-                console.log(respone.status);
+                (respone.status);
                 })
                 .catch((error) => {
-                console.log(error);
+                (error);
         });
             } else {
                 alert("Confirm password not match");

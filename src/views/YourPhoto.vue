@@ -57,7 +57,7 @@ export default {
     },
     user() {
       const abc = window.localStorage.getItem('user');
-      // console.log(abc);
+      // (abc);
       const appove = this.$store.state.approved_images;
       
       return JSON.parse(abc);

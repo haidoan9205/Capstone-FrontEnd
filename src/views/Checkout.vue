@@ -192,7 +192,7 @@ export default {
       "https://www.paypal.com/sdk/js?client-id=AYvSMAPfagJB-ffNa4cHkH_dk7zK8ojJu4G6UVhrhQqe2w3LaKqjzvKirbdm3cGguTH_pM6FQRx-_O76";
     script.addEventListener("load", this.setLoaded);
     document.body.appendChild(script);
-    //console.log(this.$store.state.ucart);
+    //(this.$store.state.ucart);
   },
   methods: {
     setLoaded: function () {
@@ -228,14 +228,14 @@ export default {
               this.onCheckoutSaveToBC();
             }
 
-            //console.log("VALUE");
-            //console.log(order.create_time);
+            //("VALUE");
+            //(order.create_time);
           },
           onCancel: function (data) {
             this.$alert.error("The transaction has been canceled");
           },
           onError: (err) => {
-            console.log("ERR: " + err);
+            ("ERR: " + err);
             alert("Transaction error!");
           },
         })
@@ -254,7 +254,7 @@ export default {
       }
 
       this.total = price;
-      //console.log(this.total);
+      //(this.total);
     },
     createListItems() {
       this.cart.forEach((item) => {
@@ -305,7 +305,7 @@ export default {
           if (respone.status == 201) {
             loader.hide();
             this.$alert("Transaction complete", "Success", "success").then(() =>
-              console.log("Closed")
+              ("Closed")
             );
 
             this.paidFor = true;
@@ -334,7 +334,7 @@ export default {
         width: 50,
       });
       axios({
-        url: "http://localhost:3000/transactions",
+        url: "https://35.185.185.238:3000/transactions",
         data: {
           transactionId: this.orderInfo.id,
           prevOwner: this.$store.state.ucart[0].image.userId,
@@ -380,7 +380,7 @@ export default {
                     "Transaction complete",
                     "Success",
                     "success"
-                  ).then(() => console.log("Closed"));
+                  ).then(() => ("Closed"));
                   this.paidFor = true;
                   window.localStorage.removeItem("ucart");
                   this.$store.state.ucart = [];

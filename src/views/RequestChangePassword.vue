@@ -60,10 +60,10 @@ export default {
             } else {
                 alert("Something has error, Please try again!!!");
             }
-                console.log(respone.status);
+                (respone.status);
             })
             .catch((error) => {
-            console.log(error);
+            (error);
             });
         },
     },

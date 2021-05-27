@@ -83,7 +83,7 @@ export default {
             this.$router.push("/"))
           .catch(
             (err) => (
-              console.log(err)
+              (err)
             )
           );
         this.$store.dispatch("auth");

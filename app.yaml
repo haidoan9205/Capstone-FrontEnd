@@ -1,4 +1,4 @@
-runtime: nodejs11
+runtime: nodejs14
 handlers:
   # Serve all static files with urls ending with a file extension
 - url: /(.*\..+)$ 
@@ -7,4 +7,4 @@ handlers:
   # catch all handler to index.html
 - url: /.*
   static_files: dist/index.html
-  upload: dist/index.htmn
+  upload: dist/index.html

@@ -64,7 +64,7 @@ export default {
   },
   mounted() {
     this.$store.dispatch("getTransactionDetail", this.$route.params.transactionId);
-    console.log(this.transactions)
+    (this.transactions)
   },
   methods:{
       frontEndDateFormat(date) {

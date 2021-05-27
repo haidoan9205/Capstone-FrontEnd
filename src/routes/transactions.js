@@ -15,12 +15,12 @@ async function getConnection() {
     try {
         client = new MongoClient(process.env.DB_CONNECTION1, { useNewUrlParser: true, useUnifiedTopology: true });
         await client.connect();
-        console.log("Connected correctly to server!");
+        ("Connected correctly to server!");
         const db = client.db(process.env.DB_NAME);
         // Create ProvenDB Client
         pdb = new ProvenDB(db);
     } catch (error) {
-        console.log(error);
+        (error);
     }
 }
 
@@ -29,13 +29,13 @@ router.get('/', (req, res) => {
 });
 
 router.post('/', async(req, res) => {
-    //console.log("req body: " + JSON.stringify(req.body));
+    //("req body: " + JSON.stringify(req.body));
     await getConnection();
     // Use/Create the collection "Transactions"
     const col = pdb.collection("Transactions");
     // Check current version
     result = await pdb.getVersion();
-    console.log(`Version was ${result.version}.`);
+    (`Version was ${result.version}.`);
     const transaction = new Transaction({
         transactionId: req.body.transactionId,
         prevOwner: req.body.prevOwner,
@@ -51,16 +51,16 @@ router.post('/', async(req, res) => {
         // Find one document
         result = await col.findOne();
         // Print to the console
-        console.log(result);
+        (result);
         // Check version again
         result = await pdb.getVersion();
-        console.log(`Version is now ${result.version}.`);
+        (`Version is now ${result.version}.`);
 
         // // Fetch the history of that document.
         // result = await pdb.docHistory('Transactions', { name: 'Yeezus' });
-        // console.log(result);
+        // (result);
         // let length = result.history.length;
-        // console.log(
+        // (
         //     `History for document: ${JSON.stringify(result.history[length - 1], null, 4)}`
         // );
 
@@ -68,8 +68,8 @@ router.post('/', async(req, res) => {
         result = await pdb.submitProof({
             anchorType: 'HEDERA_MAINNET'
         });
-        console.log(`Submitted Proof: ${JSON.stringify(result, null, 4)}`);
-        //console.log(`Your ProofID: ${JSON.stringify(result.proofId)}`);
+        (`Submitted Proof: ${JSON.stringify(result, null, 4)}`);
+        //(`Your ProofID: ${JSON.stringify(result.proofId)}`);
         let proofId = JSON.stringify(result.proofId);
         return res.send(`${proofId}`);
     }
@@ -100,7 +100,7 @@ router.get('/getProof/:id', async(req, res) => {
         if (result.proofs == "") {
             return res.send('ProofId is invalid!');
         } else {
-            console.log(`Latest Proof Is: ${JSON.stringify(result.proofs, null, 4)}`);
+            (`Latest Proof Is: ${JSON.stringify(result.proofs, null, 4)}`);
             return res.json(result.proofs, null, 4);
         }
     } catch (error) {
@@ -116,9 +116,9 @@ router.get('/getDocumentHistory/:userId', async(req, res) => {
     try {
         // Fetch the history of that document.
         result = await pdb.docHistory('Transactions', { ownerID: `${req.params.userId}` });
-        console.log(result);
+        (result);
         let length = result.history.length;
-        console.log(
+        (
             `History for document: ${JSON.stringify(result.history[length - 1], null, 4)}`
         );
 
@@ -135,9 +135,9 @@ router.get('/getPhotoHistory/:photoHash', async (req, res) => {
     await getConnection();
     try {
         result = await pdb.docHistory('Transactions', { photoHash: `${req.params.photoHash}` });
-        console.log(result);
+        (result);
         let length = result.history.length;
-        console.log(
+        (
             `History of photo: ${JSON.stringify(result.history[length - 1], null, 4)}`
         );
         return res.json(result.history, null, 4);
@@ -153,14 +153,14 @@ router.put('/checkCart/:photoId', async(req, res) => {
 
         axios.put('https://capstoneprojectapi20210418160622.azurewebsites.net/api/v1/Photo/ChangeIsBought/' +
             req.params.photoId).then((response) => {
-            console.log(response.status);
-            console.log(response.data);
+            (response.status);
+            (response.data);
         })
     }, 900000);
     // axios.put('https://capstoneprojectapi20210418160622.azurewebsites.net/api/v1/Photo/ChangeIsBought/' +
     //         req.params.photoId).then((response) => {
-    //             console.log(response.status);
-    //             console.log(response.data);
+    //             (response.status);
+    //             (response.data);
     //         })
 
 });
@@ -170,7 +170,7 @@ router.put('/checkCart/:photoId', async(req, res) => {
 //     try {
 //         // Verify the proof of that document.
 //         result = await pdb.verifyProof(req.params.id);
-//         console.log(result);
+//         (result);
 //         return res.json(result, null, 4);
 //     } catch (error) {
 //         res.json({ message: error });

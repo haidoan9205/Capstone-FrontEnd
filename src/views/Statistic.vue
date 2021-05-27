@@ -99,10 +99,10 @@ export default {
                 data: JSON.parse(JSON.stringify(response.data[1])),
               },
             ]);
-          console.log(response.data[0]);
+          (response.data[0]);
         })
         .catch((error) => {
-          console.log(error);
+          (error);
         });
     },
   },
@@ -116,7 +116,7 @@ export default {
     this.value.push(y);
 
     let user = this.user;
-    console.log(user.userId);
+    (user.userId);
     axios
       .get(
         'https://capstoneprojectapi20210418160622.azurewebsites.net/api/v1/User/GetPhotoStatusStatistic/' +
@@ -133,10 +133,10 @@ export default {
         var r = ~~((a/t)*100);
         this.str = "You have " + response.data.approvedPhoto + " photos approved, " + response.data.deniedPhoto + " denied photos and "
           + response.data.pendingPhoto + " pending approval. Your photo approval rate is " + r + "%.";
-          console.log(this.str);
+          (this.str);
       })
       .catch((error) => {
-        console.log(error);
+        (error);
       });
     let dt = {
       startDate: this.value[0],
@@ -161,10 +161,10 @@ export default {
               data: JSON.parse(JSON.stringify(response.data[1])),
             },
           ]);
-        console.log(response.data[0]);
+        (response.data[0]);
       })
       .catch((error) => {
-        console.log(error);
+        (error);
       });
   },
 };

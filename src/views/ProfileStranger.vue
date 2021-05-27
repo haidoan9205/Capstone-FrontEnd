@@ -221,7 +221,7 @@ export default {
 
   methods: {
     followUser(strange) {
-      // console.log(user.userId)
+      // (user.userId)
       axios({
         method: "POST",
         url:
@@ -233,7 +233,7 @@ export default {
       }).then((response) => {
         if (response.data == true) {
           this.$alert("Follow Successfully", "Success", "success").then(() =>
-            console.log("Closed")
+            ("Closed")
           );
           this.isClick = true;
         } else {
@@ -245,7 +245,7 @@ export default {
       });
     },
     unFollowUser(follower) {
-      // console.log(user.userId)
+      // (user.userId)
       axios({
         method: "POST",
         url:
@@ -255,7 +255,7 @@ export default {
           followUserId: follower.userId,
         },
       }).then((response) => {
-        console.log(response.data);
+        (response.data);
       });
     },
     async getStrangerNonExlusiveImages(){

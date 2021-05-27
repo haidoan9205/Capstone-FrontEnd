@@ -28,7 +28,7 @@ export default {
           .then(() => this.$router.push("/"))
           .catch(
             (err) => (
-              console.log(err),
+              (err),
               alert("The username and / or password is incorrect")
             )
           );

@@ -124,7 +124,7 @@ export const GET_HISTORY_DETAIL = (state, transaction_detail) => {
 export const REMOVE_ITEM = (state, {image}) => {
   if (state.cartFlag === true) {
     var indexItem = state.cart.findIndex((x) => x.image === image);
-    console.log('index: ' + indexItem);
+    ('index: ' + indexItem);
     state.cart.splice(indexItem, 1);
     window.localStorage.setItem('cart', JSON.stringify(state.cart));
     if (state.cart.length == 0) {

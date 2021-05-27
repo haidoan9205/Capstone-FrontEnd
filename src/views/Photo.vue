@@ -249,7 +249,7 @@ export default {
     addToCart() {
       if (this.image.typeId == 2) {
         axios.put(
-          "http://35.185.185.238:3000/transactions/checkCart/" + this.photoId
+          "https://35.185.185.238:3000/transactions/checkCart/" + this.photoId
         );
         axios
           .get(
@@ -278,8 +278,8 @@ export default {
       }
     },
     followUser() {
-      // console.log(user.userId)
-      console.log(this.$store.state.image.userId);
+      // (user.userId)
+      (this.$store.state.image.userId);
       axios({
         method: "POST",
         url:
@@ -289,7 +289,7 @@ export default {
           followUserId: this.$store.state.image.userId,
         },
       }).then((response) => {
-        console.log(response.data);
+        (response.data);
       });
     },
     getPhotosByCategory(badge) {
@@ -324,41 +324,41 @@ export default {
       // });
       await axios
         .get(
-          "http://localhost:3000/transactions/getPhotoHistory/" +
+          "https://35.185.185.238:3000/transactions/getPhotoHistory/" +
             this.image.phash
         )
         .then((response) => {
           if (response.status == 200) {
-            // console.log(response.data);
+            // (response.data);
             this.list = response.data;
           }
         })
         .catch((error) => {
           alert("System error, please contact admin!");
-          console.log(error);
+          (error);
         });
     },
     async getTrackingDetail() {
-      // console.log("abe" + JSON.stringify(this.list));
+      // ("abe" + JSON.stringify(this.list));
       this.trackingItems = [];
       for (let index = 0; index < this.list.length; index++) {
-        // console.log("index no." + index + " " + JSON.stringify(list[index].versions[0].document));
+        // ("index no." + index + " " + JSON.stringify(list[index].versions[0].document));
         if (this.list[index].versions[0].document.isTransaction == false) {
           if (index == 0) {
             this.pivot1 = this.list[index].versions[0].document.prevOwner;
             this.pivot2 = this.list[index].versions[0].document.amount;
           }
-          console.log(this.pivot1);
-          console.log(this.list[index].versions[0].document.prevOwner);
-          console.log(this.pivot2);
-          console.log(this.list[index].versions[0].document.amount);
+          (this.pivot1);
+          (this.list[index].versions[0].document.prevOwner);
+          (this.pivot2);
+          (this.list[index].versions[0].document.amount);
           // compare if photo is edited
           if (
             this.pivot1.localeCompare(
               this.list[index].versions[0].document.prevOwner
             ) != 0
           ) {
-            console.log("yessss");
+            ("yessss");
             JSON.stringify(
               await this.getOwnerDetails(
                 this.list[index].versions[0].document.ownerID
@@ -377,7 +377,7 @@ export default {
               this.list[index].versions[0].document.amount
             ) != 0
           ) {
-            console.log("noooooo");
+            ("noooooo");
             JSON.stringify(
               await this.getOwnerDetails(
                 this.list[index].versions[0].document.ownerID
@@ -433,7 +433,7 @@ export default {
               this.list[index].versions[0].document.prevOwner
             )
           );
-          console.log(
+          (
             JSON.stringify(this.ownerInfo) +
               " - " +
               JSON.stringify(this.prevOwnerInfo)
@@ -474,7 +474,7 @@ export default {
         })
         .catch((error) => {
           // alert("System error, please contact admin!");
-          console.log(error);
+          (error);
         });
     },
     async getOwnerDetails(id) {
@@ -490,7 +490,7 @@ export default {
         })
         .catch((error) => {
           // alert("System error, please contact admin!");
-          console.log(error);
+          (error);
         });
     },
   },
@@ -506,7 +506,7 @@ export default {
     },
   },
   mounted() {
-    console.log(this.photoId);
+    (this.photoId);
 
     this.$store.dispatch("checkIsYour", this.$route.params.photoId);
     this.$store.dispatch("checkIsBought", this.$route.params.photoId);
