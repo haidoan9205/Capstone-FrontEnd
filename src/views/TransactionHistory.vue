@@ -428,8 +428,8 @@ export default {
     async getProofInfo(proofId) {
       await this.getExclusiveHistory();
       await axios
-        .get("https://35.185.185.238:3000/transactions/getProof/" + proofId)
-        // .get("http://https://35.185.185.238:3000/transactions/getProof/" + proofId)
+        .get("http://35.185.185.238:3000/transactions/getProof/" + proofId)
+        // .get("http://http://35.185.185.238:3000/transactions/getProof/" + proofId)
         .then((response) => {
           if (response.status == 200) {
             let flag = false;
@@ -469,11 +469,11 @@ export default {
       });
       await axios
         .get(
-          "https://35.185.185.238:3000/transactions/getDocumentHistory/" +
+          "http://35.185.185.238:3000/transactions/getDocumentHistory/" +
             this.user.userId
         )
         // .get(
-        // "http://https://35.185.185.238:3000/transactions/getDocumentHistory/" +
+        // "http://http://35.185.185.238:3000/transactions/getDocumentHistory/" +
         // this.user.userId
         // )
         .then((response) => {

@@ -892,7 +892,7 @@ export default {
       // (user.userId)
       (objectSelected);
       axios({
-        url: "https://35.185.185.238:3000/transactions",
+        url: "http://35.185.185.238:3000/transactions",
         data: {
           transactionId: "none",
           prevOwner: objectSelected.photoName,

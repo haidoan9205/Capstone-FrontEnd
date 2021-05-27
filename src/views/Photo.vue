@@ -249,7 +249,7 @@ export default {
     addToCart() {
       if (this.image.typeId == 2) {
         axios.put(
-          "https://35.185.185.238:3000/transactions/checkCart/" + this.photoId
+          "http://35.185.185.238:3000/transactions/checkCart/" + this.photoId
         );
         axios
           .get(
@@ -324,7 +324,7 @@ export default {
       // });
       await axios
         .get(
-          "https://35.185.185.238:3000/transactions/getPhotoHistory/" +
+          "http://35.185.185.238:3000/transactions/getPhotoHistory/" +
             this.image.phash
         )
         .then((response) => {
