@@ -28,6 +28,7 @@ export default {
     user_non_exlusive_images: [],
     user_exlusive_images: [],
     user_exlusive_property: [],
+    image_disabled:[],
     notifications: [],
     checkIsYour: false,
     checkIsBought: false,

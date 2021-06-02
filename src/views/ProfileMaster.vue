@@ -557,7 +557,7 @@
                     </div>
                   </tab-pane>
 
-                  <tab-pane key="tab3">
+                  <tab-pane key="tab4">
                     <template slot="title"> Exclusive Property </template>
 
                     <div class="container">
@@ -726,6 +726,50 @@
                       </div>
                     </div>
                   </tab-pane>
+                   <tab-pane key="tab4">
+                    <template slot="title"> Photo Disabled </template>
+
+                    <div class="container">
+                      <div class="ct-example-row">
+                        <div class="row">
+                          <div
+                            class="col-6 col-md-4"
+                            v-for="(item, index) in imageDisabled"
+                            :key="index"
+                            style="cursor: pointer"
+                          >
+                            <img
+                             title="Click for more actions"
+                              @click.prevent.stop="
+                                $refs.menu3.open($event, item),
+                                  (selectedDisabled = index),
+                                  (objectSelectedDisbled = item)
+                              "
+                              v-lazy="item.wmlink"
+                              class="img-fit hov"
+                            />
+                           
+                          </div>
+                           <vue-context ref="menu3">
+                            <li
+                              class="pd-3"
+                              @click="enableExclusive(objectSelectedDisbled)"
+                            >
+                              <a class="modalCursor">
+                                Re-Upload
+                                <i
+                                  class="fa fa-check mt-1"
+                                  style="float: right"
+                                ></i>
+                              </a>
+                            </li>
+                       
+                          </vue-context>
+                         
+                        </div>
+                      </div>
+                    </div>
+                  </tab-pane>
                 </card>
               </tabs>
             </div>
@@ -770,6 +814,8 @@ export default {
       objectSelectedNor: null,
       selectedEnable: 0,
       objectSelectedEnable: null,
+      selectedDisabled: 0,
+      objectSelectedDisbled: null,
     };
   },
   computed: {
@@ -799,6 +845,9 @@ export default {
     followers() {
       return this.$store.state.followingUsers;
     },
+    imageDisabled(){
+      return this.$store.state.image_disabled;
+    }
   },
   mounted() {
     this.$store.dispatch("getFollowingUsers");
@@ -806,6 +855,7 @@ export default {
     this.$store.dispatch("getUserNonExlusiveImages");
     this.$store.dispatch("getUserExlusiveImages");
     this.$store.dispatch("getUserExlusiveProperty");
+    this.$store.dispatch("getImageDisabled");
   },
   methods: {
     onEditProfile() {
@@ -892,7 +942,7 @@ export default {
       // (user.userId)
       (objectSelected);
       axios({
-        url: "http://35.185.185.238:3000/transactions",
+        url: "http://localhost:3000/transactions",
         data: {
           transactionId: "none",
           prevOwner: objectSelected.photoName,
@@ -923,6 +973,7 @@ export default {
                   "success"
                 ).then(() => ("Closed"));
                 this.modals.modalEnable = false;
+                 this.$router.go();
               } else {
                 this.$alert(
                   "Something went wrong, please try again",

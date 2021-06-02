@@ -175,6 +175,10 @@ export const auth_error = (state) => {
   state.status = 'error';
 };
 
+export const SET_IMAGES_DISABLED = (state, image_disabled) => { 
+  state.image_disabled = image_disabled;
+}
+
 export const logout = (state) => {
   state.status = '';
   state.token = '';

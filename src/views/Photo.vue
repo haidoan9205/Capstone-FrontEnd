@@ -128,6 +128,7 @@
             </footer>
           </router-link>
         </blockquote>
+        
         <div class="flex-container" style="display: flex">
           <div class="mb-3 mt-2" style="margin-right: 4%">
             <base-button
@@ -278,8 +279,8 @@ export default {
       }
     },
     followUser() {
-      // (user.userId)
-      (this.$store.state.image.userId);
+      // console.log(user.userId)
+      console.log(this.$store.state.image.userId);
       axios({
         method: "POST",
         url:
@@ -289,7 +290,7 @@ export default {
           followUserId: this.$store.state.image.userId,
         },
       }).then((response) => {
-        (response.data);
+        console.log(response.data);
       });
     },
     getPhotosByCategory(badge) {
@@ -309,9 +310,15 @@ export default {
       this.$router.go();
     },
     async openTrackingModal() {
+       let loader = this.$loading.show({
+        loader: 'dots',
+        height: 50,
+        width: 50,
+    })
       this.trackingModal = true;
       await this.getTrackingInfo();
       await this.getTrackingDetail();
+      loader.hide();
     },
     openTagModal() {
       this.tagModal = true;
@@ -323,42 +330,46 @@ export default {
       //   width: 50,
       // });
       await axios
+       
         .get(
-          "http://35.185.185.238:3000/transactions/getPhotoHistory/" +
+          "http://localhost:3000/transactions/getPhotoHistory/" +
             this.image.phash
         )
         .then((response) => {
           if (response.status == 200) {
-            // (response.data);
+            // console.log(response.data);
             this.list = response.data;
+
           }
         })
         .catch((error) => {
           alert("System error, please contact admin!");
-          (error);
+          console.log(error);
+ 
         });
     },
     async getTrackingDetail() {
-      // ("abe" + JSON.stringify(this.list));
+      
+      // console.log("abe" + JSON.stringify(this.list));
       this.trackingItems = [];
       for (let index = 0; index < this.list.length; index++) {
-        // ("index no." + index + " " + JSON.stringify(list[index].versions[0].document));
+        // console.log("index no." + index + " " + JSON.stringify(list[index].versions[0].document));
         if (this.list[index].versions[0].document.isTransaction == false) {
           if (index == 0) {
             this.pivot1 = this.list[index].versions[0].document.prevOwner;
             this.pivot2 = this.list[index].versions[0].document.amount;
           }
-          (this.pivot1);
-          (this.list[index].versions[0].document.prevOwner);
-          (this.pivot2);
-          (this.list[index].versions[0].document.amount);
+          console.log(this.pivot1);
+          console.log(this.list[index].versions[0].document.prevOwner);
+          console.log(this.pivot2);
+          console.log(this.list[index].versions[0].document.amount);
           // compare if photo is edited
           if (
             this.pivot1.localeCompare(
               this.list[index].versions[0].document.prevOwner
             ) != 0
           ) {
-            ("yessss");
+            console.log("yessss");
             JSON.stringify(
               await this.getOwnerDetails(
                 this.list[index].versions[0].document.ownerID
@@ -369,7 +380,7 @@ export default {
                 this.list[index].versions[0].document.createDate
               ).toLocaleDateString(),
               htmlMode: true,
-              content: `<div><a href="#/stranger/${this.list[index].versions[0].document.ownerID}" target="_blank">${this.ownerInfo.username}</a> change photo name from ${this.pivot1} to ${this.list[index].versions[0].document.prevOwner}</div>`,
+              content: `<div><span style="font-weight:bold; color:blue">${this.ownerInfo.username}</span> change photo name from <span style=font-weight:bold>"${this.pivot1}"</span> to <span style=font-weight:bold>"${this.list[index].versions[0].document.prevOwner}"</span></div>`,
             });
           }
           if (
@@ -377,7 +388,7 @@ export default {
               this.list[index].versions[0].document.amount
             ) != 0
           ) {
-            ("noooooo");
+            console.log("noooooo");
             JSON.stringify(
               await this.getOwnerDetails(
                 this.list[index].versions[0].document.ownerID
@@ -388,7 +399,7 @@ export default {
                 this.list[index].versions[0].document.createDate
               ).toLocaleDateString(),
               htmlMode: true,
-              content: `<div><a href="#/stranger/${this.list[index].versions[0].document.ownerID}" target="_blank">${this.ownerInfo.username}</a> change photo price from ${this.pivot2} to ${this.list[index].versions[0].document.amount}</div>`,
+              content: `<div><span style="font-weight:bold; color:blue">${this.ownerInfo.username}</span> change photo price from <span style="font-weight:bold">"${this.pivot2}"</span> to <span style="font-weight:bold">"${this.list[index].versions[0].document.amount}"</span></div>`,
             });
           }
           if (
@@ -412,7 +423,7 @@ export default {
             });
             await this.trackingItems.push({
               htmlMode: true,
-              content: `<div>Owner of this photo: <a href="#/stranger/${this.list[index].versions[0].document.ownerID}" target="_blank">${this.ownerInfo.username}</a></div>`,
+              content: `<div>Owner of this photo: ${this.ownerInfo.username}</div>`,
               type: "star",
               color: "#90EE90",
             });
@@ -433,7 +444,7 @@ export default {
               this.list[index].versions[0].document.prevOwner
             )
           );
-          (
+          console.log(
             JSON.stringify(this.ownerInfo) +
               " - " +
               JSON.stringify(this.prevOwnerInfo)
@@ -452,7 +463,7 @@ export default {
           });
           await this.trackingItems.push({
             htmlMode: true,
-            content: `<div>Owner of this photo: <a href="#/stranger/${this.list[index].versions[0].document.ownerID}" target="_blank">${this.ownerInfo.username}</a></div>`,
+            content: `<div>Owner of this photo: ${this.ownerInfo.username}</div>`,
             type: "star",
             color: "#EE82EE",
           });
@@ -474,7 +485,7 @@ export default {
         })
         .catch((error) => {
           // alert("System error, please contact admin!");
-          (error);
+          console.log(error);
         });
     },
     async getOwnerDetails(id) {
@@ -490,7 +501,7 @@ export default {
         })
         .catch((error) => {
           // alert("System error, please contact admin!");
-          (error);
+          console.log(error);
         });
     },
   },
@@ -506,14 +517,13 @@ export default {
     },
   },
   mounted() {
-    (this.photoId);
-
+    console.log(this.photoId);
     this.$store.dispatch("checkIsYour", this.$route.params.photoId);
     this.$store.dispatch("checkIsBought", this.$route.params.photoId);
     this.getTrackingDetail();
   },
   async created() {
-     this.$store.dispatch("getImage", this.$route.params.photoId);
+    this.$store.dispatch("getImage", this.$route.params.photoId);
     await this.getTrackingInfo();
   },
 };

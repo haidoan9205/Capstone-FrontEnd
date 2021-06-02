@@ -92,6 +92,22 @@ export const getUserExlusiveImages = ({ commit }) => {
         })
 }
 
+export const getImageDisabled = ({ commit }) => {
+ 
+    const user = localStorage.getItem("user");
+    const user_parsed = JSON.parse(user);
+    axios
+        .get(
+            `https://capstoneprojectapi20210418160622.azurewebsites.net/api/v1/User/GetUserDisabledPhotos/${user_parsed.userId}`
+        )
+        .then((response) => {
+            commit("SET_IMAGES_DISABLED", response.data);
+           
+        }).catch((err) => {
+           
+        })
+}
+
 export const getStrangerExlusiveImages = ({ commit }) => {
     let loader = Vue.$loading.show({
         loader: 'dots',

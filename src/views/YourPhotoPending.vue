@@ -138,6 +138,7 @@ export default {
             ("Closed")
           );
           this.modals.modalEnable = false;
+          this.$router.go();
         } else {
           this.$alert(
             "Something went wrong, please try again",
