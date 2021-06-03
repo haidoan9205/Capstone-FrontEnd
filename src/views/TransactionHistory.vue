@@ -554,7 +554,7 @@ export default {
           "&userId=" +
           user_parsed.userId,
       }).then((response) => {
-        (response);
+     
         if(response.status == 200){
           window.location.href = response.data;
         }

@@ -230,7 +230,8 @@ export const downloadImage = ({ commit }, { tokenId, photoId }) => {
         method: "GET",
         responseType: "blob",
     }).then((response) => {
-        (response.status);
+        console.log('debug')
+        console.log(response)
         if (response.status == 200) {
             var fileURL = window.URL.createObjectURL(new Blob([response.data]));
             var fileLink = document.createElement("a");

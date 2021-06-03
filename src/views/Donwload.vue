@@ -1,7 +1,7 @@
 <template>
   <div class="row align-items-center justify-content-center text-center" style="padding-top: 40px; height: 400px;">
     <div class="col">
-      <h3>Token will expire after 15 minutes or after 3 downloads</h3>
+      <h3>Token will expire after 15 minutes</h3>
       <button class="btn btn-primary"  @click="download()" >Download</button>
     </div>
   </div>
@@ -15,7 +15,7 @@ export default {
   },
   methods: {
     download() {
-      ('chien');
+     
       this.$store.dispatch("downloadImage", {
         tokenId: this.$route.query.tokenId,
         photoId: this.$route.query.photoId
