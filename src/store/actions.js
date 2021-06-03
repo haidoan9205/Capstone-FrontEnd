@@ -53,11 +53,7 @@ export const getImagesAllExclusive = ({ commit }) => {
 };
 
 export const getUserNonExlusiveImages = ({ commit }) => {
-    let loader = Vue.$loading.show({
-        loader: 'dots',
-        height: 50,
-        width: 50,
-    })
+   
     const user = localStorage.getItem("user");
     const user_parsed = JSON.parse(user);
     axios
@@ -66,9 +62,9 @@ export const getUserNonExlusiveImages = ({ commit }) => {
         )
         .then((response) => {
             commit("SET_IMAGES_USER_NON_EXCLUSIVE", response.data);
-            loader.hide()
+            
         }).catch((err) => {
-            loader.hide();
+      
         })
 }
 
@@ -88,7 +84,7 @@ export const getUserExlusiveImages = ({ commit }) => {
             commit("SET_IMAGES_USER_EXCLUSIVE", response.data);
             loader.hide();
         }).catch((err) => {
-            loader.hide();
+            loader.hide();            
         })
 }
 
@@ -109,11 +105,7 @@ export const getImageDisabled = ({ commit }) => {
 }
 
 export const getStrangerExlusiveImages = ({ commit }) => {
-    let loader = Vue.$loading.show({
-        loader: 'dots',
-        height: 50,
-        width: 50,
-    })
+  
 
     axios
         .get(
@@ -121,9 +113,9 @@ export const getStrangerExlusiveImages = ({ commit }) => {
         )
         .then((response) => {
             commit("SET_IMAGES_STRANGER_EXCLUSIVE", response.data);
-            loader.hide();
+         
         }).catch((err) => {
-            loader.hide();
+     
         })
 }
 
@@ -159,11 +151,7 @@ export const getNotification = ({ commit }) => {
 }
 
 export const getUserExlusiveProperty = ({ commit }) => {
-    let loader = Vue.$loading.show({
-        loader: 'dots',
-        height: 50,
-        width: 50,
-    })
+   
     const user = localStorage.getItem("user");
     const user_parsed = JSON.parse(user);
     axios
@@ -377,11 +365,7 @@ export const getUnknownPeople = ({ commit }) => {
 }
 
 export const getFollowingUsers = ({ commit }) => {
-    let loader = Vue.$loading.show({
-        loader: 'dots',
-        height: 50,
-        width: 50,
-    })
+   
     const user = localStorage.getItem("user");
     const user_parsed = JSON.parse(user);
     ("user parse");
@@ -392,9 +376,9 @@ export const getFollowingUsers = ({ commit }) => {
         )
         .then((response) => {
             commit("SET_FOLLOWINGUSERS", response.data);
-            loader.hide();
+           
         }).catch((err) => {
-            loader.hide();
+          
         })
 
 };
@@ -449,11 +433,7 @@ export const logout = ({ commit }) => {
 };
 
 export const getApprovedImageByUser = ({ commit }) => {
-    let loader = Vue.$loading.show({
-        loader: 'dots',
-        height: 50,
-        width: 50,
-    })
+   
     const user = localStorage.getItem("user");
     const user_parsed = JSON.parse(user);
     ("user parse");
@@ -464,7 +444,7 @@ export const getApprovedImageByUser = ({ commit }) => {
         )
         .then((response) => {
             commit("GET_APPROVED_IMAGE", response.data);
-            loader.hide();
+          
         });
 };
 
